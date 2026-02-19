@@ -90,3 +90,12 @@
 - Budget tracking ✓
 - KB ingestion ✓
 - Morning digest ✓
+
+## 2026-02-20 (Night Shift 5) - Daily Wrap-Up + Research
+
+### Added
+- `scripts/daily_wrapup.sh` - End of day summary script
+
+### Completed
+- Vector DB research (LanceDB recommended for MVP)
+- Updated research queue with findings

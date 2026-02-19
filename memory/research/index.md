@@ -39,6 +39,16 @@
 - Learning/feedback loops for improvement
 - SQLite + vector embeddings for storage
 
+### Vector DB Options (2026-02-20)
+**Options researched:**
+- **LanceDB**: Rust-based, embedded, zero-config, Python-native, fast
+- **pgvector**: PostgreSQL extension, mature, good for existing PG users
+- **Chroma**: Simple, Python-first, good for prototyping
+- **Qdrant**: Rust-based, API server, production-ready
+- **Milvus**: Enterprise scale, complex setup
+
+**Recommendation for MVP:** LanceDB - simplest, embedded, no server needed
+
 ## Research Protocol
 
 ### For New Research
@@ -56,4 +66,4 @@
 ## Queue (Backlog)
 - [ ] Explore Chatterbox/Resemble AI for audio transformation
 - [ ] Investigate Chrome extension for browser automation
-- [ ] Research vector db options (LanceDB, pgvector)
+- [x] Research vector db options (LanceDB, pgvector) ✅ DONE
