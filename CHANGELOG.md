@@ -21,7 +21,14 @@
 - Security gate provides basic input validation for external prompts
 
 ## Future Priorities
-- Implement actual test harness execution
+- Implement actual test harness execution ✅ DONE
 - Wire security gate into message processing
 - Add budget tracking dashboard
 - Implement KB/ingestion pipeline
+
+## 2026-02-19 (Late Night) - Test Runner + Domain Index
+
+### Added
+- `scripts/test_runner.sh` - Automated test execution (5/5 tests passing)
+- `memory/domains/index.md` - Second brain domain organization system
+- Updated `.gitignore` to exclude runtime logs
