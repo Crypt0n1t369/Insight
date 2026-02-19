@@ -34,7 +34,7 @@ ls -la /home/drg/.openclaw/workspace/tests/
 - **Fail:** Tests missing or stale (>7 days)
 
 ### H5: Model Usage Consistency
-- **Check:** Review recent session costs via `session_status`
+- **Check:** Run `/home/drg/.openclaw/workspace/scripts/budget_tracker.sh` or review via `session_status`
 - **Pass:** Daily spend <$10 (budget cap)
 - **Fail:** Budget exceeded
 

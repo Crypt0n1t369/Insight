@@ -63,3 +63,15 @@
 - `scripts/test_runner.sh` - Automated test execution (5/5 tests passing)
 - `memory/domains/index.md` - Second brain domain organization system
 - Updated `.gitignore` to exclude runtime logs
+
+## 2026-02-19 (Night Shift 3) - Budget Tracker
+
+### Added
+- `scripts/budget_tracker.sh` - Daily budget tracking with $10 cap
+- Updated HEARTBEAT.md to reference budget tracker
+
+### Status
+- All systems operational ✓
+- Health checks passing ✓
+- Test runner: 5/5 ✓
+- Budget tracker: Functional ✓
