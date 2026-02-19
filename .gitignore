@@ -1,0 +1,7 @@
+# Ignore sensitive files
+.env
+*.ckpt
+*.pem
+*.key
+*.secret
+*.log
