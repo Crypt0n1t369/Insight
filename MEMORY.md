@@ -30,7 +30,36 @@
 - Security: Gate functional ✓
 - Memory: 2 daily files + domain index ✓
 
+### Improvements Made (Session 3 - Backbone Build)
+1. **AGENTS.md Enhanced** - Sophisticated model tier routing with task classification
+   - 4-tier system: Elite → Balanced → Efficient → Ultralight
+   - Automatic routing triggers for each tier
+   - Escalation protocol defined
+   - Learning loop for task→tier optimization
+
+2. **Second Brain Domains Created**
+   - `memory/domains/ai-automation.md` - OpenClaw, automation patterns
+   - `memory/domains/productivity.md` - Second brain, knowledge management
+   - `memory/domains/index.md` - Domain organization master
+
+3. **Research Tracker**
+   - `memory/research/index.md` - Active research tracking
+   - Protocol for research workflow (Tier 3→2→1)
+   - Queue for backlog topics
+
+4. **Domain Tools**
+   - `scripts/domain_capture.sh` - Quick knowledge entry
+   - `scripts/recall.sh` - Fast topic retrieval
+
+### Current Status
+- Model routing: ✓ Enhanced with task classification
+- Domain memory: ✓ 2 active domains + index + research
+- Recall system: ✓ Scripts functional
+- Health checks: ✓ All passing
+- Test harness: ✓ 5/5 passing
+
 ### Next Priorities
-- Wire security gate into message processing pipeline
+- Wire security gate into message processing
 - Add automated budget tracking
-- Create actual domain files (ai-automation, productivity, etc.)
+- Test domain capture script
+- Explore automation examples from gists
