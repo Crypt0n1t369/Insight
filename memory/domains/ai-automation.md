@@ -28,6 +28,16 @@ OpenClaw agent framework, automation patterns, model routing, second brain archi
 - Cross-linking between domains
 - Research tracking: `memory/research/`
 
+### Browser Automation
+- Native via `browser` tool in OpenClaw
+- Use profile="chrome" for extension relay takeover
+- profile="openclaw" for isolated browser
+- Actions: snapshot, act, navigate, screenshot
+
+### Data Storage
+- Vector DB: LanceDB (recommended for MVP)
+- SQLite + vector for embeddings
+
 ## Patterns & Learnings
 
 ### Effective Task Routing

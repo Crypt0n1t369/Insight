@@ -49,6 +49,17 @@
 
 **Recommendation for MVP:** LanceDB - simplest, embedded, no server needed
 
+### Chrome Extension for Browser Automation (2026-02-20)
+**Options:**
+- **OpenClaw Browser Relay** - Native integration, toolbar button to attach tabs
+- **Selenium** - WebDriver-based, full browser control
+- **Puppeteer/Playwright** - Headless, API-first, good for CI/CD
+- **BrowserForge** - AI-friendly browser automation
+
+**OpenClaw integration:** Already built-in via `browser` tool with profile="chrome" option. User clicks OpenClaw Browser Relay toolbar icon to attach tab. Works with `browser` tool actions: snapshot, act, navigate, etc.
+
+**Recommendation:** Use OpenClaw's native browser tool - no extension needed beyond relay
+
 ## Research Protocol
 
 ### For New Research
@@ -65,5 +76,5 @@
 
 ## Queue (Backlog)
 - [ ] Explore Chatterbox/Resemble AI for audio transformation
-- [ ] Investigate Chrome extension for browser automation
+- [x] Investigate Chrome extension for browser automation ✅ DONE
 - [x] Research vector db options (LanceDB, pgvector) ✅ DONE
