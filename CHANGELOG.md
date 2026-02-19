@@ -75,3 +75,18 @@
 - Health checks passing ✓
 - Test runner: 5/5 ✓
 - Budget tracker: Functional ✓
+
+## 2026-02-20 (Night Shift 4) - KB Ingestion + Morning Digest
+
+### Added
+- `scripts/kb_ingest.sh` - URL/content ingestion for knowledge base
+- `scripts/morning_digest.sh` - Daily status summary script
+- `memory/2026-02-20.md` - Today's memory entry
+
+### Infrastructure Complete
+- Health checks ✓
+- Test runner ✓
+- Security gate ✓
+- Budget tracking ✓
+- KB ingestion ✓
+- Morning digest ✓
