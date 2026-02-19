@@ -5,3 +5,6 @@
 *.key
 *.secret
 *.log
+.health_check.log
+.test_results.log
+.security_log
