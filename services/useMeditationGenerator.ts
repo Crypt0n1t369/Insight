@@ -114,6 +114,83 @@ const createAudioBlob = (audioBase64: string, mimeType?: string): Blob => {
 };
 
 
+/**
+ * Demo Mode: Creates a meditation using hardcoded content with Web Speech API
+ * This allows testing the app without an API key
+ */
+const runDemoMode = async (
+    config: MeditationConfig,
+    setMeditations: any,
+    setActiveMeditationId: any,
+    setView: any,
+    soundscapes: Soundscape[]
+) => {
+    const tempId = crypto.randomUUID();
+    
+    // Demo content - simple meditation script
+    const demoGreeting = `Welcome to your meditation. Find a comfortable position and allow yourself to settle into this moment.`;
+    const demoContent = [
+        `Take a deep breath in through your nose... and release slowly through your mouth.`,
+        `With each breath, allow yourself to sink deeper into relaxation.`,
+        `Notice the sensations in your body... the warmth... the heaviness... the peace.`,
+        `Let go of any thoughts that don't serve you right now.`,
+        `You are exactly where you need to be.`,
+        `Continue breathing gently... allowing this sense of calm to fill your entire being.`,
+        `As we come to the end of this session, carry this peace with you.`,
+        `When you're ready, slowly open your eyes.`
+    ];
+
+    // Create segments with Web Speech flag
+    const greetingSegment: PlayableSegment = {
+        id: 'greeting',
+        text: demoGreeting,
+        audioUrl: '',
+        duration: demoGreeting.length / 15,
+        useWebSpeech: true
+    };
+
+    const contentSegments: PlayableSegment[] = demoContent.map((text, i) => ({
+        id: `demo-${i}`,
+        text,
+        audioUrl: '',
+        duration: text.length / 15,
+        useWebSpeech: true
+    }));
+
+    const allSegments = [greetingSegment, ...contentSegments];
+    const totalDuration = allSegments.reduce((acc, s) => acc + s.duration, 0);
+
+    // Find selected soundscape
+    const selectedSoundscape = soundscapes.find(s => s.id === config.soundscapeId) || soundscapes[0];
+
+    const newMeditation: Meditation = {
+        id: tempId,
+        title: config.focus ? `Demo: ${config.focus}` : 'Demo Meditation',
+        transcript: demoGreeting + '\n\n' + demoContent.join('\n\n'),
+        lines: [demoGreeting, ...demoContent],
+        audioQueue: allSegments,
+        isGenerating: false,
+        durationMinutes: config.duration || 5,
+        createdAt: Date.now(),
+        played: false,
+        soundscapeId: selectedSoundscape?.id || 'default',
+        backgroundType: 'deep-space',
+        config: config
+    };
+
+    console.log('🎯 Demo Mode: Created meditation with', allSegments.length, 'segments, ~' + Math.round(totalDuration) + 's total');
+
+    // Update state
+    setMeditations(prev => [newMeditation, ...prev]);
+    setActiveMeditationId(tempId);
+    setView(ViewState.LOADING);
+
+    // Small delay then switch to player
+    setTimeout(() => {
+        setView(ViewState.PLAYING);
+    }, 500);
+};
+
 export const useMeditationGenerator = (
     soundscapes: Soundscape[],
     activeResolution: Resolution | null,
@@ -146,6 +223,14 @@ export const useMeditationGenerator = (
             console.error('❌ finalizeMeditationGeneration called with invalid config:', config);
             console.error('   pendingMeditationConfig was:', pendingMeditationConfig);
             throw new Error('Invalid meditation config: missing required fields (soundscapeId)');
+        }
+
+        // ===== DEMO MODE: Check for API key and use fallback if missing =====
+        const googleApiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+        if (!googleApiKey || googleApiKey === '' || googleApiKey === 'your_google_api_key_here') {
+            console.log('🔑 No Google API key detected - running in DEMO MODE with Web Speech');
+            await runDemoMode(config, setMeditations, setActiveMeditationId, setView, soundscapes);
+            return;
         }
 
         // Prevent double submissions or cancel previous
@@ -292,31 +377,47 @@ export const useMeditationGenerator = (
 
             // Only create greeting segment if we have valid audio
             if (greetingResult && greetingResult.audioData) {
-                // Create greeting audio blob with correct mimeType
-                const greetingBlob = await createAudioBlob(greetingResult.audioData, greetingResult.mimeType);
-                const greetingUrl = URL.createObjectURL(greetingBlob);
-
-                // Push greeting to queue IMMEDIATELY - user can start listening
-                const greetingSegment: PlayableSegment = {
-                    id: 'greeting',
-                    text: greetingResult.text,
-                    audioUrl: greetingUrl,
-                    // Decode base64 to get actual byte count for duration calculation
-                    // 24kHz, 16-bit mono = 48000 bytes per second
-                    duration: decodeBase64(greetingResult.audioData).length / 48000,
-                    instructions: [] // Greeting has no special sonic instructions
-                };
-
-                // Update meditation with greeting - PLAYER CAN START NOW
-                setMeditations(current => current.map(m => {
-                    if (m.id === tempId) return {
-                        ...m,
-                        audioQueue: [greetingSegment],
-                        isGenerating: true // Still generating remaining batches
+                // Check for Web Speech API fallback (text/speech mimeType)
+                if (greetingResult.mimeType === 'text/speech') {
+                    console.log('🔊 Using Web Speech API for greeting (fallback mode)');
+                    // Create a segment with empty audioUrl but with text - player will use Web Speech
+                    const greetingSegment: PlayableSegment = {
+                        id: 'greeting',
+                        text: greetingResult.text,
+                        audioUrl: '',  // Empty - will use Web Speech
+                        duration: greetingResult.text.length / 15, // Estimate: ~15 chars/sec for speech
+                        instructions: [],
+                        useWebSpeech: true  // Flag for player to use Web Speech API
                     };
-                    return m;
-                }));
+                    setMeditations(current => current.map(m => {
+                        if (m.id === tempId) return {
+                            ...m,
+                            audioQueue: [greetingSegment],
+                            isGenerating: true
+                        };
+                        return m;
+                    }));
+                } else {
+                    // Normal audio blob creation
+                    const greetingBlob = await createAudioBlob(greetingResult.audioData, greetingResult.mimeType);
+                    const greetingUrl = URL.createObjectURL(greetingBlob);
 
+                    const greetingSegment: PlayableSegment = {
+                        id: 'greeting',
+                        text: greetingResult.text,
+                        audioUrl: greetingUrl,
+                        duration: decodeBase64(greetingResult.audioData).length / 48000,
+                        instructions: []
+                    };
+                    setMeditations(current => current.map(m => {
+                        if (m.id === tempId) return {
+                            ...m,
+                            audioQueue: [greetingSegment],
+                            isGenerating: true
+                        };
+                        return m;
+                    }));
+                }
                 console.log('⚡ Fast Start: Greeting ready! Player can begin.');
             } else {
                 console.log('⚠️ No greeting audio, player will wait for first batch');
@@ -384,20 +485,32 @@ export const useMeditationGenerator = (
                         previousChunkEnd
                     });
 
-                    // Use createAudioBlob which handles mimeType correctly
-                    const blob = createAudioBlob(audioData, mimeType);
-                    const url = URL.createObjectURL(blob);
-                    // Decode base64 to get actual byte count for duration calculation
-                    // 24kHz, 16-bit mono = 48000 bytes per second
-                    const actualBytes = decodeBase64(audioData);
+                    // Check for Web Speech API fallback (text/speech mimeType)
+                    let newSegment: PlayableSegment;
+                    if (mimeType === 'text/speech') {
+                        console.log('🔊 Using Web Speech API for batch (fallback mode)');
+                        newSegment = {
+                            id: `batch-${i}`,
+                            text: batch.text,
+                            audioUrl: '',  // Empty - will use Web Speech
+                            duration: batch.text.length / 15, // Estimate: ~15 chars/sec
+                            instructions: sonicTimeline.segmentInstructions[i + 1] || [],
+                            useWebSpeech: true
+                        };
+                    } else {
+                        // Normal audio blob creation
+                        const blob = createAudioBlob(audioData, mimeType);
+                        const url = URL.createObjectURL(blob);
+                        const actualBytes = decodeBase64(audioData);
 
-                    const newSegment: PlayableSegment = {
-                        id: `batch-${i}`,
-                        text: batch.text,
-                        audioUrl: url,
-                        duration: actualBytes.length / 48000,
-                        instructions: sonicTimeline.segmentInstructions[i + 1] || [] // +1 for greeting offset
-                    };
+                        newSegment = {
+                            id: `batch-${i}`,
+                            text: batch.text,
+                            audioUrl: url,
+                            duration: actualBytes.length / 48000,
+                            instructions: sonicTimeline.segmentInstructions[i + 1] || []
+                        };
+                    }
 
                     // STREAM: Append this segment to queue immediately
                     setMeditations(current => current.map(m => {

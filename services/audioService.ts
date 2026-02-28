@@ -213,6 +213,13 @@ class AudioServiceClass {
             this.onSegmentChange(index, segment);
         }
 
+        // Check for Web Speech API fallback
+        if ((segment as any).useWebSpeech) {
+            console.log('🔊 AudioService: Using Web Speech API for segment', index);
+            await this.playSegmentWebSpeech(segment);
+            return;
+        }
+
         try {
             // Fetch and decode audio
             this.currentBuffer = await this.fetchAndDecodeSegment(segment);
@@ -251,6 +258,91 @@ class AudioServiceClass {
                 this.playSegment(index + 1);
             }
         }
+    }
+
+    /**
+     * Play a segment using Web Speech API (fallback when TTS unavailable)
+     */
+    private async playSegmentWebSpeech(segment: PlayableSegment): Promise<void> {
+        if (!segment.text) {
+            // No text to speak, skip to next segment
+            if (this.isPlaying && !this.isPaused) {
+                this.playSegment(this.currentSegmentIndex + 1);
+            }
+            return;
+        }
+
+        return new Promise((resolve) => {
+            if (typeof window === 'undefined' || !window.speechSynthesis) {
+                console.warn('Web Speech API not available');
+                resolve();
+                return;
+            }
+
+            // Cancel any ongoing speech
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(segment.text);
+            
+            // Configure for meditation (slow, calm)
+            utterance.rate = 0.85;
+            utterance.pitch = 1.0;
+            utterance.volume = 1.0;
+            
+            // Try to find a good voice
+            const voices = window.speechSynthesis.getVoices();
+            const preferredVoices = ['Microsoft Zira', 'Google UK English Female', 'Samantha', 'Google US English'];
+            const selectedVoice = voices.find(v => 
+                preferredVoices.some(pv => v.name.includes(pv))
+            ) || voices[0];
+            
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            }
+            
+            // Track progress based on estimated duration
+            const estimatedDuration = segment.duration * 1000 || segment.text.length / 15 * 1000;
+            const progressInterval = 100;
+            let elapsed = 0;
+            
+            const progressTimer = setInterval(() => {
+                if (!this.isPlaying || this.isPaused) {
+                    clearInterval(progressTimer);
+                    return;
+                }
+                elapsed += progressInterval;
+                const progress = Math.min((elapsed / estimatedDuration) * 100, 100);
+                
+                if (this.onProgress) {
+                    const state = this.getState();
+                    state.progress = progress;
+                    state.currentTime = elapsed / 1000;
+                    this.onProgress(state);
+                }
+            }, progressInterval);
+            
+            utterance.onend = () => {
+                clearInterval(progressTimer);
+                console.log('🔊 Web Speech segment complete');
+                // Move to next segment
+                if (this.isPlaying && !this.isPaused) {
+                    this.playSegment(this.currentSegmentIndex + 1);
+                }
+                resolve();
+            };
+            
+            utterance.onerror = () => {
+                clearInterval(progressTimer);
+                console.error('🔊 Web Speech error');
+                // Move to next segment even on error
+                if (this.isPlaying && !this.isPaused) {
+                    this.playSegment(this.currentSegmentIndex + 1);
+                }
+                resolve();
+            };
+            
+            window.speechSynthesis.speak(utterance);
+        });
     }
 
     /**

@@ -150,6 +150,8 @@ export interface PlayableSegment {
   duration: number;
   // Instructions to execute WHEN this segment starts playing
   instructions?: SonicInstruction[];
+  // Web Speech API fallback flag
+  useWebSpeech?: boolean;
 }
 
 export interface FeedbackData {
