@@ -1,22 +1,26 @@
 # Backlog
 
-## 2026-03-01 (00:26) - Wakeup Session
+## 2026-03-01 (00:56) - Wakeup Session
 
 ### Verified Working
 - ✅ Build passes (clean, minor CSS warning only)
 - ✅ App running on port 3001 (HTTP 200)
 - ✅ Demo Mode integrated - auto-triggers without API key
-- ✅ Web Speech API fallback wired to frontend
-- ✅ Git: 2 commits ahead of origin
+- ✅ Web Speech API fallback wired (audioService.ts:266-344)
+- ✅ Health checks passing (9/9)
+- ✅ Git: Clean
 
 ### What Was Done
-1. Verified build still passes after previous session's demo mode integration
-2. Restarted app server with latest build
-3. Confirmed demo mode code is properly wired (runDemoMode triggers when no API key)
-4. Updated progress docs
+1. Verified app running (HTTP 200 on port 3001)
+2. Confirmed demo mode code is properly wired:
+   - useMeditationGenerator.ts:121 - runDemoMode function exists
+   - audioService.ts:266 - playSegmentWebSpeech handles Web Speech
+   - UnifiedExperience.tsx - uses AudioService for playback
+3. Verified health checks passing (9/9)
+4. Git is clean, no pending changes
 
 ### Remaining Tasks
-1. **Manual Test** - Open browser to http://localhost:3001, start meditation, verify audio plays
+1. **Manual Test** - Open browser to http://localhost:3001, start meditation, verify audio plays via Web Speech
 2. **Add API Key** - Get from https://aistudio.google.com/app/apikey, add to .env.local
 3. **Deploy** - Push to production
 
