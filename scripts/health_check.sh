@@ -2,7 +2,16 @@
 # Health Check Script - Phase 1 MVP
 # Run daily to verify workspace health
 
-WORKSPACE="/home/drg/.openclaw/workspace"
+# Support both sandbox and host execution
+if [ -d "/home/drg/.openclaw/workspace" ]; then
+    WORKSPACE="/home/drg/.openclaw/workspace"
+elif [ -d "/workspace" ]; then
+    WORKSPACE="/workspace"
+else
+    echo "ERROR: Cannot find workspace"
+    exit 1
+fi
+
 DATE=$(date +%Y-%m-%d)
 LOG_FILE="$WORKSPACE/.health_check.log"
 
@@ -10,7 +19,7 @@ echo "=== Aton Health Check - $DATE ===" | tee -a $LOG_FILE
 
 # H1: Repository Health
 echo -n "H1: Repo status... " | tee -a $LOG_FILE
-cd $WORKSPACE
+cd "$WORKSPACE" || exit 1
 if git diff --quiet 2>/dev/null; then
     echo "OK" | tee -a $LOG_FILE
 else
@@ -48,10 +57,48 @@ echo "H5: Budget - check session_status manually" | tee -a $LOG_FILE
 # H6: Git Branch
 echo -n "H6: Git branch... " | tee -a $LOG_FILE
 BRANCH=$(git branch --show-current 2>/dev/null)
+# Check for detached HEAD state
+if [ -z "$BRANCH" ]; then
+    # Try to get commit hash or tag
+    BRANCH=$(git describe --tags --always --dirty 2>/dev/null || echo "detached")
+fi
 if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ] || [[ "$BRANCH" == feature/* ]]; then
     echo "OK (on $BRANCH)" | tee -a $LOG_FILE
+elif [ "$BRANCH" = "detached" ]; then
+    echo "WARN - detached HEAD" | tee -a $LOG_FILE
 else
     echo "WARN - on $BRANCH" | tee -a $LOG_FILE
+fi
+
+# H7: Memory Freshness (warn if no updates in 3 days)
+echo -n "H7: Memory freshness... " | tee -a $LOG_FILE
+LATEST_MEM=$(ls -t "$WORKSPACE"/memory/*.md 2>/dev/null | head -1)
+if [ -n "$LATEST_MEM" ]; then
+    DAYS_OLD=$(echo "$(date +%s) - $(stat -c %Y "$LATEST_MEM" 2>/dev/null || stat -f %m "$LATEST_MEM" 2>/dev/null)" | bc 2>/dev/null | cut -d. -f1)
+    DAYS_OLD=$((DAYS_OLD / 86400))
+    if [ "$DAYS_OLD" -lt 3 ]; then
+        echo "OK (${DAYS_OLD}d old)" | tee -a $LOG_FILE
+    else
+        echo "WARN - ${DAYS_OLD}d since last entry" | tee -a $LOG_FILE
+    fi
+else
+    echo "WARN - no memory files" | tee -a $LOG_FILE
+fi
+
+# H8: Auto-commit suggestion
+echo -n "H8: Git cleanup... " | tee -a $LOG_FILE
+if ! git diff --quiet 2>/dev/null; then
+    echo "PENDING - run 'git add -A && git commit -m \"updates\"'" | tee -a $LOG_FILE
+else
+    echo "OK" | tee -a $LOG_FILE
+fi
+
+# H9: Cron health (check if cron is running)
+echo -n "H9: Cron active... " | tee -a $LOG_FILE
+if pgrep -x "cron" > /dev/null 2>&1 || pgrep -f "openclaw" > /dev/null 2>&1; then
+    echo "OK" | tee -a $LOG_FILE
+else
+    echo "WARN - no active cron/openclaw processes" | tee -a $LOG_FILE
 fi
 
 echo "=== Health Check Complete ===" | tee -a $LOG_FILE

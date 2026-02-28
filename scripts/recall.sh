@@ -10,20 +10,23 @@ if [ -z "$SEARCH" ]; then
     exit 1
 fi
 
-echo "🔍 Searching domains for: $SEARCH"
+echo "🔍 Searching memory for: $SEARCH"
+echo "================================"
 echo ""
 
-cd /home/drg/.openclaw/workspace/memory
+# Use vector search first
+echo "📊 Relevance scoring:"
+/workspace/scripts/memory_vector.sh "$SEARCH" 2>/dev/null
+echo ""
 
-# Search in domain files
-grep -l -i "$SEARCH" domains/*.md 2>/dev/null | while read file; do
-    echo "📁 $file"
-    grep -i "$SEARCH" "$file" | head -3
-    echo ""
-done
+# Then show context from top matches
+echo "📄 Top matches context:"
+echo ""
 
-# Also search research index
-if grep -l -i "$SEARCH" research/*.md 2>/dev/null; then
-    echo "🔬 Also in research:"
-    grep -l -i "$SEARCH" research/*.md 2>/dev/null
-fi
+for file in $(find /workspace/memory -name "*.md" -type f 2>/dev/null); do
+    if grep -qi "$SEARCH" "$file"; then
+        echo "→ $(basename "$file"):"
+        grep -i "$SEARCH" "$file" | head -2 | sed 's/^/   /'
+        echo ""
+    fi
+done | head -30

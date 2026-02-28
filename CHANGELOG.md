@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## 2026-02-28 - Night Shift - Phase 1.1 Evolution
+
+### Evolved
+- **Memory Vector Search** - Added `scripts/memory_vector.sh` for TF-IDF-style keyword relevance scoring across memory files
+- **Recall System** - Updated `scripts/recall.sh` to use vector search + context display for semantic-ish queries
+- **Test Runner** - Fixed to work in both sandbox (/workspace) and host environments
+- **Memory Index** - Built `memory/vector-index.json` with embeddings for 6 memory files (92KB)
+
+### Fixed
+- `scripts/health_check.sh` - Workspace path detection now supports both sandbox and host
+- H6 Git branch check now handles detached HEAD state gracefully
+
+### Added
+- H7: Memory freshness check - warns if no updates in 3+ days
+- H8: Git cleanup suggestion - shows pending commit command if uncommitted changes
+- H9: Cron health check - verifies cron/openclaw processes are running
+
+### Status
+- Health check now has 9 automated checks
+- Script works in both sandbox (/workspace) and host (/home/drg/.openclaw/workspace) environments
+- Memory embeddings index ready but not yet wired into prompt context injection
+- 5 core tests defined but not automated in cron yet
+
 - Phase 0 MVP foundations drafted (security hygiene, memory backbone skeleton)
 - Phase 1 MVP backbone outlined (identity, memory, model-tier policy, heartbeat)
 - Telegram milestone notifier wired; morning digest scheduler configured for 06:51 Cairo

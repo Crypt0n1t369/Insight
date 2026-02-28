@@ -8,3 +8,7 @@
 .health_check.log
 .test_results.log
 .security_log
+
+# Ignore runtime/generated
+node_modules/
+memory/vector-index.json

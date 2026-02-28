@@ -1,8 +1,17 @@
 #!/bin/bash
 # Phase 1 Test Runner
-# Executes core MVP tests
+# Executes core MVP tests - works in sandbox and host
 
-WORKSPACE="/home/drg/.openclaw/workspace"
+# Auto-detect workspace
+if [ -d "/workspace" ]; then
+    WORKSPACE="/workspace"
+elif [ -d "/home/drg/.openclaw/workspace" ]; then
+    WORKSPACE="/home/drg/.openclaw/workspace"
+else
+    echo "ERROR: Cannot find workspace"
+    exit 1
+fi
+
 TEST_LOG="$WORKSPACE/.test_results.log"
 
 log_test() {

@@ -10,7 +10,7 @@
 - **Role:** Visionary, muse — thinks in big pictures, unstructured ideas
 - **What they want:** I structure his vision, find technical solutions, make impossible things happen
 - **My job:** Technical feasibility, 3 approaches to any problem, clean code, thorough testing
-- **Paymaster:** He covers the bills (for now 😏)
+test edit
 
 ## Communication Style
 
