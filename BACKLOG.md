@@ -11,15 +11,15 @@
 - **Note:** OpenClaw already has browser automation + web_fetch built-in
 - **Completed:** 2026-02-28
 
-## Free Web Search (Research Complete)
-- **Status:** Done
+## Free Web Search
+- **Status:** Research done, setup blocked
 - **Findings:**
-  - **SearXNG** - Self-hosted metasearch engine (aggregates Bing, Google, DuckDuckGo, etc). No API key needed. Requires self-hosting.
-  - **DuckDuckGo** - Has instant answer API (unofficial, rate limited)
-  - **Brave Search** - $5 free credits/month (recommended)
-  - **Existing tools** - curl/wget available for basic scraping
-- **Recommendation:** Brave Search ($5/mo free) or self-hosted SearXNG
-- **Completed:** 2026-02-28
+  - Public SearXNG instances: rate-limited, unreliable
+  - Perplexica: Docker pull keeps terminating (resource issue)
+  - Brave Search: $5/mo, reliable (recommended)
+  - Browser tool: Already available in OpenClaw, works for scraping
+- **Recommendation:** Use Brave Search ($5/mo) or existing browser tool
+- **Added:** 2026-02-28
 
 ## 2026-02-28 (Evening) - Wakeup Assessment
 

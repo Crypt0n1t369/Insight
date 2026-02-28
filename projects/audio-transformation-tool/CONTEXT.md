@@ -107,11 +107,12 @@ _(See DECISIONS.md)_
 
 ---
 
-## Current Status (2026-02-28)
+## Current Status (2026-02-28 Evening)
 
-### Build Status
-- ✅ Code builds successfully (`npm run build` passes)
-- ✅ App runs (`npm run preview` serves on port 3001)
+### Runtime Status
+- ✅ Code builds successfully (`npm run build` passes - verified Feb 28)
+- ✅ App runs on port 3001 (`npm run preview`)
+- ✅ Original "Insight" app still running on port 3000
 - ⚠️ Requires API keys to function fully
 
 ### What's Implemented
@@ -122,12 +123,16 @@ _(See DECISIONS.md)_
 - Supabase schema and edge functions (chat, director, generate-meditation, audit-reflection)
 
 ### What's Missing / Blocked
-1. **API Keys** - Need in `.env.local`:
-   - `VITE_GOOGLE_API_KEY` - for Gemini TTS/generation (REQUIRED)
-   - `VITE_RESEMBLE_API_KEY` - optional, for custom voices
-   - `VITE_SUPABASE_URL/KEY` - optional for local dev
-2. **Testing** - Happy path not verified with real API keys
+1. **API Keys** - User needs to provide in `.env.local`:
+   - `VITE_GOOGLE_API_KEY` - Required. Get from https://aistudio.google.com/app/apikey
+   - `VITE_RESEMBLE_API_KEY` - Optional, for custom voices
+   - `VITE_RESEMBLE_VOICE_UUID` - Optional
+   - `VITE_SUPABASE_URL/KEY` - Optional for local dev
+2. **Testing** - Happy path needs API key to verify
 3. **WOOP Specialist** - Lower priority per DECISIONS.md
+
+### Action Required
+User must add Google API key to enable TTS and AI features. Without it, app UI loads but sessions cannot be generated.
 
 ### Architecture Notes
 - Theme-to-Protocol mapping: SAFETY→NSDR (stabilization), SPARK→WOOP (motivation), POWER→ACT (boundary), FLOW→NVC (connection)
@@ -136,4 +141,27 @@ _(See DECISIONS.md)_
 
 ---
 
-_Last updated: 2026-02-28 (Evening)_
+## Progress Update (2026-02-28 18:26)
+
+### ✅ Completed
+1. Full frontend codebase builds without errors
+2. App serves on port 3001
+3. 8 clinical protocols implemented
+4. Conversational check-in flow working
+5. Audio infrastructure (TTS, binaural, soundscapes)
+6. Session state management
+7. Supabase backend structure
+
+### 🔄 In Progress
+- Awaiting API key integration for end-to-end testing
+
+### ⏳ Next Steps (Priority Order)
+1. **User Action:** Add `VITE_GOOGLE_API_KEY` to `.env.local`
+2. **Test:** Verify happy path - start session, receive audio
+3. **Iterate:** Fix any issues discovered during testing
+4. **Deploy:** Push to production (Vercel/Netlify)
+5. **Validate:** User acceptance testing
+
+---
+
+_Last updated: 2026-02-28 (18:26)_

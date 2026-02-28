@@ -1,0 +1,6 @@
+#!/bin/bash
+# MCP Web Browse wrapper for OpenClaw
+# Usage: mcp-browse "url1,url2" "query"
+URLS=$1
+QUERY=$2
+mcporter call minimax_search.browse "urls:[$URLS], query:\"$QUERY\"" 2>&1
