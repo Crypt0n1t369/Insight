@@ -107,4 +107,26 @@ _(See DECISIONS.md)_
 
 ---
 
-_Last updated: 2026-02-18_
+## Current Status (2026-02-28)
+
+### Build Status
+- ✅ Code builds successfully (`npm run build` passes)
+- ✅ App runs (`npm run preview` serves on port 3001)
+- ⚠️ Requires API keys to function fully
+
+### What's Implemented
+- 8 clinical protocols (NSDR, IFS, ACT, WOOP, NVC, Identity, Narrative, General)
+- Audio system (TTS, soundscapes, binaural beats)
+- Conversational check-in flow
+- Session management
+- Reflection system
+
+### What's Missing / Blocked
+1. **API Keys** - Need Google API key in `.env.local`:
+   - `VITE_GOOGLE_API_KEY` - for Gemini TTS/generation
+2. **Testing** - Happy path not verified yet
+3. **MVP Protocol** - iCOVER/NSDR not yet implemented as primary flow
+
+---
+
+_Last updated: 2026-02-28_
