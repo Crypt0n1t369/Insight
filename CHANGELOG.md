@@ -1,5 +1,41 @@
 # CHANGELOG
 
+## 2026-02-28 (Evening) - Audio Transformation Tool Assessment
+
+### Investigated
+- **Audio Transformation Tool** - Cloned from https://github.com/cryptonighter/Insight
+- **Build Status:** ✅ Builds successfully (`npm run build`)
+- **Runtime Status:** ✅ App serves on port 3001 (`npm run preview`)
+- **Protocols:** 8 clinical protocols implemented (NSDR, IFS, ACT, WOOP, NVC, Identity, Narrative, General)
+- **Architecture:** React + Vite + Gemini TTS + Supabase
+
+### Identified Issues
+1. **API Keys Missing** - `.env.local` has placeholders, needs:
+   - `VITE_GOOGLE_API_KEY` - for Gemini TTS
+   - `VITE_RESEMBLE_API_KEY` - optional, for custom voices
+   - `VITE_SUPABASE_URL/KEY` - optional for local dev
+2. **Not Tested** - Happy path needs verification with valid API keys
+
+### What's Working
+- ✅ Frontend builds and runs
+- ✅ 8 clinical protocols defined in `services/protocols.ts`
+- ✅ Audio service (TTS, binaural, soundscapes)
+- ✅ Conversational check-in flow
+- ✅ Session management
+
+### What's Next (Priority Order)
+1. **Add Google API key** to enable Gemini TTS
+2. **Test happy path** - complete a session
+3. **Implement iCOVER/NSDR** as primary MVP flow (per DECISIONS.md)
+4. **Build WOOP specialist** (lowest complexity, per decision)
+5. **Integrate Supabase** for persistence (optional)
+
+### System Health
+- Health check: 9/9 passing ✅
+- Tests: 5/5 passing ✅
+- Git: Clean ✅
+- Budget: $0.01/day ✅
+
 ## 2026-02-28 (Evening) - Recall System Fix
 
 ### Fixed
