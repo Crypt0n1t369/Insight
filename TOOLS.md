@@ -94,37 +94,23 @@ A comprehensive list of all installed tools, their capabilities, and use cases.
 
 ## Open Source Alternatives (Not Installed)
 
-### Web Search
+### Web Search (Installed)
 
-#### SearXNG
-- **Type:** Self-hosted metasearch engine
-- **Cost:** Free (self-hosted)
-- **Capabilities:**
-  - Aggregates 245+ search engines
-  - Privacy-focused (no tracking)
-  - Tor support
-  - REST API
-  - Multiple search modes
-- **Pros:** Complete privacy, no API costs
-- **Cons:** Requires self-hosting, maintenance
-
-#### Perplexica
-- **Type:** AI-powered search engine
-- **Cost:** Free (self-hosted)
-- **Capabilities:**
-  - AI-powered answers with citations
-  - Supports Ollama (local LLM)
-  - Web/Image/Video search
-  - File upload Q&A
-  - Smart search modes (speed/balanced/quality)
-- **Pros:** AI-powered, local LLM support
-- **Cons:** Requires Docker, more resource intensive
-
-#### DuckDuckGo
-- **Type:** Public search engine
+#### Public SearXNG Instances (Free, Rate-Limited)
+- **URLs:** searxng.site, searxng.website, searx.tiekoetter.com, searxng.canine.tools
 - **Cost:** Free
-- **Capabilities:** Instant Answer API (unofficial)
-- **Limitation:** Rate limited, not for production
+- **Limitations:** Heavy rate-limiting, may be blocked
+- **Use:** Quick tests only
+
+#### Perplexica (Not Working)
+- **Type:** AI-powered search engine
+- **Status:** Docker pull keeps terminating (resource constraints)
+- **Alternative:** Could try non-Docker install later
+
+#### Brave Search API (Recommended)
+- **Cost:** $5/month (2000+ searches)
+- **URL:** brave.com/search/api
+- **Setup:** Get API key, configure in OpenClaw
 
 ### Web Scraping
 
