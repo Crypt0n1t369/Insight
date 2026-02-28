@@ -48,7 +48,7 @@
 4. ✅ Git repository clean
 5. ✅ Committed pending changes
 
-### Current State
+### Current State (2026-02-28 20:56)
 
 | Component | Status | Notes |
 |-----------|--------|-------|
@@ -59,16 +59,17 @@
 
 ### What's Working
 - ✅ Frontend builds successfully (832KB bundle)
-- ✅ 8 clinical protocols implemented
+- ✅ 10 clinical protocols implemented
 - ✅ Audio system (TTS, binaural, soundscapes)
 - ✅ Conversational check-in flow
 - ✅ Session management
+- ✅ App serves on port 3001
 
 ### What's Blocked / Remaining
 1. **API Key Needed** - User must provide:
    - `VITE_GOOGLE_API_KEY` from https://aistudio.google.com/app/apikey
+   - Template already at: `projects/audio-transformation-tool/code/.env.local`
 2. **Testing** - Happy path verification pending API key
-3. **Perplexica** - On hold (port conflict resolved - now on 3001)
 
 ### What's Next (Priority Order)
 1. **User provides Google API key** - Enables Gemini TTS
