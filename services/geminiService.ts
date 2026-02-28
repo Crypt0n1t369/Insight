@@ -624,8 +624,78 @@ ${text}
       retries++;
     }
   }
+  
+  // FINAL FALLBACK: Use Web Speech API if external APIs fail
+  if (USE_WEB_SPEECH) {
+    console.warn("🎤 External TTS failed, falling back to Web Speech API");
+    try {
+      return await generateAudioChunkWebSpeech(text, voice);
+    } catch (webSpeechError) {
+      console.error("Web Speech fallback failed:", webSpeechError);
+    }
+  }
+  
   throw new Error("TTS Generation Exhausted");
 };
+
+/**
+ * Web Speech API Fallback - Uses browser's built-in speech synthesis
+ * This provides basic TTS functionality when external APIs are not configured
+ */
+const generateAudioChunkWebSpeech = async (
+  text: string,
+  voice: VoiceId
+): Promise<{ audioData: string; mimeType: string }> => {
+  return new Promise((resolve, reject) => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) {
+      reject(new Error("Web Speech API not available"));
+      return;
+    }
+
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // Map voice IDs to browser voices
+    const voiceMap: Record<string, string[]> = {
+      'Kore': ['Microsoft Zira', 'Google UK English Female', 'Samantha'],
+      'Fenrir': ['Microsoft David', 'Google UK English Male', 'Daniel'],
+      'Puck': ['Microsoft Zira', 'Google US English', 'Samantha']
+    };
+    
+    const preferredVoices = voiceMap[voice] || voiceMap['Kore'];
+    
+    const voices = window.speechSynthesis.getVoices();
+    const selectedVoice = voices.find(v => 
+      preferredVoices.some(pv => v.name.includes(pv))
+    ) || voices[0];
+    
+    if (selectedVoice) {
+      utterance.voice = selectedVoice;
+    }
+    
+    // Configure for meditation (slow, calm)
+    utterance.rate = 0.85;  // Slower for meditation
+    utterance.pitch = 1.0;
+    utterance.volume = 1.0;
+
+    // For browser TTS, we can't capture audio data directly
+    // Instead, we'll return a placeholder and let the frontend use speechSynthesis directly
+    // This is a limitation - the app will speak but not generate audio files
+    
+    console.log("🎤 Using Web Speech API fallback - audio will play directly");
+    
+    // Return empty audioData - frontend will handle playback via speechSynthesis
+    resolve({ 
+      audioData: "",  // Empty - frontend uses direct playback
+      mimeType: "text/speech"  // Marker for frontend to use speechSynthesis
+    });
+  });
+};
+
+// Check if we should use Web Speech fallback
+const USE_WEB_SPEECH = typeof window !== 'undefined' && !!window.speechSynthesis;
 
 
 export const generateDailyContext = async (

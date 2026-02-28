@@ -523,6 +523,51 @@ class AudioServiceClass {
     }
 
     /**
+     * Speak text directly using Web Speech API (fallback when TTS APIs unavailable)
+     */
+    async speakText(text: string, voice: string = 'Kore'): Promise<void> {
+        if (typeof window === 'undefined' || !window.speechSynthesis) {
+            console.warn('Web Speech API not available');
+            return;
+        }
+
+        // Cancel any ongoing speech
+        window.speechSynthesis.cancel();
+
+        return new Promise((resolve) => {
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            // Map voice IDs to browser voices
+            const voiceMap: Record<string, string[]> = {
+                'Kore': ['Microsoft Zira', 'Google UK English Female', 'Samantha'],
+                'Fenrir': ['Microsoft David', 'Google UK English Male', 'Daniel'],
+                'Puck': ['Microsoft Zira', 'Google US English', 'Samantha']
+            };
+            
+            const preferredVoices = voiceMap[voice] || voiceMap['Kore'];
+            
+            const voices = window.speechSynthesis.getVoices();
+            const selectedVoice = voices.find(v => 
+                preferredVoices.some(pv => v.name.includes(pv))
+            ) || voices[0];
+            
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            }
+            
+            // Configure for meditation (slow, calm)
+            utterance.rate = 0.85;
+            utterance.pitch = 1.0;
+            utterance.volume = 1.0;
+            
+            utterance.onend = () => resolve();
+            utterance.onerror = () => resolve(); // Resolve even on error to not block
+            
+            window.speechSynthesis.speak(utterance);
+        });
+    }
+
+    /**
      * Load and play a soundscape audio file in a loop
      */
     async loadSoundscape(audioUrl: string): Promise<void> {
