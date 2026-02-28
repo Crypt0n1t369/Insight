@@ -24,42 +24,39 @@
 ## 2026-02-28 (Evening) - Wakeup Assessment
 
 ### Completed This Session
-1. ✅ Committed pending changes (TOOLS.md, CONTEXT.md, BACKLOG.md, Perplexica, memory file, whisper-transcribe)
-2. ✅ Verified Audio Transformation Tool running at http://localhost:3000
-3. ✅ Verified Ollama running with qwen2.5 models available
-4. ✅ Health checks pass (9/9)
-5. ✅ Git repository clean
+1. ✅ Verified Audio Tool build passes (npm run build - 15.23s)
+2. ✅ Verified app running on port 3001 (HTTP 200)
+3. ✅ Health checks pass (9/9 after commit)
+4. ✅ Git repository clean
+5. ✅ Committed pending changes
 
 ### Current State
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| Audio Tool (Insight) | 🟡 Running but incomplete | Running on port 3000, missing API keys |
-| Perplexica | 🟡 Cloned, not running | Image pulled but port 3000 busy |
-| Ollama | ✅ Running | qwen2.5:1.5b, qwen2.5:0.5b available |
+| Audio Tool (Insight) | 🟡 Running but needs API key | Port 3001 responding, build OK |
+| Ollama | ✅ Running | Available if needed |
 | Health Check | ✅ Passing | 9/9 checks OK |
-| Git | ✅ Clean | All changes committed |
+| Git | ✅ Clean | Just committed |
 
 ### What's Working
-- ✅ Insight app builds and serves
+- ✅ Frontend builds successfully (832KB bundle)
 - ✅ 8 clinical protocols implemented
 - ✅ Audio system (TTS, binaural, soundscapes)
 - ✅ Conversational check-in flow
 - ✅ Session management
 
 ### What's Blocked / Remaining
-1. **API Keys Needed** - For full functionality:
-   - `VITE_GOOGLE_API_KEY` - Required for Gemini TTS
-   - User needs to provide from https://aistudio.google.com/app/apikey
-2. **Perplexica Setup** - Port 3000 occupied by Insight; needs alternative port or stopping Insight
-3. **Testing** - Happy path verification pending API key
+1. **API Key Needed** - User must provide:
+   - `VITE_GOOGLE_API_KEY` from https://aistudio.google.com/app/apikey
+2. **Testing** - Happy path verification pending API key
+3. **Perplexica** - On hold (port conflict resolved - now on 3001)
 
 ### What's Next (Priority Order)
-1. **Get Google API key** from user to enable Gemini TTS
-2. **Test happy path** - complete a stabilization session with audio
+1. **User provides Google API key** - Enables Gemini TTS
+2. **Test happy path** - Complete a stabilization session with audio
 3. **Implement iCOVER/NSDR** as primary MVP flow
 4. **Build WOOP specialist** (lower complexity)
-5. **Set up Perplexica** on alternative port if needed
 
 ---
 *Previous entries archived above*
