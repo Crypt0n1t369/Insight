@@ -1,5 +1,23 @@
 # Backlog
 
+## Solar Scout - COMPLETED ✅
+- **Status:** Fully Operational
+- **Results:** 51 qualified leads (companies WITHOUT solar panels)
+- **Top Leads:** Grindeks (2615 kW), Valmieras Stikla Skiedra (3038 kW), Alutech (2721 kW)
+- **Data:** companies_final.json with decision maker enrichment
+- **Output:** 120 annotated satellite images in output/images/
+- **Dashboard:** dashboard.html ready (uses hardcoded demo data)
+- **Completed:** 2026-02-28
+
+## Audio Transformation Tool
+- **Status:** Running but blocked by API key
+- **Location:** projects/audio-transformation-tool/code/ (port 3001)
+- **Requires:** VITE_GOOGLE_API_KEY in .env.local
+- **Completed:** Build verified, 8 clinical protocols implemented
+- **Next:** Test happy path once API key provided
+
+---
+
 ## Open Source Web Scraping
 - **Status:** Research Complete
 - **Findings:**

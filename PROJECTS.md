@@ -3,10 +3,23 @@
 ## Active Projects
 
 ### 1. Audio Transformation Tool
-- **Status:** Research phase
+- **Status:** Running (blocked by API key)
 - **Summary:** Audio-based transformation platform (wellness → military → enterprise → individual development)
 - **Path:** `projects/audio-transformation-tool/`
 - **Key Doc:** `research/Consciousness_Engineering_System.pdf`
+- **Runtime:** Port 3001 (HTTP 200 verified)
+- **Blocked:** Needs `VITE_GOOGLE_API_KEY` in .env.local
+
+### 2. Solar Scout (Lead Generator) - COMPLETED ✅
+- **Status:** Fully Operational
+- **Summary:** Latvia manufacturing company lead generator with solar detection
+- **Path:** `solar-scout/`
+- **Results:** 51 qualified leads (companies WITHOUT solar)
+- **Top Leads:** 
+  - Grindeks: 2,615 kW potential - Juris Bundulis (Chairman)
+  - Valmieras Stikla Skiedra: 3,038 kW - Janis Siliņš (Production Director)
+  - Alutech: 2,721 kW - Maris Krastins (Director)
+- **Output:** companies_final.json + 120 annotated images
 
 ---
 

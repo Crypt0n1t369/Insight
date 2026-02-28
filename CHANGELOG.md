@@ -8,25 +8,28 @@
 - **Health Checks** - 9/9 passing
 - **Git** - Clean after commit
 
+### Solar Scout - COMPLETED 🎉
+- **Discovery:** 120 manufacturing companies found in Latvia
+- **Validation:** Addresses verified via satellite imagery  
+- **Solar Detection:** CV analysis completed on all companies
+- **Capacity:** Calculated for all 51 solar-negative companies
+- **Enrichment:** Decision makers identified for all leads
+- **Dashboard:** HTML dashboard created with 18 sample leads
+- **Output:** 120 annotated satellite images generated
+
 ### Current Status
-- Audio Transformation Tool is runnable but needs Google API key to generate audio sessions
-- All clinical protocols implemented (NSDR, IFS, ACT, WOOP, NVC, Identity, Narrative, Somatic)
-- Check-in flow maps themes to protocols: SAFETY→NSDR, SPARK→WOOP, POWER→ACT, FLOW→NVC
+- **Audio Transformation Tool:** Runnable but needs Google API key for TTS
+- **Solar Scout:** Fully operational - 51 qualified leads ready for outreach
 
 ### Blocked
-- Awaiting user to add `VITE_GOOGLE_API_KEY` to `.env.local`
+- Audio Tool: Awaiting user to add `VITE_GOOGLE_API_KEY` to `.env.local`
 
-### Next Steps (when API key provided)
-1. Test happy path - complete a session with audio
-2. Implement iCOVER/NSDR as primary MVP flow
-3. Build WOOP specialist agent
-
-### Investigated
-- **Audio Transformation Tool** - Cloned from https://github.com/cryptonighter/Insight
-- **Build Status:** ✅ Builds successfully (`npm run build`)
-- **Runtime Status:** ✅ App serves on port 3001 (`npm run preview`)
-- **Protocols:** 8 clinical protocols implemented (NSDR, IFS, ACT, WOOP, NVC, Identity, Narrative, General)
-- **Architecture:** React + Vite + Gemini TTS + Supabase
+### Next Steps (Priority Order)
+1. **User Action:** Add Google API key to enable Audio Tool TTS
+2. **Test Audio Tool:** Happy path verification with API key
+3. **Solar Scout:** Wire dashboard to JSON data (optional enhancement)
+4. **Implement iCOVER/NSDR** as primary MVP flow for Audio Tool
+5. **Build WOOP specialist** for Audio Tool
 
 ### Identified Issues
 1. **API Keys Missing** - `.env.local` has placeholders, needs:
@@ -36,11 +39,14 @@
 2. **Not Tested** - Happy path needs verification with valid API keys
 
 ### What's Working
-- ✅ Frontend builds and runs
+- ✅ Audio Tool frontend builds and runs on port 3001
 - ✅ 8 clinical protocols defined in `services/protocols.ts`
 - ✅ Audio service (TTS, binaural, soundscapes)
 - ✅ Conversational check-in flow
 - ✅ Session management
+- ✅ Solar Scout full pipeline (discover→validate→detect→enrich)
+- ✅ 51 qualified leads with decision makers
+- ✅ Dashboard with lead visualization
 
 ### What's Next (Priority Order)
 1. **Add Google API key** to enable Gemini TTS
