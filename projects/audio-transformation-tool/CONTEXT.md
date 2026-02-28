@@ -141,22 +141,26 @@ User must add Google API key to enable TTS and AI features. Without it, app UI l
 
 ---
 
-## Progress Update (2026-02-28 18:26)
+## Progress Update (2026-02-28 20:56)
 
 ### ✅ Completed
 1. Full frontend codebase builds without errors
-2. App serves on port 3001
-3. 8 clinical protocols implemented
+2. App serves on port 3000 (npm run dev) and port 3001 (npm run preview)
+3. 10 clinical protocols implemented (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL)
 4. Conversational check-in flow working
-5. Audio infrastructure (TTS, binaural, soundscapes)
+5. Audio infrastructure (TTS via Gemini, binaural, soundscapes)
 6. Session state management
 7. Supabase backend structure
+8. Created .env.local template in code/ folder
+9. App verified running on port 3001 (HTTP 200)
 
 ### 🔄 In Progress
 - Awaiting API key integration for end-to-end testing
 
 ### ⏳ Next Steps (Priority Order)
-1. **User Action:** Add `VITE_GOOGLE_API_KEY` to `.env.local`
+1. **User Action Required:** Add `VITE_GOOGLE_API_KEY` to `projects/audio-transformation-tool/code/.env.local`
+   - Get key: https://aistudio.google.com/app/apikey
+   - Template already exists at: `projects/audio-transformation-tool/code/.env.local`
 2. **Test:** Verify happy path - start session, receive audio
 3. **Iterate:** Fix any issues discovered during testing
 4. **Deploy:** Push to production (Vercel/Netlify)
@@ -164,4 +168,4 @@ User must add Google API key to enable TTS and AI features. Without it, app UI l
 
 ---
 
-_Last updated: 2026-02-28 (18:26)_
+_Last updated: 2026-02-28 (20:56)_
