@@ -134,7 +134,14 @@ _(See DECISIONS.md)_
 ### Action Required
 User must add Google API key to enable TTS and AI features. Without it, app UI loads but sessions cannot be generated.
 
-### Architecture Notes
+### Web Speech API Fallback Status (2026-02-28)
+- Framework exists in `audioService.ts` (speakText method) and `geminiService.ts` (generateAudioChunkWebSpeech)
+- Returns `{ audioData: "", mimeType: "text/speech" }` when triggered
+- NOT fully integrated - frontend doesn't handle text/speech mimeType
+- Would require frontend changes to use AudioService.speakText() directly for text/speech segments
+- Low priority: API key is simpler solution
+
+## Progress Update (2026-02-28 23:26)
 - Theme-to-Protocol mapping: SAFETY→NSDR (stabilization), SPARK→WOOP (motivation), POWER→ACT (boundary), FLOW→NVC (connection)
 - iCOVER/NSDR implemented as NSDR protocol, mapped to SAFETY theme (overwhelmed state)
 - Router-Specialist model: CheckIn → Triage → Protocol Selection → Session
@@ -171,4 +178,37 @@ User must add Google API key to enable TTS and AI features. Without it, app UI l
 
 ---
 
-_Last updated: 2026-02-28 (22:56)_
+_Last updated: 2026-02-28 (23:26)_
+
+## Wakeup Session Notes (2026-02-28 23:26)
+
+### Verified This Session
+- ✅ App running on port 3001 (HTTP 200)
+- ✅ Health checks pass (9/9)
+- ✅ Web Speech API framework exists in code
+- ❌ Web Speech NOT integrated - returns empty audioData with text/speech mimeType
+- ❌ Frontend doesn't handle text/speech mimeType
+
+### What I Tried
+1. Analyzed code flow for TTS generation
+2. Found Web Speech fallback exists but isn't wired up
+3. Identified gap: frontend needs to detect mimeType="text/speech" and use AudioService.speakText()
+4. Conclusion: API key is simpler path than fixing Web Speech integration
+
+### Blocking Issue
+- **VITE_GOOGLE_API_KEY** not set in `.env.local`
+- Without it, meditation generation fails
+- Web Speech fallback exists but needs frontend integration work
+
+### What Could Be Done (Not Done - Requires Significant Work)
+1. Integrate Web Speech fallback fully:
+   - Modify useMeditationGenerator.ts to detect text/speech mimeType
+   - Route to AudioService.speakText() instead of playQueue()
+   - Would enable offline mode without API key
+2. Add demo mode with pre-scripted meditations
+3. Use alternative free TTS API
+
+### Recommended Next Steps
+1. **User Action:** Add Google API key (simplest fix)
+2. **Then:** Test happy path - start session, verify audio plays
+3. **Optional:** Integrate Web Speech for offline use (lower priority)
