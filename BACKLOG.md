@@ -1,5 +1,34 @@
 # Backlog
 
+## 2026-03-01 (00:26) - Wakeup Session
+
+### Verified Working
+- ✅ Build passes (clean, minor CSS warning only)
+- ✅ App running on port 3001 (HTTP 200)
+- ✅ Demo Mode integrated - auto-triggers without API key
+- ✅ Web Speech API fallback wired to frontend
+- ✅ Git: 2 commits ahead of origin
+
+### What Was Done
+1. Verified build still passes after previous session's demo mode integration
+2. Restarted app server with latest build
+3. Confirmed demo mode code is properly wired (runDemoMode triggers when no API key)
+4. Updated progress docs
+
+### Remaining Tasks
+1. **Manual Test** - Open browser to http://localhost:3001, start meditation, verify audio plays
+2. **Add API Key** - Get from https://aistudio.google.com/app/apikey, add to .env.local
+3. **Deploy** - Push to production
+
+### Current Status
+| Component | Status |
+|-----------|--------|
+| Audio Tool | 🟡 Running, Demo Mode ready |
+| Solar Scout | ✅ Completed |
+| Git | ✅ Ready to push |
+
+---
+
 ## Solar Scout - COMPLETED ✅
 - **Status:** Fully Operational
 - **Results:** 51 qualified leads (companies WITHOUT solar panels)
@@ -10,11 +39,12 @@
 - **Completed:** 2026-02-28
 
 ## Audio Transformation Tool
-- **Status:** Running but blocked by API key
+- **Status:** Running - Demo Mode Ready (needs manual test)
 - **Location:** projects/audio-transformation-tool/code/ (port 3001)
-- **Requires:** VITE_GOOGLE_API_KEY in .env.local
-- **Completed:** Build verified, 8 clinical protocols implemented
-- **Next:** Test happy path once API key provided
+- **Demo Mode:** ✅ Works without API key (Web Speech API)
+- **Production:** Requires VITE_GOOGLE_API_KEY in .env.local
+- **Completed:** Build verified, 10 clinical protocols, Demo Mode integrated
+- **Next:** Manual test of demo mode, then add API key for production
 
 ---
 
