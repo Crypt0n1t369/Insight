@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 2026-02-28 (Evening) - Recall System Fix
+
+### Fixed
+- `scripts/recall.sh` - Fixed hardcoded /workspace path → now uses /home/drg/.openclaw/workspace
+- `scripts/memory_vector.sh` - Fixed hardcoded /workspace path → now uses /home/drg/.openclaw/workspace
+- Vector search now returns relevant results for semantic queries
+
+### Verified
+- Health checks: 9/9 passing ✓
+- Test runner: 5/5 passing ✓
+- Budget: $0.03/$10 (well within) ✓
+- Recall system: Working ✓
+
 ## 2026-02-28 - Night Shift - Phase 1.1 Evolution
 
 ### Evolved

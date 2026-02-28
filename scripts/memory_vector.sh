@@ -2,7 +2,7 @@
 # memory_vector.sh - Lightweight semantic-ish search for memory files
 # Uses keyword weighting + frequency scoring (TF-IDF style)
 
-MEMORY_DIR="/workspace/memory"
+MEMORY_DIR="/home/drg/.openclaw/workspace/memory"
 QUERY="$1"
 
 if [ -z "$QUERY" ]; then
