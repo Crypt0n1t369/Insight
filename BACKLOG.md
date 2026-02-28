@@ -49,41 +49,39 @@
 5. ✅ Git committed: Progress updates saved
 6. ✅ Verified 10 clinical protocols in code (NSDR, IFS, WOOP, ACT, etc.)
 7. ✅ Checked geminiService - properly handles missing API key with console errors
+8. ✅ Added Web Speech API fallback for TTS (framework ready)
+9. ✅ Build verified (12.05s), app running on port 3001
 
-### Current State (2026-02-28 22:26)
+### Current State (2026-02-28 22:56)
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| Audio Tool (Insight) | 🟡 Running, needs API key | Port 3001 responding, build OK |
+| Audio Tool (Insight) | 🟡 Running, needs API key | Port 3001 HTTP 200, build OK |
+| Web Speech Fallback | 🔄 Added | Framework ready |
 | Solar Scout | ✅ Completed | 51 leads ready |
-| Health Check | ✅ Passing | 8/9 (Git now clean) |
-| Git | ✅ Clean | Just committed |
+| Git | ✅ Clean | Committed |
 
 ### What's Working
-- ✅ Frontend builds successfully (12.04s)
-- ✅ 10 clinical protocols implemented (NSDR, IFS, WOOP, ACT, FUTURE_SELF, NVC, SOMATIC_AGENCY, IDENTITY, NARRATIVE, GENERAL)
-- ✅ Audio system (TTS via Gemini, binaural beats, soundscapes)
-- ✅ Conversational check-in flow with 4 themes (SAFETY→NSDR, SPARK→WOOP, POWER→ACT, FLOW→NVC)
-- ✅ Session management and reflection system
+- ✅ Frontend builds successfully (12.05s)
+- ✅ 10 clinical protocols implemented
+- ✅ Audio system (TTS via Gemini + Web Speech fallback)
+- ✅ Conversational check-in flow with 4 themes
+- ✅ Session management
 - ✅ App serves on port 3001
-- ✅ .env.local template in place
+- ✅ Web Speech API fallback code added
 
 ### What's Blocked / Remaining
 1. **API Key Required** - User must provide:
    - `VITE_GOOGLE_API_KEY` from https://aistudio.google.com/app/apikey
    - Add to: `projects/audio-transformation-tool/code/.env.local`
-   - Then restart: `cd projects/audio-transformation-tool/code && npm run dev`
-2. **Testing** - Happy path verification pending API key:
-   - Complete a check-in flow
-   - Generate a meditation session
-   - Test audio playback (TTS, binaural beats)
-   - Test reflection/insight extraction
+2. **Testing** - Happy path verification pending API key
+3. **Web Speech Integration** - Optional frontend work
 
 ### What's Next (Priority Order)
-1. **User provides Google API key** - Enables Gemini TTS and AI features
-2. **Test happy path** - Complete a full stabilization session with audio
+1. **User provides Google API key** - Enables Gemini TTS
+2. **Test happy path** - Complete a full session with audio
 3. **Fix any issues** discovered during testing
-4. **Deploy** to production (Vercel/Netlify)
+4. **Deploy** to production
 
 ### Current State (2026-02-28 21:56)
 

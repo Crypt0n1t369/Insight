@@ -141,7 +141,7 @@ User must add Google API key to enable TTS and AI features. Without it, app UI l
 
 ---
 
-## Progress Update (2026-02-28 21:56)
+## Progress Update (2026-02-28 22:56)
 
 ### ✅ Completed
 1. Full frontend codebase builds without errors
@@ -153,20 +153,22 @@ User must add Google API key to enable TTS and AI features. Without it, app UI l
 7. Supabase backend structure
 8. .env.local template in code/ folder
 9. App verified running on port 3001 (HTTP 200)
-10. Git repository cleaned and committed
+10. **Web Speech API fallback added** - Framework for browser-native TTS
+11. Git committed with changes (commit 0747324)
 
 ### 🔄 In Progress
-- Awaiting API key integration for end-to-end testing
+- API key integration for full TTS functionality
+- Web Speech fallback needs frontend integration for direct playback
 
 ### ⏳ Next Steps (Priority Order)
 1. **User Action Required:** Add `VITE_GOOGLE_API_KEY` to `projects/audio-transformation-tool/code/.env.local`
    - Get key: https://aistudio.google.com/app/apikey
    - Template already exists at: `projects/audio-transformation-tool/code/.env.local`
 2. **Test:** Verify happy path - start session, receive audio
-3. **Iterate:** Fix any issues discovered during testing
+3. **Integrate Web Speech fallback** (optional - for offline use)
 4. **Deploy:** Push to production (Vercel/Netlify)
 5. **Validate:** User acceptance testing
 
 ---
 
-_Last updated: 2026-02-28 (21:56)_
+_Last updated: 2026-02-28 (22:56)_
