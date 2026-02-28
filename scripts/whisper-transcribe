@@ -1,0 +1,10 @@
+#!/bin/bash
+# Whisper transcription wrapper for OpenClaw
+source ~/.venv/whisper/bin/activate
+python3 -c "
+import sys
+from faster_whisper import WhisperModel
+model = WhisperModel('tiny', device='cpu', compute_type='int8')
+segments, _ = model.transcribe('$1')
+print(' '.join([s.text for s in segments]))
+"

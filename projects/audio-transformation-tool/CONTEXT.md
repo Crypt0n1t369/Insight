@@ -115,18 +115,25 @@ _(See DECISIONS.md)_
 - ⚠️ Requires API keys to function fully
 
 ### What's Implemented
-- 8 clinical protocols (NSDR, IFS, ACT, WOOP, NVC, Identity, Narrative, General)
-- Audio system (TTS, soundscapes, binaural beats)
-- Conversational check-in flow
-- Session management
-- Reflection system
+- 8 clinical protocols (NSDR, IFS, ACT, WOOP, NVC, Identity, Narrative, Somatic Agency)
+- Audio system (TTS via Gemini/Resemble, soundscapes, binaural beats)
+- Conversational check-in flow with 4 themes (SAFETY → NSDR, SPARK → WOOP, POWER → ACT, FLOW → NVC)
+- Session management and reflection system
+- Supabase schema and edge functions (chat, director, generate-meditation, audit-reflection)
 
 ### What's Missing / Blocked
-1. **API Keys** - Need Google API key in `.env.local`:
-   - `VITE_GOOGLE_API_KEY` - for Gemini TTS/generation
-2. **Testing** - Happy path not verified yet
-3. **MVP Protocol** - iCOVER/NSDR not yet implemented as primary flow
+1. **API Keys** - Need in `.env.local`:
+   - `VITE_GOOGLE_API_KEY` - for Gemini TTS/generation (REQUIRED)
+   - `VITE_RESEMBLE_API_KEY` - optional, for custom voices
+   - `VITE_SUPABASE_URL/KEY` - optional for local dev
+2. **Testing** - Happy path not verified with real API keys
+3. **WOOP Specialist** - Lower priority per DECISIONS.md
+
+### Architecture Notes
+- Theme-to-Protocol mapping: SAFETY→NSDR (stabilization), SPARK→WOOP (motivation), POWER→ACT (boundary), FLOW→NVC (connection)
+- iCOVER/NSDR implemented as NSDR protocol, mapped to SAFETY theme (overwhelmed state)
+- Router-Specialist model: CheckIn → Triage → Protocol Selection → Session
 
 ---
 
-_Last updated: 2026-02-28_
+_Last updated: 2026-02-28 (Evening)_
