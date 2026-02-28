@@ -1,12 +1,12 @@
 """
 Phase 6: Image Annotation
 Annotates satellite images with pinpoints at company locations
+Uses PIL for image manipulation
 """
 
 import json
 import os
-import cv2
-import numpy as np
+from PIL import Image, ImageDraw, ImageFont
 
 OUTPUT_DIR = "/home/drg/.openclaw/workspace/solar-scout/output/images"
 
@@ -14,7 +14,6 @@ OUTPUT_DIR = "/home/drg/.openclaw/workspace/solar-scout/output/images"
 def annotate_satellite_image(company: dict) -> str:
     """
     Create annotated image with pinpoint for company location
-    Returns: path to annotated image
     """
     name = company.get("name", "Unknown")
     image_path = company.get("solar_analysis_image")
@@ -23,92 +22,80 @@ def annotate_satellite_image(company: dict) -> str:
         print(f"   ❌ No image to annotate for {name}")
         return None
     
-    # Create annotated filename
     safe_name = "".join(c for c in name if c.isalnum() or c in (' ', '-', '_')).strip()[:30]
     safe_name = safe_name.replace(' ', '_')
     annotated_path = os.path.join(OUTPUT_DIR, f"{safe_name}_annotated.jpg")
     
     try:
-        # Read original image
-        img = cv2.imread(image_path)
-        if img is None:
-            return None
+        img = Image.open(image_path)
         
-        # Get image dimensions
-        height, width = img.shape[:2]
+        if img.mode != 'RGB':
+            img = img.convert('RGB')
         
-        # Draw pin marker (red circle with dot)
+        width, height = img.size
+        draw = ImageDraw.Draw(img)
+        
         center_x = width // 2
         center_y = height // 2
         
-        # Outer circle (red)
-        cv2.circle(img, (center_x, center_y), 20, (0, 0, 255), -1)
+        # Draw pin marker (red)
+        # Outer circle
+        draw.ellipse([center_x-20, center_y-20, center_x+20, center_y+20], fill=(255, 0, 0))
+        # Inner circle
+        draw.ellipse([center_x-12, center_y-12, center_x+12, center_y+12], fill=(255, 255, 255))
+        # Center dot
+        draw.ellipse([center_x-5, center_y-5, center_x+5, center_y+5], fill=(255, 0, 0))
         
-        # Inner circle (white)
-        cv2.circle(img, (center_x, center_y), 12, (255, 255, 255), -1)
+        # Crosshairs
+        draw.line([center_x-30, center_y, center_x-10, center_y], fill=(255, 0, 0), width=2)
+        draw.line([center_x+10, center_y, center_x+30, center_y], fill=(255, 0, 0), width=2)
+        draw.line([center_x, center_y-30, center_x, center_y-10], fill=(255, 0, 0), width=2)
+        draw.line([center_x, center_y+10, center_x, center_y+30], fill=(255, 0, 0), width=2)
         
-        # Center dot (red)
-        cv2.circle(img, (center_x, center_y), 5, (0, 0, 255), -1)
-        
-        # Draw crosshairs
-        cv2.line(img, (center_x - 30, center_y), (center_x - 10, center_y), (0, 0, 255), 2)
-        cv2.line(img, (center_x + 10, center_y), (center_x + 30, center_y), (0, 0, 255), 2)
-        cv2.line(img, (center_x, center_y - 30), (center_x, center_y - 10), (0, 0, 255), 2)
-        cv2.line(img, (center_x, center_y + 10), (center_x, center_y + 30), (0, 0, 255), 2)
-        
-        # Add text label
-        # Draw background rectangle for text
+        # Company name label
         text = name[:25] + "..." if len(name) > 25 else name
         
-        # Put text with background
-        font = cv2.FONT_HERSHEY_SIMPLEX
-        text_size = cv2.getTextSize(text, font, 0.7, 2)[0]
+        # Try to use a font, fallback to default
+        try:
+            font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 16)
+        except:
+            font = ImageFont.load_default()
         
-        # Background box
-        cv2.rectangle(img, 
-                     (10, height - 50), 
-                     (text_size[0] + 20, height - 10),
-                     (0, 0 -1)
-       , 0), cv2.rectangle(img, 
-                     (10, height - 50), 
-                     (text_size[0] + 20, height - 10),
-                     (0, 120, 200), 2)
+        # Draw text background
+        text_bbox = draw.textbbox((0, 0), text, font=font)
+        text_width = text_bbox[2] - text_bbox[0]
+        text_height = text_bbox[3] - text_bbox[1]
         
-        # Text
-        cv2.putText(img, text, (20, height - 20), 
-                   font, 0.7, (255, 255, 255), 2)
+        draw.rectangle([10, height - text_height - 25, text_width + 20, height - 10], fill=(0, 0, 150))
+        draw.text((15, height - text_height - 20), text, fill=(255, 255, 255), font=font)
         
-        # Add solar status badge
+        # Solar status badge
         solar = company.get("solar_analysis", {})
         detected = solar.get("detected")
         
         if detected == False:
-            # Green badge - opportunity
             badge_text = "OPPORTUNITY"
-            badge_color = (0, 200, 0)  # Green
+            badge_color = (0, 180, 0)
         elif detected == True:
-            # Red badge - has solar
             badge_text = "HAS SOLAR"
-            badge_color = (0, 0, 200)  # Red
+            badge_color = (200, 0, 0)
         else:
-            # Yellow badge - unknown
             badge_text = "UNKNOWN"
-            badge_color = (0, 200, 200)  # Yellow
+            badge_color = (200, 200, 0)
         
-        # Badge background
-        cv2.rectangle(img, (width - 180, 10), (width - 10, 40), badge_color, -1)
-        cv2.putText(img, badge_text, (width - 170, 32), 
-                   cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+        # Badge
+        badge_w = len(badge_text) * 9 + 10
+        draw.rectangle([width - badge_w - 10, 10, width - 10, 35], fill=badge_color)
+        draw.text((width - badge_w, 15), badge_text, fill=(255, 255, 255), font=font)
         
-        # Add capacity info if available
+        # Capacity info
         capacity = company.get("capacity", {})
         if capacity.get("estimated_kw", 0) > 0:
             kw_text = f"{capacity['estimated_kw']:.1f} kW"
-            cv2.putText(img, kw_text, (width - 180, 65), 
-                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+            draw.text((width - badge_w - 80, 40), kw_text, fill=(0, 200, 0), font=font)
         
-        # Save annotated image
-        cv2.imwrite(annotated_path, img)
+        # Save
+        img.save(annotated_path, "JPEG", quality=90)
         
         print(f"   ✅ Annotated: {os.path.basename(annotated_path)}")
         return annotated_path
@@ -119,9 +106,6 @@ def annotate_satellite_image(company: dict) -> str:
 
 
 def run_annotation(companies: list) -> list:
-    """
-    Annotate all company images
-    """
     print("\n" + "="*60)
     print("PHASE 6: IMAGE ANNOTATION")
     print("="*60)
@@ -141,36 +125,30 @@ def run_annotation(companies: list) -> list:
         
         annotated.append(company)
     
-    # Save final results
     output_file = "/home/drg/.openclaw/workspace/solar-scout/data/companies_final.json"
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(annotated, f, ensure_ascii=False, indent=2)
     
-    # Stats
     with_image = len([c for c in annotated if c.get("output_image")])
     
-    print(f"\n💾 Saved final results to {output_file}")
-    print(f"   🖼️ Annotated images: {with_image}")
+    print(f"\n💾 Saved to {output_file}")
+    print(f"   🖼️ Annotated: {with_image}")
     
     return annotated
 
 
-def generate_summary(companies: list) -> str:
-    """
-    Generate a summary report of all leads
-    """
+def generate_summary(companies: list) -> list:
     print("\n" + "="*60)
     print("FINAL SUMMARY REPORT")
     print("="*60)
     
-    # Filter to target companies (no solar, has decision maker)
     targets = [
         c for c in companies 
         if c.get("solar_analysis", {}).get("detected") == False
         and c.get("decision_maker", {}).get("name")
     ]
     
-    print(f"\n🎯 TARGET COMPANIES (No Solar + Decision Maker): {len(targets)}")
+    print(f"\n🎯 TARGET COMPANIES: {len(targets)}")
     
     total_kw = 0
     
@@ -181,26 +159,13 @@ def generate_summary(companies: list) -> str:
         
         print(f"\n{i}. {name}")
         print(f"   📍 {c.get('validation', {}).get('display_name', 'N/A')[:60]}")
-        print(f"   👤 {dm.get('name')} - {dm.get('title', 'N/A')}")
+        print(f"   👤 {dm.get('name', 'N/A')} - {dm.get('title', 'N/A')}")
         print(f"   📞 {dm.get('phone', 'N/A')}")
         print(f"   ✉️ {dm.get('email', 'N/A')}")
-        print(f"   ⚡ Potential: {capacity.get('estimated_kw', 0):.1f} kW")
+        print(f"   ⚡ {capacity.get('estimated_kw', 0):.1f} kW potential")
         
         total_kw += capacity.get("estimated_kw", 0)
     
     print(f"\n📊 TOTAL POTENTIAL: {total_kw:.1f} kW")
     
     return targets
-
-
-if __name__ == "__main__":
-    # Test annotation
-    test_company = {
-        "name": "Test Company",
-        "solar_analysis": {"detected": False},
-        "capacity": {"estimated_kw": 150},
-        "solar_analysis_image": None
-    }
-    
-    result = annotate_satellite_image(test_company)
-    print(f"Result: {result}")

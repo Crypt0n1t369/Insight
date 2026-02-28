@@ -7,7 +7,6 @@ Uses PIL instead of OpenCV
 import json
 import os
 from PIL import Image, ImageStat, ImageFilter
-import numpy as np
 import urllib.request
 import ssl
 
@@ -84,13 +83,14 @@ def detect_solar_pil(image_path: str) -> dict:
         # Calculate variance (grid patterns have higher variance)
         variance = stats.stddev[0]
         
-        # Decision logic
+        # Decision logic - require higher confidence
         detected = False
         confidence = 0.0
         details = ""
         
-        # Heuristics for solar detection
-        if blue_ratio > 1.1 and darkness < 120:
+        # Heuristics for solar detection - stricter criteria
+        # Must have BOTH blue color AND high variance to detect solar
+        if blue_ratio > 1.15 and darkness < 100 and variance > 55:
             # Blue-ish and dark - possible solar
             confidence = 0.5
             detected = True
