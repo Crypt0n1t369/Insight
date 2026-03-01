@@ -1,33 +1,36 @@
 # Backlog
-## 2026-03-01 (02:26) - Wakeup Session
+## 2026-03-01 (02:56) - Wakeup Session
 
 ### Verified Working
 - ✅ Build passes (clean, minor chunk warning)
 - ✅ App running on port 3001 (HTTP 200)
+- ✅ Frontend serving correctly (HTML + assets load)
 - ✅ Demo Mode integrated - auto-triggers without API key
 - ✅ Web Speech API fallback wired in AudioService
-- ✅ Git: Modified (CONTEXT.md updated)
+- ✅ Git: Clean (2 commits ahead of origin/main, ready to push)
 
 ### What Was Done (This Session)
 1. Verified app running (HTTP 200 on port 3001)
-2. Confirmed Demo Mode code properly wired:
+2. Confirmed frontend serving: HTML loads, assets (JS/CSS) accessible
+3. Confirmed Demo Mode code properly wired:
    - useMeditationGenerator.ts:231 - API key check triggers runDemoMode()
-   - useMeditationGenerator.ts:121 - runDemoMode function generates segments with useWebSpeech: true
-   - audioService.ts:217 - playSegment checks useWebSpeech flag
-   - audioService.ts:264 - playSegmentWebSpeech handles browser-native TTS
-3. Verified .env.local still has placeholder (demo mode active)
-4. Updated CONTEXT.md with session notes
+   - useMeditationGenerator.ts:121 - runDemoMode generates 9 segments with useWebSpeech: true
+   - audioService.ts - playSegmentWebSpeech handles browser-native TTS
+4. Verified .env.local still has placeholder (demo mode active)
+5. Git status: 2 commits ahead of origin/main
+6. No browser available for automated testing (needs manual test)
 
 ### Remaining Tasks (Priority Order)
 1. **Manual Test** - Open browser to http://localhost:3001, start meditation, verify audio plays via Web Speech
 2. **Add API Key** - Get from https://aistudio.google.com/app/apikey, add to .env.local for production AI features
-3. **Deploy** - Push git commits, deploy to Vercel/Netlify
+3. **Deploy** - `git push` then deploy to Vercel/Netlify
 
 ### Current Status
 | Component | Status |
 |-----------|--------|
-| Audio Tool | 🟡 Running, Demo Mode ready |
+| Audio Tool | 🟡 Running, Demo Mode ready (needs manual test) |
 | Solar Scout | ✅ Completed |
+| Git | 🔄 Ready to push (2 commits ahead) |
 | Git | 🔄 Modified (needs commit) |
 
 ---
