@@ -101,4 +101,12 @@ else
     echo "WARN - no active cron/openclaw processes" | tee -a $LOG_FILE
 fi
 
+# H10: Memory Context Auto-Inject
+echo -n "H10: Memory context... " | tee -a $LOG_FILE
+if python3 "$WORKSPACE/scripts/auto_memory_inject.py" > /dev/null 2>&1; then
+    echo "OK" | tee -a $LOG_FILE
+else
+    echo "WARN - inject failed" | tee -a $LOG_FILE
+fi
+
 echo "=== Health Check Complete ===" | tee -a $LOG_FILE
