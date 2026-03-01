@@ -655,3 +655,19 @@
 
 ### P0
 - [x] Set up parallel agent system with 5h reset --priority=P0 | Project: general | Priority: P0 | Assignee: any | Added: 2026-03-01 11:54
+## New Ideas (2026-03-01)
+
+### 1. Magnetic Field Simulator
+- Interactive simulator for magnetic field spheres and donuts (toroids)
+- Visualize field lines, flux, particle behavior
+- Tech: WebGL/Three.js, physics simulation
+
+### 2. Youth Quest Platform
+- Gamified activity rewards system - witty quests youth complete to earn rewards
+- Goal: Keep youth off streets (dīkstāve), inspire growth
+- Mechanics: Quest → points → rewards (activities, experiences)
+
+### 3. Meditation App - Inner World Map
+- Interactive dexterity map of inner world discovered via audio
+- Audio-guided exploration + simulation + conscious neurosymbiosis + feedback loops
+- Tech: Web Audio API, biofeedback sensors, generative audio
