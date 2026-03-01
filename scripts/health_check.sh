@@ -103,7 +103,7 @@ fi
 
 # H10: Memory Context Auto-Inject
 echo -n "H10: Memory context... " | tee -a $LOG_FILE
-if python3 "$WORKSPACE/scripts/enhanced_context.py" --prompt > "$WORKSPACE/.memory_context" 2>&1; then
+if python3 "$WORKSPACE/scripts/enhanced_context.py" --save > /dev/null 2>&1; then
     echo "OK" | tee -a $LOG_FILE
 else
     echo "WARN - inject failed" | tee -a $LOG_FILE

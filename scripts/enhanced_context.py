@@ -23,6 +23,7 @@ import re
 
 WORKSPACE = Path("/home/drg/.openclaw/workspace")
 MEMORY_DIR = WORKSPACE / "memory"
+MEMORY_CONTEXT_FILE = WORKSPACE / "MEMORY_CONTEXT.md"  # Auto-injected by OpenClaw
 
 def get_recent_files(days=3):
     """Get memory files from recent days."""
@@ -157,15 +158,24 @@ def generate_summary():
     
     return '\n'.join(lines)
 
+def save_context():
+    """Save context to MEMORY_CONTEXT.md for auto-injection."""
+    content = generate_prompt_context()
+    MEMORY_CONTEXT_FILE.write_text(content)
+    print(f"✅ Saved to {MEMORY_CONTEXT_FILE.name} ({len(content)} chars)")
+
 def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--prompt", action="store_true", help="Prompt injection format")
     parser.add_argument("--json", action="store_true", help="JSON format")
     parser.add_argument("--summary", action="store_true", help="Quick summary")
+    parser.add_argument("--save", action="store_true", help="Save to MEMORY_CONTEXT.md")
     args = parser.parse_args()
     
-    if args.json:
+    if args.save:
+        save_context()
+    elif args.json:
         print(json.dumps(generate_json_context(), indent=2))
     elif args.summary:
         print(generate_summary())
