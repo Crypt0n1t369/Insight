@@ -10,8 +10,8 @@
 - **Demo Mode:** ✅ Works without API key (Web Speech API fallback)
 - **Protocol-Specific Demo Content:** ✅ NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY
 - **Git:** ✅ Pushed to Crypt0n1t369/Insight (5 commits)
-- **Deploy:** ✅ Vercel config added, ready for one-click deploy
-- **Next:** Deploy to Vercel (fork pushed), get optional API key for production AI
+- **Deploy:** ✅ Vercel config added - READY FOR DEPLOY
+- **Next:** Connect repo to Vercel (user action), optional API key for production AI
 
 ### 2. Solar Scout (Lead Generator) - COMPLETED ✅
 - **Status:** Fully Operational
