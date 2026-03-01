@@ -9,9 +9,9 @@
 - **Runtime:** Port 3001 (HTTP 200 verified Mar 1)
 - **Demo Mode:** ✅ Works without API key (Web Speech API fallback)
 - **Protocol-Specific Demo Content:** ✅ NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY
-- **Git:** ✅ 4 commits ahead of origin (ready to push)
+- **Git:** ✅ Pushed to Crypt0n1t369/Insight (5 commits)
 - **Deploy:** ✅ Vercel config added, ready for one-click deploy
-- **Next:** Manual browser test, then `git push` + Vercel connect
+- **Next:** Deploy to Vercel (fork pushed), get optional API key for production AI
 
 ### 2. Solar Scout (Lead Generator) - COMPLETED ✅
 - **Status:** Fully Operational

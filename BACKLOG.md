@@ -1,5 +1,35 @@
 # Backlog
 
+## 2026-03-01 (11:26) - Wakeup Session
+
+### What Was Done This Session
+1. ✅ **Verified server running** - Port 3001 responding HTTP 200
+2. ✅ **Verified build** - Clean build (12.29s, chunk size warning only)
+3. ✅ **Pushed Git** - Successfully pushed 5 commits to Crypt0n1t369/Insight fork
+4. ✅ **Committed workspace** - PROJECTS.md, CONTEXT.md, BACKLOG.md updated
+
+### Current Status
+| Component | Status |
+|-----------|--------|
+| Audio Tool | ✅ Running (port 3001), Demo Mode ready |
+| Git Push | ✅ Pushed to Crypt0n1t369/Insight (5 commits) |
+| Build | ✅ Passes (12.29s) |
+| Vercel Ready | ✅ Config in place, repo pushed |
+| Browser Test | ❌ No Chrome/Chromium on host |
+
+### What's Ready
+- **Fork URL:** https://github.com/Crypt0n1t369/Insight
+- Demo Mode works without API key (Web Speech API)
+- Protocol-specific content: NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY
+- Ready for Vercel deployment
+
+### What's Next (Priority Order)
+1. **Deploy to Vercel** - Import repo at https://vercel.com/new
+2. **Test Demo Mode** - In production, verify audio plays
+3. **Optional: Add API key** - Get from https://aistudio.google.com/app/apikey
+
+---
+
 ## 2026-03-01 (09:56) - Wakeup Session
 
 ### What Was Done This Session

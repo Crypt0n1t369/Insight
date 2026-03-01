@@ -508,7 +508,44 @@ _Last updated: 2026-03-01 10:26_
 - Full AI features require Google API key
 - Vite build → dist folder → Vercel auto-deploy
 
+## Wakeup Session (2026-03-01 11:26)
+
+### ✅ Completed This Session
+1. **Verified Build** - Clean build (12.29s, chunk size warning only)
+2. **Verified Server** - Port 3001 responding HTTP 200 ✅
+3. **Pushed Git** - Successfully pushed 5 commits to Crypt0n1t369/Insight fork
+4. **Vercel Ready** - vercel.json config in place, repo ready for Vercel connect
+
+### 🔄 What's Been Done (Cumulative)
+1. App builds successfully (Vite + React + TypeScript)
+2. Server runs on port 3001 (HTTP 200 verified)
+3. Demo Mode integrated - works without API key via Web Speech API
+4. Protocol-specific demo content (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY)
+5. Vercel deployment config added
+6. Git pushed to fork (Crypt0n1t369/Insight)
+
+### ⏳ What's Remaining (Priority Order)
+1. **Deploy to Vercel (Ready)**
+   - Fork pushed: https://github.com/Crypt0n1t369/Insight
+   - Go to: https://vercel.com/new
+   - Import the repo
+   - (Optional) Add VITE_GOOGLE_API_KEY in Vercel env vars for AI features
+   
+2. **Manual Test (Optional - can do in Vercel)**
+   - Once deployed, test the demo mode in production
+   - Verify audio plays via Web Speech API
+   
+3. **Add API Key (Optional - for production AI)**
+   - Get key: https://aistudio.google.com/app/apikey
+   - Add to Vercel env vars: VITE_GOOGLE_API_KEY
+
+### Technical Notes
+- Browser automation unavailable (no Chrome/Chromium on host)
+- Demo mode works with hardcoded scripts via Web Speech API
+- Full AI features require Google API key
+- Fork URL: https://github.com/Crypt0n1t369/Insight
+
 ---
 
-_Last updated: 2026-03-01 10:56_
+_Last updated: 2026-03-01 11:26_
 
