@@ -19,7 +19,7 @@ import time
 
 WORKSPACE = Path("/home/drg/.openclaw/workspace")
 STATE_FILE = WORKSPACE / ".agent_state.json"
-RESET_HOURS = 5
+RESET_HOURS = 5  # Max cycle time, NOT auto-reset
 
 def load_state():
     """Load agent state."""

@@ -524,3 +524,12 @@
 
 ---
 *Previous entries archived above*
+
+
+### P2
+- [ ] Look into making the audio tool work offline | Project: audio-transformation-tool | Priority: P2 | Assignee: any | Added: 2026-03-01 11:54
+- [ ] Set up parallel agent system with 5h reset --priority P0 | Project: general | Priority: P2 | Assignee: any | Added: 2026-03-01 11:54
+- [ ] Test parallel agent system --priority P1 | Project: general | Priority: P2 | Assignee: any | Added: 2026-03-01 11:53
+
+### P0
+- [ ] Set up parallel agent system with 5h reset --priority=P0 | Project: general | Priority: P0 | Assignee: any | Added: 2026-03-01 11:54

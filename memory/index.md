@@ -1,25 +1,35 @@
 # Memory Index
 
-## Daily Logs
-- `2026-02-18.md` - Kickoff, bootstrap
-- `2026-02-19.md` - Night shift improvements
-- `2026-02-20.md` - More improvements
-- `2026-02-24.md` - Session logs
-- `2026-02-25.md` - Session logs  
-- `2026-02-28.md` - Current
+## Structure (PARA)
 
-## Domains
-- `domains/ai-automation.md` - OpenClaw, automation
-- `domains/productivity.md` - Second brain, knowledge management
-- `domains/index.md` - Domain master list
+| Folder | Purpose | TTL |
+|--------|---------|-----|
+| 00-inbox | Quick captures | <24h |
+| 01-areas | Ongoing responsibilities | Permanent |
+| 02-resources | Evergreen reference | Permanent |
+| 03-projects | Active work | 3-6 months |
+| 04-archives | Completed | Archived |
 
-## Projects
-- `projects/audio-transformation-tool/` - Active research
+## Areas
+- ai-automation
+- productivity
 
-## Research
-- `research/index.md` - Active research tracking
+## Active Projects
+- audio-transformation-tool
+- solar-scout
+
+## Tags
+- #ai - AI/ML
+- #project - Active project
+- #decision - Key decision
+- #todo - Action item
+- #learned - Lessons
 
 ## Scripts
-- `scripts/memory_vector.sh` - Keyword search across all memory
-- `scripts/recall.sh` - Topic retrieval
-- `scripts/domain_capture.sh` - Quick knowledge entry
+- capture.py - Quick note
+- triage.py - Sort inbox
+- link.py - Find connections
+
+---
+
+Updated: 2026-03-01
