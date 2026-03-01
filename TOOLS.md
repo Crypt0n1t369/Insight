@@ -2,105 +2,91 @@
 
 ---
 
-## OpenClaw Built-in Tools (Available Now)
+## OpenClaw Built-in Tools
 
 ### web_fetch
-- **Capabilities:** HTTP GET → extract readable content (HTML → markdown/text)
-- **Limitation:** No JavaScript execution
-- **Use:** Lightweight page scraping, text extraction
+- **Capabilities:** HTTP GET → extract readable content
+- **Limitation:** No JavaScript
+- **Use:** Quick text extraction
 
-### web_search
-- **Capabilities:** Web search via configured provider (Brave/Perplexity/Gemini)
-- **Requirement:** API key (Brave $5/mo)
-- **Status:** Currently not configured (no API key)
-
-### browser
-- **Capabilities:** Full browser automation (Chrome/Chromium via CDP)
-- **Use:** JS-heavy sites, complex interactions, form filling, full-page extraction
+### browser  
+- **Capabilities:** Full browser automation (Chrome/Chromium)
+- **Use:** JS-heavy sites, interactive pages
 
 ---
 
-## In-House Research Tools
+## Advanced Scraping (In-House)
 
-### scripts/research/fetch.py
-- **Deep extraction** using trafilatura (local, free)
-- **Usage:** `python3 scripts/research/fetch.py <url>`
-- **Requires:** `~/.venv/research` (already set up)
-
-### scripts/memory/capture.py
-- **Quick capture** to second brain inbox
-- **Usage:** `python3 scripts/memory/capture.py "note content" --tag=research`
-
-### Browser Tool (Recommended)
-- **Full capabilities:** Navigate, extract, interact
-- **Best for:** JS-heavy sites, login-required pages, dynamic content
-
----
-
-## Research Workflow
-
-### Option 1: Quick (web_fetch)
+### 1. browser (Recommended for JS sites)
+```bash
+browser action=navigate targetUrl="https://example.com"
+browser action=snapshot
 ```
+
+### 2. Scrapy (Full framework)
+```bash
+# Install: already in ~/.venv/research/
+source ~/.venv/research/bin/activate
+
+# Quick fetch
+scrapy fetch https://example.com
+
+# Interactive shell
+scrapy shell https://example.com
+
+# Run spider
+scrapy runspider spider.py
+```
+
+### 3. Custom Spiders
+
+```bash
+# Basic spider
+python3 scripts/scraper/spider.py run https://example.com
+
+# Multi-page crawl
+python3 scripts/scraper/crawl.py --url "https://example.com" --depth 2
+
+# Save to memory
+python3 scripts/scraper/spider.py run https://example.com --save
+```
+
+---
+
+## Research Tools
+
+### web_fetch (lightweight)
+```bash
 web_fetch url="https://example.com"
 ```
 
-### Option 2: Deep (trafilatura)
-```
-python3 scripts/research/fetch.py https://example.com
-```
-
-### Option 3: Full Browser
-```
-browser action=navigate targetUrl="https://example.com"
-```
-
-### Option 4: Interactive Search
-```
-browser action=navigate targetUrl="https://duckduckgo.com"
-# Then type in search box
+### trafilatura (deep text extraction)
+```bash
+~/.venv/research/bin/python -c "
+import trafilatura
+print(trafilatura.extract(trafilatura.fetch_url('https://example.com')))
+"
 ```
 
 ---
 
-## Free Search Alternatives
+## Memory Integration
 
-### Public SearXNG Instances (Rate Limited)
-- searxng.site
-- searxng.website
-- searx.tiekoetter.com
-
-### Self-Hosted (Recommended for Privacy)
-- **SearXNG** - Docker install, full control
-- **Perplexica** - AI-powered (needs resources)
-
-### Browser-Based
-- DuckDuckGo (lite: html.duckduckgo.com)
-- Google (via browser tool)
+### Capture scraped content
+```bash
+python3 scripts/memory/capture.py "insights from..." --tag=scraped
+```
 
 ---
 
-## Installed Packages
+## Cost: FREE
 
-### ~/.venv/research/
-- trafilatura (2.0.0) - Content extraction
-- beautifulsoup4 (4.14.3) - HTML parsing
-- lxml (6.0.2) - XML/HTML processing
-- requests (2.32.5) - HTTP client
-
-### ~/.venv/whisper/
-- faster-whisper (1.2.1) - Local speech-to-text
-
----
-
-## Cost Analysis
-
-| Method | Cost | Quality | Speed |
-|--------|------|---------|-------|
-| web_fetch | Free | Good (text) | Fast |
-| browser | Free | Best (full) | Slow |
-| trafilatura | Free | Best (text) | Medium |
-| Brave Search | $5/mo | Good | Fast |
-| Perplexity API | $$$ | Best | Fast |
+| Tool | Cost | Best For |
+|------|------|----------|
+| browser | Free | JS sites, interactive |
+| web_fetch | Free | Static text |
+| Scrapy | Free | Large-scale crawl |
+| trafilatura | Free | Clean text extraction |
 
 ---
 
