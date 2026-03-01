@@ -8,9 +8,10 @@
 - **Path:** `projects/audio-transformation-tool/code/` (Deno/Fresh)
 - **Runtime:** Port 3001 (HTTP 200 verified Mar 1)
 - **Demo Mode:** ✅ Works without API key (Web Speech API fallback)
-- **Production:** Requires `VITE_GOOGLE_API_KEY` in `.env.local`
-- **Git:** 3 commits ahead of origin/main (committed Mar 1 05:56)
-- **Next:** Manual browser test, then git push + deploy
+- **Protocol-Specific Demo Content:** ✅ NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY
+- **Git:** ✅ Pushed to fork - https://github.com/Crypt0n1t369/Insight
+- **Deploy:** Ready for Vercel/Netlify (connect fork repo)
+- **Next:** Manual browser test, then deploy
 
 ### 2. Solar Scout (Lead Generator) - COMPLETED ✅
 - **Status:** Fully Operational

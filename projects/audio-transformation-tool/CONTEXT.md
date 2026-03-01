@@ -375,4 +375,43 @@ _Last updated: 2026-02-28 (23:56)_
 
 ---
 
-_Last updated: 2026-03-01 05:26_
+## Wakeup Session (2026-03-01 07:56)
+
+### ✅ Completed This Session
+1. **Enhanced Demo Mode with Protocol-Specific Content**
+   - Added DEMO_CONTENT map with tailored scripts for each methodology:
+     - NSDR: Body scan, physiological sigh, parasympathetic activation
+     - IFS: Parts work, unblending, Self-energy connection
+     - ACT: Values, acceptance, committed action
+     - WOOP: Wish-Outcome-Obstacle-Plan framework
+     - NVC: Observations, feelings, needs, requests
+     - SOMATIC_AGENCY: Embodiment, personal power, agency
+   - Demo mode now reads `config.methodology` to select appropriate content
+   - Meditation title now shows methodology (e.g., "Demo: NSDR")
+   
+2. **Build Verified** - Clean build (12.23s, chunk size warning only)
+3. **Server Verified** - Port 3001 responding HTTP 200
+4. **Git Committed** - 3 commits ahead of origin/main (ready to push)
+
+### ⏳ What's Remaining (Priority Order)
+1. **Manual Test (User Action Needed)**
+   - Open http://localhost:3001 in browser
+   - Select different themes/methodologies
+   - Verify appropriate demo content plays for each
+   
+2. **Add API Key (Optional - for production)**
+   - Get key: https://aistudio.google.com/app/apikey
+   - Add to: projects/audio-transformation-tool/code/.env.local
+   
+3. **Deploy**
+   - Push git commits: `git push`
+   - Deploy to Vercel/Netlify
+
+### Notes
+- Browser automation unavailable (no Chrome/Chromium on this machine)
+- Demo mode now provides meaningful content for each protocol
+- Full AI features still require Google API key
+
+---
+
+_Last updated: 2026-03-01 07:56_

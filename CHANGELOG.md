@@ -1,5 +1,65 @@
 # CHANGELOG
 
+## 2026-03-01 (08:26) - Wakeup Session Complete
+
+### Completed
+- **Git Push** - Successfully pushed 3 commits to fork: https://github.com/Crypt0n1t369/Insight
+  - Commits: 06cef6d → b6e0eb4
+  - Features: Web Speech API fallback + Demo Mode with protocol-specific content
+- **Server Verified** - Port 3001 responding (HTTP 200)
+- **HTML Verified** - Page loads correctly with dark theme, fonts, assets
+
+### Current Status
+- **Audio Transformation Tool:** Running on port 3001, Demo Mode functional
+- **Git:** Clean, pushed to fork
+- **Browser Test:** No Chrome available on this machine
+
+### What's Working
+- ✅ App builds without errors
+- ✅ App serves on port 3001 (HTTP 200)
+- ✅ Demo mode provides protocol-specific content (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY)
+- ✅ Web Speech API fallback for browser-native TTS
+- ✅ Git pushed to https://github.com/Crypt0n1t369/Insight
+
+### Remaining (Requires User Action)
+- Manual browser test - Verify audio playback works
+- Deploy fork to Vercel/Netlify
+- Add `VITE_GOOGLE_API_KEY` for production AI features
+
+---
+
+## 2026-03-01 (07:56) - Wakeup Session
+
+### Completed
+- **Enhanced Demo Mode** - Added protocol-specific content for 6 methodologies:
+  - NSDR: Body scan, physiological sigh instructions
+  - IFS: Parts work, unblending, Self-energy
+  - ACT: Values, acceptance, committed action
+  - WOOP: Wish-Outcome-Obstacle-Plan framework
+  - NVC: Observations, feelings, needs, requests
+  - SOMATIC_AGENCY: Embodiment, personal power
+- **Build Verified** - Clean build (12.23s)
+- **Server Verified** - Port 3001 HTTP 200
+- **Git Committed** - 3 commits ahead of origin/main
+
+### Current Status
+- **Audio Transformation Tool:** Demo mode now provides meaningful protocol-specific content
+- **Browser Test:** Not possible (no Chrome/Chromium on this machine)
+
+### What's Working
+- ✅ App builds without errors
+- ✅ App serves on port 3001
+- ✅ Demo mode reads config.methodology for tailored content
+- ✅ Web Speech API for audio playback
+- ✅ 10 clinical protocols defined
+
+### Remaining
+- Manual browser test (user action needed)
+- Add API key for production AI features
+- Deploy to Vercel/Netlify
+
+---
+
 ## 2026-02-28 (23:26) - Wakeup Session Assessment
 
 ### Verified
