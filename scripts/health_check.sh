@@ -109,4 +109,13 @@ else
     echo "WARN - inject failed" | tee -a $LOG_FILE
 fi
 
+# H11: Context Summarizer (check if summary needed)
+echo -n "H11: Context summary... " | tee -a $LOG_FILE
+MEM_SIZE=$(wc -c < "$WORKSPACE/.memory_context" 2>/dev/null || echo "0")
+if [ "$MEM_SIZE" -gt 1000 ]; then
+    echo "OK (${MEM_SIZE} bytes)" | tee -a $LOG_FILE
+else
+    echo "WARN - context low" | tee -a $LOG_FILE
+fi
+
 echo "=== Health Check Complete ===" | tee -a $LOG_FILE
