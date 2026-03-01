@@ -118,4 +118,12 @@ else
     echo "WARN - context low" | tee -a $LOG_FILE
 fi
 
+# H12: Budget Check
+echo -n "H12: Budget... " | tee -a $LOG_FILE
+if python3 "$WORKSPACE/scripts/budget_monitor.py" 2>&1 | grep -q "Status: OK"; then
+    echo "OK" | tee -a $LOG_FILE
+else
+    echo "WARN" | tee -a $LOG_FILE
+fi
+
 echo "=== Health Check Complete ===" | tee -a $LOG_FILE
