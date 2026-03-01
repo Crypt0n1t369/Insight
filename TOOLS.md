@@ -1,175 +1,107 @@
-# Tools Inventory
-
-A comprehensive list of all installed tools, their capabilities, and use cases.
+# TOOLS.md - Updated Tools Inventory
 
 ---
 
-## System Tools (Pre-installed)
-
-### ffmpeg
-- **Type:** System utility
-- **Capabilities:** Audio/video encoding, conversion, streaming
-- **Use case:** Audio processing, media conversion
-
-### git
-- **Type:** Version control
-- **Capabilities:** Source code management, versioning
-- **Use case:** Code repository management
-
-### curl / wget
-- **Type:** HTTP clients
-- **Capabilities:** Download files, make HTTP requests, API calls
-- **Use case:** Web scraping, API testing, file downloads
-
-### python3
-- **Type:** Runtime
-- **Capabilities:** Python scripting, automation
-- **Use case:** General automation, custom scripts
-
-### node / npm
-- **Type:** JavaScript runtime
-- **Capabilities:** Node.js execution, package management
-- **Use case:** Running OpenClaw, JavaScript automation
-
----
-
-## OpenClaw Built-in Tools
-
-### web_search
-- **Type:** OpenClaw tool
-- **Capabilities:** Web search via configured provider (Brave/Perplexity/Gemini)
-- **Requirements:** API key (Brave has $5/mo free tier)
-- **Use case:** General web research
+## OpenClaw Built-in Tools (Available Now)
 
 ### web_fetch
-- **Type:** OpenClaw tool
-- **Capabilities:** HTTP GET + extract readable content (HTML → markdown/text)
+- **Capabilities:** HTTP GET → extract readable content (HTML → markdown/text)
 - **Limitation:** No JavaScript execution
-- **Use case:** Lightweight page scraping
+- **Use:** Lightweight page scraping, text extraction
+
+### web_search
+- **Capabilities:** Web search via configured provider (Brave/Perplexity/Gemini)
+- **Requirement:** API key (Brave $5/mo)
+- **Status:** Currently not configured (no API key)
 
 ### browser
-- **Type:** OpenClaw tool
 - **Capabilities:** Full browser automation (Chrome/Chromium via CDP)
-- **Use case:** JS-heavy sites, complex interactions, form filling
-
-### message
-- **Type:** OpenClaw tool
-- **Capabilities:** Send messages via Telegram/Discord/Signal/etc
-- **Use case:** Cross-channel messaging, notifications
-
-### exec
-- **Type:** OpenClaw tool
-- **Capabilities:** Run shell commands
-- **Security:** Configurable (gateway/sandbox/full)
-
-### image
-- **Type:** OpenClaw tool
-- **Capabilities:** Analyze images with vision models
-- **Use case:** Image understanding, OCR
-
-### tts
-- **Type:** OpenClaw tool
-- **Capabilities:** Text-to-speech output
-- **Provider:** OpenAI or ElevenLabs
-
-### nodes
-- **Type:** OpenClaw tool
-- **Capabilities:** Control paired mobile devices
-- **Use case:** Camera, location, notifications, screen capture
+- **Use:** JS-heavy sites, complex interactions, form filling, full-page extraction
 
 ---
 
-## Installed Python Packages
+## In-House Research Tools
 
-### faster-whisper
-- **Type:** Local STT (Speech-to-Text)
-- **Version:** 1.2.1
-- **Model:** tiny (int8, CPU)
-- **Capabilities:** Transcribe audio to text locally
-- **Use case:** Voice note transcription (no API key needed)
-- **Path:** `~/.venv/whisper/bin/python`
-- **Setup date:** 2026-02-28
+### scripts/research/fetch.py
+- **Deep extraction** using trafilatura (local, free)
+- **Usage:** `python3 scripts/research/fetch.py <url>`
+- **Requires:** `~/.venv/research` (already set up)
 
----
+### scripts/memory/capture.py
+- **Quick capture** to second brain inbox
+- **Usage:** `python3 scripts/memory/capture.py "note content" --tag=research`
 
-## Open Source Alternatives (Not Installed)
-
-### Web Search (Installed)
-
-#### Public SearXNG Instances (Free, Rate-Limited)
-- **URLs:** searxng.site, searxng.website, searx.tiekoetter.com, searxng.canine.tools
-- **Cost:** Free
-- **Limitations:** Heavy rate-limiting, may be blocked
-- **Use:** Quick tests only
-
-#### Perplexica (Not Working)
-- **Type:** AI-powered search engine
-- **Status:** Docker pull keeps terminating (resource constraints)
-- **Alternative:** Could try non-Docker install later
-
-#### Brave Search API (Recommended)
-- **Cost:** $5/month (2000+ searches)
-- **URL:** brave.com/search/api
-- **Setup:** Get API key, configure in OpenClaw
-
-### Web Scraping
-
-#### Trafilatura
-- **Type:** Python library
-- **Cost:** Free
-- **Capabilities:** Extract main text, metadata, comments from web pages
-- **Use case:** Clean text extraction without JS
-
-#### Firecrawl
-- **Type:** AI web scraper
-- **Cost:** Cloud + self-hosted options
-- **Capabilities:** Turn websites into LLM-ready markdown
-- **Use case:** AI data extraction
-
-#### Scrapy
-- **Type:** Python framework
-- **Cost:** Free
-- **Capabilities:** Full-featured web crawler
-- **Use case:** Large-scale crawling
+### Browser Tool (Recommended)
+- **Full capabilities:** Navigate, extract, interact
+- **Best for:** JS-heavy sites, login-required pages, dynamic content
 
 ---
 
-## Recommendations
+## Research Workflow
 
-### For Free Search:
-1. **Use public SearXNG instance** - searx.space (no setup)
-2. **Self-host SearXNG** - If you want privacy/control
-3. **Brave Search** - $5/mo for reliable API
-
-### For Free Scraping:
-1. **Use OpenClaw browser tool** - Already available, handles JS
-2. **Use web_fetch** - Lightweight, no JS needed
-
-### For Voice Transcription:
-1. **Use faster-whisper** - Already installed, free, local
-
----
-
-## Configuration Notes
-
-### Audio Transcription (faster-whisper)
-```bash
-# Test manually:
-~/.venv/whisper/bin/python -c "from faster_whisper import WhisperModel; ..."
-# Or use wrapper script:
-/home/drg/.openclaw/workspace/scripts/whisper-transcribe <audio_file>
+### Option 1: Quick (web_fetch)
+```
+web_fetch url="https://example.com"
 ```
 
-### OpenClaw Config Location
+### Option 2: Deep (trafilatura)
 ```
-~/.openclaw/openclaw.json
+python3 scripts/research/fetch.py https://example.com
 ```
 
-### Backup Location
+### Option 3: Full Browser
 ```
-~/.openclaw/openclaw.json.bak
+browser action=navigate targetUrl="https://example.com"
+```
+
+### Option 4: Interactive Search
+```
+browser action=navigate targetUrl="https://duckduckgo.com"
+# Then type in search box
 ```
 
 ---
 
-*Last updated: 2026-02-28*
+## Free Search Alternatives
+
+### Public SearXNG Instances (Rate Limited)
+- searxng.site
+- searxng.website
+- searx.tiekoetter.com
+
+### Self-Hosted (Recommended for Privacy)
+- **SearXNG** - Docker install, full control
+- **Perplexica** - AI-powered (needs resources)
+
+### Browser-Based
+- DuckDuckGo (lite: html.duckduckgo.com)
+- Google (via browser tool)
+
+---
+
+## Installed Packages
+
+### ~/.venv/research/
+- trafilatura (2.0.0) - Content extraction
+- beautifulsoup4 (4.14.3) - HTML parsing
+- lxml (6.0.2) - XML/HTML processing
+- requests (2.32.5) - HTTP client
+
+### ~/.venv/whisper/
+- faster-whisper (1.2.1) - Local speech-to-text
+
+---
+
+## Cost Analysis
+
+| Method | Cost | Quality | Speed |
+|--------|------|---------|-------|
+| web_fetch | Free | Good (text) | Fast |
+| browser | Free | Best (full) | Slow |
+| trafilatura | Free | Best (text) | Medium |
+| Brave Search | $5/mo | Good | Fast |
+| Perplexity API | $$$ | Best | Fast |
+
+---
+
+*Updated: 2026-03-01*
