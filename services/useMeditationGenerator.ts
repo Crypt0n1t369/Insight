@@ -118,6 +118,103 @@ const createAudioBlob = (audioBase64: string, mimeType?: string): Blob => {
  * Demo Mode: Creates a meditation using hardcoded content with Web Speech API
  * This allows testing the app without an API key
  */
+
+// Protocol-specific demo content for each methodology
+const DEMO_CONTENT: Record<string, { greeting: string; segments: string[] }> = {
+    NSDR: {
+        greeting: `Welcome to your NSDR session. Non-Sleep Deep Rest allows your nervous system to restore and recalibrate. Find a comfortable position, and let's begin.`,
+        segments: [
+            `Begin with a physiological sigh - two quick breaths in through your nose... and one long, slow exhale through your mouth.`,
+            `Now let your breathing return to its natural rhythm... slow and steady.`,
+            `Bring your attention to your body... feel the weight of your body sinking into the surface beneath you.`,
+            `Let's do a body scan. Beginning at the top of your head... notice any sensations there.`,
+            `Move your attention down to your forehead... your eyes... your cheeks... your jaw.`,
+            `Notice if you're holding any tension... and with each exhale, release it.`,
+            `Let this deep rest restore every cell in your body.`,
+            `When you're ready, slowly return to full awareness. Open your eyes gently.`
+        ]
+    },
+    IFS: {
+        greeting: `Welcome to your Internal Family Systems exploration. You'll be guided to connect with different parts of yourself. Find a comfortable position, and let's begin.`,
+        segments: [
+            `Take a few deep breaths... and allow yourself to settle into this moment.`,
+            `Now, bring to mind a part of yourself that you've been carrying... something that feels heavy or reactive.`,
+            `Notice where you feel this part in your body... what sensation arises?`,
+            `Without trying to change anything... simply observe. This part has a purpose.`,
+            `Ask this part: What do you need me to know?`,
+            `Listen with curiosity and compassion... there's no rush.`,
+            `You can acknowledge this part... and remind it that you're here to help.`,
+            `Take a moment to notice how you feel now. When ready, slowly return.`
+        ]
+    },
+    ACT: {
+        greeting: `Welcome to your Acceptance and Commitment Therapy session. You'll explore values, acceptance, and committed action. Find a comfortable position, and let's begin.`,
+        segments: [
+            `Take a deep breath in... and notice what thoughts are present right now.`,
+            `Imagine those thoughts as clouds passing through the sky... you can watch them come and go.`,
+            `Now, bring to mind your values... what matters most to you in life?`,
+            `Notice any emotions that arise as you connect with your values... simply observe them.`,
+            `You don't need to change or fix anything... just allow them to be here.`,
+            `What one small action could you take today that aligns with your values?`,
+            `You have the capacity to make that choice... in this moment.`,
+            `Carry this intention with you. When ready, slowly open your eyes.`
+        ]
+    },
+    WOOP: {
+        greeting: `Welcome to your WOOP session - Wish, Outcome, Obstacle, Plan. We'll work with your motivation and goals. Find a comfortable position, and let's begin.`,
+        segments: [
+            `Take a deep breath and settle into this moment.`,
+            `Think of a wish or goal that matters to you... something you desire.`,
+            `Imagine this wish fulfilled... what does the best outcome look and feel like?`,
+            `Now consider the obstacle... what is the main thing that stands in your way?`,
+            `Notice how this obstacle shows up in your body and mind.`,
+            `Here's your planning step: When you encounter this obstacle, you will... [specific action].`,
+            `Visualize yourself executing this plan successfully.`,
+            `You have the power to make this happen. Open your eyes when ready.`
+        ]
+    },
+    NVC: {
+        greeting: `Welcome to your Nonviolent Communication practice. You'll connect with your feelings and needs. Find a comfortable position, and let's begin.`,
+        segments: [
+            `Take a deep breath and allow yourself to arrive fully in this moment.`,
+            `Bring to mind a situation or person you'd like to understand better.`,
+            `First, separate your observations from your judgments... what exactly is happening?`,
+            `Now notice what feelings arise as you observe this... name them without judgment.`,
+            `What needs are behind these feelings? What are you longing for?`,
+            `Now, from this place of needs... what request could you make?`,
+            `Practice voicing this request with compassion - for yourself and others.`,
+            `Carry this gentle awareness with you. When ready, slowly open your eyes.`
+        ]
+    },
+    SOMATIC_AGENCY: {
+        greeting: `Welcome to your Somatic Agency session. You'll reconnect with your body's innate wisdom and capacity for action. Find a comfortable position, and let's begin.`,
+        segments: [
+            `Take a deep breath and feel your body... the sensations moving through you.`,
+            `Notice your posture... how you're holding yourself in this moment.`,
+            `Bring attention to your core... the center of your personal power.`,
+            `Feel your feet on the ground... roots growing deep into the earth.`,
+            `Notice the difference between reacting and responding... you have a choice.`,
+            `What does agency feel like in your body? Strong? Centered? Present?`,
+            `You have the capacity to choose your actions... you are not helpless.`,
+            `Carry this embodied sense of power with you. When ready, open your eyes.`
+        ]
+    },
+    // Default/general fallback
+    DEFAULT: {
+        greeting: `Welcome to your meditation. Find a comfortable position and allow yourself to settle into this moment.`,
+        segments: [
+            `Take a deep breath in through your nose... and release slowly through your mouth.`,
+            `With each breath, allow yourself to sink deeper into relaxation.`,
+            `Notice the sensations in your body... the warmth... the heaviness... the peace.`,
+            `Let go of any thoughts that don't serve you right now.`,
+            `You are exactly where you need to be.`,
+            `Continue breathing gently... allowing this sense of calm to fill your entire being.`,
+            `As we come to the end of this session, carry this peace with you.`,
+            `When you're ready, slowly open your eyes.`
+        ]
+    }
+};
+
 const runDemoMode = async (
     config: MeditationConfig,
     setMeditations: any,
@@ -127,18 +224,13 @@ const runDemoMode = async (
 ) => {
     const tempId = crypto.randomUUID();
     
-    // Demo content - simple meditation script
-    const demoGreeting = `Welcome to your meditation. Find a comfortable position and allow yourself to settle into this moment.`;
-    const demoContent = [
-        `Take a deep breath in through your nose... and release slowly through your mouth.`,
-        `With each breath, allow yourself to sink deeper into relaxation.`,
-        `Notice the sensations in your body... the warmth... the heaviness... the peace.`,
-        `Let go of any thoughts that don't serve you right now.`,
-        `You are exactly where you need to be.`,
-        `Continue breathing gently... allowing this sense of calm to fill your entire being.`,
-        `As we come to the end of this session, carry this peace with you.`,
-        `When you're ready, slowly open your eyes.`
-    ];
+    // Get protocol-specific content based on methodology, or default
+    const methodology = config.methodology || 'DEFAULT';
+    const demoData = DEMO_CONTENT[methodology] || DEMO_CONTENT['DEFAULT'];
+    
+    // Demo content based on selected protocol
+    const demoGreeting = demoData.greeting;
+    const demoContent = demoData.segments;
 
     // Create segments with Web Speech flag
     const greetingSegment: PlayableSegment = {
@@ -165,7 +257,7 @@ const runDemoMode = async (
 
     const newMeditation: Meditation = {
         id: tempId,
-        title: config.focus ? `Demo: ${config.focus}` : 'Demo Meditation',
+        title: config.methodology ? `Demo: ${config.methodology}` : (config.focus ? `Demo: ${config.focus}` : 'Demo Meditation'),
         transcript: demoGreeting + '\n\n' + demoContent.join('\n\n'),
         lines: [demoGreeting, ...demoContent],
         audioQueue: allSegments,
