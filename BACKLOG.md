@@ -1,11 +1,12 @@
 # Backlog
 
-## 2026-03-01 (14:56) - Wakeup Session Complete
+## 2026-03-01 (15:56) - Wakeup Session Complete
 
 ### What Was Done This Session
 1. ✅ **Verified Server** - Port 3001 responding HTTP 200 ✅
-2. ✅ **Git Synced** - Committed progress docs (working tree clean)
-3. ✅ **Build Verified** - Clean build confirmed
+2. ✅ **Verified Git Sync** - All commits pushed to Crypt0n1t369/Insight fork
+3. ✅ **Verified Demo Mode** - 6+ protocols with Web Speech API fallback confirmed in code
+4. ✅ **Verified Vercel Config** - vercel.json in place
 
 ### Current Status
 | Component | Status |
@@ -13,14 +14,14 @@
 | Audio Tool | ✅ Running (port 3001), Demo Mode ready |
 | Git | ✅ Synced to Crypt0n1t369/Insight |
 | Build | ✅ Clean |
-| Vercel Ready | ✅ Config in place, repo ready to connect |
-| Demo Mode | ✅ 8 protocols (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, etc.) |
+| Vercel Ready | ✅ Config in place, repo pushed |
+| Demo Protocols | ✅ 6+ (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY) + DEFAULT |
 
 ### What's Ready
 - **Fork URL:** https://github.com/Crypt0n1t369/Insight
 - Demo Mode works without API key (Web Speech API)
 - Server running on http://localhost:3001
-- All 8 clinical protocols implemented
+- Vercel deployment ready
 
 ### What's Next (Priority Order)
 1. **Deploy to Vercel (User Action)** - Go to vercel.com, import Crypt0n1t369/Insight, deploy
