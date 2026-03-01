@@ -9,8 +9,9 @@
 - **Runtime:** Port 3001 (HTTP 200 verified Mar 1, 20:26)
 - **Demo Mode:** ✅ Works without API key (Web Speech API fallback)
 - **Protocol-Specific Demo Content:** ✅ NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY + DEFAULT
-- **Git:** ✅ Synced with Crypt0n1t369/Insight (f211ee7)
+- **Git:** ✅ Synced with Crypt0n1t369/Insight (3bd347e)
 - **Bug Fix:** ✅ Fixed ViewState.PLAYING → ViewState.PLAYER TypeScript error
+- **PWA:** ✅ Offline support enabled (service worker)
 - **Deploy:** ✅ Vercel config ready - user needs to connect repo in Vercel dashboard
 - **Next:** Vercel deploy (user action: go to vercel.com → import Crypt0n1t369/Insight)
 

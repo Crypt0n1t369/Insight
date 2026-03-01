@@ -783,3 +783,45 @@ _Last updated: 2026-03-01 19:56_
 - Fork URL: https://github.com/Crypt0n1t369/Insight
 
 _Last updated: 2026-03-01 21:26_
+
+---
+
+## Wakeup Session (2026-03-01 22:26)
+
+### ✅ Verified Working
+1. **Server Running** - Port 3001 responding HTTP 200 ✅
+2. **Build Passes** - Clean build (12.18s, chunk size warning only)
+3. **Git Synced** - Fork (Crypt0n1t369/Insight) is up to date ✅
+4. **PWA Enabled** - Offline support via service worker ✅
+
+### 🔄 What's Been Done (Cumulative)
+1. App builds successfully (Vite + React + TypeScript)
+2. Server runs on port 3001 (HTTP 200 verified)
+3. Demo Mode integrated - works without API key via Web Speech API
+4. Protocol-specific demo content for 7+ methodologies (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, DEFAULT)
+5. Vercel deployment config (vercel.json) ready
+6. PWA offline support added
+7. Git synced to fork (Crypt0n1t369/Insight)
+
+### ⏳ What's Remaining (Priority Order)
+1. **Deploy to Vercel (User Action Needed)**
+   - Fork: https://github.com/Crypt0n1t369/Insight
+   - Go to: https://vercel.com/new
+   - Import the repo
+   - (Optional) Add VITE_GOOGLE_API_KEY in Vercel env vars for AI features
+   
+2. **Manual Test**
+   - Once deployed, test demo mode in production
+   - Verify audio plays via Web Speech API
+   
+3. **Add API Key (Optional - for production AI)**
+   - Get key: https://aistudio.google.com/app/apikey
+   - Add to Vercel env vars: VITE_GOOGLE_API_KEY
+
+### Technical Notes
+- Browser automation unavailable on this machine
+- Demo mode works with hardcoded protocol-specific scripts
+- Full AI features require Google API key
+- Fork URL: https://github.com/Crypt0n1t369/Insight
+
+_Last updated: 2026-03-01 22:26_
