@@ -1,33 +1,20 @@
-=== ATON CONTEXT ===
-Generated: 2026-03-01 12:28
+# MEMORY_CONTEXT.md - Current Session Context
+
+Generated: 2026-03-01 13:56
 
 ## Active Projects
-- audio-transformation-tool: Unknown
+- audio-transformation-tool: Running on port 3001, Demo Mode works
 
 ## Key Decisions
-### Memory System Architecture
-- **Decision:** Use hybrid approach (TF-IDF now, vector embeddings later)
-### Context Management Approach
-- **Decision:** File-based context with auto-generation, not Mem0 cloud
-### Audio Tool Demo Mode
-
-## Recent Sessions
-### 2026-02-28
-- ### Health Check Improvements (Completed earlier today)
-- Fixed: Workspace path detection health_check.sh now auto-detects between sandbox and host environments
-- Fixed: Git branch check now handles detached HEAD state properly
-
-### 2026-02-28-minimax-key
-- Session Key: agent:main:telegram:direct:551447474
-- Session ID: 75f1fa74-8de9-4ecd-acf1-d4895f735360
-- Source: telegram
-
-### 2026-02-28-lead-magnet-solar
-- Session Key: agent:main:telegram:direct:551447474
-- Session ID: fcc84bce-716a-4c39-b863-680336bc9850
-- Source: telegram
+- Demo Mode with Web Speech API fallback (no API key needed)
+- Vercel-ready deployment config in place
 
 ## Quick Status
-- Memory: Fresh (today)
-- Health: 11 checks passing
-- Context: Auto-generated
+- Audio Tool: Running on port 3001
+- Git: Synced to Crypt0n1t369/Insight
+- Health: Server responding HTTP 200
+
+## What's Next
+1. Manual browser test (user action needed)
+2. Deploy to Vercel (user action - vercel.com dashboard)
+3. Optional: Add Google API key for production AI

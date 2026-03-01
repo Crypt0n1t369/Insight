@@ -547,20 +547,20 @@ _Last updated: 2026-03-01 10:26_
 
 ---
 
-## Wakeup Session (2026-03-01 12:56)
+## Wakeup Session (2026-03-01 13:26)
 
-### ✅ Completed This Session
-1. **Verified Build** - Clean build (14.88s, chunk size warning only)
-2. **Verified Server** - Port 3001 responding HTTP 200 ✅
-3. **Git Status** - 5 commits committed & pushed to Crypt0n1t369/Insight fork
-4. **Vercel Ready** - vercel.json config in place, repo ready for connect
+### ✅ Verified Working
+1. **Server running** - Port 3001 responding HTTP 200 ✅
+2. **Build passes** - Clean build (12.13s, chunk size warning only)
+3. **Git pushed** - 4 commits ahead of fork (Crypt0n1t369/Insight)
+4. **App verified** - HTML loads correctly, dark theme, assets linked
 
 ### 🔄 What's Been Done (Cumulative)
 1. App builds successfully (Vite + React + TypeScript)
 2. Server runs on port 3001 (HTTP 200 verified)
 3. Demo Mode integrated - works without API key via Web Speech API
 4. Protocol-specific demo content (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY)
-5. Vercel deployment config added
+5. Vercel deployment config (vercel.json) added
 6. Git pushed to fork (Crypt0n1t369/Insight)
 
 ### ⏳ What's Remaining (Priority Order)
@@ -582,7 +582,46 @@ _Last updated: 2026-03-01 10:26_
 - Full AI features require Google API key
 - Fork URL: https://github.com/Crypt0n1t369/Insight
 
+## Wakeup Session (2026-03-01 14:26)
+
+### ✅ Completed This Session
+1. **Server Restarted** - Server was down (port 3001 not responding), rebuilt and restarted successfully
+2. **Build Verified** - Clean build (12.21s, chunk size warning only)
+3. **Server Running** - Port 3001 responding HTTP 200 ✅
+4. **Git Ready** - 4 commits ahead of origin/main (ready to push)
+
+### 🔄 What's Been Done (Cumulative)
+1. App builds successfully (Vite + React + TypeScript)
+2. Server runs on port 3001 (HTTP 200 verified)
+3. Demo Mode integrated - works without API key via Web Speech API
+4. Protocol-specific demo content (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY)
+5. Vercel deployment config (vercel.json) added
+6. Git pushed to fork (Crypt0n1t369/Insight) - awaiting user to connect
+
+### ⏳ What's Remaining (Priority Order)
+1. **Manual Test (User Action Needed)**
+   - Open http://localhost:3001 in browser
+   - Click "Start Session"
+   - Select any theme (SAFETY→NSDR, SPARK→WOOP, POWER→ACT, FLOW→NVC)
+   - Verify audio plays via Web Speech API
+
+2. **Deploy to Vercel (Ready)**
+   - Fork: https://github.com/Crypt0n1t369/Insight
+   - Go to: https://vercel.com/new
+   - Import the repo
+   - (Optional) Add VITE_GOOGLE_API_KEY in Vercel env vars for AI features
+
+3. **Add API Key (Optional - for production AI)**
+   - Get key: https://aistudio.google.com/app/apikey
+   - Add to .env.local locally AND Vercel env vars for production
+
+### Technical Notes
+- Browser automation unavailable on this machine
+- Demo mode works with hardcoded protocol-specific scripts
+- Full AI features require Google API key
+- Fork URL: https://github.com/Crypt0n1t369/Insight
+
 ---
 
-_Last updated: 2026-03-01 12:56_
+_Last updated: 2026-03-01 14:26_
 
