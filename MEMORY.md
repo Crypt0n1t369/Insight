@@ -1,4 +1,10 @@
-# MEMORY.md - Long-Term Memory (Phase 0 MVP Foundation)
+## 2026-03-01 Morning
+
+### Health Check Issue
+- H1/H8 FAIL: Uncommitted changes pending since ~08:03 AM
+- Files: BACKLOG.md, CHANGELOG.md, PROJECTS.md, audio-transformation-tool/, solar-scout/
+- Status: Non-critical (not H2/H5), logged but not alerting Telegram
+- Action: Awaiting user review before commit
 
 - Updated: Kickoff session alignment. Verified critical artifacts for Phase 0 → Phase 1 rollout. 
 - Completed: workspace health check, key runbooks exist (Phase1_MVP_runbook.md). 
