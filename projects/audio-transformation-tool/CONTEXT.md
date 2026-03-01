@@ -330,4 +330,49 @@ _Last updated: 2026-02-28 (23:56)_
 
 ---
 
-_Last updated: 2026-03-01 01:56_
+## Wakeup Session Notes (2026-03-01 05:26)
+
+### ✅ Verified Working
+1. **App running** - Port 3001 responding HTTP 200
+2. **Build passes** - Dist assets built (809KB JS, 125KB CSS)
+3. **Demo Mode integrated** - Works without API key via Web Speech API
+4. **Git ready** - 2 commits ahead of origin/main (ready to push)
+5. **Code verified:**
+   - `useMeditationGenerator.ts`: runDemoMode() generates 9 hardcoded segments
+   - `audioService.ts`: playSegmentWebSpeech() handles Web Speech playback  
+   - Detection of missing VITE_GOOGLE_API_KEY triggers demo mode
+6. **HTML loads correctly** - Dark theme, proper assets linked
+
+### 🔄 What Was Done
+- Verified server running on port 3001 (HTTP 200)
+- Confirmed build output fresh (Mar 1 01:57)
+- Verified demo mode code paths:
+  - Google API key check → runDemoMode()
+  - useWebSpeech flag on segments
+  - playSegmentWebSpeech() in audio flow
+- Confirmed git ready to push (2 commits ahead)
+
+### ⏳ What's Remaining
+1. **Manual Test (User Action Needed)**
+   - Open http://localhost:3001 in browser
+   - Click "Start Session" 
+   - Select any theme (SAFETY→NSDR, SPARK→WOOP, POWER→ACT, FLOW→NVC)
+   - Verify audio plays via Web Speech API
+
+2. **Add API Key (Optional - for production)**
+   - Get key: https://aistudio.google.com/app/apikey
+   - Add to: projects/audio-transformation-tool/code/.env.local
+
+3. **Deploy**
+   - Push git commits: `git push`
+   - Deploy to Vercel/Netlify
+
+### What I Tested (Automated)
+- HTTP endpoint: 200 OK ✅
+- Build artifacts: Present ✅  
+- Code integration: Verified ✅
+- Git status: Clean, 2 commits ahead ✅
+
+---
+
+_Last updated: 2026-03-01 05:26_

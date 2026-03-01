@@ -1,4 +1,69 @@
 # Backlog
+
+## 2026-03-01 (05:56) - Wakeup Assessment
+
+### Verified Today
+- ✅ App running on port 3001 (HTTP 200 confirmed)
+- ✅ Git: Clean, 2 commits ahead of origin/main
+- ✅ Build exists in dist/ folder (verified serving)
+- ✅ Demo Mode code verified in place:
+  - useMeditationGenerator.ts:121 - runDemoMode function exists
+  - audioService.ts:266 - playSegmentWebSpeech handles browser-native TTS
+  - No API key → auto-triggers Demo Mode (line 228-232)
+- ✅ Frontend serves correctly (HTML, dark theme, fonts load)
+
+### Current Status
+| Component | Status |
+|-----------|--------|
+| Audio Tool | 🟡 Running (port 3001), Demo Mode ready |
+| Git | 🟡 2 commits ready, push needs credentials |
+| Browser Test | ❌ No display/Chrome available |
+
+### What I CANNOT Do (Requires You)
+1. **Manual browser test** - Need display to verify Web Speech audio plays
+2. **Git push** - No GitHub credentials in environment
+3. **API key** - You need to get from https://aistudio.google.com/app/apikey
+
+### What's Ready to Do
+1. **Manual test** - Open http://localhost:3001 in browser, click Begin, verify Web Speech audio
+2. **Git push** - Run `git push origin main` in `projects/audio-transformation-tool/code/`
+3. **Deploy** - After push, connect repo to Vercel/Netlify
+
+### Next Steps (Priority Order)
+1. **Manual browser test** - Verify Demo Mode audio works
+2. **Add API key** (optional for demo, required for production AI features)
+3. **Git push + deploy**
+
+### Verified Today
+- ✅ App running on port 3001 (HTTP 200 confirmed)
+- ✅ Git: Clean, 2 commits ahead of origin/main
+- ✅ Build exists in dist/ folder (assets, audio, index.html)
+- ✅ Demo Mode: Framework ready (Web Speech API fallback)
+
+### Current Status
+| Component | Status |
+|-----------|--------|
+| Audio Tool | 🟡 Running (port 3001), Demo Mode ready |
+| Git | 🟡 2 commits ready, push needs credentials |
+| Solar Scout | ✅ Completed |
+
+### What I CANNOT Do (Requires You)
+1. **Manual browser test** - Need display/Chrome extension to verify audio plays
+2. **Git push** - No GitHub credentials in environment
+3. **API key** - You need to get from https://aistudio.google.com/app/apikey
+
+### What's Ready to Do
+1. **Manual test** - Open http://localhost:3001 in browser, click Begin, verify Web Speech audio
+2. **Git push** - Run `git push origin main` in `projects/audio-transformation-tool/code/`
+3. **Deploy** - After push, connect repo to Vercel/Netlify
+
+### Next Steps (Priority Order)
+1. **Manual browser test** - Verify Demo Mode audio works
+2. **Add API key** (optional for demo, required for production AI features)
+3. **Git push + deploy**
+
+---
+
 ## 2026-03-01 (04:26) - Wakeup Assessment
 
 ### Current Status
