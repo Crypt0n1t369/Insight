@@ -9,8 +9,8 @@
 - **Runtime:** Port 3001 (HTTP 200 verified)
 - **Demo Mode:** ✅ Works without API key (Web Speech API fallback)
 - **Production:** Requires `VITE_GOOGLE_API_KEY` in .env.local
-- **Git:** 2 commits ahead of origin/main (ready to push)
-- **Next:** Manual test in browser, then deploy
+- **Git:** 2 commits ahead of origin/main (user needs to push - no credentials in env)
+- **Next:** Manual test in browser, git push, then deploy
 
 ### 2. Solar Scout (Lead Generator) - COMPLETED ✅
 - **Status:** Fully Operational
