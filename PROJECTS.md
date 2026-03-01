@@ -5,13 +5,13 @@
 ### 1. Audio Transformation Tool
 - **Status:** Running (Demo Mode works without API key)
 - **Summary:** Audio-based transformation platform (wellness → military → enterprise → individual development)
-- **Path:** `projects/audio-transformation-tool/code/` (Deno/Fresh)
+- **Path:** `projects/audio-transformation-tool/code/` (Vite/React)
 - **Runtime:** Port 3001 (HTTP 200 verified Mar 1)
 - **Demo Mode:** ✅ Works without API key (Web Speech API fallback)
 - **Protocol-Specific Demo Content:** ✅ NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY
-- **Git:** ✅ Pushed to fork - https://github.com/Crypt0n1t369/Insight
-- **Deploy:** Ready for Vercel/Netlify (connect fork repo)
-- **Next:** Manual browser test, then deploy
+- **Git:** ✅ 4 commits ahead of origin (ready to push)
+- **Deploy:** ✅ Vercel config added, ready for one-click deploy
+- **Next:** Manual browser test, then `git push` + Vercel connect
 
 ### 2. Solar Scout (Lead Generator) - COMPLETED ✅
 - **Status:** Fully Operational

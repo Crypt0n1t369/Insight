@@ -462,3 +462,53 @@ _Last updated: 2026-02-28 (23:56)_
 ---
 
 _Last updated: 2026-03-01 10:26_
+## Wakeup Session (2026-03-01 10:26)
+
+- Status unchanged. Still waiting on browser test.
+- Memory system enhanced (auto-inject wired into health_check)
+- Git committed.
+
+---
+
+## Wakeup Session (2026-03-01 10:56)
+
+### ✅ Completed This Session
+1. **Verified Build** - Clean build (14.83s, chunk size warning only)
+2. **Verified Server** - Port 3001 responding HTTP 200 ✅
+3. **Added Vercel Config** - Created vercel.json for one-click deploy
+4. **Git Committed** - Added vercel.json (now 4 commits ahead of origin)
+
+### 🔄 What's Been Done (Cumulative)
+1. App builds successfully (Vite + React + TypeScript)
+2. Server runs on port 3001 (HTTP 200 verified)
+3. Demo Mode integrated - works without API key via Web Speech API
+4. Protocol-specific demo content (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY)
+5. Vercel deployment config added
+6. Git ready to push (4 commits ahead)
+
+### ⏳ What's Remaining (Priority Order)
+1. **Manual Test (User Action Needed)**
+   - Open http://localhost:3001 in browser
+   - Click "Start Session"
+   - Select any theme (SAFETY→NSDR, SPARK→WOOP, POWER→ACT, FLOW→NVC)
+   - Verify audio plays via Web Speech API
+   
+2. **Deploy to Vercel (Ready to go)**
+   - Push git: `git push` (4 commits ready)
+   - Connect repo to Vercel: https://vercel.com/new
+   - Add VITE_GOOGLE_API_KEY in Vercel env vars (optional for demo mode)
+   
+3. **Add API Key (Optional - for production AI)**
+   - Get key: https://aistudio.google.com/app/apikey
+   - Add to .env.local locally AND Vercel env vars for production
+
+### Technical Notes
+- Browser automation unavailable (no Chrome/Chromium on host)
+- Demo mode provides meaningful protocol-specific content
+- Full AI features require Google API key
+- Vite build → dist folder → Vercel auto-deploy
+
+---
+
+_Last updated: 2026-03-01 10:56_
+
