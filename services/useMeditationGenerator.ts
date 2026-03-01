@@ -279,7 +279,7 @@ const runDemoMode = async (
 
     // Small delay then switch to player
     setTimeout(() => {
-        setView(ViewState.PLAYING);
+        setView(ViewState.PLAYER);
     }, 500);
 };
 
