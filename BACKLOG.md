@@ -1,39 +1,55 @@
 # Backlog
-## 2026-03-01 (02:56) - Wakeup Session
+## 2026-03-01 (03:26) - Wakeup Session
 
 ### Verified Working
-- ✅ Build passes (clean, minor chunk warning)
-- ✅ App running on port 3001 (HTTP 200)
-- ✅ Frontend serving correctly (HTML + assets load)
-- ✅ Demo Mode integrated - auto-triggers without API key
-- ✅ Web Speech API fallback wired in AudioService
-- ✅ Git: Clean (2 commits ahead of origin/main, ready to push)
+- ✅ App running on port 3001 (HTTP 200 verified)
+- ✅ Frontend serving correctly (HTML + JS + CSS all load)
+- ✅ Demo Mode code properly wired:
+  - useMeditationGenerator.ts:232 - API key check → runDemoMode()
+  - useMeditationGenerator.ts:121 - runDemoMode generates segments with useWebSpeech: true
+  - audioService.ts:266 - playSegmentWebSpeech handles browser-native TTS
+- ✅ Web Speech API fallback confirmed in code
+- ✅ Git: Clean, working tree clean
 
 ### What Was Done (This Session)
 1. Verified app running (HTTP 200 on port 3001)
-2. Confirmed frontend serving: HTML loads, assets (JS/CSS) accessible
-3. Confirmed Demo Mode code properly wired:
-   - useMeditationGenerator.ts:231 - API key check triggers runDemoMode()
-   - useMeditationGenerator.ts:121 - runDemoMode generates 9 segments with useWebSpeech: true
-   - audioService.ts - playSegmentWebSpeech handles browser-native TTS
-4. Verified .env.local still has placeholder (demo mode active)
-5. Git status: 2 commits ahead of origin/main
-6. No browser available for automated testing (needs manual test)
+2. Confirmed frontend: HTML loads, Inter + Space Grotesk fonts, dark theme
+3. Verified Demo Mode integration:
+   - playSegmentWebSpeech() handles browser-native TTS
+   - useWebSpeech flag properly passed through segments
+4. Checked git status: clean, no pending commits
+5. No browser available for automated testing (requires manual browser test)
 
 ### Remaining Tasks (Priority Order)
-1. **Manual Test** - Open browser to http://localhost:3001, start meditation, verify audio plays via Web Speech
-2. **Add API Key** - Get from https://aistudio.google.com/app/apikey, add to .env.local for production AI features
-3. **Deploy** - `git push` then deploy to Vercel/Netlify
+1. **Manual Test** - Open browser to http://localhost:3001, click "Begin", verify audio plays via Web Speech
+2. **Add API Key** - Get from https://aistudio.google.com/app/apikey, add to .env.local
+3. **Deploy** - Push to Vercel/Netlify
 
 ### Current Status
 | Component | Status |
 |-----------|--------|
-| Audio Tool | 🟡 Running, Demo Mode ready (needs manual test) |
+| Audio Tool | 🟡 Running, Demo Mode ready (manual test pending) |
 | Solar Scout | ✅ Completed |
-| Git | 🔄 Ready to push (2 commits ahead) |
-| Git | 🔄 Modified (needs commit) |
+| Git | ✅ Clean |
+
+### What's Working
+- ✅ Frontend builds & serves on port 3001
+- ✅ Demo Mode: generates 9 meditation segments without API key
+- ✅ Web Speech API fallback: browser-native TTS
+- ✅ 10 clinical protocols implemented (NSDR, IFS, WOOP, ACT, etc.)
+- ✅ Conversational check-in flow
+
+### What's Blocked / Needs Manual Test
+1. **Manual browser test** - Need to verify audio actually plays in browser
+2. **API key** - For production AI features (Gemini TTS)
+
+### What's Next (Priority Order)
+1. **Manual test in browser** - Start session, verify Web Speech audio plays
+2. **Add Google API key** - For full production features
+3. **Deploy** to Vercel/Netlify
 
 ---
+## 2026-03-01 (02:56) - Wakeup Session
 
 
 ## 2026-03-01 (00:56) - Wakeup Session
