@@ -6,14 +6,15 @@
 - **Status:** Running (Demo Mode works without API key)
 - **Summary:** Audio-based transformation platform (wellness → military → enterprise → individual development)
 - **Path:** `projects/audio-transformation-tool/code/` (Deno/Fresh)
-- **Runtime:** Port 3001 (HTTP 200 verified Mar 2, 01:26)
+- **Runtime:** Port 3001 (HTTP 200 verified Mar 2, 06:26)
 - **Demo Mode:** ✅ Works without API key (Web Speech API fallback)
 - **Protocol-Specific Demo Content:** ✅ NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY + DEFAULT
-- **Git:** ✅ Synced with Crypt0n1t369/Insight (a5923b4)
+- **Git:** ✅ Synced with Crypt0n1t369/Insight (6f69b39) - upstream diverged
 - **Fork:** https://github.com/Crypt0n1t369/Insight
 - **Bug Fix:** ✅ Fixed ViewState.PLAYING → ViewState.PLAYER TypeScript error
 - **PWA:** ✅ Offline support enabled (service worker)
 - **Deploy:** ✅ Vercel config ready - user needs to connect repo in Vercel dashboard
+- **Upstream:** 5 new commits available (pipeline fixes, check-in system) - manual merge deferred
 - **Next:** Vercel deploy (user action: go to vercel.com → import Crypt0n1t369/Insight)
 
 ### 2. Solar Scout (Lead Generator) - COMPLETED ✅
@@ -45,23 +46,21 @@ _(None yet)_
 
 ---
 
-## Wakeup Session (2026-03-02 05:26)
+## Wakeup Session (2026-03-02 06:26)
 
 ### ✅ Completed This Session
 1. **Server Verified** - Port 3001 responding HTTP 200 ✅
-2. **Git Fork Verified** - Synced with Crypt0n1t369/Insight (b8f671c) ✅
-3. **Manifest Verified** - /manifest.webmanifest returns 200 ✅
-4. **Service Worker Verified** - /sw.js returns 200 ✅
-5. **HTML Response Verified** - Dark theme, PWA meta tags present ✅
-6. **Progress Doc Updated** - PROGRESS.md updated ✅
-7. **Health Check** - All systems operational ✅
+2. **Build Verified** - Clean build (12.15s), PWA v1.2.0 generated ✅
+3. **Upstream Sync Attempted** - origin/main has 5 new commits (pipeline fixes, check-in system) - deferred for manual merge ✅
+4. **Git Commit** - Progress updated (6f69b39) ✅
+5. **Health Check** - All systems operational ✅
 
 ### Current Status
 | Component | Status |
 |-----------|--------|
 | Audio Tool | ✅ Running (port 3001), Demo Mode ready |
-| Git Fork | ✅ Synced with Crypt0n1t369/Insight (b8f671c) |
-| Build | ✅ Clean, PWA enabled |
+| Git Fork | ✅ Local (6f69b39), upstream diverged |
+| Build | ✅ Clean (12.15s), PWA enabled |
 | Vercel Ready | ✅ Config in place (vercel.json) |
 | Demo Protocols | ✅ 7 (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, DEFAULT) |
 | Health | ✅ All systems operational |
@@ -73,6 +72,45 @@ _(None yet)_
 - Vercel deployment ready (vercel.json in place)
 - 4 voice samples (james, marcus, sarah, thomas)
 - PWA icons (192x192, 512x512, apple-touch)
+- PWA Offline: 11 precache entries (922.25 KiB)
+
+### What's Next (Priority Order)
+1. **Deploy to Vercel (User Action)** - Go to vercel.com → import Crypt0n1t369/Insight → deploy
+2. **Test in Production** - Once deployed, verify demo mode audio plays
+3. **Add API Key (Optional)** - Get from https://aistudio.google.com/app/apikey for production AI
+4. **Merge Upstream** - Manual merge of 5 new commits (pipeline fixes, check-in system) - defer until needed
+
+---
+
+## Wakeup Session (2026-03-02 05:56)
+
+### ✅ Completed This Session
+1. **Server Verified** - Port 3001 responding HTTP 200 ✅
+2. **Build Verified** - Clean build (12.34s), PWA v1.2.0 generated ✅
+3. **Git Verified** - Clean working tree (b8f671c) ✅
+4. **Manifest Verified** - /manifest.webmanifest returns 200 ✅
+5. **Service Worker Verified** - /sw.js returns 200 ✅
+6. **PWA Offline** - 11 precache entries (922.25 KiB) ✅
+7. **Health Check** - All systems operational ✅
+
+### Current Status
+| Component | Status |
+|-----------|--------|
+| Audio Tool | ✅ Running (port 3001), Demo Mode ready |
+| Git Fork | ✅ Synced with Crypt0n1t369/Insight (b8f671c) |
+| Build | ✅ Clean (12.34s), PWA enabled |
+| Vercel Ready | ✅ Config in place (vercel.json) |
+| Demo Protocols | ✅ 7 (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, DEFAULT) |
+| Health | ✅ All systems operational |
+
+### What's Ready
+- **Fork URL:** https://github.com/Crypt0n1t369/Insight
+- Demo Mode works without API key (Web Speech API fallback)
+- Server running on http://localhost:3001
+- Vercel deployment ready (vercel.json in place)
+- 4 voice samples (james, marcus, sarah, thomas)
+- PWA icons (192x192, 512x512, apple-touch)
+- PWA Offline: 11 precache entries (922.25 KiB)
 
 ### What's Next (Priority Order)
 1. **Deploy to Vercel (User Action)** - Go to vercel.com → import Crypt0n1t369/Insight → deploy
