@@ -1,3 +1,6 @@
+# Ignore solar-scout generated content
+solar-scout/docs/images/*.jpg
+
 # Ignore sensitive files
 .env
 *.ckpt
