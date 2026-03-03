@@ -9,7 +9,7 @@
 - **Runtime:** Port 3001 (HTTP 200 verified Mar 3, 3:56 PM)
 - **Demo Mode:** ✅ Works without API key (Web Speech API fallback)
 - **Protocol-Specific Demo Content:** ✅ NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY + DEFAULT
-- **Git:** ✅ Fork synced at ff6b7ef (pushed to GitHub)
+- **Git:** ✅ Fork synced at aa324f4 (pushed to GitHub)
 - **Fork:** https://github.com/Crypt0n1t369/Insight
 - **Build:** ✅ Clean (12.19s), PWA v1.2.0
 - **PWA:** ✅ Offline support enabled (service worker, 11 precache entries)
