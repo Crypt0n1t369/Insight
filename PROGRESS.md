@@ -1,18 +1,19 @@
 # Audio Transformation Tool - Progress Report
 
-**Last Updated:** March 3, 2026 — 9:56 PM Cairo (Wakeup Session)
+**Last Updated:** March 3, 2026 — 10:26 PM Cairo (Wakeup Session)
 
 ---
 
-## Wakeup Session (9:56 PM - March 3, 2026)
+## Wakeup Session (10:26 PM - March 3, 2026)
 
 ### Completed This Session
 1. **Server Verified** - Port 3001 responding HTTP 200 ✅
-2. **Build Verified** - Clean build, PWA operational ✅
-3. **Git Verified** - Clean working tree at 11c1b2a (synced to GitHub fork) ✅
-4. **Upstream Checked** - 1 commit ahead (8562fd2 - meditation pipeline fixes), 32 commits behind main
+2. **Build Verified** - Clean build (12.17s), PWA v1.2.0 with 11 precache entries ✅
+3. **Git Verified** - Clean working tree at 750dded (synced to GitHub fork) ✅
+4. **Code Analysis** - Verified demo mode code paths in useMeditationGenerator.ts and audioService.ts ✅
 5. **Demo Mode Verified** - Web Speech API fallback with 7 protocol templates (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, DEFAULT) ✅
-6. **Progress Doc Updated** ✅
+6. **Upstream Status** - 1 commit behind origin/main (8562fd2 - meditation pipeline fixes) - deferred for stability
+7. **Progress Doc Updated** ✅
 
 ---
 
@@ -26,21 +27,22 @@
 | Protocols | 7 CONFIGURED | NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, DEFAULT |
 | PWA | ENABLED | Offline support via service worker (11 entries) |
 | Vercel Config | READY | vercel.json configured |
-| Git Fork | SYNCED | 78265ea pushed to Crypt0n1t369/Insight |
+| Git Fork | SYNCED | 750dded pushed to Crypt0n1t369/Insight |
 
 ---
 
 ## Upstream Analysis
 
-**origin/main (upstream cryptonighter/Insight) - Status unknown:**
-- Last checked: GitHub API returned 500 error
-- Previously tracked: commit `8562fd2` - Fix meditation generation pipeline (deferred for stability)
+**origin/main (upstream cryptonighter/Insight):**
+- 1 new commit available: `8562fd2` - Fix meditation generation pipeline (meditation duration calc, error handling, progress UX, voice mapping, model updates)
+- Status: **1 commit behind** (local is at 750dded, origin/main is at 8562fd2)
+- Deferred for stability - will merge after production deployment confirmed
 
 **Local/Fork Status:** 
-- Local HEAD: 78265ea
-- fork/main: 78265ea (aligned, synced to GitHub)
+- Local HEAD: 750dded
+- fork/main: 750dded (aligned with GitHub)
 
-**Merge Status:** Upstream changes deferred for stability - re-check after production deployment
+**Merge Status:** Upstream changes deferred for stability
 
 ---
 
