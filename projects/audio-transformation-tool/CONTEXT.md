@@ -830,3 +830,52 @@ _Last updated: 2026-03-01 21:26_
 - Fork URL: https://github.com/Crypt0n1t369/Insight
 
 _Last updated: 2026-03-03 21:26_
+
+---
+
+## Wakeup Session (2026-03-03 23:26)
+
+### ✅ Verified Working
+1. **Server Running** - Port 3001 responding HTTP 200 ✅
+2. **Build Passes** - Clean build (12.28s, chunk size warning only)
+3. **Git Synced** - Working tree clean, synced with fork ✅
+4. **PWA Ready** - Service worker with 11 precache entries ✅
+5. **Demo Mode Confirmed** - Works without API key via Web Speech API
+6. **Upstream Reviewed** - Commit 8562fd2 reviewed (meditation pipeline fixes); merge deferred
+
+### 🔄 What Was Done This Session
+1. Verified server running (HTTP 200)
+2. Verified clean build (12.28s)
+3. Reviewed upstream commit 8562fd2 (meditation pipeline improvements)
+4. Attempted merge - conflicts in useMeditationGenerator.ts (demo mode vs upstream)
+5. Decided to defer merge: our demo mode modifications conflict with upstream changes
+6. Merge aborted, working tree remains clean
+
+### ⏳ What's Remaining (Priority Order)
+1. **Deploy to Vercel (User Action Needed)**
+   - Fork: https://github.com/Crypt0n1t369/Insight
+   - Go to: https://vercel.com/new
+   - Import the repo
+   - (Optional) Add VITE_GOOGLE_API_KEY in Vercel env vars for AI features
+   
+2. **Manual Test**
+   - Once deployed, test demo mode in production
+   - Verify audio plays via Web Speech API
+   
+3. **Add API Key (Optional - for production AI)**
+   - Get key: https://aistudio.google.com/app/apikey
+   - Add to Vercel env vars: VITE_GOOGLE_API_KEY
+
+4. **Future: Manual Merge** - When ready, manually merge upstream commit 8562fd2:
+   - Keep demo mode check at start
+   - Incorporate upstream timeout/reset handling
+   - Keep Web Speech fallback for both greeting and batch segments
+
+### Technical Notes
+- Browser automation unavailable on this machine
+- Demo mode stable with 7+ protocol-specific scripts
+- Full AI features require Google API key
+- Fork URL: https://github.com/Crypt0n1t369/Insight
+- Upstream commit improves: duration calc, error handling, progress UX, voice mapping
+
+_Last updated: 2026-03-03 23:26_
