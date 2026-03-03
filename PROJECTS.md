@@ -6,14 +6,14 @@
 - **Status:** Running (Demo Mode works without API key)
 - **Summary:** Audio-based transformation platform (wellness → military → enterprise → individual development)
 - **Path:** `projects/audio-transformation-tool/code/` (Vite + React)
-- **Runtime:** Port 3001 (HTTP 200 verified Mar 3, 8:56 PM)
+- **Runtime:** Port 3001 (HTTP 200 verified Mar 3, 9:26 PM)
 - **Demo Mode:** ✅ Works without API key (Web Speech API fallback)
 - **Protocol-Specific Demo Content:** ✅ NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY + DEFAULT
-- **Git:** ✅ Fork synced at 11c1b2a (pushed to GitHub)
-- **Build:** ✅ Clean (15.91s), PWA v1.2.0
+- **Git:** ✅ Fork synced (current HEAD)
+- **Build:** ✅ Clean (12.27s), PWA v1.2.0
 - **PWA:** ✅ Offline support enabled (service worker, 11 precache entries)
 - **Deploy:** ✅ Vercel config ready - user needs to connect repo in Vercel dashboard
-- **Upstream:** merge deferred (GitHub API error on fetch)
+- **Upstream:** 1 commit available (8562fd2) - merge deferred for stability
 - **Next:** Vercel deploy (user action: go to vercel.com → import Crypt0n1t369/Insight)
 
 ### 2. Solar Scout (Lead Generator) - COMPLETED ✅
