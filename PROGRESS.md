@@ -1,18 +1,16 @@
 # Audio Transformation Tool - Progress Report
 
-**Last Updated:** March 3, 2026 — 7:56 PM Cairo (Wakeup Session)
+**Last Updated:** March 3, 2026 — 8:26 PM Cairo (Wakeup Session)
 
 ---
 
-## Wakeup Session (7:56 PM - March 3, 2026)
+## Wakeup Session (8:26 PM - March 3, 2026)
 
 ### Completed This Session
 1. **Server Verified** - Port 3001 responding HTTP 200
-2. **Build Verified** - Clean build (12.67s), PWA v1.2.0 generated with 11 precache entries
-3. **HTML Response Verified** - Dark theme, PWA meta tags present
-4. **Git Verified** - Clean working tree at d963ce7 (30 commits ahead of origin/main)
-5. **Upstream Analyzed** - origin/main has 1 new commit (8562fd2 - meditation pipeline fixes)
-6. **Progress Doc Updated**
+2. **Build Verified** - Clean build (12.32s), PWA v1.2.0 generated with 11 precache entries (922.25 KiB)
+3. **Git Verified** - Clean working tree, fork aligned at 6da4876 (synced to GitHub)
+4. **Progress Doc Updated**
 
 ---
 
@@ -20,26 +18,27 @@
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| Build | PASS | Vite + React + TypeScript (12.67s) |
+| Build | PASS | Vite + React + TypeScript (12.32s) |
 | Dev Server | RUNNING | Port 3001 responding with HTTP 200 |
 | Demo Mode | IMPLEMENTED | Web Speech API fallback for meditation |
 | Protocols | 7 CONFIGURED | NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, DEFAULT |
 | PWA | ENABLED | Offline support via service worker (11 entries) |
 | Vercel Config | READY | vercel.json configured |
-| Git Fork | SYNCED | d963ce7 (pushed to Crypt0n1t369/Insight) |
+| Git Fork | SYNCED | 6da4876 pushed to Crypt0n1t369/Insight |
 
 ---
 
 ## Upstream Analysis
 
-**origin/main has 1 new commit:**
+**origin/main (upstream cryptonighter/Insight) has 1 new commit:**
 - `8562fd2` - Fix meditation generation pipeline: duration calc, error handling, progress UX, voice mapping, and model updates
 
-**Local is 30 commits ahead of origin/main**
+**Local/Fork Status:** 
+- Local HEAD: 6da4876
+- fork/main: 6da4876 (aligned)
+- origin/main: 8562fd2 (1 commit ahead)
 
-**Merge Status:** Previously attempted - conflicts in useMeditationGenerator.ts - **DEFERRED for stability**
-
-**Recommendation:** Manual merge after Vercel deployment to integrate upstream fixes while preserving demo mode.
+**Merge Status:** Upstream changes contain improvements to meditation pipeline - **DEFERRED for stability**
 
 ---
 
@@ -50,7 +49,7 @@
 
 ### Technical Tasks (Deferred)
 - [ ] **Test in Production** - After Vercel deploy, verify demo mode audio plays
-- [ ] **Merge Upstream Changes:** origin/main has 1 new commit (8562fd2 - meditation pipeline fixes). Conflicts in useMeditationGenerator.ts - needs careful manual resolution.
+- [ ] **Merge Upstream Changes:** origin/main has 1 new commit (8562fd2 - meditation pipeline fixes). Review and merge after deployment if desired.
 
 ### Optional Enhancements
 - [ ] Add Google API key for full TTS (demo mode works without)
@@ -62,5 +61,17 @@
 
 1. **Deploy to Vercel (User Action)** - Go to vercel.com → import Crypt0n1t369/Insight → deploy
 2. **Test in Production** - Once deployed, verify demo mode audio plays
-3. **Merge Upstream** - Integrate origin/main fixes (1 commit) while preserving demo mode
+3. **Merge Upstream (Optional)** - Review origin/main commit (8562fd2) for integration
 4. **Add API Key (Optional)** - Get from https://aistudio.google.com/app/apikey for production AI
+
+---
+
+## Deployment Instructions
+
+1. Go to https://vercel.com
+2. Click "Add New..." → "Project"
+3. Import from GitHub: select `Crypt0n1t369/Insight`
+4. Click "Deploy"
+5. Once deployed, test the audio playback works
+
+**Fork URL:** https://github.com/Crypt0n1t369/Insight
