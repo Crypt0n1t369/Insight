@@ -255,13 +255,14 @@ Project is deployment-ready. All systems operational.
 
 ---
 
-## Wakeup Check - 2026-03-04 22:26
+## Wakeup Check - 2026-03-04 22:56
 
 ### Verification Complete
 - ✅ Server running on port 3001 (HTTP 200)
-- ✅ Build verified clean (PWA v1.2.0 generated)
-- ✅ Git working tree clean
-- ✅ Demo mode operational (7 protocols)
+- ✅ Build verified clean (15.14s)
+- ✅ Git working tree clean (HEAD: 7b2bf9d)
+- ✅ PWA v1.2.0 generated (11 entries, 922.25 KiB)
+- ✅ Demo mode operational (7 protocols: NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, DEFAULT)
 - ✅ Fork synced to Crypt0n1t369/Insight
 
 ### Current Status
@@ -269,4 +270,21 @@ Project is deployment-ready. All systems operational.
 
 ---
 
-*Last updated: 2026-03-04 22:26*
+## What's Next (Requires User Action)
+
+### P0 - Deployment (BLOCKING)
+1. **Deploy to Vercel** - Visit vercel.com → Import Crypt0n1t369/Insight → Deploy
+   - Fork: https://github.com/Crypt0n1t369/Insight
+   - Build command: `npm run build`
+   - Output directory: `dist`
+
+### P1 - After Deploy
+2. **Test in Production** - Verify demo mode audio plays
+3. **Add API Key (Optional)** - Get from https://aistudio.google.com/app/apikey
+
+### P2 - Future
+4. **Manual Merge** - When ready, manually merge upstream commit 8562fd2
+
+---
+
+*Last updated: 2026-03-04 22:56*
