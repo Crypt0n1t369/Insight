@@ -2,7 +2,14 @@
 
 ## Active Projects
 
-### 1. Audio Transformation Tool
+### 1. Synthesis Platform
+- **Status:** Research Complete
+- **Summary:** Unified platform combining Audio Tool + Credo + Synthetic Characters
+- **Documents:** PLATFORM.md, ARCHITECTURE.md, RESEARCH_REPORT.md
+- **Research:** 13 new domains created in memory/research/
+- **Vision:** Interface for distributed collaboration and egoless representation with synthetic characters
+
+### 2. Audio Transformation Tool
 - **Status:** Running (Demo Mode works without API key)
 - **Summary:** Audio-based transformation platform (wellness → military → enterprise → individual development)
 - **Path:** `projects/audio-transformation-tool/code/` (Vite + React)

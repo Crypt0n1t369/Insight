@@ -2,22 +2,21 @@
 
 ## Active Research
 
-### OpenClaw Backbone Architecture
-- **Started:** 2026-02-19
-- **Status:** In Progress
-- **Goal:** Build sophisticated model routing, context management, and second brain system
-- **References:**
-  - Gist: OpenClaw Prompts (10 automation examples)
-  - Gist: OpenClaw Soul (persona system)
-  - Gist: OpenClaw Identity (lobster energy)
-  - Gist: OpenClaw PRD (architecture)
-  - forwardfuture.ai: 25+ Use Cases
+### Synthesis Platform Architecture
+- **Started:** 2026-03-04
+- **Status:** Strategic Planning
+- **Goal:** Unified platform for personal development + distributed collaboration + synthetic characters
+- **Output:** PLATFORM.md, ARCHITECTURE.md in projects/synthesis/
 
-### Model Tier Optimization
-- **Started:** 2026-02-19
-- **Status:** Architecture Defined
-- **Goal:** Efficient token spend with appropriate model selection
-- **Approach:** Task classification → tier routing → escalation protocol
+### Audio Transformation Tool
+- **Started:** 2026-02-28
+- **Status:** MVP Ready (Demo Mode)
+- **Goal:** Ship functional audio protocol tool
+
+### Credibility Platform (Credo)
+- **Started:** 2026-02-20
+- **Status:** Research Complete
+- **Goal:** Awaiting pilot validation
 
 ## Completed Research
 
@@ -74,7 +73,26 @@
 - Code/scripts → appropriate directory
 - Decisions → DECISIONS.md or domain file
 
-## Queue (Backlog)
+## Research Queue (Backlog)
 - [ ] Explore Chatterbox/Resemble AI for audio transformation
-- [x] Investigate Chrome extension for browser automation ✅ DONE
-- [x] Research vector db options (LanceDB, pgvector) ✅ DONE
+- [ ] Synthetic characters - deep dive on persona synthesis
+- [ ] Knowledge graph implementations (Neo4j vs Supabase)
+- [ ] Voice interface latency optimization
+- [ ] Zero-knowledge proof integration
+- [ ] Quadratic voting implementation
+- [ ] Real-time audio streaming protocols
+
+## Completed Research
+### Synthesis Platform (2026-03-04)
+Research areas created:
+- synthetic-characters/ - AI representation of users
+- distributed-collaboration/ - Mechanisms for egoless work
+- knowledge-systems/ - Knowledge graph design
+- identity-systems/ - Anonymous identity with ZK proofs
+- voice-interfaces/ - TTS/STT options
+- neurobiology/ - Advanced topics beyond current protocols
+- engagement/ - Gamification principles
+- governance/ - Decision-making systems
+- technical/ - Implementation stack
+
+### OpenClaw Examples (2026-02-19)
