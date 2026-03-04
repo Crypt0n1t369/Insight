@@ -9,8 +9,8 @@
 - **Runtime:** Port 3001 (HTTP 200 verified Mar 3, 10:26 PM)
 - **Demo Mode:** ✅ Works without API key (Web Speech API fallback)
 - **Protocol-Specific Demo Content:** ✅ NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY + DEFAULT
-- **Git:** ✅ Fork synced (current HEAD ca871b3)
-- **Upstream:** 1 commit behind origin/main (8562fd2) - merge deferred for stability
+- **Git:** ✅ Fork synced (current HEAD 9338e02)
+- **Build:** ✅ Clean (16.82s), PWA v1.2.0
 - **PWA:** ✅ Offline support enabled (service worker, 11 precache entries)
 - **Deploy:** ✅ Vercel config ready - user needs to connect repo in Vercel dashboard
 - **Next:** Vercel deploy (user action: go to vercel.com → import Crypt0n1t369/Insight)
