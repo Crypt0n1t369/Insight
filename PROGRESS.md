@@ -1,18 +1,20 @@
 # Audio Transformation Tool - Progress Report
 
-**Last Updated:** March 4, 2026 — 1:26 AM Cairo (Wakeup Session)
+**Last Updated:** March 4, 2026 — 1:56 AM Cairo (Wakeup Session)
 
 ---
 
-## Wakeup Session (1:26 AM - March 4, 2026)
+## Wakeup Session (1:56 AM - March 4, 2026)
 
 ### Completed This Session
 1. **Server Verified** - Port 3001 responding HTTP 200 ✅
-2. **Build Verified** - Clean build (12.54s), PWA v1.2.0 with 11 precache entries ✅
-3. **Git Verified** - Clean working tree at 9338e02, synced to fork ✅
-4. **HTML Verified** - Dark theme, PWA meta tags present ✅
-5. **Health Check** - Gateway OK, Telegram OK, Memory OK ✅
-6. **Progress Doc Updated** ✅
+2. **Build Verified** - Clean build (12.74s), PWA v1.2.0 with 11 precache entries ✅
+3. **Git Verified** - Fork synced at 9150fb7, 1 commit behind origin/main ✅
+4. **HTML Verified** - Dark theme, PWA meta tags, manifest.webmanifest ✅
+5. **Demo Mode Verified** - 6 protocols + DEFAULT configured (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY)
+6. **Web Speech Integration Verified** - playSegmentWebSpeech() properly wired to audio flow ✅
+7. **Upstream Status** - 1 commit behind (8562fd2 - meditation pipeline fixes, deferred for stability)
+8. **Progress Doc Updated** ✅
 
 ---
 
@@ -20,13 +22,13 @@
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| Build | PASS | Vite + React + TypeScript (16.82s), PWA v1.2.0 |
+| Build | PASS | Vite + React + TypeScript (12.74s), PWA v1.2.0 |
 | Dev Server | RUNNING | Port 3001 responding with HTTP 200 |
-| Demo Mode | IMPLEMENTED | Web Speech API fallback for meditation (7 protocols) |
+| Demo Mode | IMPLEMENTED | Web Speech API fallback for meditation (6 protocols + DEFAULT) |
 | Protocols | 7 CONFIGURED | NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, DEFAULT |
 | PWA | ENABLED | Offline support via service worker (11 entries) |
 | Vercel Config | READY | vercel.json configured |
-| Git Fork | SYNCED | e85c714 pushed to Crypt0n1t369/Insight |
+| Git Fork | SYNCED | 9150fb7 pushed to Crypt0n1t369/Insight |
 | Dist | VERIFIED | All assets present (index.html, sw.js, manifest, icons) |
 
 ---
