@@ -18,14 +18,24 @@
 - **Git:** ✅ Clean (HEAD: 89f5f73)
 - **Next:** Vercel deploy (user action: go to vercel.com → import Crypt0n1t369/Insight)
 
-### 2. Credo (Credibility Platform) - Research Complete
-- **Status:** Research complete, awaiting review
-- **Summary:** Decentralized credibility system for collaborative research
-- **Research Output:** 6 deep dives completed (UX, Security, Gamification, Alternatives, Avatar, Business)
-- **Location:** `memory/research/credibility-platform/`
-- **Next:** Boss review and architectural decisions
+### 2. Credo Collaboration Platform
+- **Status:** Specification Complete (Ready for MVP Build)
+- **Summary:** Infrastructure for distributed, pseudo-anonymous collaboration with egoless representation
+- **Path:** `projects/collaboration-platform/`
+- **Documents:**
+  - STRATEGY.md (24KB - strategic overview)
+  - SPEC.md (24KB - technical specification)
+  - SCHEMA.md (21KB - database schema)
+  - PILOT.md (8KB - Paper Branch pilot plan)
+  - INTEGRATION.md (18KB - synthetic characters & knowledge)
+  - BACKLOG.md (8KB - prioritized feature backlog)
+- **Research:** 6 deep dives in `memory/research/credibility-platform/`
+- **Next:** 
+  1. Boss review of documentation
+  2. Run Paper Branch pilot
+  3. Start MVP build
 
-### 3. Solar Scout (Lead Generator) - COMPLETED ✅
+### 4. Solar Scout (Lead Generator) - COMPLETED ✅
 - **Status:** Fully Operational (No pending tasks)
 - **Summary:** Latvia manufacturing company lead generator with solar detection
 - **Path:** `solar-scout/` (not projects/)
