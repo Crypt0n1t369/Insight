@@ -13,12 +13,12 @@
 - **Status:** Running (Demo Mode works without API key)
 - **Summary:** Audio-based transformation platform (wellness → military → enterprise → individual development)
 - **Path:** `projects/audio-transformation-tool/code/` (Vite + React)
-- **Runtime:** Port 3001 (HTTP 200 verified Mar 5, 15:26)
-- **Last Verified:** 2026-03-05 23:56 (HTTP 200, build clean 12.19s, JCI tests 8/8)
-- **Git:** ✅ Clean (HEAD: 5caa72a), Synced to fork
+- **Runtime:** Port 3001 (HTTP 200 verified Mar 6, 01:26)
+- **Last Verified:** 2026-03-06 01:26 (HTTP 200, JCI tests 8/8, Health 12/12)
+- **Git:** ✅ Clean (HEAD: 4e7cfa0), Synced to fork
 - **PWA:** v1.2.0 (11 precache entries, 922.25 KiB)
 - **Demo Protocols:** 7 (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, DEFAULT)
-- **Next:** Vercel deploy (user action: go to vercel.com → import Crypt0n1t369/Insight)
+- **Next:** Vercel deploy (user action: go to vercel.com → import Crypt0n1t369/Insight → Deploy)
 
 ### 2. Credo Collaboration Platform
 - **Status:** Specification Complete (Ready for MVP Build)
@@ -47,6 +47,7 @@
   - Google Drive integration for organization folders
   - Telegram bot with command handlers
 - **Tests:** 8/8 passing ✅
+- **Runtime:** Bot running (PID 2744968), Portal running on port 8080
 - **Next:** Configure .env with Telegram bot token and run
 
 ### 4. Solar Scout (Lead Generator)
