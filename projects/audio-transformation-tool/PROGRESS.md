@@ -4,6 +4,47 @@
 
 ---
 
+## Wakeup Check - 2026-03-05 22:30 PM
+
+### Verification Complete
+- ✅ Audio Tool Server running on port 3001 (HTTP 200)
+- ✅ JCI Web Portal restarted and running on port 8080 (HTTP 200)
+- ✅ JCI Tests: 8/8 passing (deprecation fix applied)
+- ✅ Git committed & pushed (430b8b7)
+
+### Fix Applied
+- Fixed deprecation warning in test_agents.py: replaced `datetime.utcnow()` with `datetime.now(UTC)`
+- Tests still passing after fix
+- Changes pushed to fork
+
+### Current Status
+| Component | Status |
+|-----------|--------|
+| Audio Tool Server | ✅ Running on port 3001 (HTTP 200) |
+| JCI Web Portal | ✅ Running on port 8080 (HTTP 200) |
+| JCI Tests | ✅ 8/8 passing |
+| Git | ✅ Clean (430b8b7 pushed) |
+
+### What's Working
+- ✅ Audio Tool server on port 3001 (HTTP 200)
+- ✅ Demo Mode functional (Web Speech API fallback)
+- ✅ 7 protocols active (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, DEFAULT)
+- ✅ JCI Org Manager - all tests passing
+- ✅ JCI Web Portal running
+
+### ⚠️ BLOCKED - Waiting on User Action
+1. **Deploy to Vercel** - Go to vercel.com → import Crypt0n1t369/Insight → Deploy
+2. **Test in Production** - Once deployed, verify demo mode audio
+3. **Boss Review Credo Docs** - Review SPEC.md, SCHEMA.md, PILOT.md for MVP build decision
+4. **Start MVP Build** - Once approved, begin M1 (Next.js setup)
+
+### Next Session
+1. Continue verifying systems
+2. Await user action on Vercel deployment
+3. Await user review of Credo documentation
+
+---
+
 ## Wakeup Check - 2026-03-05 21:56 PM
 
 ### Verification Complete
