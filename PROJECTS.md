@@ -50,10 +50,11 @@
 - **Next:** Configure .env with Telegram bot token and run
 
 ### 4. Solar Scout (Lead Generator)
-- **Status:** Completed / Archived (Feb 2026)
+- **Status:** Completed / Archived (Feb 2026) - No pending tasks
 - **Summary:** Latvia manufacturing company lead generator with solar detection
-- **Last Known Results:** 70 total leads (51 qualified companies WITHOUT solar)
-- **Last Checked:** 2026-03-04 - No pending tasks
+- **Results:** 70 total leads (51 qualified companies WITHOUT solar)
+- **Last Checked:** 2026-03-05 - No pending P0-P1 items
+- **Location:** `solar-scout/` (root directory)
 
 ---
 
