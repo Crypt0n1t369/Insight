@@ -37,6 +37,18 @@
   2. Run Paper Branch pilot
   3. Start MVP build
 
+### 3. JCI Org Manager
+- **Status:** Code Complete (Tests Passing)
+- **Summary:** AI-powered organization manager for Telegram groups. Manages projects, collaboration, member engagement, and fluid roles.
+- **Path:** `projects/jci-org-manager/`
+- **Implementation:**
+  - 4 AI Agents: Collaboration, Projects, Engagement, Roles
+  - Database models: Member, Project, Task, Meeting, Opportunity, EngagementLog
+  - Google Drive integration for organization folders
+  - Telegram bot with command handlers
+- **Tests:** 8/8 passing ✅
+- **Next:** Configure .env with Telegram bot token and run
+
 ### 4. Solar Scout (Lead Generator)
 - **Status:** Completed / Archived (Feb 2026)
 - **Summary:** Latvia manufacturing company lead generator with solar detection
