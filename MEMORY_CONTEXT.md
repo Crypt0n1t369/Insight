@@ -1,8 +1,9 @@
 === ATON CONTEXT ===
-Generated: 2026-03-05 02:58
+Generated: 2026-03-05 03:58
 
 ## Active Projects
-- audio-transformation-tool: Unknown
+- audio-transformation-tool: Running (Demo Mode), deployment-ready
+- collaboration-platform: Spec complete, MVP pending user go-ahead
 
 ## Key Decisions
 ### Memory System Architecture
@@ -10,19 +11,12 @@ Generated: 2026-03-05 02:58
 ### Context Management Approach
 - **Decision:** File-based context with auto-generation, not Mem0 cloud
 ### Audio Tool Demo Mode
-
-## Recent Sessions
-### 2026-03-04
-- ### Session Overview
-- Focus: Comprehensive strategy and specification for Credo collaboration platform
-- Duration: Extended research session (several hours)
-
-### 2026-03-02-refund-request
-- Session Key: agent:main:telegram:direct:551447474
-- Session ID: 98e9fbd2-c5e8-4239-8e9e-ee0c4cc7903d
-- Source: telegram
+- **Decision:** Keep demo mode for local dev, deploy to Vercel when ready
 
 ## Quick Status
 - Memory: Fresh (today)
-- Health: 11 checks passing
+- Health: 12/12 checks passing
 - Context: Auto-generated
+
+## Current Blocker
+- **Vercel deployment** - User action required to deploy audio tool
