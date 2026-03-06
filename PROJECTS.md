@@ -54,8 +54,8 @@
 - **Status:** Completed / Archived (Feb 2026) - No pending tasks
 - **Summary:** Latvia manufacturing company lead generator with solar detection
 - **Results:** 70 total leads (51 qualified companies WITHOUT solar)
-- **Last Checked:** 2026-03-05 - No pending P0-P1 items
-- **Location:** `solar-scout/` (root directory)
+- **Last Checked:** 2026-03-06 - No pending P0-P1 items
+- **Location:** `solar-scout/` (root directory - NOT under projects/)
 
 ---
 
