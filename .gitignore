@@ -1,3 +1,6 @@
+# Ignore inbound media (user uploads)
+media/inbound/
+
 # Ignore solar-scout generated content
 solar-scout/docs/images/*.jpg
 
