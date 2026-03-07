@@ -38,17 +38,23 @@
   3. Start MVP build
 
 ### 3. JCI Org Manager
-- **Status:** Code Complete (Tests Passing)
+- **Status:** Enhanced (Inline Keyboards + Smart Responses)
 - **Summary:** AI-powered organization manager for Telegram groups. Manages projects, collaboration, member engagement, and fluid roles.
 - **Path:** `projects/jci-org-manager/`
 - **Implementation:**
   - 4 AI Agents: Collaboration, Projects, Engagement, Roles
   - Database models: Member, Project, Task, Meeting, Opportunity, EngagementLog
   - Google Drive integration for organization folders
-  - Telegram bot with command handlers
+  - Telegram bot with command handlers + inline keyboards + callback queries
 - **Tests:** 8/8 passing ✅
 - **Runtime:** Portal running on port 8080 (webhook_bot.py)
-- **Next:** Configure .env with Telegram bot token and run
+- **Git:** ✅ Committed (f81be38) - Enhanced with inline keyboards
+- **Features Added:**
+  - Callback query handlers for inline keyboard interactions
+  - /menu, /leaderboard, /network commands
+  - /onboard as standalone command
+  - Better group chat bot mention handling
+- **Next:** Configure .env with Telegram bot token for production
 
 ### 4. Solar Scout (Lead Generator)
 - **Status:** Completed / Archived (Feb 2026) - No pending tasks
