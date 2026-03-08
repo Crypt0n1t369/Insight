@@ -14,7 +14,7 @@
 - **Summary:** Audio-based transformation platform (wellness → military → enterprise → individual development)
 - **Path:** `projects/audio-transformation-tool/code/` (Vite + React)
 - **Runtime:** Port 3001 (HTTP 200 verified Mar 8, 02:56)
-- **Last Verified:** 2026-03-08 10:58 (HTTP 200, Git synced)
+- **Last Verified:** 2026-03-08 16:26 (HTTP 200, Git synced)
 - **Git:** ✅ Clean (9d2c1ee), Synced to origin
 - **PWA:** v1.2.0 (11 precache entries, 922.25 KiB)
 - **Demo Protocols:** 11 (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, DEFAULT, FUTURE_SELF, IDENTITY, NARRATIVE, GENERAL)
@@ -47,8 +47,8 @@
   - Google Drive integration for organization folders
   - Telegram bot with command handlers + inline keyboards + callback queries
 - **Tests:** 8/8 passing ✅ (verified Mar 8, 10:58)
-- **Runtime:** Portal running on port 8080 (HTTP 200 verified Mar 8, 10:58)
-- **Git:** ✅ Committed and synced (295f07e)
+- **Runtime:** Portal running on port 8080 (HTTP 200 verified Mar 8, 16:26)
+- **Git:** ✅ Committed and synced (c8412f4)
 - **Features Added:**
   - Callback query handlers for inline keyboard interactions
   - /menu, /leaderboard, /network commands
@@ -56,6 +56,10 @@
   - Better group chat bot mention handling
   - Member level management (/setlevel command for admins)
   - Improved task workflow help text
+  - **NEW: /msg and /m commands** - Direct messaging between members
+  - **NEW: Conversational responses** - Greetings, thanks, help triggers
+  - **NEW: Improved tab UX** - Better active state management, loading placeholders
+  - **NEW: Telegram command suggestions** - Bot commands registered with Telegram
 - **Next:** Configure .env with Telegram bot token for production
 
 ### 4. Solar Scout (Lead Generator)
