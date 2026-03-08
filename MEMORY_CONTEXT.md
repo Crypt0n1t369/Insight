@@ -1,31 +1,36 @@
 === ATON CONTEXT ===
-Generated: 2026-03-08 17:27
+Generated: 2026-03-08 19:57
 
 ## Active Projects
-- audio-transformation-tool: Unknown
+- Audio Transformation Tool: Running (port 3001), Demo Mode ready
+- JCI Org Manager: Running (port 8080), LLM-powered bot
+- Credo Collaboration Platform: Spec complete, waiting on boss review
 
 ## Key Decisions
-### Memory System Architecture
-- **Decision:** Use hybrid approach (TF-IDF now, vector embeddings later)
-### Context Management Approach
-- **Decision:** File-based context with auto-generation, not Mem0 cloud
-### Audio Tool Demo Mode
+- Memory System: Hybrid TF-IDF + vector embeddings
+- Context Management: File-based (not Mem0 cloud)
+- Audio Tool Demo Mode: Works without API key
 
 ## Recent Sessions
-### 2026-03-08
-- Services verified: Audio Tool (3001) ✅, JCI Portal (8080) ✅
+### 2026-03-08 (19:56 Cairo)
+- Health check: 12/12 passing ✅
+- Audio Tool: HTTP 200 ✅
+- JCI Portal: HTTP 200 ✅
+- Git: Clean, synced to origin ✅
+- Committed: .gitignore update + memory file (8f7b94b)
 
-### 2026-03-07
-- ### Systems Verified
-- Audio Tool (port 3001): ✅ HTTP 200
-- JCI Portal (port 8080): ✅ HTTP 200
-
-### 2026-03-06
-- ### Morning Wakeup (04:56 Cairo)
-- Audio Tool: HTTP 200 ✓, Build clean (12.27s) ✓, PWA v1.2.0 (11 entries, 922.25 KiB) ✓
-- JCI Portal: Running on port 8080, HTTP 200 ✓
+### 2026-03-08 (earlier)
+- Multiple JCI Portal improvements committed
+- Voice message handling added
+- Debug panel added
 
 ## Quick Status
 - Memory: Fresh (today)
-- Health: 11 checks passing
-- Context: Auto-generated
+- Health: 12/12 passing
+- Git: Clean, on master, synced
+- Services: Both running ✅
+
+## BLOCKED (User Action Required)
+1. Deploy Audio Tool to Vercel
+2. Boss review Credo documentation
+3. Add MINIMAX_API_KEY to JCI Bot .env
