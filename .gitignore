@@ -18,3 +18,7 @@ solar-scout/docs/images/*.jpg
 # Ignore runtime/generated
 node_modules/
 memory/vector-index.json
+
+# Ignore system-specific scripts
+scripts/enable_ollama_control.sh
+scripts/openclaw.service
