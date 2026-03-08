@@ -14,8 +14,8 @@
 - **Summary:** Audio-based transformation platform (wellness → military → enterprise → individual development)
 - **Path:** `projects/audio-transformation-tool/code/` (Vite + React)
 - **Runtime:** Port 3001 (HTTP 200 verified Mar 8, 02:56)
-- **Last Verified:** 2026-03-08 08:56 (HTTP 200, Git synced)
-- **Git:** ✅ Clean (c55708a), Synced to fork
+- **Last Verified:** 2026-03-08 10:58 (HTTP 200, Git synced)
+- **Git:** ✅ Clean (9d2c1ee), Synced to origin
 - **PWA:** v1.2.0 (11 precache entries, 922.25 KiB)
 - **Demo Protocols:** 11 (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, DEFAULT, FUTURE_SELF, IDENTITY, NARRATIVE, GENERAL)
 - **Next:** Vercel deploy (user action: go to vercel.com → import Crypt0n1t369/Insight → Deploy)
@@ -46,14 +46,16 @@
   - Database models: Member, Project, Task, Meeting, Opportunity, EngagementLog
   - Google Drive integration for organization folders
   - Telegram bot with command handlers + inline keyboards + callback queries
-- **Tests:** 8/8 passing ✅ (verified Mar 8, 02:56)
-- **Runtime:** Portal running on port 8080 (HTTP 200 verified Mar 8, 02:56)
-- **Git:** ✅ Committed and synced
+- **Tests:** 8/8 passing ✅ (verified Mar 8, 10:58)
+- **Runtime:** Portal running on port 8080 (HTTP 200 verified Mar 8, 10:58)
+- **Git:** ✅ Committed and synced (295f07e)
 - **Features Added:**
   - Callback query handlers for inline keyboard interactions
   - /menu, /leaderboard, /network commands
   - /onboard as standalone command
   - Better group chat bot mention handling
+  - Member level management (/setlevel command for admins)
+  - Improved task workflow help text
 - **Next:** Configure .env with Telegram bot token for production
 
 ### 4. Solar Scout (Lead Generator)
