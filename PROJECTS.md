@@ -48,7 +48,7 @@
   - Telegram bot with command handlers + inline keyboards + callback queries
 - **Tests:** 8/8 passing ✅ (verified Mar 8, 10:58)
 - **Runtime:** Portal running on port 8080 (HTTP 200 verified Mar 8, 16:26)
-- **Git:** ✅ Committed and synced (c8412f4)
+- **Git:** ✅ Committed and synced (ecb68d3)
 - **Features Added:**
   - Callback query handlers for inline keyboard interactions
   - /menu, /leaderboard, /network commands
