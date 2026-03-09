@@ -19,6 +19,10 @@ solar-scout/docs/images/*.jpg
 node_modules/
 memory/vector-index.json
 
+# Ignore Next.js build artifacts
+projects/*/frontend/.next
+projects/*/frontend/node_modules
+
 # Ignore system-specific scripts
 scripts/enable_ollama_control.sh
 scripts/openclaw.service
