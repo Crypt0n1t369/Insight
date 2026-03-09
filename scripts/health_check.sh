@@ -155,4 +155,39 @@ else
     echo "WARN - only $SERVICES_OK/3 running" | tee -a $LOG_FILE
 fi
 
+# H15: CPU Load
+echo -n "H15: CPU load... " | tee -a $LOG_FILE
+LOAD=$(uptime | awk -F'load average:' '{print $2}' | awk '{print $1}' | sed 's/,//')
+LOAD_INT=$(echo "$LOAD" | cut -d. -f1)
+if [ "$LOAD_INT" -lt 4 ]; then
+    echo "OK (load: $LOAD)" | tee -a $LOG_FILE
+else
+    echo "WARN - high load: $LOAD" | tee -a $LOG_FILE
+fi
+
+# H16: Disk Space
+echo -n "H16: Disk space... " | tee -a $LOG_FILE
+DISK_USED=$(df -h . | awk 'NR==2{print $5}' | sed 's/%//')
+if [ "$DISK_USED" -lt 80 ]; then
+    echo "OK (${DISK_USED}% used)" | tee -a $LOG_FILE
+else
+    echo "WARN - ${DISK_USED}% used" | tee -a $LOG_FILE
+fi
+
+# H17: Credo Service
+echo -n "H17: Credo API... " | tee -a $LOG_FILE
+if curl -s http://localhost:3000/health 2>/dev/null | grep -q "ok"; then
+    echo "OK" | tee -a $LOG_FILE
+else
+    echo "WARN - not responding" | tee -a $LOG_FILE
+fi
+
+# H18: OpenClaw Gateway
+echo -n "H18: Gateway... " | tee -a $LOG_FILE
+if pgrep -f "openclaw-gateway" > /dev/null 2>&1; then
+    echo "OK" | tee -a $LOG_FILE
+else
+    echo "WARN - not running" | tee -a $LOG_FILE
+fi
+
 echo "=== Health Check Complete ===" | tee -a $LOG_FILE
