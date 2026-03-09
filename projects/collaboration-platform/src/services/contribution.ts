@@ -1,0 +1,167 @@
+// Contribution Service - Ideas, Comments, Resources
+// Version: 0.1.0 (MVP)
+
+import { v4 as uuidv4 } from 'uuid';
+import { 
+  Contribution, 
+  CreateContributionInput, 
+  ContributionSchema,
+  ContributionType 
+} from '../types/index.js';
+import { identityService } from './identity.js';
+import { branchService } from './branch.js';
+
+// In-memory storage for MVP
+const contributions = new Map<string, Contribution>();
+
+/**
+ * Contribution Service - handles all content contributions
+ */
+export class ContributionService {
+  
+  /**
+   * Create a new contribution
+   */
+  async createContribution(authorId: string, input: CreateContributionInput): Promise<Contribution> {
+    const now = new Date().toISOString();
+    
+    const contribution: Contribution = {
+      id: uuidv4(),
+      author_id: authorId,
+      branch_id: input.branch_id,
+      parent_id: input.parent_id ?? null,
+      type: input.type,
+      content: input.content,
+      endorsements: 0,
+      created_at: now,
+      updated_at: now,
+    };
+    
+    const validated = ContributionSchema.parse(contribution);
+    contributions.set(validated.id, validated);
+    
+    // Award credibility based on contribution type
+    const credibilityMap: Record<ContributionType, number> = {
+      'idea': 3,
+      'resource': 3,
+      'synthesis': 5,
+      'question': 2,
+      'comment': 1,
+    };
+    
+    const points = credibilityMap[input.type];
+    await identityService.updateCredibility(authorId, points, `Created ${input.type}`);
+    
+    return validated;
+  }
+  
+  /**
+   * Get contribution by ID
+   */
+  async getContributionById(id: string): Promise<Contribution | null> {
+    return contributions.get(id) ?? null;
+  }
+  
+  /**
+   * Get contributions for a branch
+   */
+  async getBranchContributions(
+    branchId: string, 
+    options?: {
+      type?: ContributionType;
+      parentId?: string | null;
+      limit?: number;
+      offset?: number;
+    }
+  ): Promise<{ contributions: Contribution[]; total: number }> {
+    let result = Array.from(contributions.values())
+      .filter(c => c.branch_id === branchId);
+    
+    // Filter by type
+    if (options?.type) {
+      result = result.filter(c => c.type === options.type);
+    }
+    
+    // Filter by parent (null = top-level)
+    if (options?.parentId !== undefined) {
+      result = result.filter(c => c.parent_id === options.parentId);
+    }
+    
+    // Sort by endorsements (popular first), then newest
+    result.sort((a, b) => {
+      if (b.endorsements !== a.endorsements) {
+        return b.endorsements - a.endorsements;
+      }
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    });
+    
+    const total = result.length;
+    const offset = options?.offset ?? 0;
+    const limit = options?.limit ?? 20;
+    
+    return {
+      contributions: result.slice(offset, offset + limit),
+      total,
+    };
+  }
+  
+  /**
+   * Get top-level contributions (ideas)
+   */
+  async getIdeas(branchId: string, limit = 20, offset = 0): Promise<{ contributions: Contribution[]; total: number }> {
+    return this.getBranchContributions(branchId, { 
+      type: 'idea', 
+      parentId: null, 
+      limit, 
+      offset 
+    });
+  }
+  
+  /**
+   * Endorse a contribution
+   */
+  async endorse(contributionId: string, userId: string): Promise<Contribution | null> {
+    const contribution = contributions.get(contributionId);
+    if (!contribution) return null;
+    
+    const updated: Contribution = {
+      ...contribution,
+      endorsements: contribution.endorsements + 1,
+      updated_at: new Date().toISOString(),
+    };
+    
+    contributions.set(contributionId, updated);
+    
+    // Award credibility to author
+    await identityService.updateCredibility(
+      contribution.author_id, 
+      1, 
+      'Received endorsement'
+    );
+    
+    return updated;
+  }
+  
+  /**
+   * Get user's contributions
+   */
+  async getUserContributions(userId: string): Promise<Contribution[]> {
+    return Array.from(contributions.values())
+      .filter(c => c.author_id === userId)
+      .sort((a, b) => 
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+  }
+  
+  /**
+   * Get contribution count for a branch
+   */
+  async getBranchContributionCount(branchId: string): Promise<number> {
+    return Array.from(contributions.values())
+      .filter(c => c.branch_id === branchId)
+      .length;
+  }
+}
+
+// Export singleton instance
+export const contributionService = new ContributionService();

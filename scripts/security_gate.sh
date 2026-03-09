@@ -14,7 +14,7 @@ check_input() {
     local input="$1"
     
     # Command injection patterns
-    if echo "$input" | grep -E "(;|\||&&|\$\(|`)" >/dev/null 2>&1; then
+    if echo "$input" | grep -E '(;|\||&&|\$\(|`)' >/dev/null 2>&1; then
         log_attempt "Potential command injection detected"
         return 1
     fi
@@ -28,6 +28,12 @@ check_input() {
     # Prompt injection
     if echo "$input" | grep -iE "(ignore previous|forget|system prompt|you are now)" >/dev/null 2>&1; then
         log_attempt "Potential prompt injection detected"
+        return 1
+    fi
+    
+    # SQL injection patterns
+    if echo "$input" | grep -iE "(union.*select|insert into|drop table|' or '1'|' or '0)" >/dev/null 2>&1; then
+        log_attempt "Potential SQL injection detected"
         return 1
     fi
     

@@ -126,4 +126,33 @@ else
     echo "WARN" | tee -a $LOG_FILE
 fi
 
+# H13: Memory Usage
+echo -n "H13: Memory usage... " | tee -a $LOG_FILE
+MEM_AVAIL=$(free -m | awk 'NR==2{print $7}')
+if [ "$MEM_AVAIL" -gt 500 ]; then
+    echo "OK (${MEM_AVAIL}MB free)" | tee -a $LOG_FILE
+elif [ "$MEM_AVAIL" -gt 200 ]; then
+    echo "WARN - ${MEM_AVAIL}MB free" | tee -a $LOG_FILE
+else
+    echo "CRITICAL - ${MEM_AVAIL}MB free" | tee -a $LOG_FILE
+fi
+
+# H14: Critical Services
+echo -n "H14: Services... " | tee -a $LOG_FILE
+SERVICES_OK=0
+if curl -s -o /dev/null -w "%{http_code}" http://localhost:3001 2>/dev/null | grep -q "200"; then
+    SERVICES_OK=$((SERVICES_OK + 1))
+fi
+if curl -s -o /dev/null -w "%{http_code}" http://localhost:8080 2>/dev/null | grep -q "200"; then
+    SERVICES_OK=$((SERVICES_OK + 1))
+fi
+if pgrep -f "openclaw-gateway" > /dev/null 2>&1; then
+    SERVICES_OK=$((SERVICES_OK + 1))
+fi
+if [ $SERVICES_OK -ge 2 ]; then
+    echo "OK ($SERVICES_OK/3 running)" | tee -a $LOG_FILE
+else
+    echo "WARN - only $SERVICES_OK/3 running" | tee -a $LOG_FILE
+fi
+
 echo "=== Health Check Complete ===" | tee -a $LOG_FILE
