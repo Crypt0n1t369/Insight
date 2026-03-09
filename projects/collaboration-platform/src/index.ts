@@ -8,6 +8,7 @@ import helmet from 'helmet';
 import { identityService } from './services/identity.js';
 import { branchService } from './services/branch.js';
 import { contributionService } from './services/contribution.js';
+import { proposalService } from './services/proposal.js';
 
 import type { 
   CreateUserInput, 
@@ -286,6 +287,124 @@ app.get('/api/stats', async (_req, res) => {
   }
 });
 
+// ============================================
+// Proposal Routes
+// ============================================
+
+// Create proposal
+app.post('/api/proposals', async (req, res) => {
+  try {
+    const input: CreateProposalInput = req.body;
+    const authorId = req.headers['x-user-id'] as string;
+    
+    if (!authorId) {
+      return res.status(401).json({ success: false, error: 'User ID required' });
+    }
+    
+    const proposal = await proposalService.createProposal(authorId, input);
+    res.status(201).json({ success: true, data: proposal });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
+// Get proposal by ID
+app.get('/api/proposals/:id', async (req, res) => {
+  try {
+    const proposal = await proposalService.getProposalById(req.params.id);
+    if (!proposal) {
+      return res.status(404).json({ success: false, error: 'Proposal not found' });
+    }
+    res.json({ success: true, data: proposal });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
+// Get branch proposals
+app.get('/api/branches/:branchId/proposals', async (req, res) => {
+  try {
+    const limit = Math.min(parseInt(req.query.limit as string) || 20, 100);
+    const offset = parseInt(req.query.offset as string) || 0;
+    const status = req.query.status as any;
+    
+    const result = await proposalService.getBranchProposals(
+      req.params.branchId, 
+      { status, limit, offset }
+    );
+    
+    res.json({ 
+      success: true, 
+      data: result.proposals,
+      meta: { total: result.total, limit, offset }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
+// Vote on proposal
+app.post('/api/proposals/:id/vote', async (req, res) => {
+  try {
+    const input: CreateVoteInput = req.body;
+    const voterId = req.headers['x-user-id'] as string;
+    
+    if (!voterId) {
+      return res.status(401).json({ success: false, error: 'User ID required' });
+    }
+    
+    const vote = await proposalService.vote(req.params.id, voterId, input);
+    if (!vote) {
+      return res.status(404).json({ success: false, error: 'Proposal not found' });
+    }
+    res.status(201).json({ success: true, data: vote });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
+// Close a proposal
+app.post('/api/proposals/:id/close', async (req, res) => {
+  try {
+    const proposal = await proposalService.closeProposal(req.params.id);
+    if (!proposal) {
+      return res.status(404).json({ success: false, error: 'Proposal not found or already closed' });
+    }
+    res.json({ success: true, data: proposal });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
+// Withdraw proposal
+app.post('/api/proposals/:id/withdraw', async (req, res) => {
+  try {
+    const userId = req.headers['x-user-id'] as string;
+    
+    if (!userId) {
+      return res.status(401).json({ success: false, error: 'User ID required' });
+    }
+    
+    const proposal = await proposalService.withdrawProposal(req.params.id, userId);
+    if (!proposal) {
+      return res.status(404).json({ success: false, error: 'Proposal not found' });
+    }
+    res.json({ success: true, data: proposal });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
+// Get proposal votes
+app.get('/api/proposals/:id/votes', async (req, res) => {
+  try {
+    const votes = await proposalService.getProposalVotes(req.params.id);
+    res.json({ success: true, data: votes });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`
@@ -302,6 +421,10 @@ app.listen(PORT, () => {
 ║   - POST   /api/contributions  Create contribution║
 ║   - GET    /api/contributions  List contributions║
 ║   - POST   /api/contributions/:id/endorse       ║
+║   - POST   /api/proposals        Create proposal ║
+║   - GET    /api/proposals/:id    Get proposal    ║
+║   - POST   /api/proposals/:id/vote             ║
+║   - POST   /api/proposals/:id/close            ║
 ╚═══════════════════════════════════════════════════╝
   `);
 });
