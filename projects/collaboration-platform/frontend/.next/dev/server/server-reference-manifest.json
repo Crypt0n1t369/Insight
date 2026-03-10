@@ -1,5 +1,21 @@
 {
-  "node": {},
+  "node": {
+    "4093d17e67aa4316fba97cdb774742e14d03727b38": {
+      "workers": {
+        "app/join/page": {
+          "moduleId": "[project]/projects/collaboration-platform/frontend/.next-internal/server/app/join/page/actions.js { ACTIONS_MODULE0 => \"[project]/projects/collaboration-platform/frontend/src/app/join/page.tsx [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "projects/collaboration-platform/frontend/src/app/join/page.tsx"
+        }
+      },
+      "layer": {
+        "app/join/page": "rsc"
+      },
+      "filename": "projects/collaboration-platform/frontend/src/app/join/page.tsx",
+      "exportedName": "$$RSC_SERVER_ACTION_0"
+    }
+  },
   "edge": {},
   "encryptionKey": "pPleUIyT1t+eNBB4FKbrsaXTZIvsOMLLRbga4cHRRh4="
 }
