@@ -1,6 +1,6 @@
 # PROGRESS.md - Project Progress Report
 
-**Generated:** Tuesday, March 10th, 2026 — 6:05 PM (Africa/Cairo)
+**Generated:** Tuesday, March 10th, 2026 — 7:05 PM (Africa/Cairo)
 
 ---
 
@@ -12,10 +12,25 @@
 | JCI Portal | ✅ Running | Port 8080, HTTP 200 |
 | Credo API | ✅ Running | Port 3000, health OK |
 | Credo Frontend | ✅ Running | Port 3002 (dev mode), HTTP 200 |
-| JCI Tests | ✅ Passing | 8/8 (1.35s) |
-| Git | ✅ Clean | Synced to origin (186e1d6) |
+| JCI Tests | ✅ Passing | 8/8 (1.79s) |
+| Git | ✅ Clean | Synced to origin (134f052) |
 
 ---
+
+### Tuesday, March 10th - Wakeup (6:56 PM)
+- ✅ Verified all services: Audio (3001), JCI (8080), Credo API (3000), Credo Frontend (3002) - all HTTP 200
+- ✅ JCI tests: 8/8 passing (1.79s)
+- ✅ Credo API stats: 1 user, 1 branch
+- ✅ Tested proposal API: Created test proposal, voted on it successfully
+- 🎯 IMPROVEMENTS MADE:
+  - Added `/branches/[id]/proposals` - List proposals with voting
+  - Added `/branches/[id]/proposals/new` - Create proposal form
+  - Added proposals link to branch detail page
+  - Matches API schema: type (governance/branch/membership/resource), content, support
+- ✅ Build verified: Next.js build succeeds with new routes
+- ✅ Git: Committed and pushed (134f052)
+- ✅ All systems operational
+- 🔍 Reviewed PROGRESS.md, PROJECTS.md, HEARTBEAT.md - no pending tasks
 
 ### Tuesday, March 10th - Wakeup (6:26 PM)
 - ✅ Verified all services: Audio (3001), JCI (8080), Credo API (3000), Credo Frontend (3002) - all HTTP 200
@@ -140,9 +155,13 @@
   - `/` - Landing page with stats ✅
   - `/join` - Anonymous signup form ✅
   - `/branches` - Branch list ✅
+  - `/branches/new` - Create new branch ✅
   - `/branches/[id]` - Branch detail with contributions ✅
+  - `/branches/[id]/contribute` - Add contribution ✅
+  - `/branches/[id]/proposals` - List & vote on proposals ✅
+  - `/branches/[id]/proposals/new` - Create proposal ✅
   - `/profile` - User profile placeholder ✅
-- **Verified:** Mar 9, 22:58 - HTTP 200 ✅
+- **Verified:** Mar 10, 18:56 - HTTP 200 ✅
 
 ### 2. Audio Transformation Tool ✅ RUNNING
 - **Status:** Running in Demo Mode
