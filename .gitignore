@@ -22,6 +22,7 @@ memory/vector-index.json
 # Ignore Next.js build artifacts
 projects/*/frontend/.next
 projects/*/frontend/node_modules
+projects/*/frontend/.next/**
 
 # Ignore system-specific scripts
 scripts/enable_ollama_control.sh
