@@ -268,6 +268,19 @@ export default function BranchPage({ params }: { params: Promise<{ id: string }>
           <p>No contributions yet. Be the first to add one!</p>
         )}
       </section>
+
+      {/* Proposals Section */}
+      <section>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <h2>Proposals</h2>
+          <Link href={`/branches/${branch.id}/proposals`} className="btn">
+            View Proposals →
+          </Link>
+        </div>
+        <p style={{ color: 'var(--text-muted)' }}>
+          Proposals allow branch members to vote on important decisions.
+        </p>
+      </section>
     </div>
   );
 }
