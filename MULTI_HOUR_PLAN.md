@@ -15,7 +15,7 @@
 - [x] Audio Tool running (3001) ✅
 - [x] JCI Portal running (8080) ✅
 - [x] JCI Tests 8/8 passing ✅
-- [x] Credo API running (3003) ✅
+- [x] Credo API running (3000) ✅
 - [x] Credo: user, branch, contributions, endorsements, proposals, voting all tested ✅
 - [x] Paper Branch pilot created
 - [x] PROJECTS.md updated
@@ -29,7 +29,7 @@
 |-----------|--------|
 | Audio Tool (3001) | ✅ Running |
 | JCI Portal (8080) | ✅ Running |
-| Credo API (3003) | ✅ Running |
+| Credo API (3000) | ✅ Running |
 | JCI Tests | ✅ 8/8 passed |
 | Git | ✅ Clean (committed) |
 | Health Check | ✅ 18/18 passed |
