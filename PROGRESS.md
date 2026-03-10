@@ -1,6 +1,6 @@
 # PROGRESS.md - Project Progress Report
 
-**Generated:** Tuesday, March 10th, 2026 — 5:56 PM (Africa/Cairo)
+**Generated:** Tuesday, March 10th, 2026 — 6:05 PM (Africa/Cairo)
 
 ---
 
@@ -11,22 +11,22 @@
 | Audio Tool | ✅ Running | Port 3001 (frontend), HTTP 200 |
 | JCI Portal | ✅ Running | Port 8080, HTTP 200 |
 | Credo API | ✅ Running | Port 3000, health OK |
-| Credo Frontend | ✅ Running | Port 3002, HTTP 200 |
-| JCI Tests | ✅ Passing | 8/8 (1.65s) |
-| Git | ✅ Clean | Synced to origin (c9be8dd) |
+| Credo Frontend | ✅ Running | Port 3002 (dev mode), HTTP 200 |
+| JCI Tests | ✅ Passing | 8/8 (1.35s) |
+| Git | ✅ Clean | Synced to origin (186e1d6) |
 
 ---
 
-### Tuesday, March 10th - Wakeup (5:56 PM)
+### Tuesday, March 10th - Wakeup (6:05 PM)
 - ✅ Verified all services: Audio (3001), JCI (8080), Credo API (3000), Credo Frontend (3002) - all HTTP 200
-- ✅ Credo Frontend: Rebuilt and restarted with new features
+- ✅ JCI tests: 8/8 passing (1.35s)
+- ✅ Credo API: Added new endpoint GET /api/users/:id/contributions
+- ✅ Credo Frontend: Profile page now shows user's contributions list
 - 🎯 IMPROVEMENTS MADE:
-  - Profile page now fetches/displays user data from API
-  - Added localStorage persistence for user ID (auto-save)
-  - Added endorsement buttons on branch contributions
-  - Visual tree view for branch hierarchy
-  - Added title field to contribution form
-- ✅ Git: Committed and pushed (c9be8dd)
+  - Added API endpoint: GET /api/users/:id/contributions
+  - Profile page now displays all user's contributions with type, content, endorsements
+  - Each contribution shows link back to its branch
+- ✅ Git: Committed and pushed (186e1d6)
 - ✅ All systems operational
 - ✅ Verified all services: Audio (3001), JCI (8080), Credo API (3000), Credo Frontend (3002) - all HTTP 200
 - ✅ JCI tests: 8/8 passing (2.38s)
@@ -176,13 +176,12 @@
    - Add to projects/jci-org-manager/.env to enable LLM features
    - **Status:** User action required
 
-### ✅ COMPLETED THIS SESSION
-- Profile page now fully functional with user data from API
-- localStorage persistence for user ID
-- Endorsement buttons on branch contributions
-- Visual tree view for branch hierarchy
-- Rebuilt and restarted Credo Frontend (port 3002)
+### ✅ COMPLETED TODAY
+- Added API endpoint: GET /api/users/:id/contributions
+- Profile page now shows all user's contributions
+- Each contribution displays: type, content, endorsements, link to branch
 - All services verified: Audio (3001), JCI (8080), Credo API (3000), Credo Frontend (3002)
+- JCI tests: 8/8 passing
 
 ### 🔄 DEVELOPMENT (MVP Phase)
 
@@ -201,8 +200,9 @@ The Credo platform has basic frontend pages. Remaining items:
 | M9 | Build landing page | ✅ Done |
 | M10 | Build branch view page | ✅ Done |
 | M11 | Build contribution form | ✅ Done |
-| M12 | Build user profile page | ✅ Done (enhanced with localStorage) |
-| M13 | Deploy to Vercel | Not Started |
+| M12 | Build user profile page | ✅ Done (enhanced with contributions list) |
+| M13 | User contributions API | ✅ Done |
+| M14 | Deploy to Vercel | Not Started |
 
 ---
 
@@ -215,7 +215,7 @@ The Credo platform has basic frontend pages. Remaining items:
 
 ### I Can Do (Available)
 4. Add "Create Branch" page for Credo frontend
-5. Add user profile page showing user's contributions
+5. ~~Add user profile page showing user's contributions~~ ✅ Done
 6. Run full security audit (read-only assessment) - with approval
 7. Clean up workspace root files
 8. Review/update memory files
@@ -227,7 +227,8 @@ The Credo platform has basic frontend pages. Remaining items:
 
 | Project | Status | Next Action |
 |---------|--------|-------------|
-| Credo Platform | Running | Basic frontend working (port 3002) |
+| Credo Platform | Running | Frontend with user contributions (port 3002) |
+| Credo API | Running | Added /users/:id/contributions endpoint |
 | Audio Tool | Running (Demo) | User deploys to Vercel |
 | JCI Org Manager | Operational | Needs API key for LLM |
 
