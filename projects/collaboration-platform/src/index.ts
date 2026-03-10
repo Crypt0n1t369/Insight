@@ -93,6 +93,16 @@ app.post('/api/users/:id/wallet', async (req, res) => {
   }
 });
 
+// Get user's contributions
+app.get('/api/users/:id/contributions', async (req, res) => {
+  try {
+    const contributions = await contributionService.getUserContributions(req.params.id);
+    res.json({ success: true, data: contributions });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
 // Get leaderboard
 app.get('/api/users/leaderboard', async (_req, res) => {
   try {

@@ -13,6 +13,15 @@ interface User {
   endorsements_received: number;
 }
 
+interface Contribution {
+  id: string;
+  branch_id: string;
+  type: 'idea' | 'comment' | 'question' | 'resource' | 'synthesis';
+  content: string;
+  endorsements: number;
+  created_at: string;
+}
+
 export default function ProfilePage() {
   const [userId, setUserId] = useState('');
   const [user, setUser] = useState<User | null>(null);
@@ -21,6 +30,8 @@ export default function ProfilePage() {
   const [newUsername, setNewUsername] = useState('');
   const [newDisplayName, setNewDisplayName] = useState('');
   const [creating, setCreating] = useState(false);
+  const [contributions, setContributions] = useState<Contribution[]>([]);
+  const [loadingContribs, setLoadingContribs] = useState(false);
 
   // Load saved user ID from localStorage on mount
   useEffect(() => {
@@ -39,6 +50,8 @@ export default function ProfilePage() {
       if (res.ok) {
         const data = await res.json();
         setUser(data.data);
+        // Fetch user's contributions
+        fetchContributions(id);
       } else {
         setError('User not found');
         setUser(null);
@@ -47,6 +60,21 @@ export default function ProfilePage() {
       setError('Failed to fetch user');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchContributions = async (userId: string) => {
+    setLoadingContribs(true);
+    try {
+      const res = await fetch(`http://localhost:3000/api/users/${userId}/contributions`);
+      if (res.ok) {
+        const data = await res.json();
+        setContributions(data.data || []);
+      }
+    } catch (err) {
+      console.error('Failed to fetch contributions');
+    } finally {
+      setLoadingContribs(false);
     }
   };
 
@@ -216,6 +244,45 @@ export default function ProfilePage() {
               <div className="stat-value">{user.endorsements_received || 0}</div>
               <div className="stat-label">Endorsements</div>
             </div>
+          </div>
+          
+          {/* User's Contributions */}
+          <div style={{ marginTop: '1.5rem' }}>
+            <h3>Your Contributions</h3>
+            {loadingContribs ? (
+              <p style={{ color: 'var(--text-muted)' }}>Loading...</p>
+            ) : contributions.length === 0 ? (
+              <p style={{ color: 'var(--text-muted)' }}>No contributions yet. Browse branches to add your first idea!</p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {contributions.map((contrib) => (
+                  <div key={contrib.id} className="card" style={{ padding: '1rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                      <span style={{ 
+                        background: 'var(--accent)', 
+                        color: 'white', 
+                        padding: '0.25rem 0.5rem', 
+                        borderRadius: '4px',
+                        fontSize: '0.75rem',
+                        textTransform: 'capitalize'
+                      }}>
+                        {contrib.type}
+                      </span>
+                      <span style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
+                        {contrib.endorsements} endorsements
+                      </span>
+                    </div>
+                    <p style={{ margin: 0 }}>{contrib.content}</p>
+                    <Link 
+                      href={`/branches/${contrib.branch_id}`}
+                      style={{ fontSize: '0.75rem', color: 'var(--accent)', marginTop: '0.5rem', display: 'inline-block' }}
+                    >
+                      View in branch →
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           
           <div style={{ marginTop: '1.5rem', display: 'flex', gap: '1rem' }}>
