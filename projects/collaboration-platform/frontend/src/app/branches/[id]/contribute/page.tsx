@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 
@@ -13,9 +13,18 @@ export default function ContributePage() {
     userId: '',
     type: 'idea',
     content: '',
+    title: '',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Load saved user ID from localStorage
+  useEffect(() => {
+    const savedUserId = localStorage.getItem('credo_user_id');
+    if (savedUserId) {
+      setFormData(prev => ({ ...prev, userId: savedUserId }));
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,11 +41,14 @@ export default function ContributePage() {
         body: JSON.stringify({
           branch_id: branchId,
           type: formData.type,
+          title: formData.title,
           content: formData.content,
         }),
       });
 
       if (res.ok) {
+        // Save user ID for next time
+        localStorage.setItem('credo_user_id', formData.userId);
         router.push(`/branches/${branchId}`);
       } else {
         const data = await res.json();
@@ -88,7 +100,24 @@ export default function ContributePage() {
           />
           <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
             Get your ID from the <Link href="/profile" style={{ color: 'var(--accent)' }}>profile page</Link>
+            <br />
+            <span style={{ color: 'var(--success)' }}>✓ Saved for next time</span>
           </p>
+        </div>
+
+        <div>
+          <label htmlFor="title" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>
+            Title *
+          </label>
+          <input
+            type="text"
+            id="title"
+            value={formData.title}
+            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            required
+            placeholder="Give your contribution a title"
+            style={{ width: '100%', padding: '0.75rem', fontSize: '1rem' }}
+          />
         </div>
         
         <div>

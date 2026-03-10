@@ -20,7 +20,24 @@
     "afterFiles": [],
     "fallback": []
   },
-  "dynamicRoutes": [],
+  "dynamicRoutes": [
+    {
+      "page": "/branches/[id]",
+      "regex": "^/branches/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/branches/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/branches/[id]/contribute",
+      "regex": "^/branches/([^/]+?)/contribute(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/branches/(?<nxtPid>[^/]+?)/contribute(?:/)?$"
+    }
+  ],
   "staticRoutes": [
     {
       "page": "/",
@@ -39,6 +56,24 @@
       "regex": "^/_not\\-found(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/branches",
+      "regex": "^/branches(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/branches(?:/)?$"
+    },
+    {
+      "page": "/join",
+      "regex": "^/join(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/join(?:/)?$"
+    },
+    {
+      "page": "/profile",
+      "regex": "^/profile(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/profile(?:/)?$"
     }
   ],
   "dataRoutes": [],

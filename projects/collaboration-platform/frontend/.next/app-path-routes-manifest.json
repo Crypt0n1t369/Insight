@@ -1,5 +1,10 @@
 {
   "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",
-  "/page": "/"
+  "/branches/[id]/contribute/page": "/branches/[id]/contribute",
+  "/branches/[id]/page": "/branches/[id]",
+  "/branches/page": "/branches",
+  "/join/page": "/join",
+  "/page": "/",
+  "/profile/page": "/profile"
 }
