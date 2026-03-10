@@ -176,7 +176,7 @@ fi
 
 # H17: Credo Service
 echo -n "H17: Credo API... " | tee -a $LOG_FILE
-if curl -s http://localhost:3000/health 2>/dev/null | grep -q "ok"; then
+if curl -s http://localhost:3003/health 2>/dev/null | grep -q "ok"; then
     echo "OK" | tee -a $LOG_FILE
 else
     echo "WARN - not responding" | tee -a $LOG_FILE
