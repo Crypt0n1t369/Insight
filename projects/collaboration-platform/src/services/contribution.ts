@@ -163,5 +163,10 @@ export class ContributionService {
   }
 }
 
+// Reset function for testing
+export function resetContributionService() {
+  contributions.clear();
+}
+
 // Export singleton instance
 export const contributionService = new ContributionService();

@@ -132,5 +132,10 @@ export class BranchService {
   }
 }
 
+// Reset function for testing
+export function resetBranchService() {
+  branches.clear();
+}
+
 // Export singleton instance
 export const branchService = new BranchService();

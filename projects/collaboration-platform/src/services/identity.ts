@@ -158,5 +158,10 @@ export class IdentityService {
   }
 }
 
+// Reset function for testing
+export function resetIdentityService() {
+  users.clear();
+}
+
 // Export singleton instance
 export const identityService = new IdentityService();
