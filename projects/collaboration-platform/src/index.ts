@@ -46,6 +46,17 @@ app.post('/api/users', async (req, res) => {
   }
 });
 
+// Get leaderboard (must be before /:id route to avoid matching "leaderboard" as an id)
+app.get('/api/users/leaderboard', async (_req, res) => {
+  try {
+    const limit = Math.min(parseInt(_req.query.limit as string) || 10, 100);
+    const users = await identityService.getLeaderboard(limit);
+    res.json({ success: true, data: users });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
 // Get user by ID
 app.get('/api/users/:id', async (req, res) => {
   try {
@@ -98,17 +109,6 @@ app.get('/api/users/:id/contributions', async (req, res) => {
   try {
     const contributions = await contributionService.getUserContributions(req.params.id);
     res.json({ success: true, data: contributions });
-  } catch (error) {
-    res.status(500).json({ success: false, error: String(error) });
-  }
-});
-
-// Get leaderboard
-app.get('/api/users/leaderboard', async (_req, res) => {
-  try {
-    const limit = Math.min(parseInt(_req.query.limit as string) || 10, 100);
-    const users = await identityService.getLeaderboard(limit);
-    res.json({ success: true, data: users });
   } catch (error) {
     res.status(500).json({ success: false, error: String(error) });
   }
