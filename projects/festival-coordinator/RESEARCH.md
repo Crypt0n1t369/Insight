@@ -295,7 +295,143 @@ Or **independent Telegram bot**:
 
 ---
 
-## 10. Qualification & Filtering Mechanism
+## 10. Enhanced Volunteer Evaluation System
+
+### Philosophy: Low-Stakes, Growth-Oriented
+
+We separate **competence** from **reliability** - two different metrics that together determine trust.
+
+---
+
+### Metric 1: Competence (Skill Level)
+
+How capable is this volunteer? Based on task complexity completed.
+
+| Level | Title | Requirements | Can Do |
+|-------|-------|--------------|--------|
+| 1 | 🌱 Beginner | Completed 1 task | Easy tasks |
+| 2 | 🌿 Growing | Completed 3 tasks | Medium tasks |
+| 3 | 🌳 Skilled | Completed 5 tasks | Hard tasks |
+| 4 | ⭐ Expert | Completed 10 tasks | Any task |
+| 5 | 👑 Master | 15+ tasks + leader approval | Mentor others |
+
+**How it works:**
+- Automatically levels up based on tasks completed
+- Harder tasks = faster progression
+- No manual approval needed
+
+---
+
+### Metric 2: Reliability (Trust Score)
+
+How dependable is this volunteer? Based on completion rate.
+
+| Score | Title | Description |
+|-------|-------|-------------|
+| 100-90% | 💎 Diamond | Always delivers |
+| 89-75% | ⭐ Gold | Mostly reliable |
+| 74-50% | 🌱 Silver | Needs improvement |
+| <50% | ⚠️ Bronze | At risk |
+
+**Calculation:**
+```
+Reliability = (Completed / (Completed + No-Shows)) × 100
+```
+
+**Low-stakes features:**
+- No public shaming
+- Encouraging messaging
+- Easy to recover (just complete more tasks)
+- "At risk" → "Let's improve together"
+
+---
+
+### Metric 3: Engagement Level
+
+How active is this volunteer?
+
+| Level | Points | Description |
+|-------|--------|-------------|
+| 0-49 | 🐣 Newcomer | Just joined |
+| 50-199 | 🔥 Active | Regular participant |
+| 200-499 | 🚀 Super Active | Very engaged |
+| 500+ | 💎 Champion | Top contributor |
+
+---
+
+### Achievement Badges (Low-Stakes Gamification)
+
+Celebrate milestones without punishment:
+
+| Badge | Requirement | Message |
+|-------|-------------|---------|
+| 🎯 First Task | Complete 1st task | "Welcome to the team!" |
+| 🔥 On Fire | 3 tasks in a row | "You're unstoppable!" |
+| 🌟 Rising Star | Reach Skill Level 3 | "You're getting good!" |
+| 💎 Reliable | 90%+ reliability | "We can count on you!" |
+| 🤝 Team Player | Verify 5 others | "Thanks for helping!" |
+| 🎉 Super Helper | Complete 10 tasks | "Amazing contribution!" |
+
+---
+
+### Combined Trust Score (Internal)
+
+For system decisions only:
+
+```python
+Trust Score = (Competence × 0.3) + (Reliability × 0.5) + (Engagement × 0.2)
+```
+
+Used for:
+- Task assignment priority
+- Verification permissions
+- Leader nomination
+
+**User-facing: Only shows positive metrics (competence + badges)**
+
+---
+
+### User-Facing Profile Display
+
+```
+👤 John Doe
+━━━━━━━━━━━━━━━━
+🌳 Skill Level: 3 (Skilled)
+⭐ Reliability: 92% (Diamond)
+🔥 Points: 275
+
+🏆 Badges: 🎯 🔥 🌟
+
+📊 This Week: 2 tasks | +50 pts
+━━━━━━━━━━━━━━━━
+🌱 Next: Complete 2 more tasks to level up!
+```
+
+---
+
+### Encouraging Low-Level Users
+
+| Situation | Old Message | New Message |
+|-----------|-------------|-------------|
+| New user | "You can only claim 1 task" | "Great start! Complete your first task to unlock more!" |
+| Low reliability | "Unreliable" | "Let's build your reliability together! Complete tasks consistently." |
+| Level up | "Level increased" | "🎉 You're growing! Level 2 unlocked - you can take on more!" |
+| No shows | "-10 points" | "No worries! Everyone slips. Complete a task to get back on track." |
+
+---
+
+### Reliability Recovery
+
+**If reliability drops below 50%:**
+
+1. **Warning** (not punitive): "We noticed you've had some challenges. We're here to help!"
+2. **Easy recovery**: Complete 3 tasks in a row → reliability improves by 20%
+3. **Support**: Option to message organizers for help
+4. **No penalties**: Points never decrease, only increase
+
+---
+
+## 11. Qualification & Filtering Mechanism
 
 ### The Problem
 - Some volunteers just want to try (low commitment)
