@@ -36,6 +36,22 @@
         "nxtPid": "nxtPid"
       },
       "namedRegex": "^/branches/(?<nxtPid>[^/]+?)/contribute(?:/)?$"
+    },
+    {
+      "page": "/branches/[id]/proposals",
+      "regex": "^/branches/([^/]+?)/proposals(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/branches/(?<nxtPid>[^/]+?)/proposals(?:/)?$"
+    },
+    {
+      "page": "/branches/[id]/proposals/new",
+      "regex": "^/branches/([^/]+?)/proposals/new(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/branches/(?<nxtPid>[^/]+?)/proposals/new(?:/)?$"
     }
   ],
   "staticRoutes": [
@@ -58,10 +74,22 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
+      "page": "/about",
+      "regex": "^/about(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/about(?:/)?$"
+    },
+    {
       "page": "/branches",
       "regex": "^/branches(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/branches(?:/)?$"
+    },
+    {
+      "page": "/branches/new",
+      "regex": "^/branches/new(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/branches/new(?:/)?$"
     },
     {
       "page": "/join",

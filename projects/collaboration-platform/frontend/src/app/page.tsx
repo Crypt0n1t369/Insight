@@ -73,7 +73,12 @@ export default async function Home() {
             ))}
           </div>
         ) : (
-          <p>No branches yet. Be the first to create one!</p>
+          <div className="card" style={{ textAlign: 'center', padding: '2rem' }}>
+            <p style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>No branches yet. Be the first to create one!</p>
+            <Link href="/branches/new" className="btn btn-primary">
+              Create First Branch
+            </Link>
+          </div>
         )}
       </section>
     </div>
