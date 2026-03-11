@@ -196,5 +196,11 @@ export class ProposalService {
   }
 }
 
+// Reset function for testing
+export function resetProposalService() {
+  proposals.clear();
+  votes.clear();
+}
+
 // Export singleton instance
 export const proposalService = new ProposalService();
