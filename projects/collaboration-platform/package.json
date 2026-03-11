@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "tsc --noEmit",
     "start": "node dist/index.js",
     "db:generate": "tsx src/db/generate.ts",
     "db:migrate": "tsx src/db/migrate.ts",

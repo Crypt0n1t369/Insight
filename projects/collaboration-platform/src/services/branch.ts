@@ -86,7 +86,7 @@ export class BranchService {
    * Get root branches (no parent)
    */
   async getRootBranches(limit = 20, offset = 0): Promise<{ branches: Branch[]; total: number }> {
-    return this.getBranches({ parentId: null, limit, offset });
+    return this.getBranches({ parentId: undefined, limit, offset });
   }
   
   /**

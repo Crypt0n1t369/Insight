@@ -238,7 +238,7 @@ app.get('/api/branches/:branchId/contributions', async (req, res) => {
     const limit = Math.min(parseInt(req.query.limit as string) || 20, 100);
     const offset = parseInt(req.query.offset as string) || 0;
     const type = req.query.type as any;
-    const parentId = req.query.parentId === 'null' ? null : req.query.parentId;
+    const parentId = req.query.parentId === 'null' ? null : req.query.parentId as string | null;
     
     const result = await contributionService.getBranchContributions(
       req.params.branchId, 

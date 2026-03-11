@@ -27,3 +27,4 @@ projects/*/frontend/.next/**
 # Ignore system-specific scripts
 scripts/enable_ollama_control.sh
 scripts/openclaw.service
+dist/
