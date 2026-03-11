@@ -295,7 +295,89 @@ Or **independent Telegram bot**:
 
 ---
 
-## 10. Next Steps
+## 10. Qualification & Filtering Mechanism
+
+### The Problem
+- Some volunteers just want to try (low commitment)
+- Some are serious and reliable
+- Critical tasks can't afford no-shows
+- Need to filter without being too exclusionary
+
+### Proposed Solution: Tiered Trust System
+
+#### Level 0: Anonymous Browser
+- Can view tasks
+- Can NOT claim any task
+- Must verify Telegram to proceed
+
+#### Level 1: Verified Volunteer (Entry)
+- Verify Telegram account (instant)
+- Complete onboarding quiz (2-3 questions)
+- **Can claim**: Easy tasks (setup, cleanup)
+- **Max concurrent**: 1 task
+
+#### Level 2: Trial Volunteer
+- Complete 1+ small task successfully
+- OR get vouch from 1 Level 3+ volunteer
+- **Can claim**: Medium tasks
+- **Max concurrent**: 2 tasks
+
+#### Level 3: Trusted Volunteer
+- Complete 3+ tasks with good ratings
+- OR 5+ tasks completed total
+- **Can claim**: Any task
+- **Max concurrent**: 3 tasks
+- **Can verify**: Peer completions
+
+#### Level 4: Lead Volunteer (Organizer-nominated)
+- Nominated by festival organizers
+- **Can**: Create tasks, approve critical roles, resolve disputes
+
+### Onboarding Quiz (Key Filter)
+
+The quiz questions should filter intent:
+
+| Question | Purpose |
+|----------|---------|
+| "Which days are you available?" | Excludes "anytime" (unrealistic) |
+| "What's your motivation?" | "Free entry" = high no-show risk |
+| "Have you volunteered before?" | Experience indicator |
+| "Can you lift 20kg?" | For physical tasks |
+
+**Key insight**: People who only want free entry are 3x more likely to no-show than those who want to "give back".
+
+### Commitment Mechanisms
+
+| Mechanism | Effectiveness | Notes |
+|----------|---------------|-------|
+| Onboarding quiz | Medium | Filters intent |
+| Availability confirmation | High | Must commit to specific slot |
+| Vouching | High | Social accountability |
+| Trial task first | High | Earn trust before big tasks |
+| Organizer approval | Very High | For critical roles |
+| Small deposit (refunded) | Very High | Skin in the game |
+
+### Critical vs Non-Critical Tasks
+
+| Task Type | Min Level | Extra |
+|-----------|-----------|-------|
+| Decorating, setup | Level 1 | - |
+| Ticketing, info desk | Level 2 | - |
+| Sound, lighting | Level 3 | + Organizer approval |
+| Security, medical | Level 3 | + Organizer approval |
+| Team lead | Level 4 | Only |
+
+### Organizer Tools
+
+- **Nominate Level 4** - Make team leads
+- **Vouch for volunteers** - Boost someone to Level 2
+- **Manual approval** - For critical tasks
+- **Flag unreliable** - Block from claiming
+- **Override system** - Bypass levels for special cases
+
+---
+
+## 11. Next Steps
 
 1. **Pilot**: Use for small event (50-100 people)
 2. **Iterate**: Gather feedback, adjust points/rewards

@@ -45,7 +45,31 @@ class Festival(db.Model):
     end_date = db.Column(db.DateTime)
     organization_id = db.Column(db.ForeignKey('organizations.id'))
     status = db.Column(db.String(50))  # planning, active, completed
-    
+
+# NEW: Volunteer Qualification
+class VolunteerProfile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    member_id = db.Column(db.ForeignKey('members.id'))
+    festival_id = db.Column(db.ForeignKey('festivals.id'))
+    trust_level = db.Column(db.Integer, default=1)  # 0-4
+    tasks_completed = db.Column(db.Integer, default=0)
+    tasks_no_show = db.Column(db.Integer, default=0)
+    rating_sum = db.Column(db.Integer, default=0)  # For average rating
+    vouch_count = db.Column(db.Integer, default=0)
+    vouched_by = db.Column(db.Integer, db.ForeignKey('members.id'), nullable=True)
+    onboarding_completed = db.Column(db.Boolean, default=False)
+    quiz_answers = db.Column(db.JSON)  # Store quiz responses
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+# NEW: Quiz for filtering
+class OnboardingQuiz(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(500))
+    options = db.Column(db.JSON)  # ["option1", "option2"]
+    correct_answer = db.Column(db.Integer)  # Index of correct/good answer
+    is_required = db.Column(db.Boolean, default=True)
+    festival_id = db.Column(db.ForeignKey('festivals.id'))
+
 class TaskCategory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))  # technical, marketing, operations, creative
@@ -65,15 +89,18 @@ class FestivalTask(db.Model):
     proof_photo_url = db.Column(db.String(500))
     festival_id = db.Column(db.ForeignKey('festivals.id'))
     created_by = db.Column(db.ForeignKey('members.id'))
+    min_trust_level = db.Column(db.Integer, default=1)  # NEW: Qualification requirement
+    is_critical = db.Column(db.Boolean, default=False)  # NEW: Critical flag
 
 class TaskClaim(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     task_id = db.Column(db.ForeignKey('festival_tasks.id'))
     member_id = db.Column(db.ForeignKey('members.id'))
-    status = db.Column(db.String(50))  # pending, completed, verified, cancelled
+    status = db.Column(db.String(50))  # pending, completed, verified, cancelled, no_show
     claimed_at = db.Column(db.DateTime)
     completed_at = db.Column(db.DateTime)
     verification_proof = db.Column(db.Text)
+    verified_by = db.Column(db.Integer, db.ForeignKey('members.id'), nullable=True)
 
 class Reward(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -96,17 +123,22 @@ class PointRedemption(db.Model):
 | Command | Handler | Priority |
 |---------|---------|----------|
 | `/festival` | Show festival info + active tasks | P0 |
-| `/tasks` | Browse available tasks | P0 |
-| `/claim <id>` | Claim a task | P0 |
+| `/quiz` | Complete onboarding quiz (required for Level 1+) | P0 |
+| `/verifyme` | Verify Telegram account | P0 |
+| `/tasks` | Browse available tasks (filtered by level) | P0 |
+| `/claim <id>` | Claim a task (checks qualifications) | P0 |
 | `/my_tasks` | User's claimed tasks | P0 |
 | `/complete <id>` | Mark complete + upload proof | P0 |
 | `/verify <id>` | Verify someone's completion | P1 |
+| `/vouch <user>` | Vouch for a volunteer (Level 3+) | P1 |
 | `/points` | Point balance | P0 |
+| `/level` | See current trust level + requirements | P0 |
 | `/leaderboard` | Top volunteers | P1 |
 | `/rewards` | Available rewards | P0 |
 | `/redeem <id>` | Redeem points | P1 |
-| `/create_task` | Create new task (admin) | P1 |
+| `/create_task` | Create new task (Level 4) | P1 |
 | `/add_reward` | Add reward (admin) | P1 |
+| `/approve <user>` | Approve for critical task (organizer) | P1 |
 
 ### Phase 2: Reputation System (Week 2)
 
