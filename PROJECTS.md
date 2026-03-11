@@ -78,6 +78,28 @@
 
 ---
 
+### 5. Festival Coordinator
+- **Status:** Research Complete
+- **Summary:** Telegram bot for festival volunteer coordination with task assignment, reputation/points system, and rewards redemption
+- **Path:** `projects/festival-coordinator/`
+- **Research:** RESEARCH.md (comprehensive analysis)
+- **Plan:** IMPLEMENTATION_PLAN.md (3-week phased build)
+- **Architecture:** Extend JCI Org Manager (leverages existing bot infrastructure)
+- **Core Features:**
+  - Task board (technical, marketing, operations, creative, logistics)
+  - Claim → Complete → Verify → Earn points flow
+  - Reputation system (Credo-inspired trust tiers)
+  - Rewards catalog (VIP, merch, experiences)
+  - Leaderboard gamification
+- **Failure Prevention:**
+  - Skin in the game (reputation at stake)
+  - Peer verification for completions
+  - Trust tiers limiting task claims
+  - Timeout auto-release for abandoned tasks
+- **Next:** Implementation (Phase 1 - Database models + core commands)
+
+---
+
 ## Adding New Projects
 
 1. Create folder under `projects/`

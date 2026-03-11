@@ -84,6 +84,30 @@
 
 ---
 
+### Festival Coordinator - Brainstorming Session
+**Session focus:** Brainstorm new use case - Telegram bot for festival collaboration
+
+**Research completed:**
+1. Created `projects/festival-coordinator/RESEARCH.md`
+   - Core concept: task board + reputation + rewards
+   - Failure modes: no-shows, fake completions, free-riding, burnout
+   - Prevention: Credo-style reputation, peer verification, trust tiers
+   - Technical architecture: Telegram bot → Express → SQLite
+
+2. Created `projects/festival-coordinator/IMPLEMENTATION_PLAN.md`
+   - 3-week phased implementation
+   - Phase 1: Core infrastructure (database + commands)
+   - Phase 2: Reputation system
+   - Phase 3: Rewards & gamification
+   - Phase 4: Polish & testing
+   - Architecture: Extend JCI Org Manager (recommended)
+
+**Key insight:** Using existing JCI bot infrastructure is faster than building standalone
+
+**Next:** Implementation if approved
+
+---
+
 ## 2026-03-09 Evening Wakeup
 
 ### Systems Verified (20:36)
