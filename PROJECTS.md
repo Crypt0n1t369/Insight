@@ -79,9 +79,10 @@
 ---
 
 ### 5. Festival Coordinator
-- **Status:** Research Complete
+- **Status:** Research Complete (Branch: `feature/festival-coordinator`)
 - **Summary:** Telegram bot for festival volunteer coordination with task assignment, reputation/points system, and rewards redemption
 - **Path:** `projects/festival-coordinator/`
+- **Git Branch:** `feature/festival-coordinator` (created from master)
 - **Research:** RESEARCH.md (comprehensive analysis)
 - **Plan:** IMPLEMENTATION_PLAN.md (3-week phased build)
 - **Architecture:** Extend JCI Org Manager (leverages existing bot infrastructure)
