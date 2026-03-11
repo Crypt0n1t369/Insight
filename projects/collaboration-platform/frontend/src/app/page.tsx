@@ -64,7 +64,7 @@ export default async function Home() {
           <div className="branch-list">
             {branches.map((branch: any) => (
               <div key={branch.id} className="card">
-                <h4>{branch.name}</h4>
+                <h4>{branch.title}</h4>
                 <p>{branch.description || 'No description'}</p>
                 <Link href={`/branches/${branch.id}`} style={{ color: 'var(--accent)' }}>
                   View Branch →
