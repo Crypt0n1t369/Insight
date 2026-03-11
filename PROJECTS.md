@@ -43,7 +43,7 @@
   2. Paper Branch pilot (live testing)
 
 ### 3. JCI Org Manager
-- **Status:** Enhanced (Inline Keyboards + Smart Responses)
+- **Status:** Enhanced + Test Coverage (33 tests)
 - **Summary:** AI-powered organization manager for Telegram groups. Manages projects, collaboration, member engagement, and fluid roles.
 - **Path:** `projects/jci-org-manager/`
 - **Implementation:**
@@ -51,27 +51,23 @@
   - Database models: Member, Project, Task, Meeting, Opportunity, EngagementLog
   - Google Drive integration for organization folders
   - Telegram bot with command handlers + inline keyboards + callback queries
-- **Tests:** 8/8 passing ✅ (verified Mar 8, 10:58)
-- **Runtime:** Portal running on port 8080 (HTTP 200 verified Mar 8, 16:26)
-- **Git:** ✅ Committed and synced (ecb68d3)
-- **Features Added:**
-  - Callback query handlers for inline keyboard interactions
-  - /menu, /leaderboard, /network commands
-  - /onboard as standalone command
-  - Better group chat bot mention handling
-  - Member level management (/setlevel command for admins)
-  - Improved task workflow help text
-  - **NEW: /msg and /m commands** - Direct messaging between members
-  - **NEW: Conversational responses** - Greetings, thanks, help triggers
-  - **NEW: Improved tab UX** - Better active state management, loading placeholders
-  - **NEW: Telegram command suggestions** - Bot commands registered with Telegram
+- **Tests:** 33/33 passing ✅ (verified Mar 11, 07:07)
+- **Runtime:** Portal running on port 8080
+- **Git:** ✅ Committed and synced (27831a1)
+- **Recent Improvements (Mar 11):**
+  - Fixed `_get_or_create_member` with DB persistence
+  - Fixed `_update_profile_field` (interest/skill/goal/availability)
+  - Connected webapp `/api/profile` to real DB
+  - Added test_bot.py (6 tests)
+  - Added test_integration.py (9 tests)
+  - Added test_webapp.py (11 tests)
 - **Next:** Configure .env with Telegram bot token for production
 
 ### 4. Solar Scout (Lead Generator)
 - **Status:** Completed / Archived (Feb 2026) - No pending tasks
 - **Summary:** Latvia manufacturing company lead generator with solar detection
 - **Results:** 70 total leads (51 qualified companies WITHOUT solar)
-- **Last Checked:** 2026-03-11 02:06 (Africa/Cairo) - No pending P0-P1 items ✅
+- **Last Checked:** 2026-03-11 07:06 (Africa/Cairo) - No pending P0-P1 items ✅
 - **Location:** `solar-scout/` (root directory - NOT under projects/)
 - **Git:** ✅ Committed (30a4c69 committed Mar 9)
 
