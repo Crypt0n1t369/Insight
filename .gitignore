@@ -28,3 +28,4 @@ projects/*/frontend/.next/**
 scripts/enable_ollama_control.sh
 scripts/openclaw.service
 dist/
+tsconfig.tsbuildinfo
