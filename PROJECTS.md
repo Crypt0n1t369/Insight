@@ -29,7 +29,7 @@
 - **Path:** `projects/collaboration-platform/`
 - **Runtime:** 
   - API: Port 3000 ✅
-  - Frontend: Port 3003 ✅
+  - Frontend: Port 3002 ✅
 - **API Endpoints Working:**
   - POST /api/users - Create anonymous user ✅
   - GET /api/users/:id - Get user ✅
