@@ -23,6 +23,7 @@ memory/vector-index.json
 projects/*/frontend/.next
 projects/*/frontend/node_modules
 projects/*/frontend/.next/**
+next-env.d.ts
 
 # Ignore system-specific scripts
 scripts/enable_ollama_control.sh
