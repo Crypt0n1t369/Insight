@@ -106,6 +106,26 @@
 
 ---
 
+### 6. Spark - Youth Empowerment Platform
+- **Status:** Research Complete + Forked
+- **Summary:** Telegram-based platform for at-risk youth (10-18) to discover capabilities through collaborative challenges
+- **Path:** `projects/youth-empowerment-platform/`
+- **Research:** `research/youth-empowerment-platform/01-use-case-research.md`
+- **Specification:** `SPEC.md`
+- **Based on:** Credo Collaboration Platform (forked Mar 12)
+- **Core Features:**
+  - 30 challenges across 5 categories
+  - Points + badges gamification
+  - Leaderboards (weekly/monthly/all-time)
+  - Team challenges (3-5 people)
+  - Referral/viral mechanics
+  - Shareable achievement cards
+- **Next:**
+  1. Install dependencies
+  2. Set up Telegram bot
+  3. Adapt data models for challenges
+  4. Deploy MVP with 10 challenges
+
 ## Adding New Projects
 
 1. Create folder under `projects/`
