@@ -30,3 +30,7 @@ scripts/enable_ollama_control.sh
 scripts/openclaw.service
 dist/
 tsconfig.tsbuildinfo
+
+# Youth Empowerment Platform
+projects/youth-empowerment-platform/venv/
+data/
