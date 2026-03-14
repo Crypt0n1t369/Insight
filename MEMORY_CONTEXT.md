@@ -1,8 +1,11 @@
 === ATON CONTEXT ===
-Generated: 2026-03-10 20:35
+Generated: 2026-03-14 16:56
 
 ## Active Projects
-- audio-transformation-tool: Unknown
+- audio-transformation-tool: Running on port 3001, 94/94 tests passing, build clean
+- jci-org-manager: Running on port 8080, 33/33 tests passing
+- youth-empowerment-platform: Running on port 3003
+- collaboration-platform (Credo): Running on port 3000
 
 ## Key Decisions
 ### Memory System Architecture
