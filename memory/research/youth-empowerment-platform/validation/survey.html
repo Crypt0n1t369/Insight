@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Research Survey</title>
+    <style>
+        body { font-family: -apple-system, system-ui, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; background: #f5f5f5; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { font-size: 24px; margin-bottom: 10px; }
+        p { color: #666; margin-bottom: 30px; }
+        .question { margin-bottom: 25px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; }
+        textarea { min-height: 80px; }
+        button { background: #2563eb; color: white; border: none; padding: 14px 28px; border-radius: 8px; font-size: 16px; cursor: pointer; width: 100%; }
+        button:hover { background: #1d4ed8; }
+        .note { font-size: 14px; color: #888; margin-top: 20px; text-align: center; }
+        .hidden { display: none; }
+        #thank-you { text-align: center; padding: 40px; }
+        .emoji { font-size: 48px; }
+    </style>
+</head>
+<body>
+    <div class="container" id="form">
+        <h1>📱 Quick Research</h1>
+        <p>5 questions. No selling. Honest answers wanted.</p>
+        
+        <div class="question">
+            <label>1. What's something you want to do but haven't figured out how yet?</label>
+            <textarea id="q1" placeholder="Your answer..."></textarea>
+        </div>
+        
+        <div class="question">
+            <label>2. Would you use an app where a personal AI helps you track your growth and find opportunities? (1 = definitely not, 10 = definitely yes)</label>
+            <select id="q2">
+                <option value="">Select...</option>
+                <option value="1">1 - No way</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 - Maybe</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10 - Absolutely!</option>
+            </select>
+        </div>
+        
+        <div class="question">
+            <label>3. How much do you care if apps see your data? (1 = don't care, 10 = super important)</label>
+            <select id="q3">
+                <option value="">Select...</option>
+                <option value="1">1 - Don't care</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 - Somewhat</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10 - Critical</option>
+            </select>
+        </div>
+        
+        <div class="question">
+            <label>4. What's the one thing that would make you NOT use such an app?</label>
+            <textarea id="q4" placeholder="Your answer..."></textarea>
+        </div>
+        
+        <div class="question">
+            <label>5. (Optional) Your age range</label>
+            <select id="q5">
+                <option value="">Select...</option>
+                <option value="16-20">16-20</option>
+                <option value="21-25">21-25</option>
+                <option value="26-30">26-30</option>
+                <option value="31-40">31-40</option>
+                <option value="40+">40+</option>
+            </select>
+        </div>
+        
+        <button onclick="submitForm()">Submit</button>
+        
+        <p class="note">That's it! Thanks for helping.</p>
+    </div>
+    
+    <div class="container hidden" id="thank-you">
+        <div class="emoji">🙏</div>
+        <h2>Thanks!</h2>
+        <p>Really appreciate your honest feedback.</p>
+    </div>
+
+    <script>
+        async function submitForm() {
+            const data = {
+                q1: document.getElementById('q1').value,
+                q2: document.getElementById('q2').value,
+                q3: document.getElementById('q3').value,
+                q4: document.getElementById('q4').value,
+                q5: document.getElementById('q5').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Send to webhook (configure your own)
+            // For now, just show thank you
+            document.getElementById('form').classList.add('hidden');
+            document.getElementById('thank-you').classList.remove('hidden');
+            
+            console.log('Survey data:', data);
+            alert('Thanks! (Data logged to console for now)');
+        }
+    </script>
+</body>
+</html>
