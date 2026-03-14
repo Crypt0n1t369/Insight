@@ -85,6 +85,20 @@ def root():
     }
 
 
+@app.get("/health")
+def health_check():
+    """Detailed health check"""
+    import os
+    return {
+        "status": "ok",
+        "service": "youth-empowerment-platform",
+        "version": "0.1.0",
+        "vault_manager": "ready" if vault_manager else "not_initialized",
+        "active_sessions": len(user_sessions),
+        "platform": os.uname().sysname if hasattr(os, 'uname') else "unknown"
+    }
+
+
 # Vault endpoints
 @app.post("/vault/create")
 def create_vault(request: CreateVaultRequest):
