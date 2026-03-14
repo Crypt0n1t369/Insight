@@ -31,6 +31,18 @@ scripts/openclaw.service
 dist/
 tsconfig.tsbuildinfo
 
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
 # Youth Empowerment Platform
 projects/youth-empowerment-platform/venv/
 data/
