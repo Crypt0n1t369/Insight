@@ -11,76 +11,51 @@
 │                    INTERVIEW PROGRESS                           │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│   ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  0/20 (0%)       │
+│   █░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  1/20 (5%)     │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Status: 🔴 In Progress
+## ✅ Interview Complete: Kristaps
 
-**Interview started with Kristaps**
+**Pain Point:** "Get more solar panel installation deals. Need to make more money for my family"
 
----
+**Concept Feedback:**
+> "Yes, but it sounds overly complicated and like I wouldn't own the data. Also, it sounds like it wouldn't work well before network effects at least at the start?"
 
-## Interview in Progress
+**Privacy:** "Super important if it's some big corporation or government"
 
-| Name | Status | Current Question |
-|------|--------|------------------|
-| Kristaps | 🔄 Q1 sent | Awaiting response |
+**Try Score:** "Depends on how useful + smooth UX is"
 
----
+**Delete It?** 
+> "Knowing that my data is being used against me, confusing UX, no real value, constant overpromises and underdelivery"
 
-## Available Outreach Methods
-
-### What I Can Do:
-
-| Method | Status | Notes |
-|--------|--------|-------|
-| **@Aumnibot (Telegram)** | ✅ Running | Polling every 30s |
-| **Web Survey** | ✅ Ready | survey.html - can host anywhere |
-| **Direct messages** | ⚠️ Need user to start bot first | Privacy limitation |
-
-### What I CAN'T Do:
-- Join Telegram groups without invite
-- Access email
-- Post to social media
-- Search for private contacts
+**Referral:** @D_angele
 
 ---
 
-## 🚀 How to Get More Participants
+## 🎯 Key Insights from Kristaps
 
-**Option 1: Share @Aumnibot**
-- Link: https://t.me/Aumnibot
-- People message it directly
-- I run the conversation
-
-**Option 2: Share Web Survey**
-- Host `validation/survey.html` anywhere
-- People fill it out
-- (Currently logs to console - need webhook for live data)
-
-**Option 3: You reach out**
-- Forward my message to your network
-- Tell them to message @Aumnibot
-- Give me handles to try
+| Issue | What This Means |
+|-------|-----------------|
+| **Network effects** | Cold start problem is REAL - won't work without users |
+| **"Won't own data"** | Need better messaging on encryption |
+| **"Overly complicated"** | Simpler UX, less features upfront |
+| **"Overpromises"** | Under-promise, over-deliver messaging |
 
 ---
 
-## 📊 Current Metrics
+## Next Steps
 
-| Metric | Count |
-|--------|-------|
-| Started | 1 |
-| Completed | 0 |
-| Pending | 19 |
+1. Message @D_angele (referral)
+2. Get more participants
 
 ---
 
-## Next Step
+## How to Help
 
-**Kristaps:** Please answer Q1 so we can complete the first interview!
+**Share this with anyone:**
+> "Quick chat about app ideas — just message @Aumnibot. 2 min."
 
-**Also:** Share @Aumnibot with your network.

@@ -1,1 +1,16 @@
-{"interviews": []}
+{
+  "interviews": [
+    {
+      "chat_id": "551447474",
+      "name": "Kristaps",
+      "username": "kristapsbarons",
+      "timestamp": "2026-03-14T10:05:03.354419",
+      "pain_point": "Get more solar panel installation deals. I need to make more money for my family",
+      "concept_useful": "Yes, but it sounds overly complicated and like I wouldn't own the data. Also, it sounds like it wouldn't work well before network effects at least at the start?",
+      "privacy_score": "Super important if its some big corporation or government",
+      "try_score": "It all depends on how iseful it is and how smooth is the user experience",
+      "objection": "Knowing that my data is being used against me, confusing user experience, no real value, constant  overpromises and underdelovery",
+      "referrals": "Yeah, my friend @D_angele"
+    }
+  ]
+}
