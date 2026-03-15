@@ -17,6 +17,10 @@ async function getBranch(id: string): Promise<{ id: string; title: string } | nu
   }
 }
 
+export async function generateStaticParams() {
+  return [];
+}
+
 export default function NewProposalPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const [branch, setBranch] = useState<{ id: string; title: string } | null>(null);

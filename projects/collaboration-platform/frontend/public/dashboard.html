@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credo Dashboard</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f0f; color: #fff; min-height: 100vh; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #333; }
+    h1 { font-size: 1.5rem; color: #f59e0b; }
+    .status-badge { background: #22c55e; color: #000; padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.875rem; font-weight: 600; }
+    .status-badge.offline { background: #ef4444; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { background: #1a1a1a; padding: 1.5rem; border-radius: 0.75rem; border: 1px solid #333; }
+    .stat-value { font-size: 2.5rem; font-weight: 700; color: #f59e0b; }
+    .stat-label { color: #888; margin-top: 0.5rem; }
+    .section { background: #1a1a1a; border-radius: 0.75rem; border: 1px solid #333; padding: 1.5rem; margin-bottom: 1rem; }
+    .section h2 { margin-bottom: 1rem; font-size: 1.25rem; }
+    .branch-list { list-style: none; }
+    .branch-item { padding: 1rem; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+    .branch-item:last-child { border-bottom: none; }
+    .branch-title { font-weight: 600; }
+    .branch-meta { color: #888; font-size: 0.875rem; margin-top: 0.25rem; }
+    .btn { background: #f59e0b; color: #000; padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; display: inline-block; }
+    .btn:hover { background: #d97706; }
+    .loading { color: #888; text-align: center; padding: 2rem; }
+    .error { color: #ef4444; text-align: center; padding: 2rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>⚡ Credo Dashboard</h1>
+      <span id="status" class="status-badge">Checking...</span>
+    </header>
+    
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-value" id="users">-</div>
+        <div class="stat-label">Members</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="branches">-</div>
+        <div class="stat-label">Branches</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="contributions">-</div>
+        <div class="stat-label">Contributions</div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>📚 Recent Branches</h2>
+      <div id="branch-list">
+        <div class="loading">Loading...</div>
+      </div>
+    </div>
+    
+    <div class="section">
+      <h2>🏆 Top Contributors</h2>
+      <div id="leaderboard">
+        <div class="loading">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = window.location.hostname === 'localhost' 
+      ? 'http://localhost:3000' 
+      : 'https://credo-api.onrender.com';
+    
+    async function fetchJSON(url) {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(res.statusText);
+      return res.json();
+    }
+    
+    async function loadStats() {
+      try {
+        const [statsRes, branchesRes] = await Promise.all([
+          fetchJSON(`${API_URL}/api/stats`),
+          fetchJSON(`${API_URL}/api/branches?limit=5`)
+        ]);
+        
+        document.getElementById('users').textContent = statsRes.data.users;
+        document.getElementById('branches').textContent = statsRes.data.branches;
+        document.getElementById('contributions').textContent = statsRes.data.contributions;
+        
+        const branchList = document.getElementById('branch-list');
+        if (branchesRes.data.length === 0) {
+          branchList.innerHTML = '<p class="loading">No branches yet</p>';
+        } else {
+          branchList.innerHTML = '<ul class="branch-list">' + 
+            branchesRes.data.map(b => `
+              <li class="branch-item">
+                <div>
+                  <div class="branch-title">${b.title}</div>
+                  <div class="branch-meta">${new Date(b.created_at).toLocaleDateString()}</div>
+                </div>
+                <span class="status-badge" style="background:#333;color:#fff;font-size:0.75rem">${b.status}</span>
+              </li>
+            `).join('') + '</ul>';
+        }
+        
+        document.getElementById('status').textContent = 'Online';
+      } catch (e) {
+        document.getElementById('status').textContent = 'Offline';
+        document.getElementById('status').classList.add('offline');
+        console.error(e);
+      }
+    }
+    
+    async function loadLeaderboard() {
+      try {
+        const res = await fetchJSON(`${API_URL}/api/users/leaderboard?limit=5`);
+        const lb = document.getElementById('leaderboard');
+        
+        if (res.data.length === 0) {
+          lb.innerHTML = '<p class="loading">No contributors yet</p>';
+        } else {
+          lb.innerHTML = '<ul class="branch-list">' + 
+            res.data.map((u, i) => `
+              <li class="branch-item">
+                <div>
+                  <div class="branch-title">#${i + 1} ${u.display_name || 'Anonymous'}</div>
+                  <div class="branch-meta">${u.trust_tier}</div>
+                </div>
+                <div style="text-align:right">
+                  <div class="stat-value" style="font-size:1.5rem">${u.credibility_score}</div>
+                </div>
+              </li>
+            `).join('') + '</ul>';
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    
+    loadStats();
+    loadLeaderboard();
+    setInterval(loadStats, 30000);
+  </script>
+</body>
+</html>
