@@ -274,6 +274,28 @@ app.post('/api/contributions/:id/endorse', async (req, res) => {
   }
 });
 
+// Reply to contribution
+app.post('/api/contributions/:id/reply', async (req, res) => {
+  try {
+    const authorId = req.headers['x-user-id'] as string;
+    
+    if (!authorId) {
+      return res.status(401).json({ success: false, error: 'User ID required' });
+    }
+    
+    const input: CreateContributionInput = req.body;
+    const reply = await contributionService.reply(req.params.id, authorId, input);
+    
+    if (!reply) {
+      return res.status(404).json({ success: false, error: 'Parent contribution not found' });
+    }
+    
+    res.status(201).json({ success: true, data: reply });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
 // ============================================
 // Stats Routes
 // ============================================

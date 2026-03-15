@@ -19,6 +19,15 @@ const proposals = new Map<string, Proposal>();
 const votes = new Map<string, Vote>();
 
 /**
+ * Calculate quadratic voting weight
+ * Formula: weight = tokens^2 (costs increase quadratically)
+ * This reduces influence of large voters
+ */
+function calculateQuadraticWeight(tokens: number): number {
+  return tokens * tokens;
+}
+
+/**
  * Proposal Service - governance and decision making
  */
 export class ProposalService {
@@ -111,23 +120,26 @@ export class ProposalService {
     }
     
     const now = new Date().toISOString();
+    const quadraticWeight = calculateQuadraticWeight(input.tokens);
+    
     const vote: Vote = {
       id: uuidv4(),
       proposal_id: proposalId,
       voter_id: voterId,
       support: input.support,
       tokens: input.tokens,
+      quadratic_weight: quadraticWeight,
       created_at: now,
     };
     
     const validated = VoteSchema.parse(vote);
     votes.set(validated.id, validated);
     
-    // Update proposal counts
+    // Update proposal counts using quadratic weights
     const updated: Proposal = {
       ...proposal,
-      votes_for: proposal.votes_for + (input.support ? input.tokens : 0),
-      votes_against: proposal.votes_against + (input.support ? 0 : input.tokens),
+      votes_for: proposal.votes_for + (input.support ? quadraticWeight : 0),
+      votes_against: proposal.votes_against + (input.support ? 0 : quadraticWeight),
     };
     proposals.set(proposalId, updated);
     

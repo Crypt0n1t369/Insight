@@ -143,6 +143,23 @@ export class ContributionService {
   }
   
   /**
+   * Reply to a contribution (nested comment)
+   */
+  async reply(parentId: string, authorId: string, input: CreateContributionInput): Promise<Contribution | null> {
+    const parent = contributions.get(parentId);
+    if (!parent) return null;
+    
+    const replyInput: CreateContributionInput = {
+      ...input,
+      branch_id: parent.branch_id,
+      parent_id: parentId,
+      type: 'comment', // Force comment type for replies
+    };
+    
+    return this.createContribution(authorId, replyInput);
+  }
+  
+  /**
    * Get user's contributions
    */
   async getUserContributions(userId: string): Promise<Contribution[]> {

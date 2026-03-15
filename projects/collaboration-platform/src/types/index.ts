@@ -125,6 +125,7 @@ export const VoteSchema = z.object({
   voter_id: z.string().uuid(),
   support: z.boolean(),
   tokens: z.number().int().min(1),
+  quadratic_weight: z.number().int().min(1),  // Quadratic voting weight (tokens^2)
   created_at: z.string().datetime(),
 });
 export type Vote = z.infer<typeof VoteSchema>;
@@ -153,3 +154,44 @@ export interface PaginatedResponse<T> {
   total: number;
   has_more: boolean;
 }
+
+// ============================================
+// Moderation Types
+// ============================================
+
+export const ReportReasonSchema = z.enum(['spam', 'harassment', 'misinformation', 'violence', 'other']);
+export type ReportReason = z.infer<typeof ReportReasonSchema>;
+
+export const ReportStatusSchema = z.enum(['pending', 'reviewed', 'dismissed', 'actioned']);
+export type ReportStatus = z.infer<typeof ReportStatusSchema>;
+
+export const ReportSchema = z.object({
+  id: z.string().uuid(),
+  reporter_id: z.string().uuid(),
+  content_type: z.enum(['contribution', 'proposal', 'branch']),
+  content_id: z.string().uuid(),
+  reason: ReportReasonSchema,
+  evidence: z.string().nullable(),
+  status: ReportStatusSchema,
+  created_at: z.string().datetime(),
+  resolved_at: z.string().datetime().nullable(),
+});
+export type Report = z.infer<typeof ReportSchema>;
+
+export const CreateReportSchema = z.object({
+  content_type: z.enum(['contribution', 'proposal', 'branch']),
+  content_id: z.string().uuid(),
+  reason: ReportReasonSchema,
+  evidence: z.string().max(1000).optional(),
+});
+export type CreateReportInput = z.infer<typeof CreateReportSchema>;
+
+export const WarningSchema = z.object({
+  id: z.string().uuid(),
+  user_id: z.string().uuid(),
+  report_id: z.string().uuid(),
+  reason: z.string(),
+  severity: z.enum(['minor', 'major', 'severe']),
+  created_at: z.string().datetime(),
+});
+export type Warning = z.infer<typeof WarningSchema>;
