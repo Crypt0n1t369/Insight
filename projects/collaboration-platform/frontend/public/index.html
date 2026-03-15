@@ -110,6 +110,27 @@
     // API URL - update this to your deployed API
     const API_URL = 'https://credo-api.onrender.com';
     
+    // Demo data fallback when API is offline
+    const DEMO_DATA = {
+      stats: { users: 42, branches: 7, contributions: 156 },
+      branches: [
+        { title: "Trust Calibration Systems", status: "active", created_at: "2026-03-10" },
+        { title: "Anonymous Reputation Models", status: "active", created_at: "2026-03-08" },
+        { title: "Quadratic Voting Research", status: "active", created_at: "2026-03-05" },
+        { title: "Synthetic Identity Framework", status: "archived", created_at: "2026-02-28" },
+        { title: "Community Governance Patterns", status: "active", created_at: "2026-02-20" }
+      ],
+      leaderboard: [
+        { display_name: "Socratic_42", trust_tier: "elder", credibility_score: 2847, created_at: "2026-01-15" },
+        { display_name: "RationalMind", trust_tier: "elder", credibility_score: 1923, created_at: "2026-01-20" },
+        { display_name: "TruthSeeker", trust_tier: "trusted", credibility_score: 1245, created_at: "2026-02-01" },
+        { display_name: "CuriousSoul", trust_tier: "trusted", credibility_score: 892, created_at: "2026-02-10" },
+        { display_name: "IdeaForge", trust_tier: "contributor", credibility_score: 456, created_at: "2026-02-25" }
+      ]
+    };
+    
+    let useDemo = false;
+    
     async function fetchJSON(url) {
       try {
         const res = await fetch(url);
@@ -139,6 +160,7 @@
         document.getElementById('contributions').textContent = statsRes.data.contributions;
         
         apiStatusEl.textContent = 'Online';
+        useDemo = false;
         
         const branchList = document.getElementById('branches-list');
         if (!branchesRes.data || branchesRes.data.length === 0) {
@@ -180,14 +202,45 @@
         } catch (e) { console.error('Leaderboard error:', e); }
         
       } catch (e) {
-        console.error(e);
-        apiStatusEl.textContent = 'Offline';
+        console.log('API offline, using demo data');
+        useDemo = true;
+        apiStatusEl.textContent = 'Offline (Demo Mode)';
         statusEl.classList.add('offline');
-        document.getElementById('users').textContent = '?';
-        document.getElementById('branches').textContent = '?';
-        document.getElementById('contributions').textContent = '?';
-        document.getElementById('branches-list').innerHTML = '<div class="empty">API offline. Deploy the API to see data.</div>';
+        loadDemoData();
       }
+    }
+    
+    function loadDemoData() {
+      document.getElementById('users').textContent = DEMO_DATA.stats.users;
+      document.getElementById('branches').textContent = DEMO_DATA.stats.branches;
+      document.getElementById('contributions').textContent = DEMO_DATA.stats.contributions;
+      
+      const branchList = document.getElementById('branches-list');
+      branchList.innerHTML = '<ul class="list">' + 
+        DEMO_DATA.branches.map(b => `
+          <li class="list-item">
+            <div>
+              <div class="item-title">${b.title}</div>
+              <div class="item-meta">${b.created_at}</div>
+            </div>
+            <span class="badge">${b.status}</span>
+          </li>
+        `).join('') + '</ul>';
+      
+      const lb = document.getElementById('leaderboard');
+      lb.innerHTML = '<ul class="list">' + 
+        DEMO_DATA.leaderboard.map((u, i) => `
+          <li class="list-item">
+            <div>
+              <div class="item-title">#${i + 1} ${u.display_name}</div>
+              <div class="item-meta">Joined ${u.created_at}</div>
+            </div>
+            <div style="text-align:right">
+              <span class="tier-badge ${getTierClass(u.trust_tier)}">${u.trust_tier}</span>
+              <div class="item-meta" style="margin-top:0.25rem">${u.credibility_score} pts</div>
+            </div>
+          </li>
+        `).join('') + '</ul>';
     }
     
     loadData();
