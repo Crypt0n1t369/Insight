@@ -161,14 +161,15 @@ describe('Credo Platform Integration', () => {
       const voter = await identityService.createAnonymousUser();
       const vote = await proposalService.vote(proposal.id, voter.id, {
         support: true,
-        tokens: 10
+        tokens: 3  // quadratic weight = 9
       });
       expect(vote!.support).toBe(true);
-      expect(vote!.tokens).toBe(10);
+      expect(vote!.tokens).toBe(3);
+      expect(vote!.quadratic_weight).toBe(9);
       
-      // Check proposal updated
+      // Check proposal updated (quadratic voting)
       const updatedProposal = await proposalService.getProposalById(proposal.id);
-      expect(updatedProposal!.votes_for).toBe(10);
+      expect(updatedProposal!.votes_for).toBe(9);
       
       // 3. Close proposal
       const closed = await proposalService.closeProposal(proposal.id);
