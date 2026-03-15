@@ -437,6 +437,76 @@ app.get('/api/proposals/:id/votes', async (req, res) => {
   }
 });
 
+// ============================================
+// Moderation Routes
+// ============================================
+
+import { moderationService } from './services/moderation.js';
+import type { CreateReportInput } from './types/index.js';
+
+// Create report
+app.post('/api/reports', async (req, res) => {
+  try {
+    const reporterId = req.headers['x-user-id'] as string;
+    
+    if (!reporterId) {
+      return res.status(401).json({ success: false, error: 'User ID required' });
+    }
+    
+    const input: CreateReportInput = req.body;
+    const report = await moderationService.createReport(reporterId, input);
+    res.status(201).json({ success: true, data: report });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
+// Get pending reports (moderator)
+app.get('/api/reports/queue', async (req, res) => {
+  try {
+    const limit = Math.min(parseInt(req.query.limit as string) || 20, 100);
+    const offset = parseInt(req.query.offset as string) || 0;
+    
+    const result = await moderationService.getPendingReports(limit, offset);
+    res.json({ 
+      success: true, 
+      data: result.reports,
+      meta: { total: result.total, limit, offset }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
+// Review report (moderator)
+app.patch('/api/reports/:id', async (req, res) => {
+  try {
+    const { decision } = req.body; // 'dismissed' or 'actioned'
+    
+    if (!decision || !['dismissed', 'actioned'].includes(decision)) {
+      return res.status(400).json({ success: false, error: 'Invalid decision' });
+    }
+    
+    const report = await moderationService.reviewReport(req.params.id, decision);
+    if (!report) {
+      return res.status(404).json({ success: false, error: 'Report not found' });
+    }
+    res.json({ success: true, data: report });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
+// Get user warnings
+app.get('/api/users/:id/warnings', async (req, res) => {
+  try {
+    const warnings = await moderationService.getUserWarnings(req.params.id);
+    res.json({ success: true, data: warnings });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`
