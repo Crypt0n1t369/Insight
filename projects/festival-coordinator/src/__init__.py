@@ -18,6 +18,15 @@ from .models import (
     get_session,
 )
 
+from .service import (
+    TaskService,
+    PointsService,
+    RewardService,
+    get_db,
+)
+
+from . import handlers
+
 __all__ = [
     "Base",
     "Festival",
@@ -33,4 +42,9 @@ __all__ = [
     "create_db_engine",
     "init_db",
     "get_session",
+    "TaskService",
+    "PointsService",
+    "RewardService",
+    "get_db",
+    "handlers",
 ]
