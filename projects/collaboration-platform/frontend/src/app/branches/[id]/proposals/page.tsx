@@ -140,10 +140,6 @@ function ProposalCard({ proposal, userId, onVote }: {
   );
 }
 
-export async function generateStaticParams() {
-  return [];
-}
-
 export default function ProposalsPage({ params }: { params: Promise<{ id: string }> }) {
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [branch, setBranch] = useState<{ id: string; title: string } | null>(null);

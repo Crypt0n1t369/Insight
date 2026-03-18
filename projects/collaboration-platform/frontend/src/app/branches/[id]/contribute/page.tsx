@@ -4,10 +4,6 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 
-export async function generateStaticParams() {
-  return [];
-}
-
 export default function ContributePage() {
   const router = useRouter();
   const params = useParams();
