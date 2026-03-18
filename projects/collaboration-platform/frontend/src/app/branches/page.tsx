@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 async function getBranches() {
   try {
-    const res = await fetch('http://localhost:3000/api/branches', { 
+    const res = await fetch('/api/branches', { 
       cache: 'no-store' 
     });
     if (!res.ok) return [];

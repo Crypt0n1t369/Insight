@@ -46,7 +46,7 @@ export default function ProfilePage() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`http://localhost:3000/api/users/${id}`);
+      const res = await fetch(`/api/users/${id}`);
       if (res.ok) {
         const data = await res.json();
         setUser(data.data);
@@ -66,7 +66,7 @@ export default function ProfilePage() {
   const fetchContributions = async (userId: string) => {
     setLoadingContribs(true);
     try {
-      const res = await fetch(`http://localhost:3000/api/users/${userId}/contributions`);
+      const res = await fetch(`/api/users/${userId}/contributions`);
       if (res.ok) {
         const data = await res.json();
         setContributions(data.data || []);
@@ -91,7 +91,7 @@ export default function ProfilePage() {
     setError('');
     
     try {
-      const res = await fetch('http://localhost:3000/api/users', {
+      const res = await fetch('/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

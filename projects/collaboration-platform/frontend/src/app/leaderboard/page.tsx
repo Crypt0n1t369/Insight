@@ -15,7 +15,7 @@ export default function LeaderboardPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/users/leaderboard')
+    fetch('/api/users/leaderboard')
       .then(res => res.json())
       .then(data => {
         if (data.success && data.data) {

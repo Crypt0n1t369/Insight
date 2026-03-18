@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 async function getStats() {
   try {
-    const res = await fetch('http://localhost:3000/api/stats', { 
+    const res = await fetch('/api/stats', { 
       cache: 'no-store' 
     });
     if (!res.ok) return null;
@@ -14,7 +14,7 @@ async function getStats() {
 
 async function getBranches() {
   try {
-    const res = await fetch('http://localhost:3000/api/branches', { 
+    const res = await fetch('/api/branches', { 
       cache: 'no-store' 
     });
     if (!res.ok) return [];

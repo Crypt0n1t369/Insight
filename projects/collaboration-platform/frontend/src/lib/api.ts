@@ -1,4 +1,5 @@
-const API_URL = process.env.API_URL || 'http://localhost:3000';
+// Use relative URLs for API calls (works in both dev and production)
+const API_URL = '';
 
 export async function apiGet<T>(endpoint: string): Promise<T | null> {
   try {

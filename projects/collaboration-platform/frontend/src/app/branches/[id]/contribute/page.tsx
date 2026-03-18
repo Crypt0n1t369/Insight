@@ -32,16 +32,15 @@ export default function ContributePage() {
     setError('');
 
     try {
-      const res = await fetch('http://localhost:3000/api/contributions', {
+      const res = await fetch('/api/contributions', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
-          'x-user-id': formData.userId,
         },
         body: JSON.stringify({
           branch_id: branchId,
+          author_id: formData.userId,
           type: formData.type,
-          title: formData.title,
           content: formData.content,
         }),
       });

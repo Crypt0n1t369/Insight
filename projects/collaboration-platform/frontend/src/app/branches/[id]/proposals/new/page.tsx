@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 async function getBranch(id: string): Promise<{ id: string; title: string } | null> {
   try {
-    const res = await fetch(`http://localhost:3000/api/branches/${id}`, { 
+    const res = await fetch(`/api/branches/${id}`, { 
       cache: 'no-store' 
     });
     if (!res.ok) return null;
@@ -61,7 +61,7 @@ export default function NewProposalPage({ params }: { params: Promise<{ id: stri
 
     try {
       const { id: branchId } = await params;
-      const res = await fetch('http://localhost:3000/api/proposals', {
+      const res = await fetch('/api/proposals', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

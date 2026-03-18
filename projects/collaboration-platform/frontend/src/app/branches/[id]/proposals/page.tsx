@@ -18,7 +18,7 @@ interface Proposal {
 
 async function getProposals(branchId: string): Promise<Proposal[]> {
   try {
-    const res = await fetch(`http://localhost:3000/api/branches/${branchId}/proposals`, { 
+    const res = await fetch(`/api/branches/${branchId}/proposals`, { 
       cache: 'no-store' 
     });
     if (!res.ok) return [];
@@ -31,7 +31,7 @@ async function getProposals(branchId: string): Promise<Proposal[]> {
 
 async function getBranch(id: string): Promise<{ id: string; title: string } | null> {
   try {
-    const res = await fetch(`http://localhost:3000/api/branches/${id}`, { 
+    const res = await fetch(`/api/branches/${id}`, { 
       cache: 'no-store' 
     });
     if (!res.ok) return null;
@@ -166,7 +166,7 @@ export default function ProposalsPage({ params }: { params: Promise<{ id: string
 
   const handleVote = async (proposalId: string, support: boolean) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/proposals/${proposalId}/vote`, {
+      const res = await fetch(`/api/proposals/${proposalId}/vote`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

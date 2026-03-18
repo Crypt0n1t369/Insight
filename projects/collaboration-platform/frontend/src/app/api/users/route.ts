@@ -6,10 +6,28 @@ function generateAnonymousId(): string {
   return createHash('sha256').update(random).digest('hex').substring(0, 16);
 }
 
-// GET /api/users - List users (public)
-export async function GET() {
+// GET /api/users - List users or get single user by id
+export async function GET(request: Request) {
   const supabase = await getSupabase();
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id');
   
+  if (id) {
+    // Get single user
+    const { data, error: err } = await supabase
+      .from('users')
+      .select('id, anonymous_id, display_name, avatar_seed, trust_tier, credibility_score, created_at')
+      .eq('id', id)
+      .limit(1);
+    
+    if (err) {
+      return error('Failed to fetch user: ' + err.message);
+    }
+    
+    return json({ data });
+  }
+  
+  // List all users
   const { data, error: err } = await supabase
     .from('users')
     .select('id, anonymous_id, display_name, avatar_seed, trust_tier, credibility_score, created_at')

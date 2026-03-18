@@ -28,7 +28,7 @@ interface BranchTree {
 
 async function getBranch(id: string): Promise<Branch | null> {
   try {
-    const res = await fetch(`http://localhost:3000/api/branches/${id}`, { 
+    const res = await fetch(`/api/branches/${id}`, { 
       cache: 'no-store' 
     });
     if (!res.ok) return null;
@@ -41,7 +41,7 @@ async function getBranch(id: string): Promise<Branch | null> {
 
 async function getBranchContributions(branchId: string): Promise<Contribution[]> {
   try {
-    const res = await fetch(`http://localhost:3000/api/branches/${branchId}/contributions`, { 
+    const res = await fetch(`/api/branches/${branchId}/contributions`, { 
       cache: 'no-store' 
     });
     if (!res.ok) return [];
@@ -54,7 +54,7 @@ async function getBranchContributions(branchId: string): Promise<Contribution[]>
 
 async function getBranchTree(id: string): Promise<BranchTree | null> {
   try {
-    const res = await fetch(`http://localhost:3000/api/branches/${id}/tree`, { 
+    const res = await fetch(`/api/branches/${id}/tree`, { 
       cache: 'no-store' 
     });
     if (!res.ok) return null;
@@ -179,7 +179,7 @@ export default function BranchPage({ params }: { params: Promise<{ id: string }>
 
   const handleEndorse = async (contributionId: string) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/contributions/${contributionId}/endorse`, {
+      const res = await fetch(`/api/contributions/${contributionId}/endorse`, {
         method: 'POST',
         headers: { 'x-user-id': userId }
       });

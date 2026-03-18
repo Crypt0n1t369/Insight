@@ -37,10 +37,12 @@ export default function NewBranchPage() {
 
   const fetchUser = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/users/${id}`);
+      const res = await fetch(`/api/users?id=${id}`);
       if (res.ok) {
         const data = await res.json();
-        setUser(data.data);
+        if (data.data && data.data.length > 0) {
+          setUser(data.data[0]);
+        }
       }
     } catch (err) {
       console.error('Failed to fetch user');
@@ -49,7 +51,7 @@ export default function NewBranchPage() {
 
   const fetchBranches = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/branches');
+      const res = await fetch('/api/branches');
       if (res.ok) {
         const data = await res.json();
         setBranches(data.data || []);
@@ -71,15 +73,15 @@ export default function NewBranchPage() {
     setError('');
 
     try {
-      const res = await fetch('http://localhost:3000/api/branches', {
+      const res = await fetch('/api/branches', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-user-id': userId,
         },
         body: JSON.stringify({
           title,
           description,
+          creator_id: userId,
           parent_id: parentId || undefined,
         }),
       });
