@@ -35,7 +35,8 @@
   - GET /api/users/:id - Get user ✅
   - POST /api/branches - Create branch ✅
   - POST /api/contributions - Add contribution ✅
-- **Tests:** 56/56 passing ✅ (verified Mar 11, 07:30)
+  - DELETE /api/contributions/:id - Delete contribution (author only) ✅
+- **Tests:** 56/56 passing ✅ (verified Mar 19, 01:34)
 - **Git:** ✅ Committed (a20d2bf committed Mar 11)
 - **Recent Improvements (Mar 11):**
   - Added identity.test.ts (11 tests)
