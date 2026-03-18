@@ -274,6 +274,25 @@ app.post('/api/contributions/:id/endorse', async (req, res) => {
   }
 });
 
+// Delete contribution (author only)
+app.delete('/api/contributions/:id', async (req, res) => {
+  try {
+    const userId = req.headers['x-user-id'] as string;
+    
+    if (!userId) {
+      return res.status(401).json({ success: false, error: 'User ID required' });
+    }
+    
+    const deleted = await contributionService.deleteContribution(req.params.id, userId);
+    if (!deleted) {
+      return res.status(404).json({ success: false, error: 'Contribution not found or not authorized' });
+    }
+    res.json({ success: true, data: { deleted: true } });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
 // Reply to contribution
 app.post('/api/contributions/:id/reply', async (req, res) => {
   try {

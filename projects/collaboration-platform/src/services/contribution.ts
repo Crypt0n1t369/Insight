@@ -178,6 +178,23 @@ export class ContributionService {
       .filter(c => c.branch_id === branchId)
       .length;
   }
+  
+  /**
+   * Delete a contribution (soft delete - author only)
+   * Returns true if deleted, false if not found or not authorized
+   */
+  async deleteContribution(contributionId: string, userId: string): Promise<boolean> {
+    const contribution = contributions.get(contributionId);
+    if (!contribution) return false;
+    
+    // Only author can delete their contribution
+    if (contribution.author_id !== userId) return false;
+    
+    // Remove from storage
+    contributions.delete(contributionId);
+    
+    return true;
+  }
 }
 
 // Reset function for testing
