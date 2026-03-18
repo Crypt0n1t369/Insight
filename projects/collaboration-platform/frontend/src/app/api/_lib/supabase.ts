@@ -1,10 +1,12 @@
-import { createClient } from '@/utils/supabase/server';
+import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
-// Helper to get Supabase client and handle errors
-export async function getSupabase() {
-  const supabase = await createClient();
-  return supabase;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+// Service role client (bypasses RLS) - only for API routes
+export function getSupabase() {
+  return createClient(supabaseUrl, supabaseServiceKey);
 }
 
 // Helper for JSON responses
