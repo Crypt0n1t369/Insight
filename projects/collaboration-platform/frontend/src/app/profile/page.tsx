@@ -8,7 +8,7 @@ interface User {
   username: string;
   display_name: string;
   credibility: number;
-  trust_tier: number;
+  trust_tier: string;
   contributions_count: number;
   endorsements_received: number;
 }
@@ -49,7 +49,17 @@ export default function ProfilePage() {
       const res = await fetch(`/api/users/${id}`);
       if (res.ok) {
         const data = await res.json();
-        setUser(data.data);
+        // Map API fields to frontend interface
+        const u = data.data;
+        setUser({
+          ...u,
+          username: u.username || u.anonymous_id?.slice(0, 8) || 'anonymous',
+          display_name: u.display_name || 'Anonymous',
+          credibility: u.credibility_score || u.credibility || 0,
+          trust_tier: u.trust_tier || 'newcomer',
+          contributions_count: u.contributions_count || 0,
+          endorsements_received: u.endorsements_received || 0
+        });
         // Fetch user's contributions
         fetchContributions(id);
       } else {

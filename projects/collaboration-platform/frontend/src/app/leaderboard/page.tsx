@@ -19,7 +19,15 @@ export default function LeaderboardPage() {
       .then(res => res.json())
       .then(data => {
         if (data.success && data.data) {
-          setUsers(data.data);
+          // Map API fields to frontend interface
+          const mapped = data.data.map((u: any) => ({
+            id: u.id,
+            username: u.display_name || u.username || 'Anonymous',
+            credibility: u.credibility_score || u.credibility || 0,
+            trustTier: u.trust_tier || u.trustTier || 'newcomer',
+            totalEndorsements: u.endorsements_received || u.totalEndorsements || 0
+          }));
+          setUsers(mapped);
         }
       })
       .catch(console.error)
