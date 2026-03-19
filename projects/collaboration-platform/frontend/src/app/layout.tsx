@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import BugReportButton from '@/components/BugReportButton';
 
 export const metadata: Metadata = {
   title: 'Credo - Distributed Collaboration',
@@ -34,6 +35,7 @@ export default function RootLayout({
             <p>Credo Platform v0.1.0 - MVP</p>
           </div>
         </footer>
+        <BugReportButton />
       </body>
     </html>
   );
