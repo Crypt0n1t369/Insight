@@ -5,39 +5,63 @@ import { useState } from 'react';
 type BugCategory = 'bug' | 'feature' | 'improvement' | 'other';
 
 interface BugReport {
+  id: string;
   category: BugCategory;
   title: string;
   description: string;
   severity: 'low' | 'medium' | 'high' | 'critical';
+  status: 'pending' | 'analyzing' | 'planned' | 'fixed' | 'rejected';
+  createdAt: string;
+  fixAttempted?: string;
+  fixCommit?: string;
 }
+
+const BUG_REPORTS_FILE = '/api/bug-reports';
 
 export default function BugReportButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [report, setReport] = useState<BugReport>({
+    id: '',
     category: 'bug',
     title: '',
     description: '',
     severity: 'medium',
+    status: 'pending',
+    createdAt: '',
   });
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Store in localStorage for now (can be expanded to API)
-    const reports = JSON.parse(localStorage.getItem('bugReports') || '[]');
-    reports.push({
+    const newReport: BugReport = {
       ...report,
-      id: Date.now(),
+      id: `bug-${Date.now()}`,
       createdAt: new Date().toISOString(),
-    });
+    };
+    
+    // Store in localStorage
+    const reports = JSON.parse(localStorage.getItem('bugReports') || '[]');
+    reports.push(newReport);
     localStorage.setItem('bugReports', JSON.stringify(reports));
+    
+    // Also try to save to file for agent access
+    try {
+      await fetch('/api/bug-reports', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newReport),
+      });
+    } catch (err) {
+      // Fallback: already in localStorage
+      console.log('Report saved to localStorage');
+    }
     
     setSubmitted(true);
     setTimeout(() => {
       setIsOpen(false);
       setSubmitted(false);
-      setReport({ category: 'bug', title: '', description: '', severity: 'medium' });
+      setReport({ id: '', category: 'bug', title: '', description: '', severity: 'medium', status: 'pending', createdAt: '' });
     }, 1500);
   };
 
@@ -65,7 +89,8 @@ export default function BugReportButton() {
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                   <polyline points="22 4 12 14.01 9 11.01"/>
                 </svg>
-                <p>Report submitted!</p>
+                <p>Report received! I'm on it.</p>
+                <small>I'll analyze this and propose fixes automatically.</small>
               </div>
             ) : (
               <>
