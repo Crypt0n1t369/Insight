@@ -195,6 +195,31 @@ export class ContributionService {
     
     return true;
   }
+
+  /**
+   * Update a contribution (author only)
+   * Returns updated contribution or null if not found/unauthorized
+   */
+  async updateContribution(
+    contributionId: string, 
+    userId: string, 
+    updates: { content?: string }
+  ): Promise<Contribution | null> {
+    const contribution = contributions.get(contributionId);
+    if (!contribution) return null;
+    
+    // Only author can update their contribution
+    if (contribution.author_id !== userId) return null;
+    
+    const updated: Contribution = {
+      ...contribution,
+      content: updates.content ?? contribution.content,
+      updated_at: new Date().toISOString(),
+    };
+    
+    contributions.set(contributionId, updated);
+    return updated;
+  }
 }
 
 // Reset function for testing

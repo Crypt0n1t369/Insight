@@ -293,6 +293,35 @@ app.delete('/api/contributions/:id', async (req, res) => {
   }
 });
 
+// Update contribution (author only)
+app.patch('/api/contributions/:id', async (req, res) => {
+  try {
+    const userId = req.headers['x-user-id'] as string;
+    
+    if (!userId) {
+      return res.status(401).json({ success: false, error: 'User ID required' });
+    }
+    
+    const { content } = req.body;
+    if (!content || typeof content !== 'string') {
+      return res.status(400).json({ success: false, error: 'Content is required' });
+    }
+    
+    const updated = await contributionService.updateContribution(
+      req.params.id, 
+      userId, 
+      { content }
+    );
+    
+    if (!updated) {
+      return res.status(404).json({ success: false, error: 'Contribution not found or not authorized' });
+    }
+    res.json({ success: true, data: updated });
+  } catch (error) {
+    res.status(500).json({ success: false, error: String(error) });
+  }
+});
+
 // Reply to contribution
 app.post('/api/contributions/:id/reply', async (req, res) => {
   try {
