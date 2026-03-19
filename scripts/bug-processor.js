@@ -1,72 +1,101 @@
 #!/usr/bin/env node
 /**
- * Bug Report Processor
+ * Bug Report Processor - Supabase Edition
  * 
  * Usage: node scripts/bug-processor.js [command]
- * Commands:
- *   list        - List pending bug reports
- *   analyze <id> - Analyze a specific bug and propose fixes
- *   fix <id>    - Apply fix for a bug
- *   status      - Show status of all bugs
  */
 
-const fs = require('fs');
-const path = require('path');
+const { createClient } = require('@supabase/supabase-js');
 
-const BUGS_FILE = path.join(__dirname, '../../projects/collaboration-platform/data/bug-reports.json');
+const supabaseUrl = 'https://befpyjnxcaohdedvhpuu.supabase.co';
+const serviceKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJlZnB5am54Y2FvaGRlZHZocHV1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzg1ODYwNSwiZXhwIjoyMDg5NDM0NjA1fQ.eBTXK5fpMKkaMN3-0gU2fQokNMG1ZX2QMEh6KDHgSvQ';
 
-function readReports() {
-  try {
-    if (!fs.existsSync(BUGS_FILE)) return [];
-    return JSON.parse(fs.readFileSync(BUGS_FILE, 'utf-8'));
-  } catch {
-    return [];
+const supabase = createClient(supabaseUrl, serviceKey);
+
+async function listPending() {
+  const { data, error } = await supabase
+    .from('bug_reports')
+    .select('*')
+    .eq('status', 'pending')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error:', error.message);
+    return;
   }
+
+  if (!data || data.length === 0) {
+    console.log('✅ No pending bug reports.');
+    return;
+  }
+
+  console.log(`📋 Found ${data.length} pending bug report(s):\n`);
+  data.forEach(r => {
+    console.log(`[${r.id.slice(0,8)}] ${r.title}`);
+    console.log(`  Type: ${r.category} | Severity: ${r.severity}`);
+    console.log(`  ${r.description.slice(0, 80)}...`);
+    console.log('');
+  });
 }
 
-function writeReports(reports) {
-  const dir = path.dirname(BUGS_FILE);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(BUGS_FILE, JSON.stringify(reports, null, 2));
+async function showStatus() {
+  const { data, error } = await supabase
+    .from('bug_reports')
+    .select('status');
+
+  if (error) {
+    console.error('Error:', error.message);
+    return;
+  }
+
+  const counts = {};
+  data.forEach(r => {
+    counts[r.status] = (counts[r.status] || 0) + 1;
+  });
+
+  console.log('Bug Report Status:');
+  Object.entries(counts).forEach(([status, count]) => {
+    console.log(`  ${status}: ${count}`);
+  });
+}
+
+async function analyze(id) {
+  const { data: report, error } = await supabase
+    .from('bug_reports')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error || !report) {
+    console.log('Bug not found:', id);
+    return;
+  }
+
+  console.log('═'.repeat(50));
+  console.log(`BUG ANALYSIS: ${report.title}`);
+  console.log('═'.repeat(50));
+  console.log(`ID: ${report.id}`);
+  console.log(`Category: ${report.category} | Severity: ${report.severity}`);
+  console.log(`Description: ${report.description}`);
+  console.log('\nTo analyze this bug, I will:');
+  console.log('1. Investigate the codebase');
+  console.log('2. Propose 3 fix approaches');
+  console.log('3. Select the best one based on complexity/risk');
+  console.log('4. Either fix it (if simple) or ask for confirmation (if complex)');
 }
 
 const cmd = process.argv[2];
 
 if (cmd === 'list') {
-  const reports = readReports().filter(r => r.status === 'pending');
-  if (reports.length === 0) {
-    console.log('No pending bug reports.');
-  } else {
-    console.log('Pending Bug Reports:\n');
-    reports.forEach(r => {
-      console.log(`[${r.id}] ${r.title}`);
-      console.log(`  Type: ${r.category} | Severity: ${r.severity}`);
-      console.log(`  ${r.description.slice(0, 100)}...`);
-      console.log('');
-    });
-  }
+  listPending();
 } else if (cmd === 'status') {
-  const reports = readReports();
-  const byStatus = {};
-  reports.forEach(r => {
-    byStatus[r.status] = (byStatus[r.status] || 0) + 1;
-  });
-  console.log('Bug Report Status:');
-  Object.entries(byStatus).forEach(([status, count]) => {
-    console.log(`  ${status}: ${count}`);
-  });
+  showStatus();
 } else if (cmd === 'analyze') {
-  const id = process.argv[3];
-  const reports = readReports();
-  const report = reports.find(r => r.id === id);
-  if (!report) {
-    console.log('Bug not found:', id);
-    process.exit(1);
-  }
-  console.log(`Analyzing: ${report.title}`);
-  console.log(`Description: ${report.description}`);
-  console.log('\nThis would spawn a sub-agent to investigate and propose fixes.');
-  console.log('Proposed fixes will be stored in the report for review.');
+  analyze(process.argv[3]);
 } else {
-  console.log('Usage: node bug-processor.js <list|analyze|status>');
+  console.log('Usage: node bug-processor.js <list|status|analyze>');
+  console.log('\nCommands:');
+  console.log('  list      - List pending bug reports');
+  console.log('  status    - Show count by status');
+  console.log('  analyze   - Analyze a specific bug');
 }
