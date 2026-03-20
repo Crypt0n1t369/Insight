@@ -570,6 +570,199 @@ class DisputeService:
         return True, "Dispute escalated for review"
 
 
+class AnalyticsService:
+    """Analytics and reporting service for Festival Coordinator"""
+    
+    def __init__(self, session: Session):
+        self.session = session
+    
+    def get_festival_stats(self, festival_id: int) -> dict:
+        """Get comprehensive festival statistics"""
+        # Total tasks
+        total_tasks = self.session.query(FestivalTask).filter(
+            FestivalTask.festival_id == festival_id
+        ).count()
+        
+        # Tasks by status
+        tasks_by_status = {}
+        for status in TaskStatus:
+            count = self.session.query(FestivalTask).filter(
+                and_(
+                    FestivalTask.festival_id == festival_id,
+                    FestivalTask.status == status.value
+                )
+            ).count()
+            tasks_by_status[status.value] = count
+        
+        # Total claims
+        total_claims = self.session.query(TaskClaim).join(FestivalTask).filter(
+            FestivalTask.festival_id == festival_id
+        ).count()
+        
+        # Claims by status
+        claims_by_status = {}
+        for status in ClaimStatus:
+            count = self.session.query(TaskClaim).join(FestivalTask).filter(
+                and_(
+                    FestivalTask.festival_id == festival_id,
+                    TaskClaim.status == status.value
+                )
+            ).count()
+            claims_by_status[status.value] = count
+        
+        # Points awarded
+        points_awarded = self.session.query(ReputationLedger).filter(
+            ReputationLedger.festival_id == festival_id
+        ).count()
+        
+        # Total points value
+        total_points = self.session.query(ReputationLedger).filter(
+            ReputationLedger.festival_id == festival_id
+        ).all()
+        total_points_value = sum(p.points for p in total_points)
+        
+        # Rewards redeemed (join through Reward to get festival_id)
+        redemptions = self.session.query(Redemption).join(
+            Reward, Redemption.reward_id == Reward.id
+        ).filter(
+            Reward.festival_id == festival_id
+        ).count()
+        
+        # Disputes (join through FestivalTask to get festival_id)
+        disputes = self.session.query(Dispute).join(
+            FestivalTask, Dispute.task_id == FestivalTask.id
+        ).filter(
+            FestivalTask.festival_id == festival_id
+        ).count()
+        
+        return {
+            "total_tasks": total_tasks,
+            "tasks_by_status": tasks_by_status,
+            "total_claims": total_claims,
+            "claims_by_status": claims_by_status,
+            "points_awarded_count": points_awarded,
+            "total_points_value": total_points_value,
+            "rewards_redeemed": redemptions,
+            "total_disputes": disputes,
+            "completion_rate": round((tasks_by_status.get(TaskStatus.COMPLETED.value, 0) / total_tasks * 100) if total_tasks > 0 else 0, 1),
+            "verification_rate": round((claims_by_status.get(ClaimStatus.VERIFIED.value, 0) / total_claims * 100) if total_claims > 0 else 0, 1)
+        }
+    
+    def get_leaderboard(self, festival_id: int, limit: int = 10) -> list[dict]:
+        """Get top volunteers by points"""
+        # Get all points records for this festival
+        records = self.session.query(ReputationLedger).filter(
+            ReputationLedger.festival_id == festival_id
+        ).all()
+        
+        # Aggregate points per member
+        member_points = {}
+        for record in records:
+            if record.member_id not in member_points:
+                member_points[record.member_id] = {"member_id": record.member_id, "points": 0}
+            member_points[record.member_id]["points"] += record.points
+        
+        # Sort and return top members
+        sorted_members = sorted(member_points.values(), key=lambda x: x["points"], reverse=True)[:limit]
+        
+        return [
+            {"rank": idx + 1, "member_id": m["member_id"], "points": m["points"]}
+            for idx, m in enumerate(sorted_members)
+        ]
+    
+    def get_category_breakdown(self, festival_id: int) -> list[dict]:
+        """Get task breakdown by category"""
+        categories = self.session.query(TaskCategory).filter(
+            TaskCategory.festival_id == festival_id
+        ).all()
+        
+        breakdown = []
+        for cat in categories:
+            total = self.session.query(FestivalTask).filter(
+                FestivalTask.category_id == cat.id
+            ).count()
+            completed = self.session.query(FestivalTask).filter(
+                and_(
+                    FestivalTask.category_id == cat.id,
+                    FestivalTask.status == TaskStatus.COMPLETED.value
+                )
+            ).count()
+            
+            breakdown.append({
+                "category_id": cat.id,
+                "category_name": cat.name,
+                "emoji": cat.emoji,
+                "total_tasks": total,
+                "completed_tasks": completed,
+                "completion_rate": round((completed / total * 100) if total > 0 else 0, 1)
+            })
+        
+        return breakdown
+    
+    def get_member_activity(self, festival_id: int, member_id: int) -> dict:
+        """Get activity summary for a specific member"""
+        # Tasks claimed
+        claims = self.session.query(TaskClaim).join(FestivalTask).filter(
+            and_(
+                FestivalTask.festival_id == festival_id,
+                TaskClaim.member_id == member_id
+            )
+        ).all()
+        
+        completed = sum(1 for c in claims if c.status == ClaimStatus.COMPLETED.value)
+        verified = sum(1 for c in claims if c.status == ClaimStatus.VERIFIED.value)
+        
+        # Points earned
+        points = self.session.query(ReputationLedger).filter(
+            and_(
+                ReputationLedger.festival_id == festival_id,
+                ReputationLedger.member_id == member_id
+            )
+        ).all()
+        
+        total_points = sum(p.points for p in points)
+        
+        # Disputes
+        disputes = self.session.query(Dispute).filter(
+            (Dispute.claimant_id == member_id) | 
+            (Dispute.respondent_id == member_id)
+        ).count()
+        
+        return {
+            "tasks_claimed": len(claims),
+            "tasks_completed": completed,
+            "tasks_verified": verified,
+            "total_points_earned": total_points,
+            "disputes_involved": disputes,
+            "completion_rate": round((completed / len(claims) * 100) if len(claims) > 0 else 0, 1)
+        }
+    
+    def get_noshow_tasks(self, festival_id: int, hours: int = 24) -> list[dict]:
+        """Get tasks with claims that have timed out (no completion)"""
+        cutoff = datetime.utcnow() - timedelta(hours=hours)
+        
+        claims = self.session.query(TaskClaim, FestivalTask).join(
+            FestivalTask, TaskClaim.task_id == FestivalTask.id
+        ).filter(
+            and_(
+                FestivalTask.festival_id == festival_id,
+                TaskClaim.status == ClaimStatus.PENDING.value,
+                TaskClaim.claimed_at < cutoff
+            )
+        ).all()
+        
+        return [
+            {
+                "task_id": task.id,
+                "task_title": task.title,
+                "claim_id": claim.id,
+                "claimed_at": claim.claimed_at.isoformat() if claim.claimed_at else None,
+                "hours_elapsed": int((datetime.utcnow() - claim.claimed_at).total_seconds() / 3600) if claim.claimed_at else 0
+            }
+            for claim, task in claims
+        ]
+
+
 # Database initialization
 _engine = None
 _session = None

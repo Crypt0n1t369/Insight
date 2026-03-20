@@ -684,3 +684,133 @@ class TestDisputeService:
         
         dispute = dispute_service.get_dispute_by_id(dispute.id)
         assert dispute.status == DisputeStatus.UNDER_REVIEW.value
+
+
+class TestAnalyticsService:
+    """Tests for AnalyticsService"""
+    
+    def test_get_festival_stats(self, db_session, sample_festival, sample_category):
+        """Test festival statistics"""
+        from src.service import TaskService, AnalyticsService
+        
+        task_service = TaskService(db_session)
+        # Create some tasks
+        task1 = task_service.create_task(
+            festival_id=sample_festival.id,
+            title="Task 1",
+            category_id=sample_category.id
+        )
+        task2 = task_service.create_task(
+            festival_id=sample_festival.id,
+            title="Task 2",
+            category_id=sample_category.id
+        )
+        
+        # Claim and complete task1
+        task_service.claim_task(task1.id, 123)
+        task_service.complete_task(task1.id, 123, "Done")
+        
+        analytics = AnalyticsService(db_session)
+        stats = analytics.get_festival_stats(sample_festival.id)
+        
+        assert stats["total_tasks"] == 2
+        assert stats["tasks_by_status"]["open"] == 1
+        assert stats["completion_rate"] == 50.0
+    
+    def test_get_category_breakdown(self, db_session, sample_festival, sample_category):
+        """Test category breakdown"""
+        from src.service import TaskService, AnalyticsService
+        
+        task_service = TaskService(db_session)
+        task_service.create_task(
+            festival_id=sample_festival.id,
+            title="Cat Task 1",
+            category_id=sample_category.id
+        )
+        
+        analytics = AnalyticsService(db_session)
+        breakdown = analytics.get_category_breakdown(sample_festival.id)
+        
+        assert len(breakdown) == 1
+        assert breakdown[0]["category_name"] == sample_category.name
+        assert breakdown[0]["total_tasks"] == 1
+    
+    def test_get_member_activity(self, db_session, sample_festival, sample_category):
+        """Test member activity summary"""
+        from src.service import TaskService, AnalyticsService, PointsService
+        
+        task_service = TaskService(db_session)
+        task = task_service.create_task(
+            festival_id=sample_festival.id,
+            title="Activity Task",
+            category_id=sample_category.id
+        )
+        
+        # Claim and complete
+        task_service.claim_task(task.id, 123)
+        task_service.complete_task(task.id, 123, "Done")
+        
+        analytics = AnalyticsService(db_session)
+        activity = analytics.get_member_activity(sample_festival.id, 123)
+        
+        assert activity["tasks_claimed"] == 1
+        assert activity["tasks_completed"] == 1
+    
+    def test_get_noshow_tasks(self, db_session, sample_festival, sample_category):
+        """Test no-show task detection"""
+        from src.service import TaskService, AnalyticsService
+        from src.models import TaskClaim
+        
+        task_service = TaskService(db_session)
+        task = task_service.create_task(
+            festival_id=sample_festival.id,
+            title="No-show Task",
+            category_id=sample_category.id
+        )
+        
+        # Claim the task
+        task_service.claim_task(task.id, 123)
+        
+        # Find the claim and modify timestamp
+        claim = db_session.query(TaskClaim).filter(
+            TaskClaim.task_id == task.id
+        ).first()
+        claim.claimed_at = datetime.utcnow() - timedelta(hours=48)
+        db_session.commit()
+        
+        analytics = AnalyticsService(db_session)
+        noshows = analytics.get_noshow_tasks(sample_festival.id, hours=24)
+        
+        assert len(noshows) == 1
+        assert noshows[0]["task_title"] == "No-show Task"
+    
+    def test_get_leaderboard(self, db_session, sample_festival, sample_category):
+        """Test leaderboard generation"""
+        from src.service import TaskService, PointsService, AnalyticsService
+        
+        task_service = TaskService(db_session)
+        points_service = PointsService(db_session)
+        
+        task = task_service.create_task(
+            festival_id=sample_festival.id,
+            title="Leaderboard Task",
+            category_id=sample_category.id
+        )
+        
+        # Award points
+        points_service.award_points(
+            member_id=123,
+            points=50,
+            reason="Task completed",
+            reference_type="task",
+            reference_id=task.id,
+            festival_id=sample_festival.id
+        )
+        
+        analytics = AnalyticsService(db_session)
+        leaderboard = analytics.get_leaderboard(sample_festival.id)
+        
+        assert len(leaderboard) == 1
+        assert leaderboard[0]["points"] == 50
+        assert leaderboard[0]["member_id"] == 123
+        assert leaderboard[0]["rank"] == 1
