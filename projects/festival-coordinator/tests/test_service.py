@@ -16,10 +16,12 @@ from src.models import (
     Reward,
     TaskStatus,
     ClaimStatus,
+    DisputeType,
+    DisputeStatus,
     create_db_engine,
     get_session,
 )
-from src.service import TaskService, PointsService, RewardService
+from src.service import TaskService, PointsService, RewardService, DisputeService
 
 
 @pytest.fixture
@@ -378,3 +380,307 @@ class TestHandlers:
         # Check balance
         balance = service.get_balance(123)
         assert balance == 42
+
+
+class TestPhase4NoShowTimeout:
+    """Test Phase 4: No-show timeout feature"""
+    
+    def test_release_stale_claims_after_timeout(self, db_session, sample_festival, sample_category):
+        """Test that stale claims are released after timeout"""
+        from src.service import TaskService
+        
+        service = TaskService(db_session)
+        
+        # Create a task
+        task = service.create_task(
+            festival_id=sample_festival.id,
+            title="Stale Task",
+            category_id=sample_category.id,
+            points_value=25
+        )
+        
+        # Claim the task with a past timestamp
+        from src.models import TaskClaim, ClaimStatus
+        claim = TaskClaim(
+            task_id=task.id,
+            member_id=123,
+            status=ClaimStatus.PENDING.value,
+            claimed_at=datetime.utcnow() - timedelta(hours=25)  # 25 hours ago
+        )
+        db_session.add(claim)
+        task.status = TaskStatus.CLAIMED.value
+        db_session.commit()
+        
+        # Run the stale claim release (24hr default)
+        released = service.release_stale_claims(hours=24)
+        
+        assert len(released) == 1
+        assert released[0]['task_id'] == task.id
+        assert released[0]['task_title'] == "Stale Task"
+        
+        # Verify task is back to open
+        db_session.refresh(task)
+        assert task.status == TaskStatus.OPEN.value
+    
+    def test_no_release_within_timeout(self, db_session, sample_festival, sample_category):
+        """Test that claims within timeout are NOT released"""
+        from src.service import TaskService
+        
+        service = TaskService(db_session)
+        
+        # Create and claim a task (recently)
+        task = service.create_task(
+            festival_id=sample_festival.id,
+            title="Fresh Task",
+            category_id=sample_category.id
+        )
+        
+        service.claim_task(task.id, member_id=123)
+        
+        # Try to release - should find nothing
+        released = service.release_stale_claims(hours=24)
+        
+        # The task should still be claimed
+        task = service.get_task_by_id(task.id)
+        assert task.status == TaskStatus.CLAIMED.value
+        assert len(released) == 0
+    
+    def test_release_with_custom_timeout(self, db_session, sample_festival, sample_category):
+        """Test releasing with custom timeout"""
+        from src.service import TaskService
+        
+        service = TaskService(db_session)
+        
+        # Create a task
+        task = service.create_task(
+            festival_id=sample_festival.id,
+            title="Custom Timeout Task",
+            category_id=sample_category.id
+        )
+        
+        # Claim with 10-hour-old timestamp
+        from src.models import TaskClaim, ClaimStatus
+        claim = TaskClaim(
+            task_id=task.id,
+            member_id=123,
+            status=ClaimStatus.PENDING.value,
+            claimed_at=datetime.utcnow() - timedelta(hours=10)
+        )
+        db_session.add(claim)
+        task.status = TaskStatus.CLAIMED.value
+        db_session.commit()
+        
+        # With 24hr timeout, should NOT release
+        released_24 = service.release_stale_claims(hours=24)
+        assert len(released_24) == 0
+        
+        # With 8hr timeout, SHOULD release
+        released_8 = service.release_stale_claims(hours=8)
+        assert len(released_8) == 1
+
+
+class TestDisputeService:
+    """Phase 4: Dispute resolution tests"""
+    
+    def test_create_dispute(self, db_session, sample_festival, sample_category):
+        """Test creating a dispute"""
+        from src.service import TaskService, DisputeService
+        from src.models import DisputeType
+        
+        # Create and claim a task
+        task_service = TaskService(db_session)
+        task = task_service.create_task(
+            festival_id=sample_festival.id,
+            title="Dispute Test Task",
+            category_id=sample_category.id,
+            points_value=25
+        )
+        
+        # Create dispute
+        dispute_service = DisputeService(db_session)
+        success, msg = dispute_service.create_dispute(
+            task_id=task.id,
+            claimant_id=456,
+            dispute_type=DisputeType.TASK_REJECTION.value,
+            reason="Task was rejected unfairly",
+            respondent_id=789
+        )
+        
+        assert success is True
+        assert "filed" in msg.lower()
+    
+    def test_create_dispute_invalid_task(self, db_session):
+        """Test creating dispute with invalid task"""
+        from src.service import DisputeService
+        from src.models import DisputeType
+        
+        dispute_service = DisputeService(db_session)
+        success, msg = dispute_service.create_dispute(
+            task_id=99999,
+            claimant_id=456,
+            dispute_type=DisputeType.TASK_REJECTION.value,
+            reason="Test"
+        )
+        
+        assert success is False
+        assert "not found" in msg
+    
+    def test_get_dispute_by_id(self, db_session, sample_festival, sample_category):
+        """Test retrieving a dispute by ID"""
+        from src.service import TaskService, DisputeService
+        from src.models import DisputeType
+        
+        task_service = TaskService(db_session)
+        task = task_service.create_task(
+            festival_id=sample_festival.id,
+            title="Get Test Task",
+            category_id=sample_category.id
+        )
+        
+        dispute_service = DisputeService(db_session)
+        dispute_service.create_dispute(
+            task_id=task.id,
+            claimant_id=456,
+            dispute_type=DisputeType.POINTS_DISPUTE.value,
+            reason="Points not awarded"
+        )
+        
+        # Get the first dispute
+        disputes = dispute_service.get_open_disputes()
+        assert len(disputes) == 1
+        
+        dispute = dispute_service.get_dispute_by_id(disputes[0].id)
+        assert dispute is not None
+        assert dispute.dispute_type == DisputeType.POINTS_DISPUTE.value
+    
+    def test_get_my_disputes(self, db_session, sample_festival, sample_category):
+        """Test getting disputes for a member"""
+        from src.service import TaskService, DisputeService
+        from src.models import DisputeType
+        
+        task_service = TaskService(db_session)
+        task = task_service.create_task(
+            festival_id=sample_festival.id,
+            title="My Dispute Task",
+            category_id=sample_category.id
+        )
+        
+        dispute_service = DisputeService(db_session)
+        dispute_service.create_dispute(
+            task_id=task.id,
+            claimant_id=100,
+            dispute_type=DisputeType.NO_SHOW.value,
+            reason="Volunteer didn't show up"
+        )
+        
+        my_disputes = dispute_service.get_my_disputes(100)
+        assert len(my_disputes) == 1
+    
+    def test_resolve_dispute_accept(self, db_session, sample_festival, sample_category):
+        """Test resolving a dispute by accepting the claim"""
+        from src.service import TaskService, DisputeService, PointsService
+        from src.models import DisputeType, DisputeStatus
+        
+        # Create task and dispute
+        task_service = TaskService(db_session)
+        task = task_service.create_task(
+            festival_id=sample_festival.id,
+            title="Resolve Test Task",
+            category_id=sample_category.id,
+            points_value=25
+        )
+        
+        dispute_service = DisputeService(db_session)
+        dispute_service.create_dispute(
+            task_id=task.id,
+            claimant_id=456,
+            dispute_type=DisputeType.TASK_REJECTION.value,
+            reason="Rejected unfairly"
+        )
+        
+        dispute = dispute_service.get_open_disputes()[0]
+        
+        # Resolve accepting the claim
+        success, msg = dispute_service.resolve_dispute(
+            dispute_id=dispute.id,
+            resolver_id=999,
+            resolution="Claim accepted - work was satisfactory",
+            accept_claim=True,
+            adjust_points=25
+        )
+        
+        assert success is True
+        assert "Accepted" in msg
+        
+        # Verify dispute is resolved
+        dispute = dispute_service.get_dispute_by_id(dispute.id)
+        assert dispute.status == DisputeStatus.RESOLVED.value
+        
+        # Verify points were awarded
+        points_service = PointsService(db_session)
+        balance = points_service.get_balance(456)
+        assert balance == 25
+    
+    def test_resolve_dispute_reject(self, db_session, sample_festival, sample_category):
+        """Test resolving a dispute by rejecting the claim"""
+        from src.service import TaskService, DisputeService
+        from src.models import DisputeType, DisputeStatus
+        
+        task_service = TaskService(db_session)
+        task = task_service.create_task(
+            festival_id=sample_festival.id,
+            title="Reject Test Task",
+            category_id=sample_category.id
+        )
+        
+        dispute_service = DisputeService(db_session)
+        dispute_service.create_dispute(
+            task_id=task.id,
+            claimant_id=456,
+            dispute_type=DisputeType.TASK_QUALITY.value,
+            reason="Quality issues"
+        )
+        
+        dispute = dispute_service.get_open_disputes()[0]
+        
+        success, msg = dispute_service.resolve_dispute(
+            dispute_id=dispute.id,
+            resolver_id=999,
+            resolution="Work did not meet standards",
+            accept_claim=False
+        )
+        
+        assert success is True
+        assert "Rejected" in msg
+        
+        dispute = dispute_service.get_dispute_by_id(dispute.id)
+        assert dispute.status == DisputeStatus.REJECTED.value
+    
+    def test_escalate_dispute(self, db_session, sample_festival, sample_category):
+        """Test escalating a dispute"""
+        from src.service import TaskService, DisputeService
+        from src.models import DisputeType, DisputeStatus
+        
+        task_service = TaskService(db_session)
+        task = task_service.create_task(
+            festival_id=sample_festival.id,
+            title="Escalate Test Task",
+            category_id=sample_category.id
+        )
+        
+        dispute_service = DisputeService(db_session)
+        dispute_service.create_dispute(
+            task_id=task.id,
+            claimant_id=456,
+            dispute_type=DisputeType.POINTS_DISPUTE.value,
+            reason="Complex issue"
+        )
+        
+        dispute = dispute_service.get_open_disputes()[0]
+        
+        success, msg = dispute_service.escalate_dispute(dispute.id)
+        
+        assert success is True
+        
+        dispute = dispute_service.get_dispute_by_id(dispute.id)
+        assert dispute.status == DisputeStatus.UNDER_REVIEW.value

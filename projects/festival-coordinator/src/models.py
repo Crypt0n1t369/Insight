@@ -207,6 +207,45 @@ class Redemption(Base):
     )
 
 
+class DisputeStatus(str, Enum):
+    """Dispute status enum"""
+    OPEN = "open"
+    UNDER_REVIEW = "under_review"
+    RESOLVED = "resolved"
+    REJECTED = "rejected"
+
+
+class DisputeType(str, Enum):
+    """Dispute type enum"""
+    TASK_REJECTION = "task_rejection"  # Task verification rejected
+    POINTS_DISPUTE = "points_dispute"  # Points not awarded correctly
+    TASK_QUALITY = "task_quality"  # Work quality dispute
+    NO_SHOW = "no_show"  # Claimed task but didn't complete
+
+
+class Dispute(Base):
+    """Task dispute record"""
+    __tablename__ = "disputes"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    task_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey("festival_tasks.id"), nullable=False
+    )
+    claimant_id: Mapped[int] = mapped_column(Integer, nullable=False)  # Who filed
+    respondent_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)  # Who against (verifier)
+    dispute_type: Mapped[str] = mapped_column(String(50), nullable=False)
+    reason: Mapped[str] = mapped_column(Text, nullable=False)
+    status: Mapped[str] = mapped_column(
+        String(50), default=DisputeStatus.OPEN.value
+    )
+    resolution: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    resolved_by: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    resolved_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, default=datetime.utcnow
+    )
+
+
 # Database setup helpers
 def create_db_engine(database_url: str = "sqlite:///festival.db"):
     """Create database engine"""

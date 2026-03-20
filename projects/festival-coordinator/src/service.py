@@ -20,6 +20,9 @@ from .models import (
     ReputationLedger,
     Reward,
     Redemption,
+    Dispute,
+    DisputeStatus,
+    DisputeType,
     get_session,
     create_db_engine,
 )
@@ -247,6 +250,47 @@ class TaskService:
         self.session.commit()
         return task
 
+    def release_stale_claims(
+        self,
+        hours: int = 24
+    ) -> list[dict]:
+        """
+        Phase 4: No-show timeout - Release tasks that have been claimed
+        but not completed within the specified timeout period.
+        
+        Returns list of released task info.
+        """
+        cutoff = datetime.utcnow() - timedelta(hours=hours)
+        
+        # Find claims that are pending beyond the timeout
+        stale_claims = self.session.query(TaskClaim).filter(
+            and_(
+                TaskClaim.status == ClaimStatus.PENDING.value,
+                TaskClaim.claimed_at < cutoff
+            )
+        ).all()
+        
+        released = []
+        for claim in stale_claims:
+            task = self.get_task_by_id(claim.task_id)
+            if task and task.status == TaskStatus.CLAIMED.value:
+                # Release the task back to open
+                task.status = TaskStatus.OPEN.value
+                claim.status = ClaimStatus.CANCELLED.value
+                
+                released.append({
+                    'task_id': task.id,
+                    'task_title': task.title,
+                    'member_id': claim.member_id,
+                    'claimed_at': claim.claimed_at.isoformat(),
+                    'released_at': datetime.utcnow().isoformat()
+                })
+        
+        if released:
+            self.session.commit()
+        
+        return released
+
 
 class PointsService:
     """Points and reputation service"""
@@ -411,6 +455,119 @@ class RewardService:
         self.session.add(reward)
         self.session.commit()
         return reward
+
+
+class DisputeService:
+    """Dispute resolution service"""
+    
+    def __init__(self, session: Session):
+        self.session = session
+    
+    def create_dispute(
+        self,
+        task_id: int,
+        claimant_id: int,
+        dispute_type: str,
+        reason: str,
+        respondent_id: Optional[int] = None
+    ) -> tuple[bool, str]:
+        """Create a new dispute"""
+        # Verify task exists
+        task_service = TaskService(self.session)
+        task = task_service.get_task_by_id(task_id)
+        if not task:
+            return False, "Task not found"
+        
+        # Create dispute
+        dispute = Dispute(
+            task_id=task_id,
+            claimant_id=claimant_id,
+            respondent_id=respondent_id,
+            dispute_type=dispute_type,
+            reason=reason,
+            status=DisputeStatus.OPEN.value
+        )
+        self.session.add(dispute)
+        self.session.commit()
+        
+        return True, f"Dispute filed for task #{task_id}. Our team will review."
+    
+    def get_dispute_by_id(self, dispute_id: int) -> Optional[Dispute]:
+        """Get dispute by ID"""
+        return self.session.query(Dispute).filter(
+            Dispute.id == dispute_id
+        ).first()
+    
+    def get_my_disputes(self, member_id: int) -> list[Dispute]:
+        """Get disputes filed by or against a member"""
+        return self.session.query(Dispute).filter(
+            (Dispute.claimant_id == member_id) | 
+            (Dispute.respondent_id == member_id)
+        ).order_by(Dispute.created_at.desc()).all()
+    
+    def get_open_disputes(self, festival_id: Optional[int] = None) -> list[Dispute]:
+        """Get all open disputes"""
+        query = self.session.query(Dispute).filter(
+            Dispute.status.in_([
+                DisputeStatus.OPEN.value,
+                DisputeStatus.UNDER_REVIEW.value
+            ])
+        )
+        return query.order_by(Dispute.created_at.asc()).all()
+    
+    def resolve_dispute(
+        self,
+        dispute_id: int,
+        resolver_id: int,
+        resolution: str,
+        accept_claim: bool,
+        adjust_points: Optional[int] = None
+    ) -> tuple[bool, str]:
+        """Resolve a dispute"""
+        dispute = self.get_dispute_by_id(dispute_id)
+        if not dispute:
+            return False, "Dispute not found"
+        
+        if dispute.status in [DisputeStatus.RESOLVED.value, DisputeStatus.REJECTED.value]:
+            return False, "Dispute already resolved"
+        
+        dispute.status = DisputeStatus.RESOLVED.value if accept_claim else DisputeStatus.REJECTED.value
+        dispute.resolution = resolution
+        dispute.resolved_by = resolver_id
+        dispute.resolved_at = datetime.utcnow()
+        
+        # If claim accepted, handle point adjustments
+        if accept_claim and adjust_points:
+            points_service = PointsService(self.session)
+            task = TaskService(self.session).get_task_by_id(dispute.task_id)
+            
+            if task and adjust_points > 0:
+                # Award points to claimant
+                points_service.award_points(
+                    member_id=dispute.claimant_id,
+                    points=adjust_points,
+                    reason=f"Dispute resolved: {resolution}",
+                    reference_type="dispute",
+                    reference_id=dispute_id
+                )
+        
+        self.session.commit()
+        
+        return True, f"Dispute #{dispute_id} resolved: {'Accepted' if accept_claim else 'Rejected'}"
+    
+    def escalate_dispute(self, dispute_id: int) -> tuple[bool, str]:
+        """Escalate a dispute for higher-level review"""
+        dispute = self.get_dispute_by_id(dispute_id)
+        if not dispute:
+            return False, "Dispute not found"
+        
+        if dispute.status != DisputeStatus.OPEN.value:
+            return False, "Can only escalate open disputes"
+        
+        dispute.status = DisputeStatus.UNDER_REVIEW.value
+        self.session.commit()
+        
+        return True, "Dispute escalated for review"
 
 
 # Database initialization
