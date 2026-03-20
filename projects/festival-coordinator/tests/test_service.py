@@ -5,7 +5,7 @@ Phase 2: Bot Commands
 """
 
 import pytest
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from src.models import (
     Base,
@@ -405,7 +405,7 @@ class TestPhase4NoShowTimeout:
             task_id=task.id,
             member_id=123,
             status=ClaimStatus.PENDING.value,
-            claimed_at=datetime.utcnow() - timedelta(hours=25)  # 25 hours ago
+            claimed_at=datetime.now(timezone.utc) - timedelta(hours=25)  # 25 hours ago
         )
         db_session.add(claim)
         task.status = TaskStatus.CLAIMED.value
@@ -464,7 +464,7 @@ class TestPhase4NoShowTimeout:
             task_id=task.id,
             member_id=123,
             status=ClaimStatus.PENDING.value,
-            claimed_at=datetime.utcnow() - timedelta(hours=10)
+            claimed_at=datetime.now(timezone.utc) - timedelta(hours=10)
         )
         db_session.add(claim)
         task.status = TaskStatus.CLAIMED.value
@@ -775,7 +775,7 @@ class TestAnalyticsService:
         claim = db_session.query(TaskClaim).filter(
             TaskClaim.task_id == task.id
         ).first()
-        claim.claimed_at = datetime.utcnow() - timedelta(hours=48)
+        claim.claimed_at = datetime.now(timezone.utc) - timedelta(hours=48)
         db_session.commit()
         
         analytics = AnalyticsService(db_session)

@@ -4,7 +4,7 @@ Festival Coordinator - Task Management Service
 Phase 2: Bot Commands
 """
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 
 from sqlalchemy import and_
@@ -162,7 +162,7 @@ class TaskService:
         
         # Update claim and task
         claim.status = ClaimStatus.COMPLETED.value
-        claim.completed_at = datetime.utcnow()
+        claim.completed_at = datetime.now(timezone.utc)
         claim.verification_proof = proof
         task.status = TaskStatus.COMPLETED.value
         self.session.commit()
@@ -260,7 +260,7 @@ class TaskService:
         
         Returns list of released task info.
         """
-        cutoff = datetime.utcnow() - timedelta(hours=hours)
+        cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
         
         # Find claims that are pending beyond the timeout
         stale_claims = self.session.query(TaskClaim).filter(
@@ -283,7 +283,7 @@ class TaskService:
                     'task_title': task.title,
                     'member_id': claim.member_id,
                     'claimed_at': claim.claimed_at.isoformat(),
-                    'released_at': datetime.utcnow().isoformat()
+                    'released_at': datetime.now(timezone.utc).isoformat()
                 })
         
         if released:
@@ -534,7 +534,7 @@ class DisputeService:
         dispute.status = DisputeStatus.RESOLVED.value if accept_claim else DisputeStatus.REJECTED.value
         dispute.resolution = resolution
         dispute.resolved_by = resolver_id
-        dispute.resolved_at = datetime.utcnow()
+        dispute.resolved_at = datetime.now(timezone.utc)
         
         # If claim accepted, handle point adjustments
         if accept_claim and adjust_points:
@@ -739,7 +739,7 @@ class AnalyticsService:
     
     def get_noshow_tasks(self, festival_id: int, hours: int = 24) -> list[dict]:
         """Get tasks with claims that have timed out (no completion)"""
-        cutoff = datetime.utcnow() - timedelta(hours=hours)
+        cutoff = datetime.now(timezone.utc) - timedelta(hours=hours)
         
         claims = self.session.query(TaskClaim, FestivalTask).join(
             FestivalTask, TaskClaim.task_id == FestivalTask.id
@@ -757,7 +757,7 @@ class AnalyticsService:
                 "task_title": task.title,
                 "claim_id": claim.id,
                 "claimed_at": claim.claimed_at.isoformat() if claim.claimed_at else None,
-                "hours_elapsed": int((datetime.utcnow() - claim.claimed_at).total_seconds() / 3600) if claim.claimed_at else 0
+                "hours_elapsed": int((datetime.now(timezone.utc).replace(tzinfo=None) - claim.claimed_at).total_seconds() / 3600) if claim.claimed_at else 0
             }
             for claim, task in claims
         ]

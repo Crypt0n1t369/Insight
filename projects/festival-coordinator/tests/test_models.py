@@ -4,7 +4,7 @@ Phase 1: Core Infrastructure Tests
 """
 
 import pytest
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -272,7 +272,7 @@ class TestIntegration:
 
         # Complete task
         claim.status = ClaimStatus.COMPLETED.value
-        claim.completed_at = datetime.utcnow()
+        claim.completed_at = datetime.now(timezone.utc)
         claim.verification_proof = "photo_url_here"
         session.commit()
 
