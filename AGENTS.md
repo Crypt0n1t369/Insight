@@ -15,7 +15,7 @@
 - **Cost:** Moderate
 
 ### Tier 3: Efficient (Fast/Cheap)
-- **Model:** Gemini 3 Flash, Haiku, or MiniMax M2.5
+- **Model:** Gemini 3 Flash, Haiku, or MiniMax M2.7
 - **Context:** 128K-1M
 - **Use when:** Routine orchestration, health checks, simple summarization, formatting, basic tasks
 - **Cost:** Minimal
