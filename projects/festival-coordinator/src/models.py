@@ -5,7 +5,7 @@ Phase 1: Core Infrastructure
 Based on IMPLEMENTATION_PLAN.md
 """
 
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Optional
 
@@ -71,7 +71,7 @@ class Festival(Base):
         String(50), default=FestivalStatus.PLANNING.value
     )
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
+        DateTime, default=datetime.now(timezone.utc)
     )
 
     # Relationships
@@ -122,7 +122,7 @@ class FestivalTask(Base):
     )
     created_by: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
+        DateTime, default=datetime.now(timezone.utc)
     )
 
     # Relationships
@@ -146,7 +146,7 @@ class TaskClaim(Base):
     member_id: Mapped[int] = mapped_column(Integer, nullable=False)
     status: Mapped[str] = mapped_column(String(50), default=ClaimStatus.PENDING.value)
     claimed_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
+        DateTime, default=datetime.now(timezone.utc)
     )
     completed_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
     verification_proof: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
@@ -169,7 +169,7 @@ class Reward(Base):
         Integer, ForeignKey("festivals.id"), nullable=True
     )
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
+        DateTime, default=datetime.now(timezone.utc)
     )
 
 
@@ -187,7 +187,7 @@ class ReputationLedger(Base):
     reference_type: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
     reference_id: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
+        DateTime, default=datetime.now(timezone.utc)
     )
 
 
@@ -203,7 +203,7 @@ class Redemption(Base):
     points_spent: Mapped[int] = mapped_column(Integer, nullable=False)
     status: Mapped[str] = mapped_column(String(50), default="pending")
     redeemed_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
+        DateTime, default=datetime.now(timezone.utc)
     )
 
 
@@ -242,7 +242,7 @@ class Dispute(Base):
     resolved_by: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     resolved_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, default=datetime.utcnow
+        DateTime, default=datetime.now(timezone.utc)
     )
 
 
