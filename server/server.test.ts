@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeAll, vi } from 'vitest';
+import { CLINICAL_PROTOCOLS } from './protocols.js';
 import request from 'supertest';
 import express from 'express';
 import cors from 'cors';
@@ -24,6 +25,15 @@ describe('Audio Transformation Tool Server', () => {
 
         app.get('/health', (_req, res) => {
             res.json({ status: 'ok', openRouterLinked: true });
+        });
+
+        app.get('/api/protocols', (_req, res) => {
+            const protocols = Object.values(CLINICAL_PROTOCOLS).map(
+                ({ id, name, description, variables, sonicCues }) => ({
+                    id, name, description, variables, sonicCues
+                })
+            );
+            res.json({ protocols });
         });
 
         app.post('/api/chat', async (req, res) => {
@@ -97,6 +107,29 @@ describe('Audio Transformation Tool Server', () => {
             expect(res.status).toBe(200);
             expect(res.body.status).toBe('ok');
             expect(res.body.openRouterLinked).toBe(true);
+        });
+    });
+
+    describe('GET /api/protocols', () => {
+        it('returns list of protocols with correct shape', async () => {
+            const res = await request(app).get('/api/protocols');
+            expect(res.status).toBe(200);
+            expect(res.body.protocols).toBeInstanceOf(Array);
+            expect(res.body.protocols.length).toBeGreaterThan(0);
+        });
+
+        it('includes NSDR and IFS protocols', async () => {
+            const res = await request(app).get('/api/protocols');
+            const ids = res.body.protocols.map((p: any) => p.id);
+            expect(ids).toContain('NSDR');
+            expect(ids).toContain('IFS');
+        });
+
+        it('does not expose systemInput in protocol entries', async () => {
+            const res = await request(app).get('/api/protocols');
+            for (const protocol of res.body.protocols) {
+                expect(protocol).not.toHaveProperty('systemInput');
+            }
         });
     });
 

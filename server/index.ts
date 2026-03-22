@@ -57,6 +57,15 @@ app.get('/health', (req, res) => {
     res.json({ status: 'ok', openRouterLinked: !!openRouterKey });
 });
 
+app.get('/api/protocols', (req, res) => {
+    const protocols = Object.values(CLINICAL_PROTOCOLS).map(
+        ({ id, name, description, variables, sonicCues }) => ({
+            id, name, description, variables, sonicCues
+        })
+    );
+    res.json({ protocols });
+});
+
 app.post('/api/chat', async (req, res) => {
     const { history, latestInput, userVariables } = req.body;
 
