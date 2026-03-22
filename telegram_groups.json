@@ -1,0 +1,28 @@
+{
+  "groups": {
+    "audio_test": {
+      "chat_id": "test_audio_test",
+      "topic": "Audio Processing",
+      "created_at": "2026-03-22T11:36:14.356894",
+      "members": [
+        "test_agent"
+      ]
+    },
+    "credo_test": {
+      "chat_id": "test_credo_test",
+      "topic": "Credo Platform",
+      "created_at": "2026-03-22T11:36:14.357700",
+      "members": [
+        "test_agent"
+      ]
+    },
+    "health_test": {
+      "chat_id": "test_health_test",
+      "topic": "System Health",
+      "created_at": "2026-03-22T11:36:14.358469",
+      "members": [
+        "test_agent"
+      ]
+    }
+  }
+}

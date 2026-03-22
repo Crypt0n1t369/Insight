@@ -1,0 +1,144 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "07bca1cf-2e27-4c30-9575-b139d50fbab7",
+      "name": "Wakeup",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1772288802221,
+      "updatedAtMs": 1774164955634,
+      "schedule": {
+        "kind": "every",
+        "everyMs": 1800000,
+        "anchorMs": 1772288802221
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Take a look at what is being done, identify what remains to be done, do your best to do it in a careful, isolated and deliberate manner. Test if it works, integrate it afterwards if it does. Update the progress doc and outline what's next to be done"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "last",
+        "bestEffort": true
+      },
+      "state": {
+        "nextRunAtMs": 1774168555634,
+        "lastRunAtMs": 1774164402250,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 553384,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 6,
+        "lastDelivered": false,
+        "lastDeliveryError": "\u26a0\ufe0f \ud83d\udcdd Edit: `in ~/.openclaw/workspace/PROGRESS.md (4572 chars)` failed",
+        "lastError": "\u26a0\ufe0f \ud83d\udcdd Edit: `in ~/.openclaw/workspace/PROGRESS.md (4572 chars)` failed"
+      }
+    },
+    {
+      "id": "52a71e11-a8f8-46e4-8f1e-1c27b1bab556",
+      "name": "Worker-1",
+      "enabled": true,
+      "deleteAfterRun": false,
+      "createdAtMs": 1772359229918,
+      "updatedAtMs": 1774159753681,
+      "schedule": {
+        "kind": "every",
+        "everyMs": 18000000,
+        "anchorMs": 1772359229918
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Pick the highest priority task from BACKLOG.md, work on it until done, update progress"
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1774177620472,
+        "lastRunAtMs": 1774159620472,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 133209,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 2,
+        "lastDeliveryError": "\u26a0\ufe0f \ud83d\udcdd Edit: `in ~/.openclaw/workspace/BACKLOG.md (1060 chars)` failed",
+        "lastError": "\u26a0\ufe0f \ud83d\udcdd Edit: `in ~/.openclaw/workspace/BACKLOG.md (1060 chars)` failed"
+      }
+    },
+    {
+      "id": "4085dbb9-8b4b-4a18-b853-a8b190ea727d",
+      "name": "Worker-2",
+      "enabled": true,
+      "deleteAfterRun": false,
+      "createdAtMs": 1772359266462,
+      "updatedAtMs": 1774160281115,
+      "schedule": {
+        "kind": "every",
+        "everyMs": 18000000,
+        "anchorMs": 1772359266462
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Check projects/solar-scout for pending tasks, work on any P0-P1 items, update progress in PROJECTS.md"
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1774178226278,
+        "lastRunAtMs": 1774160226278,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 54837,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 2,
+        "lastDeliveryError": "\u26a0\ufe0f \ud83d\udcdd Edit: `in PROJECTS.md (78 chars)` failed",
+        "lastError": "\u26a0\ufe0f \ud83d\udcdd Edit: `in PROJECTS.md (78 chars)` failed"
+      }
+    },
+    {
+      "id": "51a41423-cef6-4c7a-94eb-789b3d32bdb9",
+      "name": "Worker-3",
+      "enabled": true,
+      "deleteAfterRun": false,
+      "createdAtMs": 1772359276571,
+      "updatedAtMs": 1774160351044,
+      "schedule": {
+        "kind": "every",
+        "everyMs": 18000000,
+        "anchorMs": 1772359276571
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Check for OpenClaw system tasks, health checks, memory management. Update .health_check.log if needed. Check memory/ folder for cleanup needs."
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1774178320993,
+        "lastRunAtMs": 1774160320993,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 30051,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0
+      }
+    }
+  ]
+}

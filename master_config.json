@@ -1,0 +1,9 @@
+{
+  "orchestration_rules": {},
+  "active_groups": [
+    "audio_test",
+    "credo_test",
+    "health_test"
+  ],
+  "master_chat_id": null
+}
