@@ -14,7 +14,7 @@ NC='\033[0m'
 
 # Services configuration
 declare -A SERVICES=(
-    ["audio-tool"]="cd $SCRIPT_DIR/projects/audio-transformation-tool/code && npm run dev"
+    ["audio-tool"]="cd $SCRIPT_DIR/projects/audio-transformation-tool/code/server && GOOGLE_API_KEY="" OPENROUTER_API_KEY="" npx tsx index.ts"
     ["jci-portal"]="cd $SCRIPT_DIR/projects/jci-org-manager && python3 -m flask run --port=8080"
     ["credo"]="cd $SCRIPT_DIR/projects/collaboration-platform && npm run dev"
 )
