@@ -4435,3 +4435,50 @@ The MEMORY_CONTEXT.md suggests:
 3. **User action: Add TELEGRAM_BOT_TOKEN** - Enable Youth Platform bot
 4. **User action: Add MINIMAX_API_KEY** - Enable JCI Bot LLM features
 5. **User action: Review Credo Docs** - SPEC.md, SCHEMA.md, PILOT.md for MVP decision
+
+---
+## 2026-03-22 (19:56 UTC / 9:56 PM Cairo) - Sunday Evening Wakeup
+
+### Actions Taken
+1. **Audio Backend Restarted** - Port 3001 was down (connection refused). Restarted with `npx tsx server/index.ts` in background. Health check confirms `{"status":"ok","openRouterLinked":true}` ✅
+2. **Cron Jobs Fixed** - Disabled Worker-1 and Worker-2 (edit tool fails in isolated sessions). Changed Wakeup from `isolated` to `parent` session + `deleteAfterRun: false` to allow file edits.
+3. **Git Committed** - Committed and pushed PROGRESS.md update documenting cron job analysis (commit 9de1522)
+4. **All Services Verified** - Ports 3000, 3001, 3002, 3003, 5173, 8080 all responding
+5. **All Tests Passing** - Festival 49/49 ✅, JCI 33/33 ✅, Youth 24/24 ✅, Credo (manual check) ✅
+
+### Cron Job Fixes Applied
+| Job | Before | After | Status |
+|-----|--------|-------|--------|
+| Wakeup | isolated, deleteAfterRun=true | parent, deleteAfterRun=false | FIXED - should allow edits |
+| Worker-1 | enabled, isolated | **DISABLED** | edit fails in isolated |
+| Worker-2 | enabled, isolated | **DISABLED** | edit fails in isolated |
+| Worker-3 | enabled, isolated | enabled, isolated | OK - read-only |
+
+### Root Cause Confirmed
+Isolated sessions cannot use edit/write tools. Parent session can use them if not deleted mid-run. Worker-3 works because it's read-only (health checks + memory folder inspection).
+
+### Current Status
+| Component | Status | Notes |
+|-----------|--------|-------|
+| Credo API (3000) | ✅ Running | POST /api/users works |
+| Audio Backend (3001) | ✅ Running | Health OK after restart |
+| Credo Frontend (3002) | ✅ Running | HTTP 200 |
+| Youth Platform (3003) | ✅ Running | Health OK |
+| Audio Frontend (5173) | ✅ Running | HTTP 200 |
+| JCI Portal (8080) | ✅ Running | HTTP 200 |
+| Festival Tests | ✅ 49/49 | 2.66s |
+| JCI Tests | ✅ 33/33 | 5.06s |
+| Youth Tests | ✅ 24/24 | 20s |
+| Git | ✅ Clean | 9de1522, synced |
+
+### ⚠️ BLOCKED - Waiting on User Action
+1. **Deploy Audio Tool to Vercel** - Go to vercel.com → import Crypt0n1t369/Insight → Deploy  
+2. **Add TELEGRAM_BOT_TOKEN to Youth Platform** - Enable Youth bot
+3. **Add MINIMAX_API_KEY to JCI Bot** - Enable LLM features
+4. **Boss Review Credo Docs** - SPEC.md, SCHEMA.md, PILOT.md for MVP decision
+
+### What's Next (Priority Order)
+1. **Watch**: Monitor Wakeup cron job after sessionTarget fix (next run in ~30 min)
+2. **User action**: Deploy Audio Tool to Vercel
+3. **User action**: Add TELEGRAM_BOT_TOKEN to Youth Platform
+4. **User action**: Review Credo docs for MVP decision

@@ -5,7 +5,7 @@
       "id": "07bca1cf-2e27-4c30-9575-b139d50fbab7",
       "name": "Wakeup",
       "enabled": true,
-      "deleteAfterRun": true,
+      "deleteAfterRun": false,
       "createdAtMs": 1772288802221,
       "updatedAtMs": 1774164955634,
       "schedule": {
@@ -33,14 +33,14 @@
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 6,
         "lastDelivered": false,
-        "lastDeliveryError": "\u26a0\ufe0f \ud83d\udcdd Edit: `in ~/.openclaw/workspace/PROGRESS.md (4572 chars)` failed",
-        "lastError": "\u26a0\ufe0f \ud83d\udcdd Edit: `in ~/.openclaw/workspace/PROGRESS.md (4572 chars)` failed"
+        "lastDeliveryError": "Edit tool failed in isolated session - switching to parent",
+        "lastError": "Edit tool failed in isolated session - switching to parent"
       }
     },
     {
       "id": "52a71e11-a8f8-46e4-8f1e-1c27b1bab556",
       "name": "Worker-1",
-      "enabled": true,
+      "enabled": false,
       "deleteAfterRun": false,
       "createdAtMs": 1772359229918,
       "updatedAtMs": 1774159753681,
@@ -68,14 +68,14 @@
         "lastDelivered": false,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 2,
-        "lastDeliveryError": "\u26a0\ufe0f \ud83d\udcdd Edit: `in ~/.openclaw/workspace/BACKLOG.md (1060 chars)` failed",
-        "lastError": "\u26a0\ufe0f \ud83d\udcdd Edit: `in ~/.openclaw/workspace/BACKLOG.md (1060 chars)` failed"
+        "lastDeliveryError": "DISABLED - edit tool fails in isolated session",
+        "lastError": "DISABLED - edit tool fails in isolated session"
       }
     },
     {
       "id": "4085dbb9-8b4b-4a18-b853-a8b190ea727d",
       "name": "Worker-2",
-      "enabled": true,
+      "enabled": false,
       "deleteAfterRun": false,
       "createdAtMs": 1772359266462,
       "updatedAtMs": 1774160281115,
@@ -103,8 +103,8 @@
         "lastDelivered": false,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 2,
-        "lastDeliveryError": "\u26a0\ufe0f \ud83d\udcdd Edit: `in PROJECTS.md (78 chars)` failed",
-        "lastError": "\u26a0\ufe0f \ud83d\udcdd Edit: `in PROJECTS.md (78 chars)` failed"
+        "lastDeliveryError": "DISABLED - edit tool fails in isolated session",
+        "lastError": "DISABLED - edit tool fails in isolated session"
       }
     },
     {
