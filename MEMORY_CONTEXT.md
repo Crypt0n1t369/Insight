@@ -24,6 +24,12 @@
 - **Decision:** Restart audio backend on port 3001 (was down, now running)
 - **Command used:** `npx tsx server/index.ts` in projects/audio-transformation-tool/code
 
+## 2026-03-22-session-wakeup-night (this session)
+- JCI Portal (8080) and Audio Frontend (5173) were DOWN
+- Restored both: JCI via python webapp/server.py, Audio via npx serve -l 5173
+- All 162 tests passing
+- Git committed and pushed (9054877)
+
 ## Recent Sessions
 ### 2026-03-22-session-wakeup-evening (this session)
 - Actions: Restarted services, verified tests, fixed PROGRESS.md test count errors
