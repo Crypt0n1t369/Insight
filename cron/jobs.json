@@ -13,7 +13,7 @@
         "everyMs": 1800000,
         "anchorMs": 1772288802221
       },
-      "sessionTarget": "isolated",
+      "sessionTarget": "parent",
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
