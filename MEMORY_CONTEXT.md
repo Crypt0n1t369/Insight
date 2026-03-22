@@ -37,7 +37,9 @@
 
 ## Quick Status
 - Memory: Fresh (today)
-- Health: 3/3 API services running (ports 3000, 3001, 3003)
+- Health: 5/5 services running (ports 3000, 3001, 3003, 8080, 5173)
+- Tests: 173 total (173 ✅) — Audio backend now has 11 tests (+3 for /api/protocols)
+- Feature Added: GET /api/protocols endpoint on Audio Backend (port 3001) (ports 3000, 3001, 3003)
 - Cron: Worker-1/2 disabled, Wakeup fixed
 - Git: Clean and synced (97461a2)
 - Tests: Credo 56 ✅, JCI 33 ✅, Festival 49 ✅, Youth 24 ✅ = 162 total
@@ -61,5 +63,5 @@
 
 ---
 
-*All implementable features complete. System stable with 162 tests passing.*
+*All implementable features complete. System stable with 173 tests passing.*
 *Remaining items require user action or external deployment.*
