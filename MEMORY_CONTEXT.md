@@ -1,49 +1,33 @@
 === ATON CONTEXT ===
-Generated: 2026-03-22 16:12
+Generated: 2026-03-22 16:15
 
 ## Active Projects
-- audio-transformation-tool: Running (Demo Mode, port 3001)
-- Credo Collaboration Platform: Running, 56 tests passing (port 3000/3002)
-- Youth Empowerment Platform: Running, 24 tests passing (port 3003)
-- JCI Org Manager: Operational, 33 tests passing (port 8080), /health endpoint added
-- Festival Coordinator: COMPLETE, 49 tests passing
-- Solar Scout: Archived (70 leads, 51 qualified)
+- audio-transformation-tool: Unknown
 
-## System Status (All Verified 4:05 PM)
-| Service | Port | Status |
-|---------|------|--------|
-| Credo API | 3000 | ✅ Running /health OK |
-| Audio Backend | 3001 | ✅ Running /health OK |
-| Credo Frontend | 3002 | ✅ Running |
-| Youth Platform | 3003 | ✅ Running /health OK |
-| Audio Frontend | 5173 | ✅ Running |
-| JCI Portal | 8080 | ✅ Running /health OK (new endpoint) |
+## Key Decisions
+### Memory System Architecture
+- **Decision:** Use hybrid approach (TF-IDF now, vector embeddings later)
+### Context Management Approach
+- **Decision:** File-based context with auto-generation, not Mem0 cloud
+### Audio Tool Demo Mode
 
-## Tests (All Passing)
-- Festival Coordinator: 49 ✅
-- JCI Org Manager: 33 ✅
-- Youth Platform: 24 ✅
-- Credo Platform: 56 ✅
+## Recent Sessions
+### 2026-03-22-session-startup
+- Session Key: agent:main:telegram:direct:551447474
+- Session ID: 31dc8b71-5b91-4dd8-a935-837c25d88651
+- Source: telegram
 
-## Git Status
-- Working tree clean (committed 921612a pushed)
-- Submodule jci-org-manager: committed 559e3b4 pushed
+### 2026-03-22-model-upgrade
+- Session Key: agent:main:telegram:direct:551447474
+- Session ID: 22b2fac8-5eac-4e57-b9cc-0ac642748e1b
+- Source: telegram
 
-## This Session (2026-03-22 16:05)
-- Added /health endpoint to JCI Portal (webapp/server.py)
-- Fixed health_check.sh H14: was checking 3/3, now correctly checks 6/6 services
-- Fixed health_check.sh H17: was checking wrong port (3003→3000), now correct
-- Verified all 4 test suites passing
-- Health check: OK (6/6 services running)
-- Git committed & pushed both submodule and parent
-
-## Blocked (Waiting on User)
-1. Deploy Audio Tool to Vercel (vercel.com → import Crypt0n1t369/Insight)
-2. Add TELEGRAM_BOT_TOKEN to Youth Platform (get from @BotFather)
-3. Add MINIMAX_API_KEY to JCI Bot (.env)
-4. Review Credo Docs (SPEC.md, SCHEMA.md, PILOT.md)
+### 2026-03-22-minimax-model-update
+- Session Key: agent:main:telegram:direct:551447474
+- Session ID: fa9987ea-425d-4453-98df-45a677646932
+- Source: telegram
 
 ## Quick Status
-- Memory: Fresh (this session)
-- Health: All 6/6 services passing
-- Context: Updated 2026-03-22 16:05
+- Memory: Fresh (today)
+- Health: 11 checks passing
+- Context: Auto-generated
