@@ -1,8 +1,34 @@
 # Progress Tracker - Aton (Drg's AI Agent)
 
-*Last updated: 2026-03-22 2:05 PM (Cairo)*
+*Last updated: 2026-03-22 2:45 PM (Cairo)*
 
 ---
+---
+
+## 2026-03-22 2:45 PM (Sunday Afternoon Check - Wakeup) ✅ BOT WIRING DONE
+
+### What's Done
+- ✅ **Festival Coordinator bot.py** — Full Telegram bot wired (python-telegram-bot v20+ API)
+  - 12 volunteer commands: /start, /festival, /tasks, /claim, /my_tasks, /complete, /verify, /points, /leaderboard, /rewards, /redeem, /cancel
+  - 2 admin ConversationHandlers: /create_task (6-step wizard), /add_reward (5-step wizard)
+  - Admin auth via ADMIN_TELEGRAM_IDS env var (comma-separated Telegram IDs)
+  - Global error handler, proper ConversationHandler fallbacks
+- ✅ **run_bot.sh** — Shell runner with .env loading, env vars check, venv activation
+- ✅ **.env.example** — Documents required TELEGRAM_BOT_TOKEN + optional ADMIN_TELEGRAM_IDS
+- ✅ **tests/test_bot.py** — 5 new tests: extract_args, admin_check, module import, token guard
+- ✅ **All 49 tests passing** (was 44)
+- ✅ PROGRESS.md updated
+
+### What's Remaining (Blocked on User)
+1. **Deploy Audio Tool to Vercel** — boss action needed at vercel.com
+2. **Add TELEGRAM_BOT_TOKEN to Youth Platform** — Get from @BotFather
+3. **Add MINIMAX_API_KEY to JCI Bot** — For LLM features
+4. **Review Credo Docs** — SPEC.md, SCHEMA.md, PILOT.md decision
+5. **Festival Coordinator** — Needs TELEGRAM_BOT_TOKEN to run (user gets from @BotFather)
+
+### Services Status
+All services verified running: Credo API (3000), Audio Backend (3001), Youth (3003), JCI (8080)
+
 
 ## Current System Status
 
@@ -12,7 +38,7 @@
 | Credo API | ✅ Running | Port 3000, HTTP 200 |
 | Youth Platform | ✅ Running | Port 3003, HTTP 200 |
 | JCI Portal | ✅ Running | Port 8080, HTTP 200 |
-| Festival Coordinator | ✅ Complete | 44 tests passing |
+| Festival Coordinator | ✅ COMPLETE | 49 tests passing (bot wired) |
 | Git | ✅ Clean | Working tree clean |
 
 ---
@@ -52,14 +78,14 @@
 - **Features:** AI agents, projects, engagement tracking, Google Drive integration, Telegram bot
 - **Blocked:** Awaiting MINIMAX_API_KEY from user for LLM features
 
-### 5. Festival Coordinator ⚠️ INCOMPLETE
-- **Status:** Core complete, bot NOT wired
+### 5. Festival Coordinator ✅ COMPLETE (Bot Wired)
+- **Status:** Fully wired — Telegram bot ready to run
 - **Location:** projects/festival-coordinator/
-- **Tests:** 44/44 passing
-- **Complete:** models.py, service.py, handlers.py (stub functions)
-- **Missing:** bot.py (Telegram entry point), run_bot.sh, admin checks in handlers
-- **Note:** handlers.py has handle_create_task/handle_add_reward but no bot.py wires them
-- **Blocked:** Needs TELEGRAM_BOT_TOKEN + design decision for admin role approach
+- **Tests:** 49/49 passing (44 original + 5 bot tests)
+- **New files:** bot.py (Telegram entry), run_bot.sh, .env.example, tests/test_bot.py
+- **Features wired:** All 12 volunteer commands + 2 admin conversations (/create_task, /add_reward)
+- **Admin auth:** Via ADMIN_TELEGRAM_IDS env var (comma-separated Telegram user IDs)
+- **Running:** Requires TELEGRAM_BOT_TOKEN from @BotFather (user action needed)
 
 ### 6. Solar Scout (Lead Generator) ✅ ARCHIVED
 - **Status:** Completed/Archived
@@ -91,9 +117,9 @@
 
 ### 📋 Dev Work Available
 
-1. **Festival Coordinator** - Build bot.py + run_bot.sh to wire handlers to Telegram
-   - handlers.py functions exist but no bot entry point
-   - 2 admin check TODOs in handlers.py (needs design: env var admin IDs or DB role)
+1. **Festival Coordinator** - ✅ COMPLETED (bot.py, run_bot.sh wired in this session)
+   - Admin auth: ADMIN_TELEGRAM_IDS env var approach chosen (simplest, no DB change)
+   - 2 admin check TODOs in handlers.py resolved via _admin_check() in bot.py
 2. **Youth Platform** - Telegram bot integration (TELEGRAM_BOT_TOKEN needed)
 3. **Credo Platform** - Additional endpoints as needed
 
