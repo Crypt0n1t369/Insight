@@ -67,7 +67,7 @@ app.get('/api/protocols', (req, res) => {
 });
 
 app.post('/api/chat', async (req, res) => {
-    const { history, latestInput, userVariables } = req.body;
+    const { history = [], latestInput, userVariables } = req.body;
 
     console.log("Chat Request received:", { historyLen: history?.length, latestInput });
     const orchestratorPrompt = `
