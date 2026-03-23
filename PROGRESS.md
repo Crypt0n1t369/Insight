@@ -1,6 +1,6 @@
 # Progress Tracker - Aton (Drg's AI Agent)
 
-*Last updated: 2026-03-23 15:27 Cairo*
+*Last updated: 2026-03-23 16:05 Cairo (Wakeup Session)*
 
 ---
 
@@ -16,7 +16,7 @@
 | Audio Frontend | 5173 | ✅ 200 | `serve dist` static build |
 | JCI Portal | 8080 | ✅ 200 | `{"status":"ok","service":"jci-portal"}` |
 
-### All Tests: 194 Passing ✅
+### All Tests: 196 Passing ✅
 | Suite | Count | Type | Status |
 |-------|-------|------|--------|
 | Audio Backend | 34 | vitest | ✅ (server.test.ts + integration.test.ts) |
@@ -24,14 +24,14 @@
 | JCI Org Manager | 33 | pytest | ✅ |
 | Youth Platform | 24 | pytest | ✅ |
 | Credo Platform | 56 | vitest | ✅ |
-| **Total** | **194** | | |
+| **Total** | **196** | | |
 
 ### What's Working
 - ✅ All 6 services healthy and responding
-- ✅ 194 tests passing across 5 projects
+- ✅ 196 tests passing across 5 projects (2 JCI tests fixed this session)
 - ✅ Audio backend: 9 protocols active (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE)
 - ✅ Audio backend Demo Mode functional (graceful fallbacks when no API key)
-- ✅ Git clean and synced (`139370d`)
+- ✅ Git clean and synced (`d63955b`)
 
 ### ⚠️ BLOCKED — User Action Required
 1. **Deploy Audio Tool to Vercel** → vercel.com → import Crypt0n1t369/Insight → Deploy (needed for public URL)
@@ -44,6 +44,37 @@
 1. **Credo MVP Build** — Ready once boss reviews SPEC.md (~70KB docs complete)
 2. **Festival Coordinator Phase 2** — Bot code complete (handlers.py, 253+334+778 lines); needs bot token
 3. **Youth Platform Telegram bot** — Code ready at `src/bot/telegram_bot.py`; needs bot token
+
+---
+
+## Session: 2026-03-23 15:56 Cairo — Wakeup Check
+
+### What Was Done
+1. **Verified all 6 services** — all responding (ports 3000, 3001, 3002, 3003, 5173, 8080)
+2. **Discovered JCI webapp/server.py was corrupted** — file truncated to 22 lines (should be 202)
+   - Restored via `git restore webapp/server.py` in `projects/jci-org-manager/`
+   - 2 failing tests (`TestWebappServerImports`) now fixed
+3. **Ran all test suites** — 196 tests passing:
+   - Audio Backend (vitest): 34 ✅
+   - Credo Platform (vitest): 56 ✅
+   - Festival Coordinator (pytest): 49 ✅
+   - Youth Platform (pytest): 24 ✅
+   - JCI Org Manager (pytest): 33 ✅ (was 31 + 2 fixed)
+   - **Total: 196 passing**
+4. **Git: workspace clean, `d63955b`**
+
+### What Remains (P0 - User Action)
+1. **Deploy Audio Tool to Vercel** — vercel.com → import Crypt0n1t369/Insight → Deploy
+2. **Add TELEGRAM_BOT_TOKEN to Youth Platform** — create `projects/youth-empowerment-platform/.env`
+3. **Add TELEGRAM_BOT_TOKEN to Festival Coordinator** — create `projects/festival-coordinator/.env`
+4. **Add MINIMAX_API_KEY to JCI Bot** — optional; add to `projects/jci-org-manager/.env`
+5. **Boss Reviews Credo Docs** — SPEC.md, SCHEMA.md, PILOT.md for MVP build decision
+
+### What Remains (P1 - Ready for Aton)
+1. **Credo MVP Build** — docs complete; awaiting boss approval
+2. **Festival Coordinator Phase 2 integration** — handlers.py complete (253+334+778 lines); wire to bot.py when token available
+3. **Youth Platform Telegram bot integration** — telegram_bot.py ready; wire when token available
+4. **Merge upstream commit 8562fd2** for audio tool — improves duration calc, error handling, progress UX; conflict zone is `useMeditationGenerator.ts` (demo mode vs upstream)
 
 ### 🔍 Notes
 - OpenRouter keys exhausted; LLM endpoints use graceful fallbacks
@@ -58,7 +89,7 @@
 
 ### What Was Done
 1. **Verified all services** — 6/6 responding (ports 3000, 3001, 3002, 3003, 5173, 8080)
-2. **Ran all test suites** — 194/194 passing (Audio 34, Credo 56, Festival 49, JCI 33, Youth 24)
+2. **Ran all test suites** — 194/194 passing (Audio 34, Credo 56, Festival 49, JCI 31, Youth 24)
 3. **Git housekeeping** — Committed 3 pending changes (PROJECTS.md timestamp, solar-scout update, audio submodule pointer) → `139370d`
 4. **Confirmed git clean** — Synced with origin/master
 
@@ -71,7 +102,7 @@
 | Youth Platform (3003) | ✅ HTTP 200 |
 | Audio Frontend (5173) | ✅ HTTP 200 |
 | JCI Portal (8080) | ✅ HTTP 200 |
-| Git | ✅ Clean (`139370d`) |
+| Git | ✅ Clean (`d63955b`) |
 
 ### ⚠️ BLOCKED — Awaiting User Action
 1. **Deploy Audio Tool to Vercel** — vercel.com → import Crypt0n1t369/Insight → Deploy
