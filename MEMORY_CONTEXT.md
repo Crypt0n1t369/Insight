@@ -1,33 +1,39 @@
 === ATON CONTEXT ===
-Generated: 2026-03-23 02:39
+Generated: 2026-03-23 04:26
 
 ## Active Projects
-- audio-transformation-tool: Running on port 3001 with 11 vitest tests, 9 clinical protocols (NSDR, IFS, ACT, WOOP, NVC, SOMATIC_AGENCY, FUTURE_SELF, IDENTITY, NARRATIVE)
+- audio-transformation-tool: Running on port 3001, 11 vitest tests, 9 protocols
+- collaboration-platform / Credo: Running on ports 3000 (API) + 3002 (frontend), 56 vitest tests
+- jci-org-manager: Running on port 8080, 33 pytest tests
+- festival-coordinator: Complete, 49 pytest tests, Phase 2 pending bot token
+- youth-empowerment-platform: Running on port 3003, 24 pytest tests, Telegram bot code exists
 
 ## Key Decisions
 ### Memory System Architecture
-- **Decision:** Use hybrid approach (TF-IDF now, vector embeddings later)
+- Hybrid approach (TF-IDF now, vector embeddings later)
 ### Context Management Approach
-- **Decision:** File-based context with auto-generation, not Mem0 cloud
+- File-based context with auto-generation, not Mem0 cloud
 ### Audio Tool Demo Mode
+- Demo Mode works without API key (Web Speech API fallback)
+
+## Test Summary (173 tests, all passing as of 04:26)
+| Project | Tests | Type |
+|---------|-------|------|
+| Credo Platform | 56 | vitest |
+| JCI Org Manager | 33 | pytest |
+| Festival Coordinator | 49 | pytest |
+| Youth Platform | 24 | pytest |
+| Audio Backend | 11 | vitest |
 
 ## Recent Sessions
-### 2026-03-22-session-startup
-- Session Key: agent:main:telegram:direct:551447474
-- Session ID: 31dc8b71-5b91-4dd8-a935-837c25d88651
-- Source: telegram
+### 2026-03-23-wakeup-0356
+- Git commit e380bca, verified 173 tests, 6 services running
 
-### 2026-03-22-model-upgrade
-- Session Key: agent:main:telegram:direct:551447474
-- Session ID: 22b2fac8-5eac-4e57-b9cc-0ac642748e1b
-- Source: telegram
-
-### 2026-03-22-minimax-model-update
-- Session Key: agent:main:telegram:direct:551447474
-- Session ID: fa9987ea-425d-4453-98df-45a677646932
-- Source: telegram
+### 2026-03-23-wakeup-0208
+- Git commit 1e43593, verified 173 tests, git sync
 
 ## Quick Status
-- Memory: Fresh (today)
-- Health: 11 checks passing
-- Context: Auto-generated
+- Memory: Fresh (memory/index.md updated this session)
+- Health: 17 checks passing
+- Services: 6/6 running
+- Git: Clean, synced
