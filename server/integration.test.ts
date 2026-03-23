@@ -219,10 +219,9 @@ describe('Audio Backend Integration — Phase 2', () => {
       expect(typeof body).toBe('object');
     });
 
-    it('handles empty body gracefully with 200 and error body', async () => {
-      // No required-field validation — server falls back to NSDR and returns
-      // graceful 200 with error body when OpenRouter credits are exhausted.
-      // This is correct demo-mode behavior.
+    it('handles empty body gracefully with 200 and demo batches', async () => {
+      // When OpenRouter credits are exhausted, server returns demo content
+      // so the client still has playable batches — not empty arrays.
       const res = await fetch(`${BASE}/api/meditation/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -231,8 +230,39 @@ describe('Audio Backend Integration — Phase 2', () => {
       expect(res.status).toBe(200);
       const body = await res.json() as Record<string, unknown>;
       expect(typeof body).toBe('object');
-      // Error body must be present when OpenRouter is unavailable
+      // Error note is present (demo mode), but batches are NOT empty
       expect(body.error).toBeDefined();
+      expect((body.batches as unknown[]).length).toBeGreaterThan(0);
+      expect(body.title).toBeDefined();
+    });
+
+    it('returns protocol-specific demo batches when OpenRouter unavailable', async () => {
+      const res = await fetch(`${BASE}/api/meditation/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ methodology: 'NSDR', focus: 'Grounding', targetFeeling: 'Calm' }),
+      });
+      expect(res.status).toBe(200);
+      const body = await res.json() as Record<string, unknown>;
+      expect(body.error).toBeDefined();
+      expect(body.title).toBe('Demo: NSDR');
+      expect((body.batches as unknown[]).length).toBeGreaterThan(0);
+      // Each batch has text
+      for (const batch of body.batches as { text: string }[]) {
+        expect(batch.text.length).toBeGreaterThan(10);
+      }
+    });
+
+    it('returns demo batches for IFS methodology', async () => {
+      const res = await fetch(`${BASE}/api/meditation/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ methodology: 'IFS', focus: 'Parts work' }),
+      });
+      expect(res.status).toBe(200);
+      const body = await res.json() as Record<string, unknown>;
+      expect(body.title).toBe('Demo: IFS');
+      expect((body.batches as unknown[]).length).toBeGreaterThan(0);
     });
   });
 

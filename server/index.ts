@@ -5,6 +5,82 @@ import { GoogleGenAI } from '@google/genai';
 import { CLINICAL_PROTOCOLS } from './protocols.js';
 import type { ChatMessage, MethodologyType, SonicInstruction } from './types.js';
 
+// --- DEMO MODE: Protocol-specific fallback scripts ---
+const DEMO_BATCHES: Record<string, { text: string; instructions: SonicInstruction[] }[]> = {
+  NSDR: [
+    { text: "Welcome to your NSDR session. Find a comfortable position, lying down if possible. Allow your eyes to close.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0.6, duration: 5 }] },
+    { text: "Begin with a double inhale...inhale through the nose...and again...then let it all go with a long, slow exhale.", instructions: [] },
+    { text: "Now, bring your attention to your right hand. Notice any sensations—warmth, tingling, weight. Feel the ground beneath you holding you.", instructions: [] },
+    { text: "Slowly rotate your attention up through your right arm, shoulder, into your chest. With each exhale, release any tension you find.", instructions: [] },
+    { text: "Let your breath find its own natural rhythm. You are safe. Your nervous system is learning to rest deeply.", instructions: [] },
+    { text: "When you're ready, begin to bring your attention back to the room. Gently wiggle your fingers and toes. Take a deep breath.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0, duration: 5 }] },
+  ],
+  IFS: [
+    { text: "Welcome. Find a quiet, safe place to turn inward. Close your eyes and take three slow breaths.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0.6, duration: 5 }] },
+    { text: "Imagine you can see the different parts of yourself — like different people in a room. Notice if one part feels particularly active right now.", instructions: [] },
+    { text: "Turn your attention gently toward that part. Don't change anything — just notice. Where do you feel it in your body?", instructions: [] },
+    { text: "Ask it quietly: What do you need me to know? What are you protecting me from?", instructions: [] },
+    { text: "Notice what arises. There is no right answer. Your inner world is valid and worth understanding.", instructions: [] },
+    { text: "Take a slow breath. You can return to this place anytime. For now, let all parts rest.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0, duration: 5 }] },
+  ],
+  SOMATIC_AGENCY: [
+    { text: "Come to standing if possible. Feel your feet grounded on the earth. You are here.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0.7, duration: 5 }] },
+    { text: "Notice your current posture. Are you collapsed, contracted, or expanded? Simply observe without judgment.", instructions: [] },
+    { text: "Take a breath and ask: What am I committed to? Let the answer arise from your center, not your conditioning.", instructions: [] },
+    { text: "Feel your feet pressing into the ground. Feel your spine elongating. This is your body. This is your life. You have agency.", instructions: [] },
+    { text: "With your next exhale, let out anything that isn't yours to carry. You choose what you embody.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0, duration: 5 }] },
+  ],
+  ACT: [
+    { text: "Find a comfortable seated position. Close your eyes. Take a deep breath in...and let it go.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0.6, duration: 5 }] },
+    { text: "Notice a thought that has been troubling you. Don't push it away. Just observe it, like a cloud passing through the sky.", instructions: [] },
+    { text: "Watch it arise. Watch it linger. Watch it pass. You are the sky. The thought is just weather.", instructions: [] },
+    { text: "Now ask yourself: What value do I want to move toward today? Let it be simple. Something that matters to you.", instructions: [] },
+    { text: "You don't have to believe every thought. You can choose your direction. Take that value with you as you return.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0, duration: 5 }] },
+  ],
+  FUTURE_SELF: [
+    { text: "Close your eyes. Take a slow breath. Begin to imagine yourself one year from today.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0.6, duration: 5 }] },
+    { text: "This future version of you has navigated everything you're facing now. They've grown through it.", instructions: [] },
+    { text: "What would this future self want to tell you? What have they learned that you need to hear?", instructions: [] },
+    { text: "Notice how it feels to receive this message. You are already becoming them. Every choice is a vote for who you will be.", instructions: [] },
+    { text: "Take a deep breath and let the image fade — but hold onto the feeling. It's already yours.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0, duration: 5 }] },
+  ],
+  WOOP: [
+    { text: "Let's work with the WOOP method. Begin by finding your wish — something meaningful but uncertain.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0.6, duration: 5 }] },
+    { text: "WOOP. Wish. Outcome. Imagine the best possible outcome if your wish came true. Feel it fully.", instructions: [] },
+    { text: "Obstacle. What is the main inner obstacle that stands between you and this outcome? Not external facts — something within you.", instructions: [] },
+    { text: "Plan. If this obstacle appears, then I will... Form a specific if-then plan. Make it concrete.", instructions: [] },
+    { text: "You've planted a seed. Your unconscious mind will work on this. Return when you're ready to take action.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0, duration: 5 }] },
+  ],
+  NVC: [
+    { text: "Find a quiet moment. Bring to mind a recent situation where you felt upset or judged someone.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0.6, duration: 5 }] },
+    { text: "Start with observation, not judgment. What actually happened? What did you see, hear, say — without评价.", instructions: [] },
+    { text: "Now identify the feeling. What did you feel? Frustrated? Sad? Scared? Name it precisely.", instructions: [] },
+    { text: "What need of yours was unmet? What were you longing for? Connection, respect, safety, understanding?", instructions: [] },
+    { text: "Finally, what could you request — clearly and without demand — that would meet that need? You deserve to have your needs heard.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0, duration: 5 }] },
+  ],
+  IDENTITY: [
+    { text: "Settle into a comfortable position. Think of one quality you are proud of — a real strength of yours.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0.6, duration: 5 }] },
+    { text: "Don't rush to the next thought. Let yourself feel what it's like to own this strength fully.", instructions: [] },
+    { text: "When did you first manifest this quality? How has it shown up in your life? Let a memory surface.", instructions: [] },
+    { text: "Feel it in your body. This is not a story. This is who you are. You have always been capable of this.", instructions: [] },
+    { text: "Carry this strength into your day. It is always available to you. You can return to it anytime.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0, duration: 5 }] },
+  ],
+  NARRATIVE: [
+    { text: "Find a quiet place. Bring to mind a problem or pattern that has been weighing on you.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0.6, duration: 5 }] },
+    { text: "Now, imagine giving this problem a name. Not as part of you — as something separate. What would you call it?", instructions: [] },
+    { text: "Notice its characteristics. How does it show up? When is it loudest? You're learning its patterns.", instructions: [] },
+    { text: "Have there been moments — exceptions — when you managed this problem better? What was different then?", instructions: [] },
+    { text: "You are not the problem. The problem is something you are learning to relate to differently. You have the upper hand.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0, duration: 5 }] },
+  ],
+  DEFAULT: [
+    { text: "Welcome. Find a comfortable position and close your eyes. Take a slow, deep breath.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0.6, duration: 5 }] },
+    { text: "Feel the weight of your body. The ground beneath you. The air on your skin. You are safe in this moment.", instructions: [] },
+    { text: "Bring your attention to your breath. No need to change it — just notice it. Inhale... exhale.", instructions: [] },
+    { text: "Whenever your mind wanders — and it will — gently guide it back. This is the practice. Not perfection.", instructions: [] },
+    { text: "Take one more deep breath. Begin to return to the room. Wiggle your fingers and toes. Open your eyes.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0, duration: 5 }] },
+  ],
+};
+
 dotenv.config();
 
 const app = express();
@@ -115,8 +191,17 @@ app.post('/api/chat', async (req, res) => {
         if (error instanceof Error) {
             console.error("Stack:", error.stack);
         }
-        // Return graceful fallback with 200 — server-side errors should not break client
-        res.json({ reply: "I hear you. Tell me more.", shouldOfferMeditation: false });
+        // Return graceful demo fallback with 200 — server-side errors should not break client
+        res.json({
+            reply: "I hear you. Tell me more about what you're experiencing — in demo mode, every word matters.",
+            shouldOfferMeditation: true,
+            meditationData: {
+                focus: "Demo Session",
+                feeling: "Open",
+                duration: 10,
+                methodology: "NSDR"
+            }
+        });
     }
 });
 
@@ -259,8 +344,17 @@ app.post('/api/meditation/generate', async (req, res) => {
 
     } catch (error) {
         console.error("Error generating meditation:", error);
-        // Return graceful 200 — server-side errors should not break client
-        res.status(200).json({ error: "Meditation generation unavailable.", batches: [], title: "Session Unavailable" });
+        // Return graceful demo content — protocol-specific scripts so the client has playable audio
+        const demoMethodology = methodology as string;
+        const demoBatches = DEMO_BATCHES[demoMethodology] || DEMO_BATCHES['DEFAULT'];
+        const demoTitle = demoMethodology && demoMethodology !== 'DEFAULT'
+            ? `Demo: ${demoMethodology}`
+            : "Demo Session";
+        res.status(200).json({
+            error: "Demo mode — AI generation requires OPENROUTER_API_KEY with credits.",
+            batches: demoBatches,
+            title: demoTitle
+        });
     }
 });
 
