@@ -11,11 +11,10 @@
 
 ### ✅ Test Suite
 - **32 vitest tests** in `code/server/` — all passing (as of 2026-03-23)
-- `server.test.ts`: unit tests for /health, /api/protocols, /api/chat, /api/director, /api/meditation/generate
-- `integration.test.ts`: Phase 2 integration tests
-- `protocols.test.ts`: 13 protocol definition tests
-- `userHistory.test.ts`: 14 user history tests
-- ⚠️ Integration tests hit real OpenRouter API — will 500 when credits exhausted
+- `npx vitest run` executes all 32 tests: 11 unit + 21 integration
+- `server.test.ts`: 11 unit tests for /health, /api/protocols, /api/chat, /api/director, /api/meditation/generate (uses mocked OpenRouter)
+- `integration.test.ts`: 21 integration tests against running server (graceful fallbacks when credits exhausted)
+- ⚠️ Integration tests require server running on localhost:3001
 
 ### ⚠️ BLOCKED — User Action Required
 1. **Deploy to Vercel** → vercel.com → import Crypt0n1t369/Insight → Deploy (needed for public URL)
