@@ -103,4 +103,43 @@ PORT=3001              # Default
 
 ---
 
-*Last updated: 2026-03-23 09:58 UTC*
+*Last updated: 2026-03-24 00:27 UTC*
+
+---
+
+## 2026-03-24 00:27 UTC - Wakeup Session
+
+### Status: ✅ Operational / Demo Mode Active
+
+**All 4 services healthy, audio tool running in demo mode.**
+
+### What Was Verified This Session
+1. ✅ **Backend health** — `http://localhost:3001/health` → `{"status":"ok","openRouterLinked":true}`
+2. ✅ **9 protocols confirmed** — NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE
+3. ✅ **Demo mode end-to-end** — `/api/chat` returns triage response with `meditationData`; `/api/director` returns NSDR fallback; `/api/meditation/generate` returns 6 NSDR batches with clinically-grounded scripts + FADE_VOL cues
+4. ✅ **Frontend** — `http://localhost:5173` → HTTP 200, PWA manifest + service worker OK, dark-mode Insight app
+5. ✅ **Tests** — 90/90 passing (vitest, 7 test files including audio server + collaboration-platform)
+6. ✅ **All 4 services confirmed healthy:**
+   - Audio Tool Backend: 3001 ✅
+   - Credo API: 3000 ✅
+   - Youth Platform: 3003 ✅
+   - JCI Portal: 8080 ✅
+7. ✅ **Git** — 1 commit ahead of origin/master (`0a26825 Archive failed module system refactor attempt`)
+
+### ⚠️ BLOCKED — User Action Required
+1. **Deploy to Vercel** → vercel.com → import Crypt0n1t369/Insight → Deploy
+2. **Add OpenRouter API Key** → credits exhausted; demo mode works but LLM features need credits
+
+### ✅ Demo Mode Verified Working
+Each `/api/meditation/generate` call returns:
+- **NSDR**: 6 batches of guided NSDR script text + FADE_VOL atmosphere cues
+- **IFS**: 6 batches (Somatic Agency: 5, others: 5 each)
+- Script text is clinically-grounded, includes binaural frequency cues
+- Demo mode fallback at `/api/director` returns NSDR rationale
+
+### What's Next (Priority Order)
+1. **User deploys to Vercel** (P0 — user action)
+2. **Add OpenRouter credits** (P0 — user action)
+3. **Merge upstream commit 8562fd2** — no upstream remote configured; cannot merge without adding anthropics remote
+4. **End-to-end browser test** — no browser available in this environment; deferred
+5. **Add remaining protocols** — GENERAL, TRAUMA_SAFE, BREATHWORK (defined in protocols.ts, not in CLINICAL_PROTOCOLS)
