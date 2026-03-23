@@ -1,23 +1,20 @@
 #!/bin/bash
 # Service Manager - Start/Stop/Restart all workspace services
-# Usage: ./service_manager.sh [start|stop|status|restart]
-
-set -e
 
 WORKSPACE="/home/drg/.openclaw/workspace"
 cd "$WORKSPACE"
 
-RED="[0;31m"
-GREEN="[0;32m"
-YELLOW="[1;33m"
-NC="[0m"
+RED="[0;31m"
+GREEN="[0;32m"
+YELLOW="[1;33m"
+NC="[0m"
 
 log_info() { echo -e "${GREEN}[INFO]${NC} $1"; }
 log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 
 check_port() {
     local port=$1
-    if curl -s --max-time 2 "http://localhost:$port/health" > /dev/null 2>&1 ||        curl -s --max-time 2 "http://localhost:$port/" > /dev/null 2>&1; then
+    if curl -s --max-time 2 "http://localhost:$port/health" > /dev/null 2>&1 || curl -s --max-time 2 "http://localhost:$port/" > /dev/null 2>&1; then
         return 0
     else
         return 1
@@ -32,7 +29,7 @@ do_status() {
     for entry in "${services[@]}"; do
         port="${entry%%:*}"
         name="${entry##*:}"
-        if check_port "$port"; then
+        if check_port $port; then
             echo -e "  ${GREEN}[OK]${NC} $name (port $port)"
         else
             echo -e "  ${RED}[DOWN]${NC} $name (port $port)"
@@ -45,11 +42,23 @@ do_status() {
 
 do_start() {
     log_info "Starting services..."
+    if ! check_port 3000; then
+        cd "$WORKSPACE/projects/collaboration-platform"
+        nohup node dist/index.js > /tmp/credo-api.log 2>&1 &
+        sleep 2
+        log_info "Credo API started on 3000"
+    fi
     if ! check_port 3001; then
         cd "$WORKSPACE/projects/audio-transformation-tool/code"
         nohup npx tsx server/index.ts > /tmp/audio-backend.log 2>&1 &
         sleep 2
         log_info "Audio Backend started on 3001"
+    fi
+    if ! check_port 3002; then
+        cd "$WORKSPACE/projects/collaboration-platform/frontend"
+        nohup npm run dev -- --port 3002 > /tmp/credo-frontend.log 2>&1 &
+        sleep 5
+        log_info "Credo Frontend started on 3002"
     fi
     if ! check_port 3003; then
         cd "$WORKSPACE/projects/youth-empowerment-platform"
@@ -59,8 +68,8 @@ do_start() {
     fi
     if ! check_port 8080; then
         cd "$WORKSPACE/projects/jci-org-manager"
-        nohup python webapp/server.py > /tmp/jci-portal.log 2>&1 &
-        sleep 2
+        nohup python3 webapp/server.py > /tmp/jci-portal.log 2>&1 &
+        sleep 3
         log_info "JCI Portal started on 8080"
     fi
     if ! check_port 5173; then
@@ -75,9 +84,11 @@ do_start() {
 
 do_stop() {
     log_info "Stopping services..."
+    pkill -f "node dist/index.js" && log_info "Credo API stopped" || true
     pkill -f "tsx server/index.ts" && log_info "Audio Backend stopped" || true
+    pkill -f "next dev.*3002" && log_info "Credo Frontend stopped" || true
     pkill -f "uvicorn.*3003" && log_info "Youth Platform stopped" || true
-    pkill -f "python webapp/server.py" && log_info "JCI Portal stopped" || true
+    pkill -f "python3 webapp/server.py" && log_info "JCI Portal stopped" || true
     pkill -f "serve -l 5173" && log_info "Audio Frontend stopped" || true
 }
 
