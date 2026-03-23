@@ -1,5 +1,5 @@
 # PROGRESS.md - Audio Transformation Tool
-*Consolidated — 2026-03-23*
+*Updated — 2026-03-23 15:03 Cairo*
 
 ## Current Status (2026-03-23)
 
@@ -10,15 +10,22 @@
 | Audio Tool Frontend | 5173 | ✅ Running | `npx serve dist` (static build) |
 
 ### ✅ Test Suite
-- **32 vitest tests** in `code/server/` — all passing (as of 2026-03-23)
-- `npx vitest run` executes all 32 tests: 11 unit + 21 integration
-- `server.test.ts`: 11 unit tests for /health, /api/protocols, /api/chat, /api/director, /api/meditation/generate (uses mocked OpenRouter)
-- `integration.test.ts`: 21 integration tests against running server (graceful fallbacks when credits exhausted)
-- ⚠️ Integration tests require server running on localhost:3001
+- **34 vitest tests** in `code/server/` — all passing (2026-03-23 15:02)
+- `npx vitest run` executes all 34 tests: 11 unit + 23 integration
+- `server.test.ts`: 11 unit tests (mocked OpenRouter)
+- `integration.test.ts`: 23 integration tests against running server
+- Integration tests require server running on localhost:3001
+
+### ✅ Demo Mode Enhanced (2026-03-23)
+Backend now generates protocol-specific demo batches when OpenRouter credits are exhausted:
+- **9 protocols** all return playable demo content: NSDR (6 batches), IFS (6), SOMATIC_AGENCY (5), ACT (5), FUTURE_SELF (5), WOOP (5), NVC (5), IDENTITY (5), NARRATIVE (5)
+- Each batch includes clinically-grounded script text + SonicInstructions (FADE_VOL cues)
+- `/api/chat` fallback now returns `meditationData` suggestion
+- `/api/meditation/generate` fallback returns demo batches with title "Demo: {METHODOLOGY}"
 
 ### ⚠️ BLOCKED — User Action Required
-1. **Deploy to Vercel** → vercel.com → import Crypt0n1t369/Insight → Deploy (needed for public URL)
-2. **Add OpenRouter API Key** → credits exhausted; LLM endpoints (/api/director, /api/meditation/generate) return 402
+1. **Deploy to Vercel** → vercel.com → import Crypt0n1t369/Insight → Deploy (needed for public URL + Telegram bot)
+2. **Add OpenRouter API Key** → credits exhausted; LLM endpoints (/api/director, /api/meditation/generate) use demo fallbacks
 
 ### ✅ What's Working
 - Demo Mode: Web Speech API fallback for audio generation (no API key needed)
@@ -69,16 +76,22 @@ PORT=3001              # Default
 
 ### P0 — User Action Needed
 1. **Deploy to Vercel** — public URL needed for Telegram bot integration
-2. **Add OpenRouter credits** — restores LLM features (director, meditation generation)
+   - Fork: https://github.com/Crypt0n1t369/Insight
+   - Go to: https://vercel.com/new → Import repo
+   - (Optional) Add `VITE_GOOGLE_API_KEY` in Vercel env vars for AI features
+2. **Add OpenRouter credits** — restores LLM features; demo mode works without but is scripted
 
 ### P1 — Can Do Now
-1. **Fix integration tests** — mock OpenRouter calls so tests pass without real API key
-2. **Add more protocols** — 9 active, could expand to 12 (GENERAL, TRAUMA_SAFE, BREATHWORK mentioned in docs)
-3. **Phase 2 integration tests** — end-to-end flows with real browser automation
+1. **Browser test demo mode** — open http://localhost:5173, start a session, verify audio plays
+2. **Test all 9 protocols** — verify each protocol's demo content loads and plays correctly
+3. **Merge upstream commit 8562fd2** — improves duration calc, error handling, progress UX, voice mapping
+   - Conflict zone: `useMeditationGenerator.ts` (demo mode vs upstream)
+   - Strategy: keep demo check at top, incorporate upstream improvements
 
 ### P2 — Future
-1. **Manual upstream merge** — upstream commit 8562fd2 improves duration calc, error handling, progress UX, voice mapping
-2. **Test in production** — verify demo mode audio plays in real browser
+1. **End-to-end browser automation tests** — verify full player flow in real browser
+2. **Add remaining protocols** — GENERAL, TRAUMA_SAFE, BREATHWORK (in protocols.ts but not in CLINICAL_PROTOCOLS)
+3. **Telegram bot integration** — connect to deployed Vercel URL for audio sessions via chat
 
 ---
 
