@@ -398,6 +398,8 @@
 - [x] Festival Coordinator: 49/49 pytest ✅
 - [x] Git: Clean, synced (bac5998)
 - [x] MEMORY_CONTEXT.md refreshed
+- [x] Audio Backend bug fix: /api/chat crashed without `history` param (fixed: default to [])
+- [x] Audio Backend restarted with fix, 11/11 tests still pass
 
 ### What's Working
 - ✅ All 6 services running and healthy
