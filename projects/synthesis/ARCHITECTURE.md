@@ -83,14 +83,15 @@
 
 ## Status
 
-| Component | Status |
-|-----------|--------|
-| Router Agent | Partial |
-| Specialist Agents | Not Built |
-| Knowledge Graph | Design |
-| Credibility Engine | Research Complete |
-| Synthetic Mediator | Future |
+| Component | Status | Tests | Notes |
+|-----------|--------|-------|-------|
+| Router Agent | ✅ Implemented | 61 | Emotion + keyword routing, confidence thresholds |
+| Specialist Agents | ✅ Implemented | 121 | NSDR (37) + IFS (31) + WOOP (25) + BREATHWORK (28) |
+| Knowledge Graph | ✅ Implemented | 36 | CRUD, traversal, full-text search, seeding |
+| Credibility Engine | ✅ Implemented | 71 | Egoless reputation, quadratic voting, anonymous attribution |
+| Synthetic Mediator | 🔶 Future | — | AI agents for collaborative mediation |
+| Platform Integration | 🔶 Todo | — | Router → Specialist → KG → Credibility wiring |
 
 ---
 
-*Last updated: 2026-03-04*
+*Last updated: 2026-03-24*
