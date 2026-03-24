@@ -20,11 +20,11 @@ const votes = new Map<string, Vote>();
 
 /**
  * Calculate quadratic voting weight
- * Formula: weight = tokens^2 (costs increase quadratically)
- * This reduces influence of large voters
+ * Formula: weight = floor(sqrt(tokens))
+ * This ensures that marginal influence decreases as more tokens are spent on one proposal
  */
 function calculateQuadraticWeight(tokens: number): number {
-  return tokens * tokens;
+  return Math.floor(Math.sqrt(tokens));
 }
 
 /**

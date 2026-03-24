@@ -31,8 +31,10 @@ async function setup() {
     .insert(testData);
 
   if (insertError) {
-    if (insertError.message.includes('relation "bug_reports" does not exist')) {
-      console.log('Table does not exist. Trying alternative creation method...');
+    console.log('Insert error:', insertError.message);
+    if (insertError.message.includes('relation "bug_reports" does not exist') || 
+        insertError.message.includes('Could not find the table')) {
+      console.log('Table does not exist in schema. Trying alternative creation method...');
       
       // Use pg_catalog to create table
       const { error: rpcError } = await supabase.rpc('pg_catalog.exec', {

@@ -17,7 +17,7 @@
 - description: Check for new bug reports and spawn analysis
 - frequency: 30m
 - action: |
-    REPORTS=$(curl -s http://localhost:3000/api/bug-reports | grep -c '"status":"pending"' || echo "0")
+    REPORTS=$(curl -s "http://localhost:3002/api/bug-reports?status=pending" | grep -c '"status":"pending"' || echo "0")
     if [ "$REPORTS" -gt "0" ]; then
       echo "Found $REPORTS pending bug report(s) - requires agent attention"
     fi
