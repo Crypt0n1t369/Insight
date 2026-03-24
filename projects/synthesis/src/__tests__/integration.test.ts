@@ -347,19 +347,19 @@ describe('Credibility Engine — Integration with Sessions', () => {
 describe('Agent Registry — All Implemented Protocols Available', () => {
   const implemented = listImplementedProtocols();
 
-  it('lists all 4 implemented protocols', () => {
+  it('lists all implemented protocols', () => {
     expect(implemented).toContain('woop');
     expect(implemented).toContain('ifs');
     expect(implemented).toContain('nsdr');
     expect(implemented).toContain('breathwork');
+    expect(implemented).toContain('se');
+    expect(implemented).toContain('general');
   });
 
   it('returns undefined for unimplemented protocols', () => {
     const actAgent = getAgent('act');
     const nvcAgent = getAgent('nvc');
-    const seAgent = getAgent('se');
     expect(actAgent).toBeUndefined();
     expect(nvcAgent).toBeUndefined();
-    expect(seAgent).toBeUndefined();
   });
 });

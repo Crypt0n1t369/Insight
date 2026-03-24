@@ -5,6 +5,7 @@ import { WOOPAgent } from './woop.js';
 import { IFSAgent } from './ifs.js';
 import { NSDRAgent } from './nsdr.js';
 import { BREATHWORKAgent } from './breathwork.js';
+import { SEAgent } from './se.js';
 import { GENERALAgent } from './general.js';
 
 // ----------------------------------------------------------------
@@ -16,6 +17,7 @@ export const AGENT_REGISTRY: Record<string, SpecialistAgent> = {
   ifs: IFSAgent,
   nsdr: NSDRAgent,
   breathwork: BREATHWORKAgent,
+  se: SEAgent,
   general: GENERALAgent,
 };
 
