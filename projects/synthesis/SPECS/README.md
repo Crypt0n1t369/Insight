@@ -6,27 +6,27 @@ This directory contains detailed interface specifications for each module of the
 
 | File | Status | Description |
 |------|--------|-------------|
-| `router-agent.md` | Ready for impl | Entry point, routes to specialists |
-| `specialist-agents.md` | Partial | Therapeutic protocol agents |
-| `knowledge-graph.md` | Ready for impl | Structured memory layer |
-| `credibility-engine.md` | Design complete | Egoless reputation system |
+| `router-agent.md` | ✅ Implemented | Entry point, routes to specialists (61 tests) |
+| `specialist-agents.md` | ✅ Implemented | NSDR/IFS/WOOP/BREATHWORK (121 tests) |
+| `knowledge-graph.md` | ✅ Implemented | Structured memory layer (36 tests) |
+| `credibility-engine.md` | ✅ Implemented | Egoless reputation system (71 tests) |
 
 ## Module Status Overview
 
 ```
 SPECS/
-├── router-agent.md        ✅ Spec complete — ready for implementation
-├── specialist-agents.md  🔶 Partial — core agents defined, ACT/NVC/SE future
-├── knowledge-graph.md    ✅ Spec complete — ready for implementation
-└── credibility-engine.md ✅ Design complete — integration with Credo platform
+├── router-agent.md        ✅ Implemented — 61 tests, committed
+├── specialist-agents.md  ✅ Implemented — NSDR/IFS/WOOP/BREATHWORK, 121 tests
+├── knowledge-graph.md    ✅ Implemented — 36 tests, committed
+└── credibility-engine.md ✅ Implemented — 71 tests, committed
 ```
 
 ## Implementation Order
 
-1. **Router Agent** — Simplest, no external dependencies
-2. **Knowledge Graph** — Required by other modules
-3. **Specialist Agents** — WOOP first (simplest), then NSDR, IFS
-4. **Credibility Engine** — Integrate with Credo platform later
+1. **Router Agent** — ✅ Implemented (61 tests)
+2. **Knowledge Graph** — ✅ Implemented (36 tests)
+3. **Specialist Agents** — ✅ All 4 implemented (121 tests): WOOP, IFS, NSDR, BREATHWORK
+4. **Credibility Engine** — ✅ Implemented (71 tests), committed `0f67db9`
 
 ## References
 

@@ -163,10 +163,10 @@ Each agent can provide:
 
 ## Status
 
-- [ ] NSDR agent implementation
-- [ ] IFS agent implementation
-- [ ] WOOP agent implementation
-- [ ] BREATHWORK agent implementation
+- [x] NSDR agent implementation — ✅ `src/specialist-agents/nsdr.ts` (37 tests)
+- [x] IFS agent implementation — ✅ `src/specialist-agents/ifs.ts` (31 tests)
+- [x] WOOP agent implementation — ✅ `src/specialist-agents/woop.ts` (25 tests)
+- [x] BREATHWORK agent implementation — ✅ `src/specialist-agents/breathwork.ts` (28 tests)
 - [ ] ACT/NVC/SE agents (future)
-- [ ] Audio clip library per agent
-- [ ] Unit tests per agent
+- [ ] Audio clip library per agent (future — TTS fallback active)
+- [x] Unit tests per agent — ✅ All 4 agents tested (121 tests total)
