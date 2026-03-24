@@ -1,0 +1,20 @@
+{
+  "module_name": "festival-coordinator",
+  "version": "1.0.0",
+  "description": "Telegram bot for managing festival event registrations, volunteer coordination, and schedule management",
+  "integration_type": "telegram-bot",
+  "features": [
+    "event-registration",
+    "volunteer-coordination",
+    "schedule-management",
+    "attendee-tracking",
+    "notification-broadcast",
+    "check-in-system"
+  ],
+  "permissions": ["events:read", "events:write", "volunteers:read", "volunteers:write", "broadcast:notify"],
+  "activation_commands": ["fest-start", "fest-stop", "fest-register", "fest-schedule", "fest-volunteer"],
+  "health_endpoint": null,
+  "api_base": null,
+  "has_webhook": true,
+  "env_vars_needed": ["TELEGRAM_BOT_TOKEN"]
+}
