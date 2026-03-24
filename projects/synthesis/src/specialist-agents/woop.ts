@@ -82,6 +82,7 @@ const PHASE_TRANSCRIPTS = {
       'Carry your WOOP with you. When you notice the obstacle arising, return to your plan.',
       'You\'ve done the inner work. Now the outer work can begin.',
     ],
+    prompt: '',
   },
 };
 
@@ -210,7 +211,7 @@ function* yieldTranscripts(
   phaseId: string,
   phaseName: string,
   totalDurationMs: number,
-): AsyncGenerator<SessionEvent> {
+): Generator<SessionEvent> {
   const perLineMs = Math.floor(totalDurationMs / Math.max(lines.length, 1));
   for (const line of lines) {
     yield {

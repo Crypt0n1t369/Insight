@@ -14,7 +14,8 @@ export type EmotionTag =
   | 'grief'
   | 'loss'
   | 'overwhelmed'
-  | 'dissociated';
+  | 'dissociated'
+  | 'trauma';
 
 export type ProtocolId =
   | 'nsdr'      // Non-Sleep Deep Rest

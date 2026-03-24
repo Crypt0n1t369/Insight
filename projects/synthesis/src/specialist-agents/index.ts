@@ -3,6 +3,7 @@
 import type { SpecialistAgent } from './types.js';
 import { WOOPAgent } from './woop.js';
 import { IFSAgent } from './ifs.js';
+import { NSDRAgent } from './nsdr.js';
 
 // ----------------------------------------------------------------
 // Agent Registry
@@ -11,7 +12,7 @@ import { IFSAgent } from './ifs.js';
 export const AGENT_REGISTRY: Record<string, SpecialistAgent> = {
   woop: WOOPAgent,
   ifs: IFSAgent,
-  // nsdr: NSDRAgent,           // future
+  nsdr: NSDRAgent,
   // breathwork: BREATHWORKAgent, // future
   // act: ACTAgent,            // future
   // se: SEAgent,               // future

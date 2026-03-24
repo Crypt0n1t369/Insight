@@ -269,7 +269,7 @@ function* yieldTranscripts(
   phaseId: string,
   phaseName: string,
   totalDurationMs: number,
-): AsyncGenerator<SessionEvent> {
+): Generator<SessionEvent> {
   const perLineMs = Math.floor(totalDurationMs / Math.max(lines.length, 1));
   for (const line of lines) {
     yield { type: 'guidance', phase: phaseName, transcript: line, duration: perLineMs, metadata: { phaseId } };
