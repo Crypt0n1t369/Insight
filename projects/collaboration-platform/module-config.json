@@ -1,0 +1,20 @@
+{
+  "module_name": "collaboration-platform",
+  "version": "1.0.0",
+  "description": "Real-time collaboration platform with chat, document editing, task management, and workflow automation",
+  "integration_type": "fullstack-web",
+  "features": [
+    "real-time-chat",
+    "document-editing",
+    "task-management",
+    "workflow-automation",
+    "video-meetings",
+    "notifications"
+  ],
+  "permissions": ["workspace:read", "workspace:write", "chat:read", "chat:write", "tasks:read", "tasks:write"],
+  "activation_commands": ["credo-start", "credo-stop", "credo-status"],
+  "health_endpoint": "http://localhost:3000/health",
+  "api_base": "http://localhost:3000",
+  "has_webhook": false,
+  "env_vars_needed": []
+}
