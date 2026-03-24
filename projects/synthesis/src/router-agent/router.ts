@@ -13,6 +13,8 @@ import {
   GOAL_KEYWORDS,
   PARTS_KEYWORDS,
   BODY_KEYWORDS,
+  BREATHWORK_KEYWORDS,
+  NSDR_KEYWORDS,
   RELATIONSHIP_KEYWORDS,
   PROTOCOL_DURATIONS,
   PROTOCOL_PREPROMPTS,
@@ -125,20 +127,12 @@ function textBasedRoute(input: RouterInput): RoutingSignal {
   const recent = input.recentProtocols ?? [];
   const tod = input.timeOfDay;
 
-  if (containsAny(text, GOAL_KEYWORDS)) {
-    // Goal-oriented input
-    if (tod === 'morning' || tod === 'afternoon') {
-      return {
-        protocol: 'woop',
-        confidence: 0.87,
-        reason: 'Goal keywords detected and daytime — routing to WOOP for wish-outcome-obstacle-plan',
-        needsClarification: false,
-      };
-    }
+  // More specific / rest-focused protocols take priority over goal language
+  if (containsAny(text, BREATHWORK_KEYWORDS)) {
     return {
-      protocol: 'woop',
-      confidence: 0.78,
-      reason: 'Goal keywords detected — routing to WOOP',
+      protocol: 'breathwork',
+      confidence: 0.87,
+      reason: 'Breathwork/respiration keywords detected — routing to Breathwork Protocol',
       needsClarification: false,
     };
   }
@@ -166,6 +160,35 @@ function textBasedRoute(input: RouterInput): RoutingSignal {
       protocol: 'nvc',
       confidence: 0.83,
       reason: 'Relationship keywords detected — routing to Nonviolent Communication',
+      needsClarification: false,
+    };
+  }
+
+  // NSDR before GOAL: "want to relax" should go to NSDR, not WOOP
+  // (GOAL keywords like 'want' are too generic to override explicit relaxation intent)
+  if (containsAny(text, NSDR_KEYWORDS)) {
+    return {
+      protocol: 'nsdr',
+      confidence: 0.87,
+      reason: 'NSDR/rest keywords detected — routing to Non-Sleep Deep Rest',
+      needsClarification: false,
+    };
+  }
+
+  if (containsAny(text, GOAL_KEYWORDS)) {
+    // Goal-oriented input
+    if (tod === 'morning' || tod === 'afternoon') {
+      return {
+        protocol: 'woop',
+        confidence: 0.87,
+        reason: 'Goal keywords detected and daytime — routing to WOOP for wish-outcome-obstacle-plan',
+        needsClarification: false,
+      };
+    }
+    return {
+      protocol: 'woop',
+      confidence: 0.78,
+      reason: 'Goal keywords detected — routing to WOOP',
       needsClarification: false,
     };
   }

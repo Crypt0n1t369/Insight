@@ -78,6 +78,8 @@ export interface RoutingSignal {
 export const GOAL_KEYWORDS = ['want', 'wish', 'hope', 'plan', 'goal', 'achieve', 'decide'];
 export const PARTS_KEYWORDS = ['part', 'inner', 'self', 'conflict', 'torn', 'should', 'want-but'];
 export const BODY_KEYWORDS = ['body', 'somatic', 'tension', 'pain', 'physical', 'felt sense'];
+export const BREATHWORK_KEYWORDS = ['breathe', 'breathing', 'breathwork', 'nervous system', 'anxious', 'calm', 'deep breath', 'inhale', 'exhale', 'pranayama', 'respiration', 'breath', 'shallow', 'tight', 'chest', 'lungs', 'respir'];
+export const NSDR_KEYWORDS = ['relaxation', 'deep rest', 'rest', 'sleep', 'nidra', 'yoga nidra', 'restore', 'energy restoration', 'parasympathetic', 'relax', 'let go'];
 export const RELATIONSHIP_KEYWORDS = ['relationship', 'partner', 'communication', 'argument', 'family'];
 
 // Protocol duration defaults (minutes)
