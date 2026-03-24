@@ -1,0 +1,21 @@
+{
+  "module_name": "audio-transformation-tool",
+  "version": "1.0.0",
+  "description": "Audio-based transformation platform for self-regulation, pattern integration, and consciousness engineering",
+  "integration_type": "standalone-api",
+  "features": [
+    "audio-upload",
+    "voice-analysis", 
+    "pattern-integration",
+    "self-regulation",
+    "transformation-playback",
+    "frequency-mapped-audio",
+    "openai-gym-integration"
+  ],
+  "permissions": ["audio:read", "audio:write", "profile:read"],
+  "activation_commands": ["start-audio", "stop-audio", "analyze", "transform"],
+  "health_endpoint": "http://localhost:3001/health",
+  "api_base": "http://localhost:3001",
+  "has_webhook": false,
+  "env_vars_needed": ["OPENROUTER_API_KEY"]
+}
