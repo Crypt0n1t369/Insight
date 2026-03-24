@@ -1,0 +1,20 @@
+{
+  "module_name": "youth-empowerment-platform",
+  "version": "1.0.0",
+  "description": "Youth empowerment platform with vault management, interview guides, progress tracking, and mentor matching",
+  "integration_type": "fullstack-web",
+  "features": [
+    "vault-management",
+    "interview-guides",
+    "progress-tracking",
+    "mentor-matching",
+    "curriculum-delivery",
+    "telegram-bot-integration"
+  ],
+  "permissions": ["youth:read", "youth:write", "vault:read", "vault:write", "mentors:read"],
+  "activation_commands": ["youth-start", "youth-stop", "youth-status", "vault", "interview", "progress"],
+  "health_endpoint": "http://localhost:3003/health",
+  "api_base": "http://localhost:3003",
+  "has_webhook": false,
+  "env_vars_needed": ["TELEGRAM_BOT_TOKEN"]
+}
