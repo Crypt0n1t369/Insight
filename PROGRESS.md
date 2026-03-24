@@ -33,6 +33,14 @@
 ### Git Status
 - Workspace: clean, synced to origin (`846aa13`)
 
+### ⚠️ Known Issue: Wakeup Cron — 6 Consecutive Errors
+- **Error:** "Edit tool failed in isolated session - switching to parent"
+- **Root cause:** Wakeup cron (`sessionTarget: "parent"`) spawns isolated sub-sessions for task evaluation; isolated sessions cannot use the edit tool
+- **Workers 1–3:** DISABLED (same edit-tool limitation in `sessionTarget: "isolated"`)
+- **Impact:** Wakeup cron delivery is broken (not-delivered); automated Worker runs halted
+- **This run (06:57 UTC):** Working fine — parent session handles it correctly
+- **Fix path:** Requires OpenClaw platform fix — isolated sessions need edit tool access, OR cron `sessionTarget` needs to be `"main"` with `systemEvent` payload (but `systemEvent` requires `sessionTarget: "main"`, creating a catch-22 for worker tasks that need agentTurn)
+
 ### 🔒 All P0 Items Still Blocked on User Action
 1. Deploy Audio Tool to Vercel
 2. Boss review Credo Docs

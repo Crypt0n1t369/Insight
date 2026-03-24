@@ -38,15 +38,15 @@
 - link.py - Find connections
 - recall.py - Search memory
 
-## Test Suite Summary (173 tests, all passing as of 2026-03-23)
+## Test Suite Summary (204 tests, all passing as of 2026-03-24)
 | Project | Tests | Type |
 |---------|-------|------|
 | Credo Platform | 56 | vitest |
-| Audio Backend | 11 | vitest |
-| JCI Org Manager | 33 | pytest |
+| Audio Backend | 34 | vitest |
+| JCI Org Manager | 41 | pytest |
 | Festival Coordinator | 49 | pytest |
 | Youth Platform | 24 | pytest |
 
 ---
 
-Updated: 2026-03-23
+Updated: 2026-03-24
