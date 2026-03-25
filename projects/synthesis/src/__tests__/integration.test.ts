@@ -353,13 +353,14 @@ describe('Agent Registry — All Implemented Protocols Available', () => {
     expect(implemented).toContain('nsdr');
     expect(implemented).toContain('breathwork');
     expect(implemented).toContain('se');
+    expect(implemented).toContain('act');
     expect(implemented).toContain('general');
   });
 
   it('returns undefined for unimplemented protocols', () => {
-    const actAgent = getAgent('act');
+    const cbtAgent = getAgent('cbt');
     const nvcAgent = getAgent('nvc');
-    expect(actAgent).toBeUndefined();
+    expect(cbtAgent).toBeUndefined();
     expect(nvcAgent).toBeUndefined();
   });
 });

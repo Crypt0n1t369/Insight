@@ -6,6 +6,7 @@ import { IFSAgent } from './ifs.js';
 import { NSDRAgent } from './nsdr.js';
 import { BREATHWORKAgent } from './breathwork.js';
 import { SEAgent } from './se.js';
+import { ACTAgent } from './act.js';
 import { GENERALAgent } from './general.js';
 
 // ----------------------------------------------------------------
@@ -18,6 +19,7 @@ export const AGENT_REGISTRY: Record<string, SpecialistAgent> = {
   nsdr: NSDRAgent,
   breathwork: BREATHWORKAgent,
   se: SEAgent,
+  act: ACTAgent,
   general: GENERALAgent,
 };
 
