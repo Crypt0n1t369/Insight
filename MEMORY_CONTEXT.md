@@ -1,38 +1,18 @@
-# MEMORY_CONTEXT.md - Session Context
+=== ATON CONTEXT ===
+Generated: 2026-03-25 08:34
 
-## Session: 2026-03-23
+## Active Projects
+- audio-transformation-tool: Unknown
 
-### Completed
+## Key Decisions
+### Memory System Architecture
+- **Decision:** Use hybrid approach (TF-IDF now, vector embeddings later)
+### Context Management Approach
+- **Decision:** File-based context with auto-generation, not Mem0 cloud
+### Audio Tool Demo Mode
 
-1. **Telegram Bot Module System** ✅
-   - Created complete module activation system
-   - Added dashboard interface
-   - Built REST API endpoints
-   - All files committed and pushed
-
-2. **GitHub Push** ✅
-   - Successfully pushed commit `df5c7b1` to origin/master
-   - Ready for deployment
-
-### Current Status
-
-- **Project:** JCI Org Manager
-- **Branch:** master (up to date)
-- **Last Commit:** "Add Telegram bot module system and dashboard interface"
-- **Files Ready:** webapp/ (4 files, 17.5 KB total)
-
-### Next Steps
-
-- Deploy webapp to production
-- Test Telegram bot commands
-- Verify module activation works
-
-### Context Compacted
-
-Removed detailed implementation notes. Keeping only:
-- Project status
-- What was completed
-- Files ready for next task
-- Next steps
-
-**Memory footprint reduced by ~80%.**
+## Recent Sessions
+## Quick Status
+- Memory: Fresh (today)
+- Health: 11 checks passing
+- Context: Auto-generated
