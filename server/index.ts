@@ -257,7 +257,7 @@ app.post('/api/director', async (req, res) => {
             parameters: {
                 type: "object",
                 properties: {
-                    methodology: { type: "string", enum: ["IFS", "SOMATIC_AGENCY", "NSDR", "GENERAL"] },
+                    methodology: { type: "string", enum: ["IFS", "SOMATIC_AGENCY", "NSDR", "ACT", "FUTURE_SELF", "WOOP", "NVC", "IDENTITY", "NARRATIVE"] },
                     focus: { type: "string" },
                     targetFeeling: { type: "string" },
                     intensity: { type: "string", enum: ["SOFT", "MODERATE", "DEEP"] },
