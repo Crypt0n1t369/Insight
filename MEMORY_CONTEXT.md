@@ -12,8 +12,9 @@ Generated: 2026-03-25 18:59 UTC (wakeup session)
 
 ### Audio Transformation Tool (projects/audio-transformation-tool/code/)
 - **Status:** ⚠️ Deployed locally, needs Vercel deploy + OpenRouter credits
-- **Server:** Running on port 3001, 68 tests passing
-- **Issue:** OpenRouter credits exhausted (402), demo mode works
+- **Server:** Running on port 3001, 34 tests passing
+- **Latest:** 3 commits cherry-picked (demo mode signaling fix, scripts+import fix, enum expansion)
+- **Issue:** OpenRouter credits exhausted, demo mode works
 - **P0 blocker:** User must deploy to Vercel
 
 ### Credo Collaboration Platform (projects/collaboration-platform/)
@@ -51,6 +52,6 @@ Generated: 2026-03-25 18:59 UTC (wakeup session)
 ## Quick Status
 - Memory: Fresh (this session - 18:59 UTC)
 - Health: 6/6 services up (all HTTP 200)
-- Tests: 639 total passing (382 synthesis + 75 Credo + 68 Audio + 41 JCI + 49 Festival + 24 Youth)
-- Git: Clean, synced to origin (8b122a2)
+- Tests: 605 total passing (382 synthesis + 75 Credo + 34 Audio + 41 JCI + 49 Festival + 24 Youth)
+- Git: Clean, synced to origin (c48fb9a)
 - Cron: Wakeup ✅, Worker-1 ✅, Worker-3 ✅, Worker-2 DISABLED

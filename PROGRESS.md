@@ -3032,14 +3032,14 @@ The audio tool server had been running since ~06:33 UTC without restarting when 
 |---------|-------|-----------|
 | Synthesis Platform | 382 | vitest |
 | Credo Platform | 75 | vitest |
-| Audio Tool | 68 | vitest |
+| Audio Tool | 34 | vitest |
 | JCI Org Manager | 41 | pytest |
 | Youth Platform | 24 | pytest |
 | Festival Coordinator | 49 | pytest |
-| **Total** | **639** | |
+| **Total** | **605** | |
 
 ### Actions Taken (This Session)
-1. Verified all 639 tests across 6 projects — all passing
+1. Verified all 605 tests across 6 projects — all passing
 2. Confirmed 6 web services running (Festival Coordinator = Telegram bot only)
 3. PROGRESS.md entry from previous wakeup (12:58 UTC) carried forward with timestamp update
 4. Git status: workspace at `357fe97`, PROGRESS.md modified (pending commit)
@@ -3065,3 +3065,57 @@ The audio tool server had been running since ~06:33 UTC without restarting when 
 4. All code tasks are blocked — nothing I can build without user decisions or tokens
 
 *Session completed: 2026-03-25 15:28 UTC*
+
+---
+
+## Wakeup Session (2026-03-25 17:28 UTC)
+
+### ✅ Completed This Session
+
+**Integrated 3 upstream commits from origin/main (cherry-picked to master):**
+
+1. **Cherry-pick `88d0b5e`** — Fix demo mode signaling in `/api/meditation/generate`
+   - Returns `error` field when OpenRouter unavailable
+   - Returns protocol-specific demo titles (e.g., "Demo: NSDR")
+   - All 9 methodologies confirmed returning correct batch counts
+
+2. **Cherry-pick `5ae27da`** — Add scripts + fix import path + null guard
+   - Added `dev/build/preview` scripts to root `package.json`
+   - Added `start/build/dev` scripts to `server/package.json`
+   - Fixed `server/protocols.ts` import: `../types.js` → `./types.js`
+   - Added null guard for `body.reply` in `integration.test.ts`
+   - Added `server/*.js` to `.gitignore` (cleaning up compiled artifacts)
+   - **Note:** Test count dropped from 68 → 34 (was running .ts + .js duplicates; .js were untracked artifacts)
+
+3. **Cherry-pick `6548ed2`** — Expand `/api/director` methodology enum to all 9 protocols
+   - Enum now covers: IFS, SOMATIC_AGENCY, NSDR, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE
+
+### ✅ Verified Working
+1. **Server running** — Port 3001 responding `{"status":"ok"}` ✅
+2. **34 vitest tests passing** — 2 test files (server.test.ts + integration.test.ts) ✅
+3. **All 9 methodologies tested** — each returns correct demo batches:
+   - NSDR: 6 batches | IFS: 6 | ACT/WOOP/NVC/IDENTITY/NARRATIVE/FUTURE_SELF/SOMATIC_AGENCY: 5 each ✅
+4. **Demo mode signaling** — `/api/meditation/generate` returns `{error, title, batches}` ✅
+5. **Git pushed** — 3 commits pushed to `origin/master` ✅
+
+### ⚠️ Test Count Correction
+- **Before:** 68 tests (was running .ts + untracked .js compiled artifacts in parallel)
+- **After:** 34 tests (clean — only .ts source files, .js gitignored as build artifacts)
+- **Total across all projects: 605 tests** (was 639)
+
+### ⚠️ BLOCKED — User Action Required
+| # | Item | Blocker |
+|---|------|---------|
+| 1 | Deploy Audio Tool to Vercel | User: vercel.com deploy |
+| 2 | Add OpenRouter Credits | User: openrouter.ai |
+| 3 | Review Contribution Graph docs | User: Q6, Q7, Q8 judgment calls |
+| 4 | Review Credo Docs | User: MVP build decision |
+| 5 | Add TELEGRAM_BOT_TOKEN (Youth + Festival) | User: BotFather token |
+
+### What's Next (Priority Order)
+1. **User: Deploy Audio Tool** — vercel.com → import Crypt0n1t369/Insight → Deploy
+2. **User: Review Contribution Graph** — CONCEPT.md + PILOT.md → go/no-go
+3. **User: Add OpenRouter credits** — for real AI meditation generation
+4. All code tasks blocked until user decisions
+
+*Session completed: 2026-03-25 17:28 UTC*
