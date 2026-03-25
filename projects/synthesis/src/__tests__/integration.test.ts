@@ -357,10 +357,8 @@ describe('Agent Registry — All Implemented Protocols Available', () => {
     expect(implemented).toContain('general');
   });
 
-  it('returns undefined for unimplemented protocols', () => {
+  it('returns undefined for truly unimplemented protocols', () => {
     const cbtAgent = getAgent('cbt');
-    const nvcAgent = getAgent('nvc');
     expect(cbtAgent).toBeUndefined();
-    expect(nvcAgent).toBeUndefined();
   });
 });
