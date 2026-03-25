@@ -126,6 +126,52 @@ const BREATHWORK: SpecialistAgent = {
 | Breathing | 10 min | Continuous connected breath |
 | Integration | 3 min | Stillness, prompts |
 
+### 5. SE Agent
+**Protocol:** Somatic Experiencing
+
+```typescript
+const SE: SpecialistAgent = {
+  protocolId: 'se',
+  displayName: 'Somatic Experiencing',
+  description: 'A body-based approach to processing trauma and stress by tracking physical sensations.',
+  defaultDuration: 20,
+};
+```
+
+**Session Structure (Hexaflex):**
+| Phase | Duration | Content |
+|-------|----------|---------|
+| Grounding | 2 min | Orient to present, body awareness |
+| Identifying Hook | 2 min | Notice the "hook" — recurring trigger pattern |
+| Defusion | 2 min | Create distance from the thought/pattern |
+| Acceptance | 2 min | Allow the sensation to be there |
+| Values | 2 min | Identify what's truly important |
+| Committed Action | 8 min | Small action aligned with values |
+| Integration | 2 min | Recap, somatic anchor |
+
+### 6. ACT Agent
+**Protocol:** Acceptance and Commitment Therapy
+
+```typescript
+const ACT: SpecialistAgent = {
+  protocolId: 'act',
+  displayName: 'Acceptance and Commitment Therapy',
+  description: 'A structured 25-minute protocol using the hexaflex model to build psychological flexibility.',
+  defaultDuration: 25,
+};
+```
+
+**Session Structure (Hexaflex):**
+| Phase | Duration | Content |
+|-------|----------|---------|
+| Grounding | 2 min | Breath, present-moment orientation |
+| Identifying Hook | 2 min | Notice the active inner conflict |
+| Defusion — Leaves | 2 min | "Notice the thinking mind — thoughts are like leaves" |
+| Acceptance | 2 min | Make space for difficult experience |
+| Values | 2 min | Clarify chosen values direction |
+| Committed Action | 12 min | Concrete value-aligned micro-commitment |
+| Integration | 3 min | Anchor, recap, somatic commitment |
+
 ## Agent Registry
 
 ```typescript
@@ -134,9 +180,9 @@ const AGENT_REGISTRY: Record<ProtocolId, SpecialistAgent> = {
   ifs: IFS,
   woop: WOOP,
   breathwork: BREATHWORK,
-  act: ACT,         // Future
-  nvc: NVC,         // Future
-  se: SE,           // Future
+  se: SE,           // Somatic Experiencing
+  act: ACT,         // Acceptance and Commitment Therapy
+  nvc: NVC,         // Future (Nonviolent Communication)
   general: GENERAL, // Always available fallback
 };
 
@@ -167,6 +213,8 @@ Each agent can provide:
 - [x] IFS agent implementation — ✅ `src/specialist-agents/ifs.ts` (31 tests)
 - [x] WOOP agent implementation — ✅ `src/specialist-agents/woop.ts` (25 tests)
 - [x] BREATHWORK agent implementation — ✅ `src/specialist-agents/breathwork.ts` (28 tests)
-- [ ] ACT/NVC/SE agents (future)
+- [x] SE agent implementation — ✅ `src/specialist-agents/se.ts` (22 tests)
+- [x] ACT agent implementation — ✅ `src/specialist-agents/act.ts` (29 tests)
+- [ ] NVC agent (future — Nonviolent Communication)
 - [ ] Audio clip library per agent (future — TTS fallback active)
-- [x] Unit tests per agent — ✅ All 4 agents tested (121 tests total)
+- [x] Unit tests per agent — ✅ All 6 agents tested (172 tests total)

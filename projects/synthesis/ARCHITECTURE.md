@@ -45,13 +45,16 @@
 - **Output:** Protocol selection + context package
 
 ### 2. Specialist Agents
-| Agent | Protocol |
-|-------|----------|
-| SE-Agent | Somatic Experiencing |
-| IFS-Agent | Internal Family Systems |
-| WOOP-Agent | Mental Contrasting |
-| ACT-Agent | Acceptance & Commitment |
-| NVC-Agent | Nonviolent Communication |
+| Agent | Protocol | Status |
+|-------|----------|--------|
+| WOOP-Agent | Mental Contrasting (Wish/Outcome/Obstacle/Plan) | ✅ |
+| IFS-Agent | Internal Family Systems | ✅ |
+| NSDR-Agent | Non-Sleep Deep Rest | ✅ |
+| BREATHWORK-Agent | Conscious Connected Breathwork | ✅ |
+| SE-Agent | Somatic Experiencing | ✅ |
+| ACT-Agent | Acceptance & Commitment Therapy | ✅ |
+| GENERAL-Agent | General fallback | ✅ |
+| NVC-Agent | Nonviolent Communication | 🔜 Future |
 
 ### 3. Knowledge Graph
 - Store structured information connecting all modules

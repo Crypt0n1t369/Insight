@@ -7,7 +7,7 @@ This directory contains detailed interface specifications for each module of the
 | File | Status | Description |
 |------|--------|-------------|
 | `router-agent.md` | ✅ Implemented | Entry point, routes to specialists (61 tests) |
-| `specialist-agents.md` | ✅ Implemented | NSDR/IFS/WOOP/BREATHWORK (121 tests) |
+| `specialist-agents.md` | ✅ Implemented | WOOP/IFS/NSDR/BREATHWORK/SE/ACT (172 tests) |
 | `knowledge-graph.md` | ✅ Implemented | Structured memory layer (36 tests) |
 | `credibility-engine.md` | ✅ Implemented | Egoless reputation system (71 tests) |
 
@@ -15,18 +15,18 @@ This directory contains detailed interface specifications for each module of the
 
 ```
 SPECS/
-├── router-agent.md        ✅ Implemented — 61 tests, committed
-├── specialist-agents.md  ✅ Implemented — NSDR/IFS/WOOP/BREATHWORK, 121 tests
-├── knowledge-graph.md    ✅ Implemented — 36 tests, committed
-└── credibility-engine.md ✅ Implemented — 71 tests, committed
+├── router-agent.md        ✅ Implemented — 61 tests
+├── specialist-agents.md  ✅ Implemented — WOOP/IFS/NSDR/BREATHWORK/SE/ACT, 172 tests
+├── knowledge-graph.md    ✅ Implemented — 36 tests
+└── credibility-engine.md ✅ Implemented — 71 tests
 ```
 
 ## Implementation Order
 
 1. **Router Agent** — ✅ Implemented (61 tests)
 2. **Knowledge Graph** — ✅ Implemented (36 tests)
-3. **Specialist Agents** — ✅ All 4 implemented (121 tests): WOOP, IFS, NSDR, BREATHWORK
-4. **Credibility Engine** — ✅ Implemented (71 tests), committed `0f67db9`
+3. **Specialist Agents** — ✅ All 6 implemented (172 tests): WOOP, IFS, NSDR, BREATHWORK, SE, ACT
+4. **Credibility Engine** — ✅ Implemented (71 tests)
 
 ## References
 
