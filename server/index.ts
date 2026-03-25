@@ -185,7 +185,35 @@ app.post('/api/chat', async (req, res) => {
         console.log("Sending to OpenRouter...");
         const text = await callOpenRouter(messages, OPENROUTER_MODEL, true);
         console.log("Raw OpenRouter Text:", text);
-        res.json(JSON.parse(cleanJson(text || "{}")));
+        // null text = missing API key → use demo fallback directly
+        // empty parse result also means demo fallback
+        if (!text) {
+            return res.json({
+                reply: "I hear you. Tell me more about what you're experiencing — in demo mode, every word matters.",
+                shouldOfferMeditation: true,
+                meditationData: {
+                    focus: "Demo Session",
+                    feeling: "Open",
+                    duration: 10,
+                    methodology: "NSDR"
+                }
+            });
+        }
+        const parsed = JSON.parse(cleanJson(text));
+        if (!parsed || typeof parsed.reply !== 'string') {
+            // Malformed response → demo fallback
+            return res.json({
+                reply: "I hear you. Tell me more about what you're experiencing — in demo mode, every word matters.",
+                shouldOfferMeditation: true,
+                meditationData: {
+                    focus: "Demo Session",
+                    feeling: "Open",
+                    duration: 10,
+                    methodology: "NSDR"
+                }
+            });
+        }
+        res.json(parsed);
     } catch (error) {
         console.error("Chat error FULL DETAILS:", error);
         if (error instanceof Error) {
@@ -303,9 +331,23 @@ app.post('/api/meditation/generate', async (req, res) => {
             { role: "user", content: "Generate session script." }
         ], OPENROUTER_MODEL, true);
 
-        const parsed = JSON.parse(cleanJson(textResponse || "{}"));
-        // ... (rest of the batching logic stays same)
-        const scriptBlocks = parsed.script || [{ text: "Breathe...", instructions: [] }];
+        // null response = missing API key → return protocol-specific demo content
+        if (!textResponse) {
+            const demoMethodology = methodology as string;
+            const demoBatches = DEMO_BATCHES[demoMethodology] || DEMO_BATCHES['DEFAULT'];
+            const demoTitle = demoMethodology && demoMethodology !== 'undefined'
+                ? `Demo: ${demoMethodology}`
+                : "Demo Session";
+            return res.status(200).json({
+                error: "Demo mode — AI generation requires OPENROUTER_API_KEY with credits.",
+                batches: demoBatches,
+                title: demoTitle
+            });
+        }
+
+        const parsed = JSON.parse(cleanJson(textResponse));
+        // Use AI-generated script if available, otherwise fall back to demo
+        const scriptBlocks = parsed.script || DEMO_BATCHES[methodology as string] || DEMO_BATCHES['DEFAULT'];
         const title = parsed.title || "Session";
 
         const batches: { text: string; instructions: SonicInstruction[] }[] = [];
