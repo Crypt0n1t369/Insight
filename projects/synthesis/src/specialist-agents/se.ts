@@ -279,24 +279,11 @@ export const SEAgent: SpecialistAgent = {
     }
   },
 
-  validate(input: ContextPackage): ValidationResult {
+  validate(_input: ContextPackage): ValidationResult {
     // SE is appropriate when the user describes physical sensations,
     // bodily tension, stress held in the body, or unresolved physical responses.
-    const seKeywords = [
-      'body', 'somatic', 'tension', 'pain', 'physical', 'felt sense',
-      'embodied', 'embodiment', 'sensations', 'ache', 'strain', 'tight',
-      'frozen', 'stuck', 'triggered', 'overwhelm', 'survival', 'trauma',
-    ];
-
-    const raw = (input.rawInput ?? '').toLowerCase();
-    const keywordMatches = seKeywords.filter((kw) => raw.includes(kw));
-
-    if (keywordMatches.length >= 1) {
-      return { valid: true };
-    }
-
-    // Default: allow routing decision to stand; SE is gentle enough
-    // to be used as a general body-awareness protocol.
+    // Note: keyword-based pre-screening removed — SE is gentle enough to serve as
+    // general body-awareness, and the router handles gross misroutes.
     return { valid: true };
   },
 };

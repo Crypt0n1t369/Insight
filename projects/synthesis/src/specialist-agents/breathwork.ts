@@ -117,8 +117,8 @@ export const BREATHWORKAgent: SpecialistAgent = {
         suggestedProtocol: 'woop',
       };
     }
-    // For users with severe trauma or certain conditions, they might want something gentler
-    if (input.detectedEmotion === 'trauma' || input.detectedEmotion === 'panic') {
+    // For users with severe trauma, offer gentle pacing warnings
+    if (input.detectedEmotion === 'trauma') {
       return {
         valid: true,
         reason: 'Breathwork can be intense; offer gentle pacing warnings.',
