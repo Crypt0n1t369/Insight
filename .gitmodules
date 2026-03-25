@@ -2,3 +2,9 @@
     path = Perplexica
     url = https://github.com/ItzCrazyKns/Perplexica.git
     branch = master
+[submodule "projects/audio-transformation-tool/code"]
+	path = projects/audio-transformation-tool/code
+	url = https://github.com/Crypt0n1t369/Insight.git
+[submodule "projects/jci-org-manager"]
+	path = projects/jci-org-manager
+	url = https://github.com/Crypt0n1t369/orgflow.git
