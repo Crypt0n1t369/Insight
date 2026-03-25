@@ -80,8 +80,8 @@ describe('Audio Transformation Tool Server', () => {
 
         app.post('/api/meditation/generate', async (req, res) => {
             const { methodology } = req.body;
-            const valid = ['IFS', 'NSDR', 'SOMATIC_AGENCY', 'ACT', 'FUTURE_SELF', 'WOOP', 'NVC', 'IDENTITY', 'NARRATIVE', 'GENERAL', 'TRAUMA_SAFE', 'BREATHWORK'];
-            if (methodology && !valid.includes(methodology)) {
+            const validProtocols = Object.keys(CLINICAL_PROTOCOLS);
+            if (methodology && !validProtocols.includes(methodology)) {
                 return res.status(400).json({ error: 'Invalid methodology' });
             }
             try {
