@@ -1,0 +1,4 @@
+[submodule "Perplexica"]
+    path = Perplexica
+    url = https://github.com/ItzCrazyKns/Perplexica.git
+    branch = master
