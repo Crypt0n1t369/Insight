@@ -54,3 +54,9 @@ data/
 .openclaw/tasks.json
 projects/festival-coordinator/venv/
 .vercel
+
+# TypeScript build artifacts (server sub-project)
+server/*.js
+server/*.js.map
+server/*.d.ts
+server/*.d.ts.map
