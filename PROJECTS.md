@@ -117,6 +117,22 @@
   - Added `/health` endpoint with detailed status
 - **Next:** Add tests, Telegram bot integration
 
+### 8. Contribution Graph
+- **Status:** Phase 0 — Validation (No Code)
+- **Summary:** Behavioral profiling system that discovers comparative advantage through micro-challenge participation, then matches to real work. Core bet: bot-observed behavioral data produces richer capability profiles than CVs or self-assessments.
+- **Path:** `projects/contribution-graph/`
+- **Documents:**
+  - `CONCEPT.md` — Full product blueprint: Core Bet, 3-Layer Architecture (Discovery Engine → Marketplace → Coordination), filetree, test plan (pre-engineering gates), roadmap (Phase 0–3)
+  - `PILOT.md` — Phase 0 validation protocol: 4 tests (self-discovery desire, attribution fairness, festival top-of-funnel, client problem readiness)
+- **Phase 0 Gates (No Engineering Required):**
+  - Test 0.1: ≥7/10 target users say they'd use the bot
+  - Test 0.2: ≥4/5 say structured attribution feels fair
+  - Test 0.3: ≥40% QR scan → quiz completion; ≥20% D7 return
+  - Test 0.4: ≥3/5 orgs willing to pay at some price
+- **Key Design:** Cybernetic self-discovery loop (sensor → comparator → effector → user agent). Three-layer decoupled architecture (Discovery → Marketplace → Coordination) built sequentially, not in parallel.
+- **Git:** ✅ Untracked (pending first commit)
+- **Next:** Boss reviews CONCEPT.md + PILOT.md → go/no-go on Phase 0 validation execution
+
 ---
 
 ## Adding New Projects

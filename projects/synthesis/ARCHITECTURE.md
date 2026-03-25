@@ -90,8 +90,8 @@
 | Knowledge Graph | ✅ Implemented | 36 | CRUD, traversal, full-text search, seeding |
 | Credibility Engine | ✅ Implemented | 71 | Egoless reputation, quadratic voting, anonymous attribution |
 | Synthetic Mediator | 🔶 Future | — | AI agents for collaborative mediation |
-| Platform Integration | 🔶 Todo | — | Router → Specialist → KG → Credibility wiring |
+| Platform Integration | ✅ Implemented | 27 | SessionOrchestrator wires Router → Specialist → KG → Credibility; 27 tests passing |
 
 ---
 
-*Last updated: 2026-03-24*
+*Last updated: 2026-03-25*
