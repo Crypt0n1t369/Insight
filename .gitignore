@@ -28,8 +28,12 @@ next-env.d.ts
 # Ignore system-specific scripts
 scripts/enable_ollama_control.sh
 scripts/openclaw.service
+scripts/service_watchdog.sh
 dist/
 tsconfig.tsbuildinfo
+
+# Ignore runtime logs
+logs/
 
 # Python cache
 __pycache__/
