@@ -14,7 +14,7 @@
 | Credo API | 3000 | ✅ Responding |
 | Audio Backend | 3001 | ✅ Responding |
 | Credo Frontend | 3002 | ✅ Next.js HTML |
-| Audio Frontend | 5173 | ✅ Next.js HTML |
+| Audio Frontend | 3005 | ✅ HTTP 200 |
 | Youth Platform | 3003 | ✅ `{"status":"ok"}` |
 | JCI Portal | 8080 | (not checked — no endpoint) |
 
