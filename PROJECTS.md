@@ -7,7 +7,7 @@
 - **Summary:** Unified wellness protocol orchestration platform with 7 specialist agents (WOOP, IFS, NSDR, BREATHWORK, SE, ACT, GENERAL)
 - **Path:** `projects/synthesis/`
 - **Tests:** 424/424 vitest passing ✅ (verified 2026-03-26)
-- **Agents:** WOOP, IFS, NSDR, BREATHWORK, SE (Somatic Experiencing), ACT, GENERAL — all registered in AGENT_REGISTRY
+- **Agents:** WOOP, IFS, NSDR, BREATHWORK, SE (Somatic Experiencing), ACT, NVC (Nonviolent Communication), GENERAL — all 8 registered in AGENT_REGISTRY
 - **Recent:** SE agent (22 tests) committed `6da0310`, ACT agent (29 tests) committed `da88305`
 
 ### 2. Audio Transformation Tool
