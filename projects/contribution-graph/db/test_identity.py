@@ -5,6 +5,10 @@ Run: python -m pytest db/test_identity.py
 
 import os
 import pytest
+
+# Set a known secret BEFORE importing identity (module reads at import time)
+os.environ["CG_SERVER_SECRET"] = "test-secret-for-testing-only"
+
 from db.identity import (
     generate_short_code,
     verify_short_code,
@@ -13,9 +17,6 @@ from db.identity import (
     SHORT_CODE_PREFIX,
     SHORT_CODE_LENGTH,
 )
-
-# Set a known secret for reproducible tests
-os.environ["CG_SERVER_SECRET"] = "test-secret-for-testing-only"
 
 
 class TestGenerateShortCode:
