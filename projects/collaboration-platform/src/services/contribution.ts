@@ -15,6 +15,22 @@ import { branchService } from './branch.js';
 const contributions = new Map<string, Contribution>();
 
 /**
+ * Contribution weight by type.
+ * Higher-effort contributions (synthesis, research) earn more credibility.
+ * Matches SPEC.md §4 credibility weights.
+ */
+export function getContributionWeight(type: ContributionType): number {
+  const weightMap: Record<ContributionType, number> = {
+    'synthesis': 5,  // Deep integration of multiple ideas
+    'idea': 3,      // Novel proposal
+    'resource': 3,  // Valuable reference
+    'question': 2,  // Thoughtful inquiry
+    'comment': 1,   // Basic participation
+  };
+  return weightMap[type] ?? 1;
+}
+
+/**
  * Contribution Service - handles all content contributions
  */
 export class ContributionService {
@@ -33,6 +49,7 @@ export class ContributionService {
       type: input.type,
       content: input.content,
       endorsements: 0,
+      weight: getContributionWeight(input.type),
       created_at: now,
       updated_at: now,
     };
@@ -118,27 +135,44 @@ export class ContributionService {
   }
   
   /**
-   * Endorse a contribution
+   * Endorse a contribution.
+   *
+   * Credibility effects:
+   * - Contribution author earns `weight` credibility (endorsement_received).
+   *   Matches SPEC.md §4: weight by contribution type (synthesis=5, idea=3, etc.)
+   * - Endorser earns 1 credibility (endorsement_given) — encourages curation.
+   *
+   * Endorsers cannot endorse their own contributions.
    */
   async endorse(contributionId: string, userId: string): Promise<Contribution | null> {
     const contribution = contributions.get(contributionId);
     if (!contribution) return null;
-    
+
+    // Prevent self-endorsement
+    if (contribution.author_id === userId) return null;
+
     const updated: Contribution = {
       ...contribution,
       endorsements: contribution.endorsements + 1,
       updated_at: new Date().toISOString(),
     };
-    
+
     contributions.set(contributionId, updated);
-    
-    // Award credibility to author
+
+    // Author earns credibility based on contribution weight
     await identityService.updateCredibility(
-      contribution.author_id, 
-      1, 
-      'Received endorsement'
+      contribution.author_id,
+      contribution.weight,
+      `Received endorsement on ${contribution.type} (weight=${contribution.weight})`
     );
-    
+
+    // Endorser earns 1 credibility for giving the endorsement
+    await identityService.updateCredibility(
+      userId,
+      1,
+      `Gave endorsement to ${contribution.id}`
+    );
+
     return updated;
   }
   

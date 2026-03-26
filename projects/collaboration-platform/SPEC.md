@@ -685,6 +685,40 @@ input ReviewDecision {
 
 ## MVP (v0.1.0)
 
+### Tier Thresholds
+
+| Tier | Credibility Score | Description |
+|------|-------------------|-------------|
+| newcomer | 0–99 | Fresh user, no track record |
+| contributor | 100–499 | Active participant |
+| trusted | 500–1999 | Established contributor |
+| elder | 2000+ | Highly credible, senior standing |
+
+> These thresholds are implemented in `SCHEMA.md get_tier()` and `identity.ts calculateTrustTier()`.
+> Changes must be reflected in both files.
+
+### Contribution Weight by Type
+
+| Type | Weight | Rationale |
+|------|--------|-----------|
+| synthesis | 5 | Deep integration of multiple ideas |
+| idea | 3 | Novel proposal |
+| resource | 3 | Valuable reference |
+| question | 2 | Thoughtful inquiry |
+| comment | 1 | Basic participation |
+
+> Author earns `weight` credibility each time their contribution receives an endorsement.
+> See `getContributionWeight()` in `services/contribution.ts`.
+
+### Endorsement Formula
+
+When user U endorses contribution C authored by user A:
+- **A (author) earns:** `C.weight` credibility (change_type: `endorsement_received`)
+- **U (endorser) earns:** 1 credibility (change_type: `endorsement_given`) — encourages curation
+- Self-endorsement is prohibited
+
+Example: A `synthesis` (weight=5) receiving an endorsement → author earns +5, endorser earns +1.
+
 ### Authentication
 - [ ] Anonymous user can be created
 - [ ] User session persists across page loads

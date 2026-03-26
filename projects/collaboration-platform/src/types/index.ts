@@ -69,6 +69,7 @@ export const ContributionSchema = z.object({
   type: ContributionTypeSchema,
   content: z.string(),
   endorsements: z.number().int().min(0),
+  weight: z.number().int().min(1).default(1),  // Credibility earned by author per endorsement
   created_at: z.string().datetime(),
   updated_at: z.string().datetime(),
 });

@@ -25,12 +25,14 @@ function generateAvatarSeed(): string {
 }
 
 /**
- * Determine trust tier based on credibility score
+ * Determine trust tier based on credibility score.
+ * Thresholds: elder=2000, trusted=500, contributor=100, newcomer=0.
+ * Matches SCHEMA.md get_tier() function. Changes here must be reflected there.
  */
 function calculateTrustTier(credibility: number): TrustTier {
-  if (credibility >= 1000) return 'elder';
-  if (credibility >= 500) return 'trusted';
-  if (credibility >= 100) return 'contributor';
+  if (credibility >= 2000) return 'elder';
+  if (credibility >= 500)  return 'trusted';
+  if (credibility >= 100)  return 'contributor';
   return 'newcomer';
 }
 

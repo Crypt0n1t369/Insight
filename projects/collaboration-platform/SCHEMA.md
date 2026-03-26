@@ -170,7 +170,8 @@ CREATE TABLE contributions (
     endorsement_count INTEGER NOT NULL DEFAULT 0,
     reply_count INTEGER NOT NULL DEFAULT 0,
     
-    -- Credibility weight (set at creation based on author tier)
+    -- Credibility weight (set at creation based on type via get_weight_for_type())
+    -- Author earns this many credibility points per endorsement received
     weight INTEGER NOT NULL DEFAULT 1,
     
     -- Moderation
@@ -417,14 +418,32 @@ $$ LANGUAGE plpgsql IMMUTABLE;
 
 ```sql
 -- Get tier from credibility score
+-- IMPORTANT: keep in sync with identity.ts calculateTrustTier()
+-- Thresholds: elder=2000, trusted=500, contributor=100, newcomer=0
 CREATE OR REPLACE FUNCTION get_tier(score INTEGER)
 RETURNS TEXT AS $$
 BEGIN
     CASE
         WHEN score >= 2000 THEN RETURN 'elder';
-        WHEN score >= 500 THEN RETURN 'trusted';
-        WHEN score >= 100 THEN RETURN 'contributor';
+        WHEN score >= 500  THEN RETURN 'trusted';
+        WHEN score >= 100  THEN RETURN 'contributor';
         ELSE RETURN 'newcomer';
+    END CASE;
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+-- Get contribution weight by type
+-- Must match SPEC.md contribution weight table
+CREATE OR REPLACE FUNCTION get_weight_for_type(type TEXT)
+RETURNS INTEGER AS $$
+BEGIN
+    CASE type
+        WHEN 'synthesis'  THEN RETURN 5;
+        WHEN 'idea'        THEN RETURN 3;
+        WHEN 'resource'    THEN RETURN 3;
+        WHEN 'question'    THEN RETURN 2;
+        WHEN 'comment'     THEN RETURN 1;
+        ELSE RETURN 1;
     END CASE;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
@@ -493,40 +512,52 @@ CREATE TRIGGER contribution_branch_stats
 ### Update User Credibility After Endorsement
 
 ```sql
--- Add credibility when contribution is endorsed
+-- Add credibility when contribution is endorsed.
+-- Formula (per SPEC.md endorsement formula):
+--   - Author earns: contribution.weight credibility (endorsement_received)
+--   - Endorser earns: 1 credibility (endorsement_given)
+-- Self-endorsement should be prevented at the application layer.
 CREATE OR REPLACE FUNCTION on_endorsement()
 RETURNS TRIGGER AS $$
 DECLARE
     contribution_author UUID;
-    credibility_change INTEGER;
+    contribution_weight INTEGER;
+    endorser_score INTEGER;
 BEGIN
     IF TG_OP = 'INSERT' THEN
-        -- Get contribution author
-        SELECT author_id INTO contribution_author
+        -- Get contribution author and weight
+        SELECT author_id, weight INTO contribution_author, contribution_weight
         FROM contributions
         WHERE id = NEW.contribution_id;
-        
-        -- Get weight from contribution
-        SELECT weight INTO credibility_change
-        FROM contributions
-        WHERE id = NEW.contribution_id;
-        
-        -- Log credibility
+
+        -- Log credibility for author (endorsement_received = contribution.weight)
         INSERT INTO credibility_log (user_id, change_type, change_amount, related_contribution_id, score_after)
         VALUES (
             contribution_author,
             'endorsement_received',
-            credibility_change,
+            contribution_weight,
             NEW.contribution_id,
-            calculate_credibility(contribution_author) + credibility_change
+            calculate_credibility(contribution_author) + contribution_weight
         );
-        
-        -- Update contribution count
+
+        -- Log credibility for endorser (endorsement_given = 1)
+        -- Using GREATEST to floor at 0
+        endorser_score := calculate_credibility(NEW.user_id);
+        INSERT INTO credibility_log (user_id, change_type, change_amount, related_contribution_id, score_after)
+        VALUES (
+            NEW.user_id,
+            'endorsement_given',
+            1,
+            NEW.contribution_id,
+            endorser_score + 1
+        );
+
+        -- Update contribution endorsement count
         UPDATE contributions
         SET endorsement_count = endorsement_count + 1
         WHERE id = NEW.contribution_id;
     END IF;
-    
+
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
