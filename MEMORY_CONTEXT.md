@@ -26,7 +26,7 @@
 ### Audio Tool
 - **Phase:** Operational (production)
 - **Ports:** 3001 (backend), 3005 (frontend via vite preview)
-- **Status:** 68 tests passing (34 workspace root + 34 in submodule code/)
+- **Status:** 34 vitest tests passing (server/)
 - **9 protocols active:** NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE
 - **Demo mode:** Working (kicks in when OpenRouter credits exhausted)
 - **Known issue:** No OpenRouter credits (402 → demo fallback)
@@ -50,13 +50,15 @@
 - **Phase:** Operational
 - **Status:** 49 tests passing
 
-## Session Summary (2026-03-26 13:05 UTC)
+## Session Summary (2026-03-26 13:58 UTC)
 
 ### This Session
-- **Fixed contribution-graph identity tests** — 3 tests failing due to `CG_SERVER_SECRET` set after import instead of before. Moved env var before import. All 18/18 now pass.
-- **Full test suite verified: 728 tests passing** (34+424+42+75+49+41+24+39)
-- **All 6 services confirmed healthy** (3000, 3001, 3002, 3003, 3005, 8080)
-- **Git:** pushed 2 commits to origin (`8af3924`, `d8e8e7c`)
+- **Verified 6/6 core services healthy** (3000, 3001, 3002, 3003, 3005, 8080)
+- **Full test suite: 686 tests passing** (34+424+75+49+41+24+39) — corrected from inaccurate 743
+- **CG Web Server verified functional** — all endpoints tested manually (`/health`, `/map`, `/api/map`, `/dev/seed`)
+- **CG Web Server not persistent** — not in `service_manager.sh`, killed after testing
+- **Test collection documented** — pytest import conflicts when run from `projects/` root; per-project runs work
+- **Git:** committed + pushed (`6c8ac96`)
 
 ## What's Left (User Action Required)
 
@@ -64,13 +66,13 @@
 |----------|------|---------|
 | P0 | Deploy Audio Tool to Vercel | Needs vercel.com import + env vars |
 | P0 | Add OpenRouter credits ($5-10) | Unblocks real AI meditation |
-| P1 | Review Contribution Graph docs | Phase 0 go/no-go decision |
-| P1 | Review Credo docs | MVP build decision |
+| P1 | Review Contribution Graph CONCEPT.md + PILOT.md | Phase 0 go/no-go |
+| P1 | Add CG Telegram bot token | Connect bot to actual Telegram |
 | P2 | Add Telegram bot tokens | Youth Platform + Festival Coordinator Phase 2 |
 
 ## Infrastructure
 
 - **Persistent service manager:** `systemctl --user start/stop/restart workspace-services`
-- **Test suite:** 681 tests across 7 projects (vitest + pytest)
+- **Test suite:** 686 tests across 7 projects (vitest + pytest) — run per-project, not from workspace root
 - **Cron:** Wakeup (30min), Worker-1 (5h), Worker-3 (5h)
-- **Git:** master at `2f60a31`, synced with origin
+- **Git:** master at `6c8ac96`, synced with origin
