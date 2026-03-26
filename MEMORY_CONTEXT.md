@@ -8,7 +8,7 @@
 **Git:** `6173fcb` (just synced)
 
 **Build status:**
-- Challenge library: 16 challenges (Impact: 5, Creative: 6, Business: 5) ✅
+- Challenge library: 18 challenges (Impact: 6, Creative: 6, Business: 6) ✅
 - Short-code identity system: ✅ (18 tests)
 - 5-phase conversation handlers: ✅ (21 tests)
 - Web server + SVG map renderer: ✅ (23 tests)
