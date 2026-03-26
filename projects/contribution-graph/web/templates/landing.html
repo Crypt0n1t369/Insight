@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribution Graph — Know Your Arc</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #0a0a0f;
+            color: #f9fafb;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container { max-width: 640px; padding: 2rem; text-align: center; }
+        h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #7C3AED, #3B82F6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tagline { color: #9ca3af; font-size: 1.1rem; margin-bottom: 2.5rem; }
+        .card { background: #1f2937; border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid #374151; }
+        .card h2 { font-size: 1.2rem; margin-bottom: 1rem; color: #d1d5db; }
+        .card p { color: #9ca3af; line-height: 1.6; }
+        .features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; text-align: left; }
+        .feature { background: #1f2937; border-radius: 12px; padding: 1.2rem; border: 1px solid #374151; }
+        .feature-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .feature h3 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+        .feature p { font-size: 0.85rem; color: #6b7280; }
+        .example-link { display: inline-block; margin-top: 1.5rem; padding: 0.75rem 1.5rem; background: #7c3aed; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: opacity 0.2s; }
+        .example-link:hover { opacity: 0.85; }
+        .footer { color: #4b5563; font-size: 0.8rem; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contribution Graph</h1>
+        <p class="tagline">Discover your unique arc of contribution</p>
+
+        <div class="card">
+            <h2>How it works</h2>
+            <p>
+                A short conversation with our bot reveals the patterns in how you work —
+                your initiative, your creative instincts, your sense of purpose.
+                We turn that into a <strong>personal contribution map</strong> that
+                grows stronger every time you complete a challenge.
+            </p>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <h3>Signal Detection</h3>
+                <p>Behavioral signals collected through conversation, not self-reporting.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🗺️</div>
+                <h3>Live Map</h3>
+                <p>Your personal contribution map, updated in real-time.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <h3>Personalized Challenges</h3>
+                <p>Challenges matched to your specific strengths and gaps.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔄</div>
+                <h3>Growth Tracking</h3>
+                <p>Watch your comparative advantage evolve over time.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <p>
+                Start by messaging our Telegram bot.
+                Type anything to begin — no forms, no sign-up flow,
+                just a conversation.
+            </p>
+            <a href="https://t.me/YourBotUsername" class="example-link">Start on Telegram →</a>
+        </div>
+
+        <p class="footer">
+            Built by Kristaps · Powered by Aton · contributiongraph.ai
+        </p>
+    </div>
+</body>
+</html>

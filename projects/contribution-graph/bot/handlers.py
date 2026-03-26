@@ -142,6 +142,18 @@ P1_OPENING_QUESTION = (
 )
 
 
+async def handle_phase_new(text: str, state: UserState) -> str:
+    """Phase NEW — greet and direct to /start"""
+    if not text or len(text) < 5:
+        return (
+            "Welcome! I'm the Contribution Graph bot. "
+            "Type /start to begin your map."
+        )
+    # If they type something, treat it as a first message after directing to start
+    state.phase = Phase.PHASE_1_OPENING
+    return P1_OPENING_QUESTION
+
+
 async def handle_phase_1_opening(text: str, state: UserState) -> str:
     """
     Phase 1: Opening — establish the topic, collect the primary question.

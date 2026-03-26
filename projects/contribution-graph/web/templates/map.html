@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ display_name }} — Contribution Map</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #0a0a0f;
+            color: #f9fafb;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .header h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #d1d5db;
+            margin-bottom: 0.3rem;
+        }
+        .header .subtitle {
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+        .map-container {
+            background: #111827;
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid #1f2937;
+            max-width: 680px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+        .contribution-map {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+        .refresh-note {
+            text-align: center;
+            color: #4b5563;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+        .footer {
+            margin-top: 2rem;
+            color: #4b5563;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+        .footer a { color: #7c3aed; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+        @media (max-width: 480px) {
+            .map-container { padding: 0.75rem; border-radius: 12px; }
+            body { padding: 1rem 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ display_name }}</h1>
+        <p class="subtitle">{{ short_code }} · Phase: {{ phase_display }}</p>
+    </div>
+
+    <div class="map-container">
+        {{ svg_content | safe }}
+    </div>
+
+    <p class="refresh-note">Map v{{ map_version }} · Updates as you complete challenges</p>
+
+    <div class="footer">
+        <p>
+            <a href="/">About</a> ·
+            <a href="https://t.me/YourBotUsername">Talk to the bot</a> ·
+            contributiongraph.ai
+        </p>
+    </div>
+
+    <script>
+        // Auto-refresh map data every 30 seconds for live updates
+        async function refreshMap() {
+            try {
+                const res = await fetch(`/api/map/{{ short_code }}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    // Update version badge if changed
+                    document.querySelector('.subtitle') &&
+                        (document.querySelector('.subtitle').textContent =
+                            `{{ short_code }} · Phase: ${data.phase || '{{ phase_display }}'} · v${data.map_version}`);
+                }
+            } catch (e) {
+                // Silently ignore refresh errors
+            }
+        }
+        setInterval(refreshMap, 30000);
+    </script>
+</body>
+</html>
