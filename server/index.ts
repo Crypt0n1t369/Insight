@@ -114,6 +114,10 @@ async function callOpenRouter(messages: any[], model: string = OPENROUTER_MODEL,
         })
     });
 
+    if (response.status === 402) {
+        console.warn("OpenRouter: insufficient credits — demo mode active");
+        return null;
+    }
     if (!response.ok) {
         const errorData = await response.text();
         console.error(`OpenRouter API Error (${response.status}):`, errorData);
