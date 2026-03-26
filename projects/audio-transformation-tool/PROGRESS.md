@@ -1,5 +1,50 @@
 # PROGRESS.md - Audio Transformation Tool
-*Updated — 2026-03-25 21:30 Cairo*
+*Updated — 2026-03-26 02:05 Cairo (00:05 UTC)*
+
+---
+
+## 2026-03-26 02:05 UTC - Wakeup Session
+
+### Status: ✅ Operational / Demo Mode Active
+
+**All services healthy. Fixed log spam issue from 402 errors.**
+
+### What Was Verified This Session
+1. ✅ **Backend health** — `http://localhost:3001/health` → `{"status":"ok","openRouterLinked":true}`
+2. ✅ **9 protocols confirmed** — NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE (all return demo batches correctly)
+3. ✅ **Demo mode end-to-end** — `/api/meditation/generate` returns NSDR demo with clean warn log (no error spam)
+4. ✅ **Frontend** — `http://localhost:5173` → HTTP 200
+5. ✅ **Tests** — 68/68 passing (4 test files)
+6. ✅ **All services confirmed healthy:**
+   - Audio Tool Backend: 3001 ✅
+   - Credo API: 3000 ✅
+   - Youth Platform: 3003 ✅
+7. ✅ **Git** — Committed fix: `d348cd0` ("fix: return null on 402 credits error — demo mode triggers cleanly without error log spam")
+
+### 🔧 Fix Applied — Clean 402 Error Handling
+**Problem**: `callOpenRouter` was throwing on 402 (credits exhausted) rather than returning `null`, causing:
+- Error-level log spam (stack traces for every request)
+- Confusing error messages in `/tmp/audio-backend.log`
+
+**Solution**: Return `null` on 402 → demo mode fallback triggers cleanly:
+```typescript
+if (response.status === 402) {
+    console.warn("OpenRouter: insufficient credits — demo mode active");
+    return null;
+}
+```
+**Result**: `/tmp/audio-backend.log` now shows single WARN line instead of ERROR + stack trace per request.
+
+### ⚠️ BLOCKED — User Action Required
+1. **Deploy to Vercel** → vercel.com → import Crypt0n1t369/Insight → Deploy
+2. **Add OpenRouter credits** → credits exhausted; demo mode works but LLM features need credits
+
+### What's Next (Priority Order)
+1. **User deploys to Vercel** (P0 — user action needed)
+2. **Add OpenRouter credits** (P0 — user action needed)
+3. **Frontend source restoration** (P2 — only if frontend changes needed)
+4. **Merge upstream commit 8562fd2** (P2 — deferred; conflicts with demo mode)
+5. **Add remaining protocols** (P2 — GENERAL, TRAUMA_SAFE, BREATHWORK in protocols.ts but not CLINICAL_PROTOCOLS)
 
 ## Current Status (2026-03-25 21:30)
 
