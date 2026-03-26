@@ -60,3 +60,6 @@ server/*.js
 server/*.js.map
 server/*.d.ts
 server/*.d.ts.map
+
+# Backup files
+*.bak
