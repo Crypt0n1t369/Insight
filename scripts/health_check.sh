@@ -175,8 +175,8 @@ else
     SERVICES_LIST="${SERVICES_LIST}youth-platform(DOWN) "
 fi
 
-# Check Audio Frontend (5173)
-if curl -s -o /dev/null -w "%{http_code}" http://localhost:5173 2>/dev/null | grep -q "200"; then
+# Check Audio Frontend (3005)
+if curl -s -o /dev/null -w "%{http_code}" http://localhost:3005 2>/dev/null | grep -q "200"; then
     SERVICES_OK=$((SERVICES_OK + 1))
     SERVICES_LIST="${SERVICES_LIST}audio-frontend "
 else
