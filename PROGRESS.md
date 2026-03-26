@@ -1,5 +1,90 @@
 ---
 
+## 2026-03-26 18:58 Cairo (16:58 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ All Systems Verified — 62 CG Tests Passing, 7/7 Services Up, Git Clean
+
+### What I Did This Session
+
+**1. Full System Verification ✅**
+- **62/62 CG tests passing** (18 identity + 21 handlers + 23 web)
+- **7/7 services up:**
+  | Service | Port | Status |
+  |---------|------|--------|
+  | Credo API | 3000 | ✅ |
+  | Audio Backend | 3001 | ✅ (`openRouterLinked: true` but credits exhausted → demo mode) |
+  | Credo Frontend | 3002 | ✅ (HTTP 200, Next.js dev) |
+  | Youth Platform | 3003 | ✅ |
+  | Audio Frontend | 3005 | ✅ |
+  | CG Web | 3006 | ✅ SQLite store active |
+  | JCI Portal | 8080 | ✅ |
+- **Git workspace: clean** at `edd846b` ✅
+- **Audio submodule: properly synced** at `8562fd2` ✅
+
+**2. CG SQLite Store Integration Verified ✅**
+- Created test user, added signals, set comparative vector
+- Bot→Web sync correctly writes to shared `contribution_graph.db`
+- Map API correctly reads back stored signals and vectors
+
+**3. ⚠️ Worker-1 and Worker-2 Disabled — Isolated Session Issue**
+- **Root cause:** The Edit tool fails in isolated sessions, causing `sessions_spawn` runs to error after 2 attempts → auto-disabled
+- **Worker-3:** Still OK (has run successfully without Edit tool calls)
+- **Wakeup cron:** Continues to run but falls back to parent session (not isolated)
+- **Impact:** Only Worker-3 is processing background tasks; Workers 1 & 2 need manual re-enable or fix
+- **Status:** Known OpenClaw issue — Edit tool unavailable in `runtime="subagent"` isolated sessions
+
+**4. OpenRouter — Key Present but Credits Exhausted**
+- `OPENROUTER_API_KEY` is set in Audio Backend environment (`sk-or-v1-f67f1b...`)
+- `/api/meditation/generate` returns `"Demo mode — AI generation requires OPENROUTER_API_KEY with credits."`
+- Demo mode is working correctly (real batches returned)
+- **Fix:** User needs to add credits at openrouter.ai or the existing key may need replenishment
+
+### What's Left (CG — No External Deps)
+
+| Item | Status | Notes |
+|------|--------|-------|
+| AI synthesis module | Stubbed + enhanced | Template narratives with confidence buckets work well; needs OpenRouter credits for real LLM |
+| CG Telegram bot | ✅ Wired + syncing | Bot→Web sync to SQLite works correctly |
+| CG Web persistence | ✅ Done | SQLite store active |
+| CG Web → public URL | Blocked | Needs Vercel deployment |
+| CG Telegram → production | Blocked | Needs bot token + public URL |
+| CG PostgreSQL/Supabase | Optional | SQLite sufficient for Phase 0; Supabase for scale later |
+| Phase 0 validation | Blocked | Needs user paper prototype interviews |
+
+### ⚠️ System Issues Requiring Attention
+
+| Issue | Severity | Fix |
+|-------|----------|-----|
+| Worker-1 + Worker-2 disabled | Medium | OpenClaw Edit tool unavailable in isolated sessions — workers use Edit and get disabled after 2 failures |
+| Worker-3 OK | — | Continues to run background tasks |
+| OpenRouter credits exhausted | P0 | User action needed: add credits |
+| Audio submodule: untracked build artifacts | Low | `ontology/`, `projects/`, `*.js`, `*.map` in submodule working dir — normal dev state |
+
+### What's Next to Do (Priority Order)
+
+**Buildable right now:**
+- Nothing — all CG build items complete; remaining tasks need external deps
+
+**User Action Items (blocking all remaining work):**
+| Priority | Item | Blocker |
+|----------|------|---------|
+| P0 | Add OpenRouter credits (~$5-10) | Unblocks real AI meditation + CG synthesis |
+| P0 | Deploy CG Web to Vercel | Needs vercel.com import + env vars → gives public URL |
+| P0 | Deploy Audio Tool to Vercel | Public URL for Audio Tool + Telegram integration |
+| P1 | Add CG Telegram bot token | Connect bot to actual Telegram |
+| P1 | Review CG CONCEPT.md + PILOT.md | Phase 0 go/no-go + answer Q6, Q7, Q8 |
+| P1 | Re-enable Worker-1 and Worker-2 | Fix isolated session Edit tool issue or manually re-enable |
+| P2 | Add Telegram bot tokens | Youth Platform + Festival Coordinator Phase 2 |
+
+**Phase 0 Decisions Needed from User (from MEMORY_CONTEXT):**
+- Q6: Onboarding hook — first 5 minutes, specific challenge type + feedback
+- Q7: Most motivating perk for target demographic
+- Q8: Next event for Test 0.2 (festival/acquisition)
+
+*Session completed: 2026-03-26 16:58 UTC*
+
+---
+
 ## 2026-03-26 18:28 Cairo (16:28 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ Audio Submodule Synced, 62 CG Tests Passing, 7/7 Services Up, Git Pushed
