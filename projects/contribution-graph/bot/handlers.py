@@ -485,107 +485,352 @@ def _generate_mirror_summary(state: UserState) -> dict:
     }
 
 
-def _select_challenge(state: UserState) -> dict:
-    """
-    Select the most appropriate challenge based on the user's comparative vector.
-    Maps signal strengths to challenge types:
-    - Pattern recognition → creative challenges
-    - Initiative taking → action challenges
-    - Purpose clarity → meaning challenges
-    """
-    vector = state.comparative_vector
+# =============================================================================
+# CHALLENGE LIBRARY
+# =============================================================================
+# Expanded from DISCOVERY-FLOW-APPENDIX.md — Appendix D
+# Each challenge: id, category (impact/creative/business), type (meaning/action/creative),
+# title, description, duration_minutes, signal_targeted
+#
+# Selection logic: primary signal → category match; secondary signals → specific challenge within category
+# Track mapping: purpose_clarity→meaning/impact, initiative_taking→action/impact/business,
+#                pattern_recognition→creative, voice_authenticity→creative, contribution_drive→impact
 
-    # Default challenge (fallback)
-    default = {
-        "id": "meaningful_moment_001",
+CHALLENGE_LIBRARY = {
+    # ---------------------------------------------------------------------------
+    # IMPACT CHALLENGES (Track 1: Helping real people, community problems)
+    # Mapped to: contribution_drive (primary), purpose_clarity (secondary)
+    # ---------------------------------------------------------------------------
+    "impact_contribution_001": {
+        "id": "impact_contribution_001",
+        "category": "impact",
+        "type": "meaning",
+        "title": "Make One Thing for Someone Else",
+        "description": (
+            "Think of one person who's helped you or your community. "
+            "Spend 20-30 minutes making something for them — advice, a resource, "
+            "a thank-you note, a useful tool. Something concrete. "
+            "Send it or give it to them this week."
+        ),
+        "duration_minutes": 30,
+        "signal_targeted": "contribution_drive",
+    },
+    "impact_contribution_002": {
+        "id": "impact_contribution_002",
+        "category": "impact",
+        "type": "action",
+        "title": "The Observation Challenge",
+        "description": (
+            "Find one person in your life who's doing something difficult. "
+            "Don't solve it. Don't help. Just ask them one question that helps them see "
+            "their own situation more clearly. Report what happened — "
+            "not what their problem was, but what you noticed in the conversation."
+        ),
+        "duration_minutes": 25,
+        "signal_targeted": "contribution_drive",
+    },
+    "impact_contribution_003": {
+        "id": "impact_contribution_003",
+        "category": "impact",
+        "type": "action",
+        "title": "The Documentation Challenge",
+        "description": (
+            "There's an issue in your neighborhood, school, or community that you care about "
+            "but don't fully understand. Find one person who knows more about it than you. "
+            "Ask them three good questions. Write down not just what they said — "
+            "but what you noticed about how they said it. "
+            "What did you learn about the problem? What did you learn about them?"
+        ),
+        "duration_minutes": 45,
+        "signal_targeted": "contribution_drive",
+    },
+    "impact_purpose_001": {
+        "id": "impact_purpose_001",
+        "category": "impact",
+        "type": "meaning",
+        "title": "Find the Gap",
+        "description": (
+            "Think about something in your community, school, or workplace that "
+            "frustrates you — something that could be better. Don't solve it. "
+            "Just describe: what is it, who's affected, and why it matters. "
+            "One paragraph. Be specific."
+        ),
+        "duration_minutes": 15,
+        "signal_targeted": "purpose_clarity",
+    },
+    "impact_purpose_002": {
+        "id": "impact_purpose_002",
+        "category": "impact",
+        "type": "action",
+        "title": "The Prototyping Challenge",
+        "description": (
+            "Design one small thing that could make one person's life a little better this week. "
+            "It has to be something you could actually do in the next 7 days with no budget. "
+            "Do it. Report what happened — including if you didn't do it."
+        ),
+        "duration_minutes": 20,
+        "signal_targeted": "initiative_taking",
+    },
+    # ---------------------------------------------------------------------------
+    # CREATIVE CHALLENGES (Track 2: Making something from nothing, translation)
+    # Mapped to: pattern_recognition (primary), voice_authenticity (primary),
+    #             initiative_taking (secondary)
+    # ---------------------------------------------------------------------------
+    "creative_pattern_001": {
+        "id": "creative_pattern_001",
+        "category": "creative",
         "type": "creative",
+        "title": "Document a Pattern",
+        "description": (
+            "Think about an area of your work or life where you've noticed "
+            "something keeps showing up. Write down: what is the pattern? "
+            "When did you first notice it? What keeps driving it?"
+        ),
+        "duration_minutes": 20,
+        "signal_targeted": "pattern_recognition",
+    },
+    "creative_pattern_002": {
+        "id": "creative_pattern_002",
+        "category": "creative",
+        "type": "creative",
+        "title": "The Remix Challenge",
+        "description": (
+            "Find something that exists — a piece of information, a concept, a story, a dataset — "
+            "and remix it into something new. Give it a new context, a new audience, or a new format. "
+            "The remixed version has to reveal something the original didn't, "
+            "or make it matter to someone different. "
+            "Tell me what you started with, what you made, and why."
+        ),
+        "duration_minutes": 40,
+        "signal_targeted": "pattern_recognition",
+    },
+    "creative_pattern_003": {
+        "id": "creative_pattern_003",
+        "category": "creative",
+        "type": "creative",
+        "title": "The Translation Challenge",
+        "description": (
+            "Take something you know a lot about — a skill, a subject, a world you understand. "
+            "Now make something that helps a 14-year-old understand the single most important thing "
+            "about it. It can be a drawing, a meme, a short video, a one-page comic, a metaphor — "
+            "anything except just explaining it in plain language. "
+            "Make the thing. Show me."
+        ),
+        "duration_minutes": 35,
+        "signal_targeted": "voice_authenticity",
+    },
+    "creative_voice_001": {
+        "id": "creative_voice_001",
+        "category": "creative",
+        "type": "creative",
+        "title": "Speak in Your Own Voice",
+        "description": (
+            "Write 300 words about something you care about — not for anyone else, "
+            "not polished. Just your actual voice. Then share it with one person "
+            "you trust and ask them what they hear."
+        ),
+        "duration_minutes": 35,
+        "signal_targeted": "voice_authenticity",
+    },
+    "creative_voice_002": {
+        "id": "creative_voice_002",
+        "category": "creative",
+        "type": "creative",
+        "title": "The Uncomfortable Truth Challenge",
+        "description": (
+            "What's something you believe that most people around you probably wouldn't agree with? "
+            "Now make something — a post, a meme, a short video, a drawing — "
+            "that expresses that belief in a way that might actually make someone reconsider. "
+            "Not attack their views. Just plant a seed. "
+            "Make the thing. Share it somewhere. Report what happened."
+        ),
+        "duration_minutes": 45,
+        "signal_targeted": "voice_authenticity",
+        "requires_comfort_with_disagreement": True,  # Guard: only offer if user showed openness
+    },
+    "creative_initiative_001": {
+        "id": "creative_initiative_001",
+        "category": "creative",
+        "type": "action",
         "title": "Capture a Meaningful Moment",
         "description": (
             "Take 20 minutes to write down, sketch, or record one specific moment "
             "from the last month where you felt like you were doing exactly what "
-            "you were meant to do. Be as concrete as possible — what was happening, "
-            "who was there, what did you make or do?"
+            "you were meant to do. Be as concrete as possible — "
+            "what was happening, who was there, what did you make or do?"
         ),
         "duration_minutes": 25,
         "signal_targeted": "voice_authenticity",
+    },
+    # ---------------------------------------------------------------------------
+    # BUSINESS CHALLENGES (Track 3: Commercial problems, real-world action)
+    # Mapped to: initiative_taking (primary), purpose_clarity (secondary)
+    # ---------------------------------------------------------------------------
+    "business_initiative_001": {
+        "id": "business_initiative_001",
+        "category": "business",
+        "type": "action",
+        "title": "Start Before You're Ready",
+        "description": (
+            "Identify one thing you've been putting off. "
+            "Spend 20 minutes just getting started — even 10% of the way. "
+            "Don't finish it. Just begin."
+        ),
+        "duration_minutes": 20,
+        "signal_targeted": "initiative_taking",
+    },
+    "business_initiative_002": {
+        "id": "business_initiative_002",
+        "category": "business",
+        "type": "action",
+        "title": "The Sales Challenge",
+        "description": (
+            "Find one person who might be interested in something you could offer — "
+            "not something you're selling, just something you'd be willing to do. "
+            "It could be a skill, a help, a favor, a small service. "
+            "Approach them. Have a real conversation about it. Don't pitch. Listen first. "
+            "See if there's a fit. Report what happened — including if there wasn't."
+        ),
+        "duration_minutes": 30,
+        "signal_targeted": "initiative_taking",
+    },
+    "business_purpose_001": {
+        "id": "business_purpose_001",
+        "category": "business",
+        "type": "meaning",
+        "title": "Map Your Values in Action",
+        "description": (
+            "List 3 concrete moments in the last month where your actions matched "
+            "what you actually care about. For each: what did you do, and why did it matter?"
+        ),
+        "duration_minutes": 20,
+        "signal_targeted": "purpose_clarity",
+    },
+    "business_purpose_002": {
+        "id": "business_purpose_002",
+        "category": "business",
+        "type": "meaning",
+        "title": "The Intelligence Challenge",
+        "description": (
+            "Think of a local business you interact with regularly — a shop, a café, a service. "
+            "Pretend you're advising them for free. "
+            "What's one thing they're doing really well that they probably don't realize "
+            "is their competitive advantage? "
+            "And what's one thing they should change that would make a meaningful difference "
+            "to their business in the next 3 months? "
+            "Write a one-page brief. (You're not going to give it to them unless you want to.)"
+        ),
+        "duration_minutes": 40,
+        "signal_targeted": "purpose_clarity",
+    },
+    "business_pattern_001": {
+        "id": "business_pattern_001",
+        "category": "business",
+        "type": "action",
+        "title": "The Problem Decomposition Challenge",
+        "description": (
+            "Pick a business problem you've heard about — from a friend who runs a business, "
+            "something you read about a company, or something you observed. "
+            "It has to be a problem involving more than one person or more than one step to solve. "
+            "Now: break it down. What are the 3 most important causes? "
+            "What's the one thing that, if fixed, would make everything else easier? "
+            "And what's the one thing almost everyone gets wrong about this problem? "
+            "Write it up in a way that would help someone who actually has this problem."
+        ),
+        "duration_minutes": 45,
+        "signal_targeted": "pattern_recognition",
+    },
+}
+
+
+def _select_challenge(state: UserState) -> dict:
+    """
+    Select the most appropriate challenge based on the user's comparative vector.
+    
+    Selection strategy:
+    1. If user has chosen a track (state.track), select from that track
+    2. Otherwise, use signal type → category mapping:
+       - contribution_drive → impact
+       - purpose_clarity → business or impact
+       - initiative_taking → business or creative
+       - pattern_recognition → creative
+       - voice_authenticity → creative
+    3. Within the chosen category, pick the challenge that best matches
+       the secondary signal (or primary if unambiguous)
+    
+    Falls back to a sensible default if no vector is available.
+    """
+    vector = state.comparative_vector
+
+    # Build lookup: category → list of challenge ids in that category
+    by_category: dict[str, list[dict]] = {}
+    for ch in CHALLENGE_LIBRARY.values():
+        cat = ch["category"]
+        by_category.setdefault(cat, []).append(ch)
+
+    # Signal type → primary category mapping
+    sig_to_category = {
+        "contribution_drive": "impact",
+        "purpose_clarity": "business",   # business is more structured; purpose clarity → real-world application
+        "initiative_taking": "business",
+        "pattern_recognition": "creative",
+        "voice_authenticity": "creative",
     }
 
     if not vector:
-        return default
+        # No vector: return the first impact challenge as a safe default
+        return by_category.get("impact", list(CHALLENGE_LIBRARY.values()))[0]
 
-    # Find highest-scoring signal
-    top = max(vector.items(), key=lambda x: x[1])
-    sig_type = top[0]
+    # Sort signals by confidence descending
+    sorted_sigs = sorted(vector.items(), key=lambda x: x[1], reverse=True)
+    primary_sig = sorted_sigs[0][0] if sorted_sigs else None
+    secondary_sig = sorted_sigs[1][0] if len(sorted_sigs) > 1 else None
 
-    challenges = {
-        "purpose_clarity": {
-            "id": "values_experience_001",
-            "type": "meaning",
-            "title": "Map Your Values in Action",
-            "description": (
-                "List 3 concrete moments in the last month where your actions matched "
-                "what you actually care about. For each: what did you do, and why did it matter?"
-            ),
-            "duration_minutes": 20,
-            "signal_targeted": "purpose_clarity",
-        },
-        "initiative_taking": {
-            "id": "start_something_001",
-            "type": "action",
-            "title": "Start Before You're Ready",
-            "description": (
-                "Identify one thing you've been putting off. Spend 20 minutes just "
-                "getting started — even 10% of the way. Don't finish it. Just begin."
-            ),
-            "duration_minutes": 20,
-            "signal_targeted": "initiative_taking",
-        },
-        "pattern_recognition": {
-            "id": "pattern_capture_001",
-            "type": "creative",
-            "title": "Document a Pattern",
-            "description": (
-                "Think about an area of your work or life where you've noticed "
-                "something keeps showing up. Write down: what is the pattern? "
-                "When did you first notice it? What keeps driving it?"
-            ),
-            "duration_minutes": 20,
-            "signal_targeted": "pattern_recognition",
-        },
-        "voice_authenticity": {
-            "id": "authentic_expression_001",
-            "type": "creative",
-            "title": "Speak in Your Own Voice",
-            "description": (
-                "Write 300 words about something you care about — not for anyone else, "
-                "not polished. Just your actual voice. Then share it with one person "
-                "you trust and ask them what they hear."
-            ),
-            "duration_minutes": 35,
-            "signal_targeted": "voice_authenticity",
-        },
-        "contribution_drive": {
-            "id": "contribution_001",
-            "type": "meaning",
-            "title": "Make One Thing for Someone Else",
-            "description": (
-                "Think of one person who's helped you or your community. "
-                "Spend 20-30 minutes making something for them — advice, a resource, "
-                "a thank-you note, a useful tool. Something concrete."
-            ),
-            "duration_minutes": 30,
-            "signal_targeted": "contribution_drive",
-        },
-    }
+    # Use signal → category mapping
+    primary_cat = sig_to_category.get(primary_sig)
+    
+    def pick_from_category(cat: str, preferred_sig: Optional[str] = None) -> dict:
+        """Pick a challenge from a category, preferring the given signal."""
+        candidates = by_category.get(cat, [])
+        if preferred_sig:
+            for c in candidates:
+                if c["signal_targeted"] == preferred_sig:
+                    return c
+        if candidates:
+            return candidates[0]
+        # Fallback: return first challenge in any category
+        return list(CHALLENGE_LIBRARY.values())[0]
 
-    return challenges.get(sig_type, default)
+    if primary_cat:
+        result = pick_from_category(primary_cat, primary_sig)
+        # If primary_cat has no good match for this sig, also check secondary
+        if result["signal_targeted"] != primary_sig and secondary_sig:
+            secondary_cat = sig_to_category.get(secondary_sig)
+            if secondary_cat and secondary_cat != primary_cat:
+                secondary_result = pick_from_category(secondary_cat, secondary_sig)
+                # Prefer whichever challenge has the higher signal score
+                primary_score = vector.get(primary_sig, 0)
+                secondary_score = vector.get(secondary_sig, 0)
+                if secondary_score >= primary_score * 0.8:  # Within 80% of top → use secondary
+                    result = secondary_result
+        return result
+
+    # Ultimate fallback
+    return list(CHALLENGE_LIBRARY.values())[0]
 
 
 def _format_challenge(challenge: dict) -> str:
     """Format a challenge dict as a readable message"""
     emoji = {"creative": "🎨", "action": "⚡", "meaning": "🌱"}.get(challenge.get("type", ""), "→")
+    track_label = {
+        "impact": "🎯 Impact",
+        "creative": "🎨 Creative",
+        "business": "💼 Business",
+    }.get(challenge.get("category", ""), "")
+    track_line = f"{track_label} track\n\n" if track_label else ""
     return (
         f"{emoji} *{challenge['title']}*\n\n"
+        f"{track_line}"
         f"{challenge['description']}\n\n"
         f"⏱️ Estimated time: {challenge.get('duration_minutes', 20)} minutes"
     )

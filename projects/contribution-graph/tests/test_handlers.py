@@ -176,7 +176,8 @@ class TestChallengeSelection:
     def test_fallback_for_empty_vector(self):
         state = UserState(telegram_user_id=123)
         challenge = _select_challenge(state)
-        assert challenge["id"] == "meaningful_moment_001"  # Default
+        # Default is first impact challenge when no vector available
+        assert challenge["category"] == "impact"
 
 
 class TestUserStateHelpers:

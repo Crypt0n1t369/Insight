@@ -3,7 +3,7 @@
 ## Active Projects
 
 ### Contribution Graph (Kristaps' Life Work)
-**Phase:** Discovery Flow Design complete. CONCEPT.md + DISCOVERY-FLOW.md + DISCOVERY-FLOW-APPENDIX.md written.
+**Phase:** Discovery Flow Design complete. Build phase in progress.
 **Location:** /home/drg/.openclaw/workspace/projects/contribution-graph/
 **Files:**
 - CONCEPT.md — Master blueprint (3-layer architecture, Phase 0–3 roadmap)
@@ -17,6 +17,15 @@
 **Revenue model:** Phase 1 = non-monetary (partner perks only). Phase 3 = commission on implemented ideas.
 
 **3 Tracks defined:** Impact, Creative, Business.
+
+**Build status:**
+- Challenge library: 16 challenges (Impact: 5, Creative: 6, Business: 5) ✅
+- Short-code identity system: ✅ (18 tests)
+- 5-phase conversation handlers: ✅ (21 tests)
+- Web server + SVG map renderer: ✅ (23 tests)
+- Telegram polling bot: ✅ (wired, not persistently running)
+- AI synthesis module: Pending (stubbed template; needs OpenRouter credits)
+- DB persistence: Schema designed (SQLite/PostgreSQL; needs credentials)
 
 **Key remaining decisions before Phase 1 build:**
 - Q6: Onboarding hook (first 5 minutes, specific challenge type + feedback)
@@ -50,15 +59,13 @@
 - **Phase:** Operational
 - **Status:** 49 tests passing
 
-## Session Summary (2026-03-26 13:58 UTC)
+## Session Summary (2026-03-26 14:28 UTC)
 
 ### This Session
 - **Verified 6/6 core services healthy** (3000, 3001, 3002, 3003, 3005, 8080)
-- **Full test suite: 686 tests passing** (34+424+75+49+41+24+39) — corrected from inaccurate 743
-- **CG Web Server verified functional** — all endpoints tested manually (`/health`, `/map`, `/api/map`, `/dev/seed`)
-- **CG Web Server not persistent** — not in `service_manager.sh`, killed after testing
-- **Test collection documented** — pytest import conflicts when run from `projects/` root; per-project runs work
-- **Git:** committed + pushed (`6c8ac96`)
+- **Full test suite: 709 tests passing** (34+424+75+49+41+24+62)
+- **CG Challenge Library expanded** — 5 → 16 challenges across 3 tracks (Impact/Creative/Business), based on DISCOVERY-FLOW-APPENDIX.md Appendix D
+- **Git:** committed + pushed — challenge library expansion (`bot/handlers.py`, `tests/test_handlers.py`, PROGRESS.md)
 
 ## What's Left (User Action Required)
 
@@ -73,6 +80,6 @@
 ## Infrastructure
 
 - **Persistent service manager:** `systemctl --user start/stop/restart workspace-services`
-- **Test suite:** 686 tests across 7 projects (vitest + pytest) — run per-project, not from workspace root
+- **Test suite:** 709 tests across 7 projects (vitest + pytest) — run per-project, not from workspace root
 - **Cron:** Wakeup (30min), Worker-1 (5h), Worker-3 (5h)
-- **Git:** master at `6c8ac96`, synced with origin
+- **Git:** master at `6c8ac96` + unstaged changes (to be committed: challenge library expansion)

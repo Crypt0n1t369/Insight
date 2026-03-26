@@ -1,5 +1,34 @@
 ---
 
+## 2026-03-26 16:28 Cairo (14:28 UTC) — Challenge Library Expansion
+
+### Status: ✅ Challenge Library Expanded 5 → 16 Challenges
+
+**What Was Built:**
+- Added 11 new challenges to `bot/handlers.py` — from 5 to 16 total
+- Based on DISCOVERY-FLOW-APPENDIX.md — Appendix D: Phase 5 Challenge Options
+- Challenges organized in 3 tracks: Impact (5), Creative (6), Business (5)
+- Each challenge: `id`, `category` (impact/creative/business), `type` (meaning/action/creative), `title`, `description`, `duration_minutes`, `signal_targeted`
+- Selection logic updated: considers both primary AND secondary signal scores (uses secondary if within 80% of primary)
+- Track label added to challenge formatting (🎯 Impact, 🎨 Creative, 💼 Business)
+- Default fallback: `impact_contribution_001` (first impact challenge when no vector available)
+- Test updated: `test_fallback_for_empty_vector` now asserts category=impact
+
+**Challenge Library Structure:**
+| Category | Challenges | Signal Targeted |
+|----------|-----------|-----------------|
+| Impact | 5 | contribution_drive, purpose_clarity |
+| Creative | 6 | pattern_recognition, voice_authenticity, initiative |
+| Business | 5 | initiative_taking, purpose_clarity, pattern_recognition |
+
+**Files Changed:**
+- `bot/handlers.py`: +330 lines (CHALLENGE_LIBRARY + updated `_select_challenge`)
+- `tests/test_handlers.py`: 1 line fixed (test assertion)
+
+**Tests:** 62 passing (21 handler + 18 identity + 23 web) ✅
+
+---
+
 ## 2026-03-26 (14:00 Cairo) — Contribution Graph Build Kickoff
 
 ### Status: ✅ Phase 0 Design Complete — Build Phase Started
@@ -54,11 +83,11 @@ Total new tests this session: 39 (18 identity + 21 handlers) ✅ All passing
 **High Priority — Can be done without user action:**
 1. **Database integration** — Connect `db/schema.sql` to Supabase/PostgreSQL
 2. **Telegram bot integration** — Wire `bot/handlers.py` to actual Telegram API
-3. **Web map page** — Implement `contributiongraph.ai/map/{short_code}` 
+3. **Web map page** — Implement `contributiongraph.ai/map/{short_code}` ✅
 4. **User state persistence** — Save/restore `UserState` to database between sessions
-5. **Short-code rate limiter** — Implement 3 attempts/min per IP enforcement
-6. **Comparative vector computation** — AI-powered signal → vector mapping
-7. **Challenge library** — Expand from 5 challenges to full library
+5. **Short-code rate limiter** — Implement 3 attempts/min per IP enforcement ✅
+6. **Comparative vector computation** — AI-powered signal → vector mapping (stubbed, needs OpenRouter credits)
+7. **Challenge library** — Expand from 5 to 16 challenges ✅
 
 **Blocked on User Action (Phase 0 Validation):**
 - Run Test 0.1: Paper prototype + 10 interviews
