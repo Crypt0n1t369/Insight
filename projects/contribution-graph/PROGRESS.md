@@ -67,6 +67,54 @@ Total new tests this session: 39 (18 identity + 21 handlers) ✅ All passing
 
 ---
 
+### 2026-03-26 15:28 Cairo (13:28 UTC) — Web Server + Telegram Polling Built ✅
+
+**Status: 62 tests passing (was 39) — Added 23 new web server tests**
+
+**What Was Built This Session:**
+
+| Component | File | Tests | Status |
+|-----------|------|-------|--------|
+| Flask Web Server | web/server.py | 6 | ✅ |
+| SVG Map Renderer | web/map_renderer.py | 2 | ✅ |
+| In-Memory Store | web/store.py | 5 | ✅ |
+| Short-Code Rate Limiter | web/rate_limiter.py | 4 | ✅ |
+| Telegram Polling Bot | bot/polling.py | — | ✅ |
+| Handler bugfix | bot/handlers.py | — | ✅ |
+
+**New Endpoints:**
+- `GET /map/<short_code>` — Public contribution map page (SVG visualization)
+- `GET /api/map/<short_code>` — JSON API for map data
+- `GET /health` — Health check
+- `GET /dev/seed/<telegram_user_id>` — Dev-only test user seeding
+
+**New Running Capabilities:**
+- `python -m web.server` — Flask web server (port 3006 by default)
+- `python -m bot.polling` — Telegram polling bot (requires `TELEGRAM_BOT_TOKEN` env var)
+- `CG_WEB_PORT=3006 python -m web.server` — Custom port
+
+**Web Map Features:**
+- Animated SVG contribution map with signal strength bars
+- Phase badge, challenge history, comparative vector display
+- Rate-limited short-code lookup (3 attempts/min per IP)
+- Responsive design, dark theme
+- Live map data auto-refresh every 30 seconds
+
+**Telegram Bot Features:**
+- Long-polling via `getUpdates` (offset-based)
+- Persistent user state across restarts (JSON file)
+- Full 5-phase conversation flow wired up
+- Reply markup with quick-reply buttons per phase
+- Graceful shutdown on SIGINT/SIGTERM
+
+**Bug Fixed:**
+- `handle_phase_new` was referenced in handlers dict but undefined → added function
+
+**Total Tests: 62 passing (23 new web tests)**
+- db/test_identity.py: 18 passing
+- tests/test_handlers.py: 21 passing
+- web/test_web.py: 23 passing (new)
+
 ## History
 
 ### 2026-03-26 Morning Sessions — Phase 0 Design
