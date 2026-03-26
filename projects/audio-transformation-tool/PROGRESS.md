@@ -1,5 +1,73 @@
 # PROGRESS.md - Audio Transformation Tool
-*Updated — 2026-03-26 18:10 Cairo (16:10 UTC)*
+*Updated — 2026-03-26 20:45 Cairo (18:45 UTC)*
+
+---
+
+## 2026-03-26 18:45 UTC - Wakeup Session
+
+### Status: ✅ Backend Demo Mode Fixed / Submodule Synced / 34 Tests Passing
+
+**Discovered backend returning 500 instead of demo data after server restart. Fixed demo mode fallback in `code/server/index.ts`.**
+
+### What Was Done This Session
+1. **Backend demo mode fixed** — Added `DEMO_BATCHES` constant with 9 protocol-specific fallback scripts to `code/server/index.ts`. Modified `/api/meditation/generate` catch block to return demo batches gracefully.
+2. **Chat fallback improved** — `/api/chat` now returns `meditationData` in fallback response.
+3. **Server selection** — Workspace root `server/` (34 tests, all endpoints) runs on 3001; `code/server` is the development source (needs additional work for full parity).
+4. **Submodule synced** — `code/` now at `d348cd0` (fork/main), parent repo updated.
+5. **Git committed & pushed** — `53abff7` in parent, submodule at `d348cd0`.
+
+### Runtime
+- Backend: `workspace/server/` on port 3001 ✅
+- Frontend: Vite preview on port 3005 ✅
+- Tests: 34/34 vitest passing ✅
+
+---
+
+## 2026-03-26 18:10 UTC - Wakeup Session
+
+### Status: ✅ Frontend Build Fixed / Frontend Rebuilt / All 34 Tests Passing
+
+**Fixed two bad imports that prevented the frontend from building.**
+
+### What Was Done This Session
+1. ✅ **Frontend build fix** — `LoadingGeneration.tsx` and `types.ts` imported `CLINICAL_PROTOCOLS` from `server/protocols` (backend module) instead of `services/protocols` (frontend service)
+2. ✅ **Frontend rebuilt** — New build succeeds: `dist/assets/index-CaW7blR8.js` (825KB)
+3. ✅ **Frontend restarted** — Running on port 3005 with freshly built assets
+4. ✅ **All tests pass** — 34 vitest tests (audio), 21 pytest tests (contribution-graph)
+5. ✅ **Git committed** — `655746a` in `code/` submodule
+
+### Services Status (All Running)
+| Component | Port | Status |
+|-----------|------|--------|
+| Audio Backend | 3001 | ✅ Running (demo mode) |
+| Audio Frontend | 3005 | ✅ Running (newly built) |
+| Credo API | 3000 | ✅ Running |
+| Credo Platform | 3002 | ✅ Running (Next.js) |
+| Youth Platform | 3003 | ✅ Running |
+| Contribution Graph Web | 3006 | ✅ Running (Flask) |
+| JCI Portal | 8080 | ✅ Running |
+
+### 🔧 Fix Applied — Corrected Import Paths
+**Problem**: Frontend TypeScript files imported `CLINICAL_PROTOCOLS` from the backend `server/` module:
+- `components/LoadingGeneration.tsx` → `import from '../server/protocols'`
+- `types.ts` → `import from './server/protocols.js'`
+
+**Solution**: Both now import from the frontend-compatible `services/protocols.ts`:
+```typescript
+import { CLINICAL_PROTOCOLS } from '../services/protocols';
+```
+
+### ⚠️ BLOCKED — User Action Required
+1. **Deploy to Vercel** → vercel.com → import Crypt0n1t369/Insight → Deploy
+2. **Add OpenRouter credits** → credits exhausted; demo mode works but LLM features need credits
+3. **Telegram bot token** → `TELEGRAM_BOT_TOKEN` env var needed for contribution-graph bot
+
+### What's Next (Priority Order)
+1. **User deploys to Vercel** (P0 — user action needed)
+2. **Add OpenRouter credits** (P0 — user action needed)
+3. **Set TELEGRAM_BOT_TOKEN** for contribution-graph Telegram bot (P0 — user action needed)
+4. **Browser test** — verify full user flow in real browser
+5. **Add remaining protocols** — GENERAL, TRAUMA_SAFE, BREATHWORK (in protocols.ts but not in CLINICAL_PROTOCOLS)
 
 ---
 

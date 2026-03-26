@@ -1,5 +1,53 @@
 ---
 
+## 2026-03-26 20:45 Cairo (18:45 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ Audio Backend Demo Mode Fixed / All 34 Tests Pass / All Services Up
+
+**Found audio backend returning 500 on OpenRouter exhaustion. Fixed demo mode fallback, synced submodule, all tests green.**
+
+### What Was Done
+1. **Identified issue** — After restart, audio backend (`code/server`) returned `{"error": "Failed to create meditation."}` instead of demo batches
+2. **Fixed demo mode** — Added `DEMO_BATCHES` constant to `code/server/index.ts` with 9 protocol-specific fallback scripts; modified `/api/meditation/generate` catch block to return demo data with proper error message
+3. **Fixed `/api/chat` fallback** — Now includes `meditationData` in fallback response
+4. **Restored workspace root server** — `server/` (not `code/server`) runs on 3001 because it has all endpoints including `/api/protocols` and full test coverage (34 tests)
+5. **Submodule synced** — `audio-transformation-tool/code` now at `d348cd0` (demo mode, 402 fix) — parent repo updated and pushed
+6. **Verified all tests** — 34 vitest (audio) ✅ | 424 vitest (synthesis) ✅ | 75 vitest (credo) ✅ | 62 pytest (CG) ✅ | 49 pytest (festival) ✅
+
+### Services: 7/7 Running
+- Audio Backend (3001) ✅ | Audio Frontend (3005) ✅ | Credo API (3000) ✅
+- Credo Platform (3002) ✅ | Youth Platform (3003) ✅ | CG Web (3006) ✅ | JCI Portal (8080) ✅
+
+### BLOCKED (user action needed)
+
+**[See BACKLOG.md]** — All code items are done or blocked on external secrets/deployment. No P0/P1 build work pending.
+
+---
+
+## 2026-03-26 20:10 Cairo (18:10 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ Audio Frontend Build Fixed / All Services Up
+
+**Fixed frontend build (was broken due to wrong import path), rebuilt and restarted.**
+
+### What Was Done
+1. **Frontend build fix** — `LoadingGeneration.tsx` and `types.ts` imported from `server/protocols` (backend) instead of `services/protocols` (frontend). Fixed both imports.
+2. **Frontend rebuilt** — Vite build now succeeds, new assets in `dist/`
+3. **Frontend restarted** — Port 3005 serving freshly built frontend
+4. **All tests pass** — 34 vitest (audio), 21 pytest (contribution-graph CG)
+5. **Git committed** — `655746a` in `code/` submodule
+
+### Services: 7/7 Running
+- Audio Backend (3001) ✅ | Audio Frontend (3005) ✅ | Credo API (3000) ✅
+- Credo Platform (3002) ✅ | Youth Platform (3003) ✅ | CG Web (3006) ✅ | JCI Portal (8080) ✅
+
+### BLOCKED (user action needed)
+- Vercel deploy for audio tool
+- OpenRouter credits
+- Telegram bot token for CG bot
+
+---
+
 ## 2026-03-26 19:28 Cairo (17:28 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ CG Challenge Library Expanded 16→18, 62 CG Tests Passing, 7/7 Services Up, Git Pushed
