@@ -25,7 +25,7 @@ SPECS/
 
 1. **Router Agent** — ✅ Implemented (61 tests)
 2. **Knowledge Graph** — ✅ Implemented (36 tests)
-3. **Specialist Agents** — ✅ All 6 implemented (172 tests): WOOP, IFS, NSDR, BREATHWORK, SE, ACT
+3. **Specialist Agents** — ✅ All 7 implemented (224 tests): WOOP, IFS, NSDR, BREATHWORK, SE, ACT, NVC
 4. **Credibility Engine** — ✅ Implemented (71 tests)
 
 ## References
