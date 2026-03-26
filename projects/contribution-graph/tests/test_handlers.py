@@ -179,6 +179,44 @@ class TestChallengeSelection:
         # Default is first impact challenge when no vector available
         assert challenge["category"] == "impact"
 
+    def test_selects_purpose_clarity_challenge(self):
+        state = UserState(telegram_user_id=123)
+        state.signals = [
+            ConversationSignal(SignalType.PURPOSE_CLARITY, {"text": "a"}, 0.88, "q1"),
+            ConversationSignal(SignalType.VOICE_AUTHENTICITY, {"text": "b"}, 0.4, "q2"),
+        ]
+        challenge = _select_challenge(state)
+        assert challenge["signal_targeted"] == "purpose_clarity"
+
+    def test_selects_contribution_drive_challenge(self):
+        state = UserState(telegram_user_id=123)
+        state.signals = [
+            ConversationSignal(SignalType.CONTRIBUTION_DRIVE, {"text": "a"}, 0.82, "q1"),
+            ConversationSignal(SignalType.INITIATIVE_TAKING, {"text": "b"}, 0.4, "q2"),
+        ]
+        challenge = _select_challenge(state)
+        assert challenge["signal_targeted"] == "contribution_drive"
+
+    def test_selects_voice_authenticity_challenge(self):
+        state = UserState(telegram_user_id=123)
+        state.signals = [
+            ConversationSignal(SignalType.VOICE_AUTHENTICITY, {"text": "a"}, 0.91, "q1"),
+            ConversationSignal(SignalType.PATTERN_RECOGNITION, {"text": "b"}, 0.4, "q2"),
+        ]
+        challenge = _select_challenge(state)
+        assert challenge["signal_targeted"] == "voice_authenticity"
+
+    def test_highest_confidence_wins_among_tied_signals(self):
+        state = UserState(telegram_user_id=123)
+        state.signals = [
+            ConversationSignal(SignalType.PURPOSE_CLARITY, {"text": "a"}, 0.70, "q1"),
+            ConversationSignal(SignalType.CONTRIBUTION_DRIVE, {"text": "b"}, 0.75, "q2"),
+            ConversationSignal(SignalType.VOICE_AUTHENTICITY, {"text": "c"}, 0.60, "q3"),
+        ]
+        challenge = _select_challenge(state)
+        # contribution_drive has highest confidence at 0.75
+        assert challenge["signal_targeted"] == "contribution_drive"
+
 
 class TestUserStateHelpers:
     """Test UserState computed properties"""
