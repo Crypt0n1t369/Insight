@@ -12,6 +12,14 @@ from bot.handlers import (
     handle_phase_3_evidence,
     handle_phase_4_mirror,
     handle_phase_5_first_stretch,
+    handle_phase_new,
+    handle_phase_completed,
+    handle_challenge_completion,
+    handle_start,
+    handle_map,
+    handle_continue,
+    handle_notifications,
+    handle_help,
     _assess_confidence,
     _generate_mirror_summary,
     _select_challenge,
@@ -356,3 +364,153 @@ class TestUserStateHelpers:
         assert not state.is_resumable
         state.phase = Phase.COMPLETED
         assert not state.is_resumable
+
+
+class TestCommandHandlers:
+    """Test /command handlers that are independent of async Telegram flow"""
+
+    def test_handle_start_resets_state(self, fresh_state):
+        """Fresh start resets signals, mirror_summary, challenge, and quick_replies"""
+        # Pre-populate state to verify reset
+        fresh_state.phase = Phase.PHASE_4_MIRROR
+        fresh_state.signals.append(ConversationSignal(
+            signal_type=SignalType.PURPOSE_CLARITY,
+            value="something",
+            confidence=0.8,
+            question_id="p1"
+        ))
+        fresh_state.mirror_summary = "old summary"
+        fresh_state.chosen_challenge = {"id": "some_challenge"}
+        fresh_state.quick_replies = ["old reply"]
+
+        response = handle_start(fresh_state)
+
+        assert fresh_state.phase == Phase.PHASE_1_OPENING
+        assert len(fresh_state.signals) == 0
+        assert fresh_state.mirror_summary is None
+        assert fresh_state.chosen_challenge is None
+        assert fresh_state.quick_replies == []
+
+    def test_handle_start_returns_opening_question(self, fresh_state):
+        response = handle_start(fresh_state)
+        # Should return the Phase 1 opening question
+        assert len(response) > 20
+
+    def test_handle_map_prompts_new_user(self, fresh_state):
+        """NEW users haven't started — should prompt to begin"""
+        fresh_state.phase = Phase.NEW
+        response = handle_map(fresh_state)
+        assert "haven't started" in response.lower() or "begin" in response.lower()
+
+    def test_handle_map_returns_url_for_active_user(self, fresh_state):
+        """Active users get their map URL"""
+        fresh_state.phase = Phase.PHASE_3_EVIDENCE
+        response = handle_map(fresh_state)
+        assert "map" in response.lower()
+        assert "contributiongraph.ai" in response or "/map/" in response
+
+    def test_handle_continue_restarts_completed_user(self, fresh_state):
+        """COMPLETED users who /continue get a fresh start (Phase 1 opening)"""
+        fresh_state.phase = Phase.COMPLETED
+        response = handle_continue(fresh_state)
+        # COMPLETED.is_resumable = False, so /continue → handle_start → Phase 1
+        assert fresh_state.phase == Phase.PHASE_1_OPENING
+        assert len(response) > 0
+
+    def test_handle_continue_prompts_new_user(self, fresh_state):
+        """NEW users should be prompted to start"""
+        fresh_state.phase = Phase.NEW
+        response = handle_continue(fresh_state)
+        assert len(response) > 0
+
+    def test_handle_continue_resumes_in_progress_user(self, fresh_state):
+        """In-progress users should get a resume message"""
+        fresh_state.phase = Phase.PHASE_3_EVIDENCE
+        response = handle_continue(fresh_state)
+        assert len(response) > 0
+        # Should not say "map" for in-progress users
+        assert "map" not in response.lower()
+
+    def test_handle_notifications_returns_info(self, fresh_state):
+        response = handle_notifications(fresh_state)
+        assert len(response) > 0
+
+    def test_handle_help_returns_info(self, fresh_state):
+        response = handle_help(fresh_state)
+        assert len(response) > 0
+        assert "/" in response  # Help should list commands
+
+
+class TestPhaseNew:
+    """Test handle_phase_new — entry point for users who type without /start"""
+
+    @pytest.mark.asyncio
+    async def test_phase_new_redirects_to_phase_1(self, fresh_state):
+        fresh_state.phase = Phase.NEW
+        response = await handle_phase_new("I want to discover my contribution pattern", fresh_state)
+        assert fresh_state.phase == Phase.PHASE_1_OPENING
+        assert len(response) > 0
+
+
+class TestChallengeCompletion:
+    """Test challenge completion flow (Phase 5 response after choosing a challenge)"""
+
+    @pytest.mark.asyncio
+    async def test_completion_sets_phase_to_completed(self, fresh_state):
+        fresh_state.phase = Phase.PHASE_5_FIRST_STRETCH
+        fresh_state.chosen_challenge = {"id": "business_initiative_001", "title": "Test Challenge"}
+        fresh_state.telegram_user_id = 999
+
+        response = await handle_challenge_completion(
+            "I did it — I spent 20 minutes getting started on my project",
+            fresh_state
+        )
+
+        assert fresh_state.phase == Phase.COMPLETED
+        assert "map" in response.lower()
+
+    @pytest.mark.asyncio
+    async def test_completion_appends_challenge_completion_signal(self, fresh_state):
+        fresh_state.phase = Phase.PHASE_5_FIRST_STRETCH
+        fresh_state.chosen_challenge = {"id": "impact_contribution_001", "title": "Make One Thing"}
+        fresh_state.telegram_user_id = 999
+        initial_signal_count = len(fresh_state.signals)
+
+        await handle_challenge_completion("I made a thank-you note for my neighbor", fresh_state)
+
+        assert len(fresh_state.signals) == initial_signal_count + 1
+        last_signal = fresh_state.signals[-1]
+        assert last_signal.signal_type == SignalType.CHALLENGE_COMPLETION
+
+    @pytest.mark.asyncio
+    async def test_completion_returns_map_url(self, fresh_state):
+        fresh_state.phase = Phase.PHASE_5_FIRST_STRETCH
+        fresh_state.chosen_challenge = {"id": "creative_voice_001"}
+        fresh_state.telegram_user_id = 888
+
+        response = await handle_challenge_completion("I wrote 300 words in my actual voice", fresh_state)
+
+        assert "map" in response.lower()
+
+
+class TestPhaseCompleted:
+    """Test handle_phase_completed — returning user who finished at least one challenge"""
+
+    @pytest.mark.asyncio
+    async def test_completed_phase_returns_map_url(self, fresh_state):
+        fresh_state.phase = Phase.COMPLETED
+        fresh_state.telegram_user_id = 777
+
+        response = await handle_phase_completed("I'm ready for my next challenge", fresh_state)
+
+        assert "map" in response.lower()
+        assert len(response) > 0
+
+    @pytest.mark.asyncio
+    async def test_completed_phase_mentions_continue(self, fresh_state):
+        fresh_state.phase = Phase.COMPLETED
+        fresh_state.telegram_user_id = 777
+
+        response = await handle_phase_completed("", fresh_state)
+
+        assert "/continue" in response or "come back" in response.lower()
