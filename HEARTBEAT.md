@@ -4,6 +4,14 @@
 
 # Add tasks below when you want the agent to check something periodically.
 
+## Contribution Graph Web Health Check
+- description: Verify CG Web server is running on port 3006
+- frequency: 15m
+- action: |
+    curl -s http://localhost:3006/health | grep -q '"status": "ok"' && echo "CG Web: OK" || echo "CG Web: FAIL"
+- alert: |
+    Contribution Graph Web down! Run: cd projects/contribution-graph && CG_WEB_PORT=3006 python3 -m web.server &
+
 ## Credo Platform Health Check
 - description: Verify Credo API and Frontend are running
 - frequency: 15m
