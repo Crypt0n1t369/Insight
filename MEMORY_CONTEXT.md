@@ -3,19 +3,20 @@
 ## Active Projects
 
 ### Contribution Graph (Kristaps' Life Work)
-**Phase:** Build phase in progress — bot↔web integration just completed.
+**Phase:** Build phase in progress — bot↔web integration complete, adaptive challenge selection fully tested.
 **Location:** /home/drg/.openclaw/workspace/projects/contribution-graph/
-**Git:** `6173fcb` (just synced)
+**Git:** `575c046` (CG adaptive challenge selection fully covered)
 
 **Build status:**
 - Challenge library: 18 challenges (Impact: 6, Creative: 6, Business: 6) ✅
 - Short-code identity system: ✅ (18 tests)
-- 5-phase conversation handlers: ✅ (21 tests)
+- 5-phase conversation handlers: ✅ (25 tests — all 6 signal types now covered)
 - Web server + SVG map renderer: ✅ (23 tests)
 - Telegram polling bot: ✅ Wired + syncing to map store
-- Bot→Web map sync: ✅ Just fixed (bot JSON + web SQLite now share data)
-- AI synthesis module: Pending (stubbed template; needs OpenRouter credits)
+- Bot→Web map sync: ✅ (bot JSON + web SQLite share data)
+- AI synthesis module: Enhanced template narratives + confidence buckets; needs OpenRouter for real LLM
 - CG Web persistence: ✅ SQLite (contribution_graph.db)
+- **Total CG tests: 66 (was 62, now 66 after adaptive selection expansion)**
 
 **Key remaining decisions before Phase 1 build:**
 - Q6: Onboarding hook (first 5 minutes, specific challenge type + feedback)
@@ -27,7 +28,8 @@
 - **Ports:** 3001 (backend), 3005 (frontend via vite preview)
 - **Status:** 34 vitest tests passing
 - **9 protocols active:** NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE
-- **Demo mode:** Working (kicks in when OpenRouter credits exhausted)
+- **Demo mode:** Working (all 9 protocols verified via direct API — NSDR: 6 batches, others: 5 each)
+- **Frontend source:** Missing (can't rebuild); dist/ pre-built and serving correctly
 - **Known issue:** No OpenRouter credits (402 → demo fallback)
 
 ### Credo Collaboration Platform
