@@ -202,9 +202,9 @@ CREATE TABLE votes (
 
 ## Status
 
-- [ ] Design complete
-- [ ] Supabase schema defined
-- [ ] Quadratic voting math verified
-- [ ] Anonymous attribution model defined
-- [ ] Integration with Credo platform (future)
-- [ ] ZK-proof upgrade path documented
+- [x] Design complete — ✅ `src/credibility-engine/credibility-engine.ts`
+- [x] Quadratic voting math verified — ✅ 71 tests in `src/credibility-engine/__tests__/`
+- [x] Anonymous attribution model defined — ✅ AnonId prefix + score calculation
+- [ ] Supabase schema defined — future
+- [ ] Integration with Credo platform — future
+- [ ] ZK-proof upgrade path documented — future

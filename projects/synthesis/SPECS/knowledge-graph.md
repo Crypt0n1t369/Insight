@@ -206,8 +206,8 @@ CREATE TABLE kg_embeddings (
 
 ## Status
 
-- [ ] SQLite implementation (dev)
-- [ ] Supabase schema + API (prod)
-- [ ] Protocol documents loaded
-- [ ] Semantic search (pgvector) integration
-- [ ] Frontend knowledge browser
+- [x] SQLite implementation (dev) — ✅ `src/knowledge-graph/storage.ts` (better-sqlite3)
+- [x] Protocol documents loaded — ✅ `src/knowledge-graph/seed.ts` (all 9 protocols)
+- [ ] Supabase schema + API (prod) — future
+- [ ] Semantic search (pgvector) integration — future
+- [ ] Frontend knowledge browser — future

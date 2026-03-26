@@ -127,7 +127,7 @@ interface ContextPackage {
 
 ## Status
 
-- [ ] Implement routing logic in TypeScript
-- [ ] Write unit tests for all decision paths
+- [x] Implement routing logic in TypeScript — ✅ `src/router-agent/router.ts`
+- [x] Write unit tests for all decision paths — ✅ 61 tests covering all branches
 - [ ] Add keyword set extensibility (plugins)
 - [ ] Integrate emotion detection (future: voice tone analysis)

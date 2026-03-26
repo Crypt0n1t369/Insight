@@ -182,7 +182,7 @@ const AGENT_REGISTRY: Record<ProtocolId, SpecialistAgent> = {
   breathwork: BREATHWORK,
   se: SE,           // Somatic Experiencing
   act: ACT,         // Acceptance and Commitment Therapy
-  nvc: NVC,         // Future (Nonviolent Communication)
+  nvc: NVC,         // Nonviolent Communication
   general: GENERAL, // Always available fallback
 };
 
@@ -215,6 +215,6 @@ Each agent can provide:
 - [x] BREATHWORK agent implementation — ✅ `src/specialist-agents/breathwork.ts` (28 tests)
 - [x] SE agent implementation — ✅ `src/specialist-agents/se.ts` (22 tests)
 - [x] ACT agent implementation — ✅ `src/specialist-agents/act.ts` (29 tests)
-- [ ] NVC agent (future — Nonviolent Communication)
+- [x] NVC agent implementation — ✅ `src/specialist-agents/nvc.ts` (42 tests)
 - [ ] Audio clip library per agent (future — TTS fallback active)
-- [x] Unit tests per agent — ✅ All 6 agents tested (172 tests total)
+- [x] Unit tests per agent — ✅ All 7 agents tested (224 tests total)
