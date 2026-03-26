@@ -447,41 +447,116 @@ def _generate_mirror_summary(state: UserState) -> dict:
     """
     Generate the bot's summary of the user (Phase 4 Mirror).
     In production, this would call the AI synthesis module.
-    For now, generates a simple text summary from collected signals.
+    For now, generates a richer text summary from collected signals and their values.
+
+    Signal narrative templates — each includes a base observation and a
+    confidence-weighted qualifier so high-confidence signals read more断言-style
+    and low-confidence signals read more exploratory.
     """
+
     vector = state.comparative_vector
 
-    # Find top 3 signal types by confidence
-    sorted_sigs = sorted(vector.items(), key=lambda x: x[1], reverse=True)
-    top_signals = sorted_sigs[:3]
+    # Narrative templates keyed by signal_type value
+    SIGNAL_NARRATIVES = {
+        "purpose_clarity": {
+            "base": "You know what matters to you",
+            "high": "You have a clear anchor — you know what you want to create and why it matters",
+            "med": "You're developing a sense of what you want to stand for",
+            "low": "You've caught glimpses of what matters to you, even if it's still taking shape",
+        },
+        "initiative_taking": {
+            "base": "You start things on your own",
+            "high": "You don't wait for permission or a perfect moment — you just begin",
+            "med": "You've started things yourself when the moment felt right",
+            "low": "There are sparks of initiative, even if they haven't fully ignited yet",
+        },
+        "pattern_recognition": {
+            "base": "You notice what others miss",
+            "high": "You see connections and patterns that aren't obvious to everyone — this is a real edge",
+            "med": "You pick up on things others overlook, and it's starting to feel natural",
+            "low": "You occasionally notice things that most people would walk right past",
+        },
+        "voice_authenticity": {
+            "base": "You speak in your own voice",
+            "high": "When you share something, it comes from a real place — people can feel that",
+            "med": "You're finding moments where you express things in your own way",
+            "low": "You're exploring what it means to share things that are really yours",
+        },
+        "contribution_drive": {
+            "base": "You care about work that matters beyond yourself",
+            "high": "You want to create something that contributes to others — that's a powerful motivator",
+            "med": "Work feels more meaningful when it connects to something bigger than you",
+            "low": "You're starting to care about how your work affects the world around you",
+        },
+        "challenge_completion": {
+            "base": "You finish what you start",
+            "high": "You follow through — when you commit to something, you see it to the end",
+            "med": "You've shown you can complete what you set out to do",
+            "low": "You're building the muscle of seeing things through to the end",
+        },
+    }
 
-    lines = [
-        "Here's what I see from what you've told me:",
-        "",
-    ]
+    def confidence_bucket(conf: float) -> str:
+        if conf >= 0.8:
+            return "high"
+        elif conf >= 0.6:
+            return "med"
+        return "low"
 
-    for sig_type, confidence in top_signals:
-        if sig_type == "purpose_clarity":
-            lines.append("• You have a clear sense of what matters to you")
-        elif sig_type == "initiative_taking":
-            lines.append("• You tend to start things on your own initiative")
-        elif sig_type == "pattern_recognition":
-            lines.append("• You notice things other people miss")
-        elif sig_type == "voice_authenticity":
-            lines.append("• You know how to speak in your own voice")
-        elif sig_type == "contribution_drive":
-            lines.append("• You care about work that contributes to something bigger")
-        else:
-            lines.append(f"• You show {sig_type.replace('_', ' ')}")
+    def build_lines() -> list[str]:
+        if not vector:
+            return [
+                "Here's what I see from what you've told me:",
+                "",
+                "I'm still getting to know you — let's keep going.",
+            ]
 
-    if top_signals:
-        avg_confidence = sum(c for _, c in top_signals) / len(top_signals)
-        lines.extend(["", f"(Average confidence: {int(avg_confidence * 100)}%)"])
+        # Sort by confidence and take top 3 distinct signals
+        sorted_sigs = sorted(vector.items(), key=lambda x: x[1], reverse=True)
+
+        # Deduplicate: if two signals are very similar (same category), keep only the stronger
+        # For now just take top 3
+        top_signals = sorted_sigs[:3]
+
+        lines = ["Here's what I see from what you've told me:", ""]
+
+        for sig_type, confidence in top_signals:
+            bucket = confidence_bucket(confidence)
+            narratives = SIGNAL_NARRATIVES.get(sig_type)
+            if narratives:
+                lines.append(f"• {narratives[bucket]}")
+            else:
+                lines.append(f"• You show {sig_type.replace('_', ' ')}")
+
+        # Add a "signature pattern" line if we have enough data
+        if len(top_signals) >= 2:
+            sig_types = [s for s, _ in top_signals]
+            if "pattern_recognition" in sig_types and "voice_authenticity" in sig_types:
+                lines.extend([
+                    "",
+                    "🪞 Your pattern recognition and authentic voice together suggest you see things differently — and know how to share that.",
+                ])
+            elif "purpose_clarity" in sig_types and "contribution_drive" in sig_types:
+                lines.extend([
+                    "",
+                    "🪞 You know what matters to you, and you want it to matter to the world — a strong combination.",
+                ])
+            elif "initiative_taking" in sig_types and "challenge_completion" in sig_types:
+                lines.extend([
+                    "",
+                    "🪞 You start things AND you finish them — that's a rare pairing.",
+                ])
+
+        avg_confidence = sum(c for _, c in top_signals) / len(top_signals) if top_signals else 0
+        lines.extend(["", f"(Signal confidence: {int(avg_confidence * 100)}% — based on how consistently your answers pointed the same direction)"])
+        return lines
+
+    lines = build_lines()
 
     return {
         "text": "\n".join(lines),
-        "top_signals": top_signals,
-        "version": 1,
+        "top_signals": [(s, c) for s, c in sorted(vector.items(), key=lambda x: x[1], reverse=True)[:3]],
+        "version": 2,
     }
 
 

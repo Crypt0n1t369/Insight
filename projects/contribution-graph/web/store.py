@@ -117,14 +117,13 @@ class SQLiteInMemoryStore:
         self._init_schema()
 
     def _init_schema(self):
-        """Initialize the database schema"""
-        schema = Path(__file__).parent.parent / "db" / "schema.sql"
-        if schema.exists():
-            # Only create tables if they don't exist
-            self._db.executescript(schema.read_text())
-        else:
-            # Fallback inline schema
-            self._db.executescript("""
+        """Initialize the SQLite database schema.
+        
+        Note: schema.sql (PostgreSQL) is NOT used here. The PostgreSQL schema
+        is for production use with PostgresStore. This inline schema is the
+        SQLite-compatible equivalent for development/persistence.
+        """
+        self._db.executescript("""
             CREATE TABLE IF NOT EXISTS users (
                 telegram_user_id INTEGER PRIMARY KEY,
                 short_code TEXT UNIQUE NOT NULL,
@@ -157,7 +156,7 @@ class SQLiteInMemoryStore:
             );
             CREATE INDEX IF NOT EXISTS idx_signals_user ON signals(user_id);
             CREATE INDEX IF NOT EXISTS idx_challenges_user ON challenges(user_id);
-            """)
+        """)
         self._db.commit()
 
     def upsert_user(self, telegram_user_id: int, short_code: str, display_name: str = "", phase: str = "new"):

@@ -26,7 +26,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from flask import Flask, render_template, jsonify, abort, request, send_from_directory
 
-from web.store import InMemoryStore
+from web.store import SQLiteInMemoryStore
 from web.rate_limiter import ShortCodeRateLimiter
 from web.map_renderer import render_map_svg, MapData
 from bot.states import Phase
@@ -38,7 +38,7 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 app.config["JSON_SORT_KEYS"] = False
 
 # In-memory store (use SQLiteInMemoryStore for dev, swap for PostgresStore in prod)
-store = InMemoryStore()
+store = SQLiteInMemoryStore()
 rate_limiter = ShortCodeRateLimiter(limit=3, window_seconds=60)
 
 # Set server secret for short-code generation

@@ -22,7 +22,7 @@ check_port() {
 }
 
 do_status() {
-    local services=("3000:Credo API" "3001:Audio Backend" "3002:Credo Frontend" "3003:Youth Platform" "3005:Audio Frontend" "8080:JCI Portal")
+    local services=("3000:Credo API" "3001:Audio Backend" "3002:Credo Frontend" "3003:Youth Platform" "3005:Audio Frontend" "3006:CG Web" "8080:JCI Portal")
     echo ""
     echo "=== Service Status ==="
     all_ok=true
@@ -78,6 +78,12 @@ do_start() {
         sleep 3
         log_info "Audio Frontend started on 3005 (preview mode)"
     fi
+    if ! check_port 3006; then
+        cd "$WORKSPACE/projects/contribution-graph"
+        CG_SERVER_SECRET="${CG_SERVER_SECRET:-dev-secret-change-me}" CG_WEB_PORT=3006 nohup python3 -m web.server > /tmp/cg-web.log 2>&1 &
+        sleep 2
+        log_info "CG Web started on 3006"
+    fi
     sleep 3
     do_status
 }
@@ -90,6 +96,7 @@ do_stop() {
     pkill -f "uvicorn.*3003" && log_info "Youth Platform stopped" || true
     pkill -f "python3 webapp/server.py" && log_info "JCI Portal stopped" || true
     pkill -f "vite.*3005" && log_info "Audio Frontend stopped" || true
+    pkill -f "web.server.*3006" && log_info "CG Web stopped" || true
 }
 
 case "${1:-status}" in
