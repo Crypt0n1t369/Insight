@@ -1,5 +1,5 @@
 # PROGRESS.md - Audio Transformation Tool
-*Updated — 2026-03-26 20:45 Cairo (18:45 UTC)*
+*Updated — 2026-03-26 23:28 Cairo (21:28 UTC)*
 
 ---
 
@@ -297,7 +297,7 @@ PORT=3001              # Default
 
 ---
 
-*Last updated: 2026-03-24 00:27 UTC*
+*Last updated: 2026-03-26 21:28 UTC (Wakeup session)*
 
 ---
 
@@ -387,3 +387,47 @@ Each `/api/meditation/generate` call (POST with `{"methodology":"NSDR"}`) return
    - Clone original Insight app and restore modifications
 4. **Merge upstream commit 8562fd2** — deferred; conflicts with demo mode
 5. **Add remaining protocols** — GENERAL, TRAUMA_SAFE, BREATHWORK (defined in protocols.ts, not in CLINICAL_PROTOCOLS)
+
+---
+
+## 2026-03-26 21:28 UTC - Wakeup Session
+
+### Status: ✅ All Systems Verified / Demo Mode Solid / 34/34 Tests Passing
+
+**Full API audit completed. All 9 protocols tested. Services confirmed running. No action items found.**
+
+### Verified This Session
+
+1. ✅ **All services healthy:**
+   - Audio Backend (3001): `{"status":"ok","openRouterLinked":true}` → HTTP 200
+   - Frontend (3005): HTTP 200
+   - Credo API (3000): HTTP 200
+   - Youth Platform (3003): HTTP 200
+   - Contribution Graph (3006): HTTP 200
+   - JCI Portal (8080): HTTP 200
+
+2. ✅ **34/34 vitest tests passing** — workspace root `server/` (2 test files, 34 tests)
+
+3. ✅ **All 9 protocols return correct demo batches:**
+   - NSDR: 6 batches ✅ | IFS: 6 batches ✅ | SOMATIC_AGENCY: 5 batches ✅
+   - ACT: 5 batches ✅ | FUTURE_SELF: 5 batches ✅ | WOOP: 5 batches ✅
+   - NVC: 5 batches ✅ | IDENTITY: 5 batches ✅ | NARRATIVE: 5 batches ✅
+
+4. ✅ **API endpoints verified:**
+   - `POST /api/chat` → demo fallback with `meditationData` (methodology: NSDR) ✅
+   - `POST /api/director` → NSDR fallback (proper structure when no API key) ✅
+   - `POST /api/meditation/generate` → protocol-specific demo batches ✅
+
+5. ✅ **Demo mode scripts** — clinically-grounded NSDR body scan scripts + FADE_VOL atmosphere cues ✅
+
+### ⚠️ BLOCKED — User Action Required
+1. **Deploy to Vercel** → vercel.com → import Crypt0n1t369/Insight → Deploy
+2. **Add OpenRouter credits** → credits exhausted; demo mode works but LLM features need credits
+
+### What's Next (Priority Order)
+1. **User deploys to Vercel** (P0 — user action needed)
+2. **Add OpenRouter credits** (P0 — user action needed)
+3. **Browser test** — verify full user flow in real browser (P1 — no browser in this environment)
+4. **Merge upstream commit 8562fd2** — improves duration calc, error handling, progress UX, voice mapping (P2 — deferred; conflicts with demo mode)
+5. **Add remaining protocols** — GENERAL, TRAUMA_SAFE, BREATHWORK not in codebase (P2 — would need to be authored)
+
