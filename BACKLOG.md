@@ -1,6 +1,6 @@
 # BACKLOG.md - Task Queue
 
-## LAST UPDATED: 2026-03-26 00:47 UTC (Worker-1 session)
+## LAST UPDATED: 2026-03-26 15:47 UTC (Worker-1 session)
 
 ---
 
@@ -145,3 +145,75 @@ Zero tests run. Three critical questions unanswered:
 ---
 
 *Maintained by: Aton (wakeup cron, 2026-03-26 10:47 UTC)*
+
+---
+
+## ☀️ CREDO MVP BUILD DECISION — Aton Review (2026-03-26)
+
+**Verdict: BUILD IT. Three caveats, all fixable.**
+
+---
+
+### SPEC.md — Architecture: Strong
+
+| Dimension | Rating | Notes |
+|-----------|--------|-------|
+| Architecture | ✅ Strong | 6-service clean separation, GraphQL+REST+WS is right choice |
+| Auth (MVP) | ✅ Strong | UUID-in-localStorage + HTTP-only cookie is appropriate |
+| ZK Deferral | ✅ Smart | Phase 3 correctly deferred — saves 2 sprints of complexity |
+| State Mgmt | ✅ Solid | Zustand + React Query is the right stack |
+| GraphQL Schema | ⚠️ Incomplete | Missing `limit`/`offset` on `branchContributions`, no cursor pagination |
+
+**3 bugs to fix before build:**
+1. **Tier thresholds mismatch** — SPEC says Elder=80+, SCHEMA says Elder=2000. Pick one.
+2. **Contribution weight derivation** — SPEC says weight based on type (Research=3, etc.) but SCHEMA has raw `weight INTEGER` field. Need a `get_weight_for_type(type)` function.
+3. **Endorsement score formula missing** — `applyEndorsementScore` interface exists but the actual formula (does endorser credibility matter? Is it just `+contribution.weight`?) is undetermined.
+
+---
+
+### SCHEMA.md — Database: Solid
+
+| Dimension | Rating | Notes |
+|-----------|--------|-------|
+| Schema design | ✅ Solid | Proper UUID PKs, indexes on FKs and filter fields, composite UNIQUE for endorsements |
+| Triggers | ✅ Correct | `update_branch_stats` and `on_endorsement` chains are well-designed |
+| Quadratic weight | ✅ Right | `FLOOR(SQRT(tokens))` matches spec |
+| RLS | ⚠️ Placeholder | Auth setup assumes `auth.uid()` but anonymous auth has no Supabase user — needs `anon.uid()` or custom JWT approach |
+| Seed data | ✅ Good | System user + Welcome branch is correct MVP starting state |
+
+**1 blocker:** The RLS policies reference `auth.uid()` but anonymous auth won't create Supabase auth users. Solution: use a custom `get_session_user_id()` function or skip RLS for MVP (acceptable risk).
+
+---
+
+### PILOT.md — Pilot Plan: Ready to Execute
+
+| Dimension | Rating | Notes |
+|-----------|--------|-------|
+| Design | ✅ Strong | Low-tech (Notion + Sheets), 4 weeks, clear metrics |
+| Consent form | ✅ Good | Covers withdrawal, anonymity, time commitment |
+| Contribution types | ✅ Match SPEC | Research/Comment/Review/Synthesis with weights |
+| Risk mitigation | ✅ Covered | Low participation, domination, dropout all addressed |
+| Status | ❌ Not started | Pilot never ran — this is the actual blocker for Phase 1 |
+
+---
+
+### MVP Build Decision: ✅ PROCEED
+
+**Rationale:**
+- SPEC is 80% complete — 3 bugs are small fixes
+- SCHEMA is well-engineered — triggers and indexes are correct
+- The concept is genuinely differentiated (cybernetic credibility loop + anonymous synthetic characters)
+- Architecture can scale to Phase 2/3 without rework
+
+**Before starting build, fix these 3 things:**
+1. ✅ Pick tier thresholds and document in both SPEC and SCHEMA
+2. ✅ Define endorsement score formula precisely
+3. ✅ Decide on RLS vs. application-level auth for anonymous users
+
+**After those fixes → ready for Phase 1 build.**
+
+**If the pilot runs and validates the core loop (≥7/10), this becomes the top-priority build over Audio Tool.**
+
+---
+
+*Review by: Aton ☀️🦞 | 2026-03-26 15:47 UTC*

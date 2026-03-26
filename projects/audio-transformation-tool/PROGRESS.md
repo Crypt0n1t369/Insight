@@ -1,5 +1,58 @@
 # PROGRESS.md - Audio Transformation Tool
-*Updated — 2026-03-26 14:30 Cairo (12:30 UTC)*
+*Updated — 2026-03-26 18:10 Cairo (16:10 UTC)*
+
+---
+
+## 2026-03-26 16:10 UTC - Wakeup Session
+
+### Status: ✅ Operational / Demo Mode Active / Director Bug Fixed
+
+**Fixed a bug in `/api/director` that was returning `{}` instead of a proper fallback when no API key was available.**
+
+### What Was Done This Session
+1. ✅ **Backend server restarted** — Fixed esbuild permission issue, server running on port 3001
+2. ✅ **Director bug fixed** — `/api/director` now returns proper NSDR fallback instead of `{}` when no API key
+3. ✅ **All 34 tests pass** — 11 unit + 23 integration tests
+4. ✅ **Demo mode verified** — IFS, NSDR, all protocols return proper demo batches
+5. ✅ **Frontend serving** — Port 3005 responding with HTTP 200
+6. ✅ **Git committed** — Fix committed to HEAD: `4b6b116`
+
+### 🔧 Bug Fix Applied
+**Problem**: `/api/director` returned `{}` when OpenRouter API key was missing/unavailable
+- `callOpenRouter` returns `null` when no key
+- `cleanJson(null || "{}")` → `"{}"` → `JSON.parse("{}")` → `{}`
+- Frontend receiving empty object could break triage flow
+
+**Solution**: Added explicit null check before parsing:
+```typescript
+if (!text) {
+    return res.json({
+        methodology: "NSDR",
+        focus: "Grounding",
+        targetFeeling: "Calm",
+        intensity: "MODERATE",
+        rationale: "Fallback: no API key available"
+    });
+}
+```
+
+### What's Working
+- `/health` → `{"status":"ok","openRouterLinked":true}`
+- `/api/protocols` → 9 protocols (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE)
+- `/api/chat` → Demo fallback with `meditationData` (methodology, focus, feeling)
+- `/api/director` → ✅ NOW RETURNS PROPER FALLBACK (was returning `{}`)
+- `/api/meditation/generate` → Demo batches for all 9 protocols
+- Frontend (port 3005) → Serving dark-mode PWA app
+
+### ⚠️ BLOCKED — User Action Required
+1. **Deploy to Vercel** → vercel.com → import Crypt0n1t369/Insight → Deploy
+2. **Add OpenRouter credits** → credits exhausted; demo mode works but LLM features need credits
+
+### What's Next (Priority Order)
+1. **User deploys to Vercel** (P0 — user action needed)
+2. **Add OpenRouter credits** (P0 — user action needed)
+3. **Frontend source restoration** (P2 — if frontend changes needed; source not in repo)
+4. **Merge upstream commit 8562fd2** (P2 — deferred; conflicts with demo mode)
 
 ---
 
