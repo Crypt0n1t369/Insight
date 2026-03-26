@@ -49,6 +49,23 @@ POLL_TIMEOUT = 55  # seconds (Telegram's max is 60)
 STATE_FILE = Path(__file__).parent.parent / "data" / "bot_state.json"
 STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
 
+# Import map store for syncing Telegram user data → web map
+# This allows the bot to write user data that the CG Web server can then display
+from web.store import SQLiteInMemoryStore
+
+# Singleton map store — shared between bot and web
+_map_store: Optional[SQLiteInMemoryStore] = None
+
+
+def get_map_store() -> SQLiteInMemoryStore:
+    """Get or create the shared SQLite map store."""
+    global _map_store
+    if _map_store is None:
+        db_path = Path(__file__).parent.parent / "data" / "contribution_graph.db"
+        _map_store = SQLiteInMemoryStore(str(db_path))
+        logger.info(f"Map store initialized: {db_path}")
+    return _map_store
+
 
 def get_token() -> str:
     token = os.getenv("TELEGRAM_BOT_TOKEN", "")
@@ -203,6 +220,7 @@ class TelegramBot:
         chat_id = message.get("chat", {}).get("id")
         text = message.get("text", "").strip()
         telegram_user_id = message.get("from", {}).get("id")
+        from_user = message.get("from", {})
 
         if not telegram_user_id or not chat_id:
             return True  # Malformed update
@@ -223,10 +241,76 @@ class TelegramBot:
             reply_markup = self._build_reply_markup(state)
             self._send_message(chat_id, response, reply_markup)
 
-        # Save updated state
+        # Save updated state to JSON (bot state)
         self.store.save_user_state(state)
 
+        # Sync to map store (SQLite) so CG Web can display user's map
+        self._sync_to_map_store(telegram_user_id, from_user, state)
+
         return True
+
+    def _sync_to_map_store(self, telegram_user_id: int, from_user: dict, state: UserState):
+        """
+        Sync Telegram user conversation state → CG Web SQLite map store.
+        
+        This ensures that when users complete onboarding via Telegram,
+        their signals and progress automatically appear on contributiongraph.ai/map.
+        
+        Args:
+            telegram_user_id: The user's Telegram ID
+            from_user: The Telegram 'from' object (has first_name, last_name)
+            state: The current UserState after processing the update
+        """
+        try:
+            from db.identity import generate_short_code
+            
+            map_store = get_map_store()
+            short_code = generate_short_code(telegram_user_id)
+            
+            # Build display name from Telegram profile
+            first_name = from_user.get("first_name", "")
+            last_name = from_user.get("last_name", "")
+            display_name = f"{first_name} {last_name}".strip() or f"User {telegram_user_id % 1000}"
+            
+            # Upsert user to map store
+            map_store.upsert_user(
+                telegram_user_id=telegram_user_id,
+                short_code=short_code,
+                display_name=display_name,
+                phase=state.phase.value,
+            )
+            
+            # Sync signals to map store
+            for sig in state.signals:
+                map_store.add_signal(
+                    user_id=telegram_user_id,
+                    signal_type=sig.signal_type.value,
+                    value=sig.value,
+                    confidence=sig.confidence,
+                )
+            
+            # Sync comparative vector if signals exist
+            if state.comparative_vector:
+                map_store.set_comparative_vector(
+                    user_id=telegram_user_id,
+                    vector=state.comparative_vector,
+                )
+            
+            # Sync challenge completion if phase is COMPLETED
+            if state.phase.value == "completed" and state.chosen_challenge:
+                challenge = state.chosen_challenge
+                map_store.add_challenge(
+                    user_id=telegram_user_id,
+                    challenge_id=challenge.get("id", "unknown"),
+                    challenge_type=challenge.get("type", "unknown"),
+                    status="completed",
+                    evidence=state.evidence or {},
+                )
+            
+            logger.debug(f"Synced user {telegram_user_id} to map store: phase={state.phase.value}")
+        except Exception as e:
+            logger.exception(f"Failed to sync user {telegram_user_id} to map store: {e}")
+            # Don't raise — map store sync failure shouldn't break bot functionality
 
     def run(self):
         """Main polling loop"""
