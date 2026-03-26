@@ -1,5 +1,62 @@
 ---
 
+## 2026-03-26 17:28 Cairo (15:28 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ Bot↔Web Map Sync Integration — 62 CG Tests Passing, 7/7 Services Up, Git Synced
+
+### What I Did This Session
+
+**1. Bot→Web Map Sync Fixed ✅**
+- **Problem**: Bot (JSON file) and Web (SQLite) used completely separate data stores — Telegram users' data never appeared on contributiongraph.ai/map
+- **Solution**: Added `_sync_to_map_store()` to TelegramBot — called after every processed Telegram update
+- `bot/polling.py`: Imports and uses the same `SQLiteInMemoryStore` as the CG Web server
+- Syncs: user profile (first_name + last_name → display_name), phase, signals, comparative_vector, challenge completion
+- Both bot and web now share `contribution_graph.db` — Telegram users automatically appear on their maps
+- Graceful failure: sync errors are logged but don't break bot functionality
+- All 62 CG tests still passing ✅
+
+**2. Services Verified: 7/7 Up ✅**
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ |
+| Audio Backend | 3001 | ✅ |
+| Credo Frontend | 3002 | ✅ |
+| Youth Platform | 3003 | ✅ |
+| Audio Frontend | 3005 | ✅ |
+| CG Web | 3006 | ✅ SQLite |
+| JCI Portal | 8080 | ✅ |
+
+**3. Git: Committed & Pushed ✅**
+- `2a3757f` — "feat(contribution-graph): bot→web map sync"
+- Workspace PROGRESS.md updated
+
+### CG — What's Left (No External Deps)
+
+| Item | Status | Notes |
+|------|--------|-------|
+| AI synthesis module | Stubbed | Template + confidence narratives work; needs OpenRouter credits for real LLM |
+| CG Telegram bot | ✅ Wired + syncing | Bot→Web sync now works; needs `TELEGRAM_BOT_TOKEN` to connect to real Telegram |
+| CG Web persistence | ✅ Done | SQLite active, bot syncs to it |
+| CG Web → public URL | Blocked | Needs deployment |
+| CG Telegram → production | Blocked | Needs bot token + public URL |
+| Phase 0 validation | Blocked | Needs user paper prototype interviews |
+
+### What's Left (User Action Items)
+
+| Priority | Item | Blocker |
+|----------|------|---------|
+| P0 | Deploy Audio Tool to Vercel | Needs vercel.com import + env vars |
+| P0 | Add OpenRouter credits (~$5-10) | Unblocks real AI meditation + CG synthesis |
+| P1 | Review CG CONCEPT.md + PILOT.md | Phase 0 go/no-go |
+| P1 | Add CG Telegram bot token | Connect bot to actual Telegram |
+| P2 | Add Telegram bot tokens | Youth Platform + Festival Coordinator Phase 2 |
+
+**Nothing to build — all remaining code tasks blocked on user-provided tokens or decisions.**
+
+*Session completed: 2026-03-26 15:45 UTC*
+
+---
+
 ## 2026-03-26 17:00 Cairo (15:00 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ CG Web Persistence + Service Manager + Richer Mirror Summary — 62 CG Tests Passing, 7/7 Services Up
