@@ -4,6 +4,91 @@
 
 ### Status: ✅ All Systems Nominal — 681 Tests Passing, 6/6 Services Up
 
+### ⚡ NEW: Persistent Service Manager — Systemd User Service Configured ✅
+
+**Problem:** Services died on every reboot because `service_manager.sh` was started manually and had no auto-start mechanism.
+
+**Solution Applied:**
+- Created systemd user service at `~/.config/systemd/user/workspace-services.service`
+- Enabled with `systemctl --user enable workspace-services`
+- Linger is already enabled (`loginctl show-user drg | grep Linger` → `yes`)
+- **Result:** All 6 services will now start automatically at boot, without requiring a login session
+
+**Verification:**
+```
+● workspace-services.service - OpenClaw Workspace Services
+   Loaded: loaded (...workspace-services.service; enabled; preset: enabled)
+   Active: active (exited)
+```
+- `systemctl --user restart workspace-services` → all 6 services confirmed healthy ✅
+- `systemctl --user start/stop/restart workspace-services` all work correctly ✅
+
+**Key behaviors:**
+- Start: runs `service_manager.sh start` — starts any services not already running
+- Stop: runs `service_manager.sh stop` — kills all service processes
+- Restart: stop + 2s delay + start — clean restart of all services
+- Boot: starts automatically at system boot (linger enabled), no login required
+
+### What Was Verified This Session
+
+**1. Full Test Suite — All 681 Tests Passing ✅**
+| Project | Tests | Framework | Status |
+|---------|-------|-----------|--------|
+| Audio Tool (workspace root) | 34 | vitest | ✅ |
+| Audio Tool (submodule code/) | 34 | vitest | ✅ |
+| Synthesis Platform | 424 | vitest | ✅ |
+| Credo Collaboration Platform | 75 | vitest | ✅ |
+| Festival Coordinator | 49 | pytest | ✅ |
+| JCI Org Manager | 41 | pytest | ✅ |
+| Youth Empowerment Platform | 24 | pytest | ✅ |
+| **Total** | **681** | | **✅ All passing** |
+
+**2. Health Check — 6/6 Services Verified ✅**
+| Service | Port | Status | Details |
+|---------|------|--------|---------|
+| Audio Backend | 3001 | ✅ `/health` 200 | |
+| Audio Frontend | 3005 | ✅ HTTP 200 | Vite preview mode, serves built dist/ |
+| Credo API | 3000 | ✅ `/health` 200 | |
+| Credo Frontend | 3002 | ✅ HTTP 200 | Next.js serving HTML |
+| Youth Platform | 3003 | ✅ `/health` 200 | |
+| JCI Portal | 8080 | ✅ HTTP 200 | |
+
+**3. Git Status** — Clean, at `7672920`, synced with origin/master
+
+**4. Cron Jobs — 3 Active ✅**
+| Job | Schedule | Status |
+|-----|----------|--------|
+| Wakeup | 30min | ✅ OK |
+| Worker-1 | 5h | ✅ OK |
+| Worker-3 | 5h | ✅ OK |
+
+### What's Next (Priority Order)
+1. ~~**⚠️ CONFIGURE PERSISTENT SERVICE MANAGER**~~ ✅ **DONE** — systemd user service configured, linger enabled
+2. **User: Review Contribution Graph docs** — Phase 0 go/no-go (highest strategic priority)
+3. **User: Deploy Audio Tool to Vercel** (P0)
+4. **User: Add OpenRouter credits** (P0)
+5. **User: Review Credo docs** (P1)
+6. **User: Add Telegram bot tokens** (Youth Platform + Festival Coordinator) (P2)
+
+### What I Did This Session
+1. **Configured persistent service manager** — systemd user service at `~/.config/systemd/user/workspace-services.service`
+2. **Verified linger enabled** — services will start at boot without login
+3. **Tested restart cycle** — all 6 services healthy after restart
+4. **Verified all 681 tests passing** across 7 projects
+5. **Confirmed 6/6 services running** (3001, 3005, 3000, 3002, 3003, 8080)
+6. **Fixed PROGRESS.md duplicate headers** from previous session edit
+
+### Health Check Notes
+- H1/H8 "uncommitted changes" WARN — stale from before last commit; git is clean
+- H18 Telegram config WARN — `groupPolicy allowlist` but no bot token configured (expected; P2)
+- These are all expected/known states, not new issues
+
+---
+
+## 2026-03-26 15:28 Cairo (13:28 UTC) - Wakeup Session (Aton) — ACTIVE NOW
+
+### Status: ✅ All Systems Nominal — 681 Tests Passing, 6/6 Services Up
+
 ### 🔧 Bug Fixed: Audio Frontend (Port 3005) Was Returning 404 — FIXED ✅
 
 **Root Cause:** `service_manager.sh` started `vite --port 3005` in dev mode. Vite dev mode requires an `index.html` at the project root (cwd). The Audio Frontend has only a built `dist/` folder — no source HTML at the project root. Result: Vite started but served nothing (HTTP 404, Content-Length: 0).
