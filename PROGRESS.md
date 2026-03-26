@@ -1,5 +1,89 @@
 ---
 
+## 2026-03-26 23:00 Cairo (21:00 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ CG 73 Tests / 4 New Challenges Added / All 7 Services Up
+
+**This session: Added challenges for the 4 uncovered signals, all tests pass, services verified.**
+
+### What Was Done This Session
+
+**1. 4 New Challenges Added for Uncovered Signals ✅**
+The design gap identified in the previous session is now closed:
+| Signal | Challenge ID | Title | Category |
+|--------|-------------|-------|----------|
+| `values_alignment` | `impact_values_001` | The Values Audit Challenge | impact |
+| `obstacle_persistence` | `business_obstacle_001` | The Friction Stay Challenge | business |
+| `challenge_completion` | `business_completion_001` | The Finish Line Challenge | business |
+| `peer_recognition` | `creative_peer_001` | The Visible Work Challenge | creative |
+
+- Updated `sig_to_category` mapping in `_select_challenge` to route new signals to their correct categories
+- 4 new tests added covering all newly wired signal→challenge routes
+- Challenge library now: **22 challenges** (18 existing + 4 new)
+
+**2. CG Tests: 73 Passing ✅**
+| Suite | Before | After | Status |
+|-------|--------|-------|--------|
+| db/test_identity.py | 18 | 18 | ✅ |
+| tests/test_handlers.py | 16 | 20 | ✅ +4 |
+| web/test_web.py | 23 | 23 | ✅ |
+| **Total** | **69** | **73** | **✅** |
+
+**3. All 7 Services Verified ✅**
+| Service | Port | Status |
+|---------|------|--------|
+| Audio Backend | 3001 | ✅ |
+| Audio Frontend | 3005 | ✅ |
+| CG Web | 3006 | ✅ |
+| Credo API | 3000 | ✅ |
+| Credo Frontend | 3002 | ✅ |
+| Youth Platform | 3003 | ✅ |
+| JCI Portal | 8080 | ✅ |
+
+### CG — Design Gap Now Closed ✅
+All 9 signal types now have dedicated challenges:
+| Signal | Category Mapping | Challenges |
+|--------|------------------|------------|
+| `contribution_drive` | impact | 3 ✅ |
+| `purpose_clarity` | business | 5 ✅ |
+| `initiative_taking` | business | 3 ✅ |
+| `pattern_recognition` | creative | 3 ✅ |
+| `voice_authenticity` | creative | 4 ✅ |
+| `values_alignment` | impact | 1 ✅ NEW |
+| `obstacle_persistence` | business | 1 ✅ NEW |
+| `challenge_completion` | business | 1 ✅ NEW |
+| `peer_recognition` | creative | 1 ✅ NEW |
+
+### CG — What's Built & Working
+| Component | Status |
+|-----------|--------|
+| Short-code identity (CG-XXXXXX) | ✅ 18 tests |
+| 5-phase conversation handlers | ✅ 20 tests |
+| Web server + SVG map + rate limiter | ✅ 23 tests |
+| Challenge library (22 challenges) | ✅ ALL 9 signals covered |
+| Enhanced mirror summary (sectioned, 10 patterns, growth edges) | ✅ |
+| Telegram polling bot | ✅ Built, needs token |
+| SQLite persistence (bot→web sync) | ✅ |
+| CG Web server (port 3006) | ✅ |
+
+### CG — What's Left (No External Deps)
+| Priority | Item | Notes |
+|----------|------|-------|
+| P1 | Wire CG bot to Telegram | Needs `TELEGRAM_BOT_TOKEN` |
+| P1 | Deploy CG Web to Vercel | Needs vercel.com import + env vars |
+| P2 | Phase 0 validation interviews | Test 0.1 paper prototype |
+
+### User Action Items (Still Blocking)
+| Priority | Item | Blocker |
+|----------|------|---------|
+| P0 | Add OpenRouter credits (~$5-10) | Unblocks real AI meditation + CG synthesis |
+| P0 | Deploy CG Web to Vercel | Needs vercel.com import + env vars |
+| P0 | Deploy Audio Tool to Vercel | Needs vercel.com import + env vars |
+| P1 | Add CG Telegram bot token | Connect bot to actual Telegram |
+| P1 | Review CG CONCEPT.md + PILOT.md | Phase 0 go/no-go |
+
+---
+
 ## 2026-03-26 22:28 Cairo (20:28 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ CG 69 Tests / Backup Removed / Mirror Summary Verified / Clean Tree

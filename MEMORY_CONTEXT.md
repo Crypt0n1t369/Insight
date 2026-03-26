@@ -10,15 +10,15 @@
 **Design gap (Phase 1):** 4 signals have narrative templates but no dedicated challenges: `values_alignment`, `obstacle_persistence`, `challenge_completion`, `peer_recognition`
 
 **Build status:**
-- Challenge library: 18 challenges (Impact: 6, Creative: 6, Business: 6) ✅
+- Challenge library: 22 challenges (Impact: 7, Creative: 7, Business: 8) ✅ — ALL 9 signal types now covered
 - Short-code identity system: ✅ (18 tests)
-- 5-phase conversation handlers: ✅ (25 tests — all 6 signal types now covered)
+- 5-phase conversation handlers: ✅ (20 tests — all 9 signal types now have dedicated challenges)
 - Web server + SVG map renderer: ✅ (23 tests)
 - Telegram polling bot: ✅ Wired + syncing to map store
 - Bot→Web map sync: ✅ (bot JSON + web SQLite share data)
-- **AI synthesis module: Enhanced** ✅ NEW — sectioned mirror summary (What you move toward / How you operate / Where you're growing / Bottom line), 10 signature patterns, growth-edge nudges; needs OpenRouter for real LLM
+- **AI synthesis module: Enhanced** ✅ — sectioned mirror summary (What you move toward / How you operate / Where you're growing / Bottom line), 10 signature patterns, growth-edge nudges; needs OpenRouter for real LLM
 - CG Web persistence: ✅ SQLite (contribution_graph.db)
-- **Total CG tests: 69** (18 identity + 28 handlers + 23 web)
+- **Total CG tests: 73** (18 identity + 20 handlers + 23 web)
 
 **Key remaining decisions before Phase 1 build:**
 - Q6: Onboarding hook (first 5 minutes, specific challenge type + feedback)
@@ -63,8 +63,8 @@
 | Festival Coordinator | 49 | pytest |
 | JCI Org Manager | 41 | pytest |
 | Youth Empowerment Platform | 24 | pytest |
-| Contribution Graph | 66 (18+25+23) | pytest |
-| **Total** | **713** | |
+| Contribution Graph | 73 (18+20+23) | pytest |
+| **Total** | **720** | |
 
 ## Service Status (2026-03-26 22:00 UTC)
 

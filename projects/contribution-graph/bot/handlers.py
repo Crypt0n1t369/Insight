@@ -994,6 +994,87 @@ CHALLENGE_LIBRARY = {
         "duration_minutes": 40,
         "signal_targeted": "purpose_clarity",
     },
+    # ---------------------------------------------------------------------------
+    # VALUES ALIGNMENT challenges (mapped to: values_alignment → impact)
+    # ---------------------------------------------------------------------------
+    "impact_values_001": {
+        "id": "impact_values_001",
+        "category": "impact",
+        "type": "meaning",
+        "title": "The Values Audit Challenge",
+        "description": (
+            "Think of one value you hold deeply — something you believe is important "
+            "about how you live or work. Now think of the last time you made a decision "
+            "where that value was actually at stake. "
+            "Did what you did match what you believe? "
+            "If it did: what made it possible to stay aligned? "
+            "If it didn't: what got in the way — urgency, fear, habit, someone else's agenda? "
+            "Write one specific thing you'll do differently next time that value is at stake."
+        ),
+        "duration_minutes": 25,
+        "signal_targeted": "values_alignment",
+    },
+    # ---------------------------------------------------------------------------
+    # OBSTACLE PERSISTENCE challenges (mapped to: obstacle_persistence → business)
+    # ---------------------------------------------------------------------------
+    "business_obstacle_001": {
+        "id": "business_obstacle_001",
+        "category": "business",
+        "type": "action",
+        "title": "The Friction Stay Challenge",
+        "description": (
+            "Think of something you've been putting off or avoiding because it feels hard, "
+            "confusing, or uncomfortable — not because it's unimportant. "
+            "Set a timer for 25 minutes. Do one focused session on that thing. "
+            "Before you start: write down the exact obstacle that makes it hard. "
+            "After 25 minutes: write down what actually happened — "
+            "not whether it worked, but what you noticed about the obstacle "
+            "that you couldn't have known beforehand."
+        ),
+        "duration_minutes": 30,
+        "signal_targeted": "obstacle_persistence",
+    },
+    # ---------------------------------------------------------------------------
+    # CHALLENGE COMPLETION challenges (mapped to: challenge_completion → business)
+    # ---------------------------------------------------------------------------
+    "business_completion_001": {
+        "id": "business_completion_001",
+        "category": "business",
+        "type": "action",
+        "title": "The Finish Line Challenge",
+        "description": (
+            "Think of one thing you've started but never quite finished — "
+            "not a new project, something you've already begun. "
+            "Define what 'done' means for it in one concrete sentence. "
+            "Then: what's the single remaining step between where you are and done? "
+            "It's usually something small and annoying, not something big. "
+            "Commit to completing that step in the next 48 hours. "
+            "Report back what the last step actually was."
+        ),
+        "duration_minutes": 20,
+        "signal_targeted": "challenge_completion",
+    },
+    # ---------------------------------------------------------------------------
+    # PEER RECOGNITION challenges (mapped to: peer_recognition → creative)
+    # ---------------------------------------------------------------------------
+    "creative_peer_001": {
+        "id": "creative_peer_001",
+        "category": "creative",
+        "type": "action",
+        "title": "The Visible Work Challenge",
+        "description": (
+            "Think of something you've made, solved, or figured out — "
+            "something you're proud of but haven't shared. "
+            "Choose one person who would genuinely appreciate it and understand it. "
+            "Send it to them, show it to them, or describe it to them — "
+            "within the next 48 hours. "
+            "Your goal is not feedback. Your goal is to let someone see your work. "
+            "After they see it: write down one thing you noticed about their reaction "
+            "that confirmed something you already suspected about your work."
+        ),
+        "duration_minutes": 20,
+        "signal_targeted": "peer_recognition",
+    },
 }
 
 
@@ -1029,6 +1110,11 @@ def _select_challenge(state: UserState) -> dict:
         "initiative_taking": "business",
         "pattern_recognition": "creative",
         "voice_authenticity": "creative",
+        # New signals added 2026-03-26
+        "values_alignment": "impact",
+        "obstacle_persistence": "business",
+        "challenge_completion": "business",
+        "peer_recognition": "creative",
     }
 
     if not vector:

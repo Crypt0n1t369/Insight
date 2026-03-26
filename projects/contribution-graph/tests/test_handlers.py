@@ -270,6 +270,54 @@ class TestChallengeSelection:
         # contribution_drive has highest confidence at 0.75
         assert challenge["signal_targeted"] == "contribution_drive"
 
+    def test_selects_values_alignment_challenge(self):
+        """values_alignment signal → impact category challenge"""
+        state = UserState(telegram_user_id=123)
+        state.signals = [
+            ConversationSignal(SignalType.VALUES_ALIGNMENT, {"text": "a"}, 0.85, "q1"),
+            ConversationSignal(SignalType.INITIATIVE_TAKING, {"text": "b"}, 0.4, "q2"),
+        ]
+        challenge = _select_challenge(state)
+        assert challenge["signal_targeted"] == "values_alignment"
+        assert challenge["category"] == "impact"
+        assert challenge["id"] == "impact_values_001"
+
+    def test_selects_obstacle_persistence_challenge(self):
+        """obstacle_persistence signal → business category challenge"""
+        state = UserState(telegram_user_id=123)
+        state.signals = [
+            ConversationSignal(SignalType.OBSTACLE_PERSISTENCE, {"text": "a"}, 0.82, "q1"),
+            ConversationSignal(SignalType.PATTERN_RECOGNITION, {"text": "b"}, 0.4, "q2"),
+        ]
+        challenge = _select_challenge(state)
+        assert challenge["signal_targeted"] == "obstacle_persistence"
+        assert challenge["category"] == "business"
+        assert challenge["id"] == "business_obstacle_001"
+
+    def test_selects_challenge_completion_challenge(self):
+        """challenge_completion signal → business category challenge"""
+        state = UserState(telegram_user_id=123)
+        state.signals = [
+            ConversationSignal(SignalType.CHALLENGE_COMPLETION, {"text": "a"}, 0.79, "q1"),
+            ConversationSignal(SignalType.VOICE_AUTHENTICITY, {"text": "b"}, 0.4, "q2"),
+        ]
+        challenge = _select_challenge(state)
+        assert challenge["signal_targeted"] == "challenge_completion"
+        assert challenge["category"] == "business"
+        assert challenge["id"] == "business_completion_001"
+
+    def test_selects_peer_recognition_challenge(self):
+        """peer_recognition signal → creative category challenge"""
+        state = UserState(telegram_user_id=123)
+        state.signals = [
+            ConversationSignal(SignalType.PEER_RECOGNITION, {"text": "a"}, 0.88, "q1"),
+            ConversationSignal(SignalType.CONTRIBUTION_DRIVE, {"text": "b"}, 0.4, "q2"),
+        ]
+        challenge = _select_challenge(state)
+        assert challenge["signal_targeted"] == "peer_recognition"
+        assert challenge["category"] == "creative"
+        assert challenge["id"] == "creative_peer_001"
+
 
 class TestUserStateHelpers:
     """Test UserState computed properties"""
