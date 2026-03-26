@@ -1,5 +1,86 @@
 ---
 
+## 2026-03-26 19:28 Cairo (17:28 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ CG Challenge Library Expanded 16→18, 62 CG Tests Passing, 7/7 Services Up, Git Pushed
+
+### What I Did This Session
+
+**1. CG Challenge Library Expanded: 16 → 18 ✅**
+- Added 2 new challenges to hit CONCEPT.md Part 8 spec minimum (18 challenges):
+  - **`business_strategic_001`** — "The 90-Day Plan Challenge"
+    - Type: Strategic Decomposition (Type 4 per spec)
+    - Category: Business | Duration: 30 min | Signal: purpose_clarity
+    - Prompt: 3-month goal → 2-week plan with common mistakes and realistic first 3 days
+  - **`impact_synthesis_001`** — "The Perspective Synthesis Challenge"
+    - Type: Synthesis (Type 2 per spec)
+    - Category: Impact | Duration: 40 min | Signal: purpose_clarity
+    - Prompt: Multi-group problem → each perspective's view + common ground + irreducible disagreement
+
+- Category distribution now balanced: 6 impact, 6 creative, 6 business
+- All 62 CG tests pass (21 handlers + 23 web + 18 identity)
+- Adaptive challenge selection verified across all 6 signal types:
+  | Signal Profile | Selected Challenge | Category |
+  |---|---|---|
+  | pattern_recognition | creative_pattern_001 | creative ✅ |
+  | voice_authenticity | creative_pattern_003 | creative ✅ |
+  | initiative_taking | business_initiative_001 | business ✅ |
+  | purpose_clarity | business_purpose_001 | business ✅ |
+  | contribution_drive | impact_contribution_001 | impact ✅ |
+  | no signals | impact_contribution_001 | impact (safe fallback) ✅ |
+
+**2. Services Verified: 7/7 Up ✅**
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ |
+| Audio Backend | 3001 | ✅ |
+| Credo Frontend | 3002 | ✅ (HTTP 200; /health 404 — Next.js doesn't expose it) |
+| Youth Platform | 3003 | ✅ |
+| Audio Frontend | 3005 | ✅ |
+| CG Web | 3006 | ✅ |
+| JCI Portal | 8080 | ✅ |
+
+**3. Git Committed & Pushed ✅**
+- `4eccfcb` — "feat(contribution-graph): expand challenge library 16→18, hitting spec minimum"
+
+### CG — What's Left (No External Deps)
+
+| Item | Status | Notes |
+|------|--------|-------|
+| AI synthesis module | Stubbed | Template + confidence narratives work; needs OpenRouter credits |
+| CG Telegram bot | ✅ Wired + syncing | Bot→Web sync to SQLite works correctly |
+| CG Web persistence | ✅ Done | SQLite active, bot syncs to it |
+| CG Web → public URL | Blocked | Needs Vercel deployment |
+| CG Telegram → production | Blocked | Needs bot token + public URL |
+| CG PostgreSQL/Supabase | Optional | SQLite sufficient for Phase 0; Supabase for scale later |
+| Phase 0 validation | Blocked | Needs user paper prototype interviews |
+
+### CG — Phase 0 Decisions Needed from User (Q6-Q8)
+
+These require user judgment, not coding:
+| # | Question | Blocker |
+|---|---|---|
+| Q6 | Onboarding hook — first 5 min, specific challenge type + feedback | User decision |
+| Q7 | Most motivating perk for target demographic | User decision |
+| Q8 | Next event for Test 0.2 (festival/acquisition) | User decision |
+
+### User Action Items (Still Blocking)
+
+| Priority | Item | Blocker |
+|----------|------|---------|
+| P0 | Add OpenRouter credits (~$5-10) | Unblocks real AI meditation + CG synthesis |
+| P0 | Deploy CG Web to Vercel | Needs vercel.com import + env vars → public URL |
+| P0 | Deploy Audio Tool to Vercel | Public URL + Telegram integration |
+| P1 | Add CG Telegram bot token | Connect bot to actual Telegram |
+| P1 | Review CG CONCEPT.md + PILOT.md | Phase 0 go/no-go + Q6/Q7/Q8 answers |
+| P2 | Add Telegram bot tokens | Youth Platform + Festival Coordinator Phase 2 |
+
+**Nothing to build — all remaining code tasks blocked on external deps or user decisions.**
+
+*Session completed: 2026-03-26 17:45 UTC*
+
+---
+
 ## 2026-03-26 18:58 Cairo (16:58 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ All Systems Verified — 62 CG Tests Passing, 7/7 Services Up, Git Clean
