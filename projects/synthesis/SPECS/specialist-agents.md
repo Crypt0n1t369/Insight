@@ -217,4 +217,4 @@ Each agent can provide:
 - [x] ACT agent implementation — ✅ `src/specialist-agents/act.ts` (29 tests)
 - [x] NVC agent implementation — ✅ `src/specialist-agents/nvc.ts` (42 tests)
 - [ ] Audio clip library per agent (future — TTS fallback active)
-- [x] Unit tests per agent — ✅ All 7 agents tested (224 tests total)
+- [x] Unit tests per agent — ✅ All 7 specialist agents tested (214 tests: NSDR×37, IFS×31, WOOP×25, BREATHWORK×28, SE×22, ACT×29, NVC×42)
