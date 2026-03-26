@@ -447,116 +447,249 @@ def _generate_mirror_summary(state: UserState) -> dict:
     """
     Generate the bot's summary of the user (Phase 4 Mirror).
     In production, this would call the AI synthesis module.
-    For now, generates a richer text summary from collected signals and their values.
+    For now, generates a rich, sectioned text summary from collected signals.
 
-    Signal narrative templates — each includes a base observation and a
-    confidence-weighted qualifier so high-confidence signals read more断言-style
-    and low-confidence signals read more exploratory.
+    Output sections:
+      1. What you move toward (top signal, highest confidence)
+      2. How you operate (signature pattern from signal combinations)
+      3. Where you're growing (lowest-confidence signal = growth edge)
+      4. One sentence synthesis
+
+    Backward-compatible: returns {text, top_signals, version} keys only.
     """
 
     vector = state.comparative_vector
 
-    # Narrative templates keyed by signal_type value
+    # Narrative templates — three confidence levels per signal
     SIGNAL_NARRATIVES = {
         "purpose_clarity": {
-            "base": "You know what matters to you",
-            "high": "You have a clear anchor — you know what you want to create and why it matters",
-            "med": "You're developing a sense of what you want to stand for",
-            "low": "You've caught glimpses of what matters to you, even if it's still taking shape",
+            "high": "You have a clear anchor — you know what you want to create and why it matters.",
+            "med": "You're developing a sense of what you want to stand for.",
+            "low": "You've caught glimpses of what matters to you, even if it's still taking shape.",
         },
         "initiative_taking": {
-            "base": "You start things on your own",
-            "high": "You don't wait for permission or a perfect moment — you just begin",
-            "med": "You've started things yourself when the moment felt right",
-            "low": "There are sparks of initiative, even if they haven't fully ignited yet",
+            "high": "You don't wait for permission or the perfect moment — you begin.",
+            "med": "You've started things when the moment felt right.",
+            "low": "There are sparks of initiative, even if they haven't fully ignited yet.",
         },
         "pattern_recognition": {
-            "base": "You notice what others miss",
-            "high": "You see connections and patterns that aren't obvious to everyone — this is a real edge",
-            "med": "You pick up on things others overlook, and it's starting to feel natural",
-            "low": "You occasionally notice things that most people would walk right past",
+            "high": "You see connections that aren't obvious to everyone — this is a real edge.",
+            "med": "You pick up on things others overlook.",
+            "low": "You occasionally notice things most people would walk right past.",
         },
         "voice_authenticity": {
-            "base": "You speak in your own voice",
-            "high": "When you share something, it comes from a real place — people can feel that",
-            "med": "You're finding moments where you express things in your own way",
-            "low": "You're exploring what it means to share things that are really yours",
+            "high": "When you share something, it comes from a real place — people can feel that.",
+            "med": "You're finding moments where you express things in your own way.",
+            "low": "You're exploring what it means to share things that are really yours.",
         },
         "contribution_drive": {
-            "base": "You care about work that matters beyond yourself",
-            "high": "You want to create something that contributes to others — that's a powerful motivator",
-            "med": "Work feels more meaningful when it connects to something bigger than you",
-            "low": "You're starting to care about how your work affects the world around you",
+            "high": "You want to create something that contributes to others — that's a core driver.",
+            "med": "Work feels more meaningful when it connects to something bigger than you.",
+            "low": "You're starting to care about how your work affects the world around you.",
         },
         "challenge_completion": {
-            "base": "You finish what you start",
-            "high": "You follow through — when you commit to something, you see it to the end",
-            "med": "You've shown you can complete what you set out to do",
-            "low": "You're building the muscle of seeing things through to the end",
+            "high": "You follow through — when you commit to something, you see it to the end.",
+            "med": "You've shown you can complete what you set out to do.",
+            "low": "You're building the muscle of seeing things through to the end.",
+        },
+        "values_alignment": {
+            "high": "Your actions and values are in strong alignment — you know what you stand for.",
+            "med": "You're increasingly aware of when your actions match your values — and when they don't.",
+            "low": "You're starting to notice the gap between how you act and what you believe.",
+        },
+        "obstacle_persistence": {
+            "high": "When things get hard, you stay with it — difficulty doesn't stop you.",
+            "med": "You've pushed through obstacles when it mattered enough.",
+            "low": "You're learning to stay with things when they get difficult.",
+        },
+        "peer_recognition": {
+            "high": "Other people notice your work — you're building real recognition.",
+            "med": "You're starting to get seen by people whose opinion matters to you.",
+            "low": "There are signs that others are noticing what you're doing.",
         },
     }
 
+    # Signature patterns: pairs/triplets of signals that together reveal a distinct mode
+    SIGNATURE_PATTERNS = [
+        {
+            "signals": {"purpose_clarity", "contribution_drive"},
+            "label": "🪞 Vision + Impact",
+            "text": "You know what matters to you, and you want it to matter to the world — "
+                    "a combination that can drive real, sustained work.",
+        },
+        {
+            "signals": {"pattern_recognition", "voice_authenticity"},
+            "label": "🪞 Perception + Voice",
+            "text": "You see things differently AND you know how to share that in your own way — "
+                    "a rare pairing that lets you translate what you see into something others can feel.",
+        },
+        {
+            "signals": {"initiative_taking", "challenge_completion"},
+            "label": "🪞 Starter + Finisher",
+            "text": "You start things AND you see them through — the rarest combination. "
+                    "Most people have one or the other.",
+        },
+        {
+            "signals": {"purpose_clarity", "initiative_taking"},
+            "label": "🪞 Anchor + Drive",
+            "text": "You have direction AND the push to move toward it. "
+                    "You don't just know what matters — you go do something about it.",
+        },
+        {
+            "signals": {"pattern_recognition", "contribution_drive"},
+            "label": "🪞 Observer + Giver",
+            "text": "You see patterns others miss AND you want what you find to help people. "
+                    "This is the maker's combination — insight that becomes something useful.",
+        },
+        {
+            "signals": {"voice_authenticity", "challenge_completion"},
+            "label": "🪞 Truth + Will",
+            "text": "You speak in your own voice AND you finish what you start. "
+                    "When you commit to something, it comes from a real place — and it gets done.",
+        },
+        {
+            "signals": {"initiative_taking", "obstacle_persistence"},
+            "label": "🪞 Courage + Stamina",
+            "text": "You start things AND you stay with them when it gets hard. "
+                    "This is the builder's combination — the ability to push through.",
+        },
+        {
+            "signals": {"purpose_clarity", "peer_recognition"},
+            "label": "🪞 Vision + Witness",
+            "text": "You know what you stand for AND other people are starting to see it too. "
+                    "Your clarity is becoming visible.",
+        },
+        {
+            "signals": {"pattern_recognition", "initiative_taking", "challenge_completion"},
+            "label": "🪞 Three-way momentum",
+            "text": "You see what others miss, you act on it, and you finish it. "
+                    "This triumvirate is unusual — it means your pattern-seeing actually becomes real-world output.",
+        },
+        {
+            "signals": {"voice_authenticity", "contribution_drive", "purpose_clarity"},
+            "label": "🪞 Authentic impact",
+            "text": "You know your own voice, you care about contributing, and you know why it matters. "
+                    "This is a deeply coherent combination — your inside and outside are aligned.",
+        },
+    ]
+
+    # Growth edge: what to develop next, based on lowest-confidence signal
+    GROWTH_EDGES = {
+        "purpose_clarity": "Try clarifying one specific thing you want to create — even a small thing.",
+        "initiative_taking": "Start something small without waiting for a perfect plan. Ship the first step.",
+        "pattern_recognition": "Notice one pattern in your work this week and write it down before it fades.",
+        "voice_authenticity": "Share something you actually think — not what you think people want to hear.",
+        "contribution_drive": "Make one thing for someone else this week. Start small, make it concrete.",
+        "challenge_completion": "Pick one thing you've started and finish it. Don't add anything new until you do.",
+        "values_alignment": "Notice one moment this week where what you did matched — or didn't match — what you believe.",
+        "obstacle_persistence": "When you hit friction, stay with it for one more session before quitting.",
+        "peer_recognition": "Let one person see something you made and ask them what they actually think.",
+    }
+
     def confidence_bucket(conf: float) -> str:
-        if conf >= 0.8:
+        if conf >= 0.75:
             return "high"
-        elif conf >= 0.6:
+        elif conf >= 0.55:
             return "med"
         return "low"
 
-    def build_lines() -> list[str]:
+    def get_narrative(sig_type: str, confidence: float) -> str:
+        bucket = confidence_bucket(confidence)
+        if sig_type in SIGNAL_NARRATIVES:
+            return SIGNAL_NARRATIVES[sig_type][bucket]
+        return f"You show {sig_type.replace('_', ' ')}."
+
+    def build_sections() -> list[str]:
         if not vector:
             return [
-                "Here's what I see from what you've told me:",
+                "I'm still getting a clear read on you — let's keep going.",
                 "",
-                "I'm still getting to know you — let's keep going.",
+                "Share a bit more about what you're working on, or something that mattered to you recently. "
+                "The more you tell me, the more useful this map becomes.",
             ]
 
-        # Sort by confidence and take top 3 distinct signals
         sorted_sigs = sorted(vector.items(), key=lambda x: x[1], reverse=True)
+        top_signals_list = sorted_sigs[:3]
+        sig_types_set = {s for s, _ in top_signals_list}
 
-        # Deduplicate: if two signals are very similar (same category), keep only the stronger
-        # For now just take top 3
-        top_signals = sorted_sigs[:3]
+        sections = []
 
-        lines = ["Here's what I see from what you've told me:", ""]
+        # ── Section 1: What you move toward ─────────────────────────────────
+        if top_signals_list:
+            primary_sig, primary_conf = top_signals_list[0]
+            sections.append("What you move toward")
+            sections.append(f"• {get_narrative(primary_sig, primary_conf)}")
 
-        for sig_type, confidence in top_signals:
-            bucket = confidence_bucket(confidence)
-            narratives = SIGNAL_NARRATIVES.get(sig_type)
-            if narratives:
-                lines.append(f"• {narratives[bucket]}")
+        # ── Section 2: How you operate (signature pattern) ──────────────────
+        matched_pattern = None
+        for pattern in SIGNATURE_PATTERNS:
+            required = len(pattern["signals"])
+            intersection = sig_types_set & pattern["signals"]
+            # Match if all pattern signals are present (subset check)
+            if pattern["signals"].issubset(sig_types_set):
+                matched_pattern = pattern
+                break
+            # Also match if at least 2 of 3 signals match for 3-signal patterns
+            if required == 3 and len(intersection) >= 2:
+                matched_pattern = pattern
+                break
+            # For 2-signal patterns, match if at least 2 intersect
+            if required == 2 and len(intersection) >= 2:
+                matched_pattern = pattern
+                break
+
+        sections.append("")
+        sections.append("How you operate")
+        if matched_pattern:
+            sections.append(f"{matched_pattern['label']}: {matched_pattern['text']}")
+        else:
+            # Fallback: describe the top 2 signals separately
+            if len(top_signals_list) >= 2:
+                _, conf2 = top_signals_list[1]
+                sections.append(
+                    f"You're driven by {top_signals_list[0][0].replace('_', ' ')} "
+                    f"with {top_signals_list[1][0].replace('_', ' ')} underneath."
+                )
             else:
-                lines.append(f"• You show {sig_type.replace('_', ' ')}")
+                sections.append("Your signals are still taking shape — more data will clarify this.")
 
-        # Add a "signature pattern" line if we have enough data
-        if len(top_signals) >= 2:
-            sig_types = [s for s, _ in top_signals]
-            if "pattern_recognition" in sig_types and "voice_authenticity" in sig_types:
-                lines.extend([
-                    "",
-                    "🪞 Your pattern recognition and authentic voice together suggest you see things differently — and know how to share that.",
-                ])
-            elif "purpose_clarity" in sig_types and "contribution_drive" in sig_types:
-                lines.extend([
-                    "",
-                    "🪞 You know what matters to you, and you want it to matter to the world — a strong combination.",
-                ])
-            elif "initiative_taking" in sig_types and "challenge_completion" in sig_types:
-                lines.extend([
-                    "",
-                    "🪞 You start things AND you finish them — that's a rare pairing.",
-                ])
+        # ── Section 3: Where you're growing (growth edge) ──────────────────
+        sections.append("")
+        sections.append("Where you're growing")
+        if len(sorted_sigs) >= 2:
+            # Growth edge = lowest-confidence signal that isn't zero
+            growth_sig, growth_conf = sorted_sigs[-1]
+            if growth_conf < 0.7 and growth_sig in GROWTH_EDGES:
+                sections.append(f"Next edge: {GROWTH_EDGES[growth_sig]}")
+            elif growth_conf < 0.7:
+                sections.append(
+                    f"You're less certain about {growth_sig.replace('_', ' ')} right now — "
+                    f"but that's exactly where development happens."
+                )
+            else:
+                sections.append("Your signals are evenly strong. That's rare.")
+        else:
+            sections.append("Keep going — more signals will reveal the pattern.")
 
-        avg_confidence = sum(c for _, c in top_signals) / len(top_signals) if top_signals else 0
-        lines.extend(["", f"(Signal confidence: {int(avg_confidence * 100)}% — based on how consistently your answers pointed the same direction)"])
-        return lines
+        # ── Section 4: One-sentence synthesis ──────────────────────────────
+        sections.append("")
+        avg_confidence = sum(c for _, c in top_signals_list) / len(top_signals_list) if top_signals_list else 0
+        if top_signals_list:
+            primary_label = top_signals_list[0][0].replace('_', ' ')
+            conf_pct = int(avg_confidence * 100)
+            sections.append(
+                f"Bottom line: you're someone who {primary_label} — "
+                f"signal strength {conf_pct}%."
+            )
 
-    lines = build_lines()
+        return sections
+
+    lines = build_sections()
 
     return {
         "text": "\n".join(lines),
         "top_signals": [(s, c) for s, c in sorted(vector.items(), key=lambda x: x[1], reverse=True)[:3]],
-        "version": 2,
+        "version": 3,  # Bumped: new sectioned format
     }
 
 
