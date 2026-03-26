@@ -7,6 +7,8 @@
 **Location:** /home/drg/.openclaw/workspace/projects/contribution-graph/
 **Git:** `162af57` — enhanced mirror summary (sectioned format, 10 signature patterns, growth edges)
 
+**Design gap (Phase 1):** 4 signals have narrative templates but no dedicated challenges: `values_alignment`, `obstacle_persistence`, `challenge_completion`, `peer_recognition`
+
 **Build status:**
 - Challenge library: 18 challenges (Impact: 6, Creative: 6, Business: 6) ✅
 - Short-code identity system: ✅ (18 tests)
@@ -16,7 +18,7 @@
 - Bot→Web map sync: ✅ (bot JSON + web SQLite share data)
 - **AI synthesis module: Enhanced** ✅ NEW — sectioned mirror summary (What you move toward / How you operate / Where you're growing / Bottom line), 10 signature patterns, growth-edge nudges; needs OpenRouter for real LLM
 - CG Web persistence: ✅ SQLite (contribution_graph.db)
-- **Total CG tests: 66** (18 identity + 25 handlers + 23 web)
+- **Total CG tests: 69** (18 identity + 28 handlers + 23 web)
 
 **Key remaining decisions before Phase 1 build:**
 - Q6: Onboarding hook (first 5 minutes, specific challenge type + feedback)

@@ -1,5 +1,69 @@
 ---
 
+## 2026-03-26 22:28 Cairo (20:28 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ CG 69 Tests / Backup Removed / Mirror Summary Verified / Clean Tree
+
+**This session: Removed accidentally-committed backup file, added 3 new mirror summary tests, verified all systems operational.**
+
+### What Was Done This Session
+
+**1. Cleanup: Removed `handlers.py.bak` (41KB) from git ✅**
+- Backup file was committed in previous session (`6ab3b10`)
+- Removed from git index + deleted locally
+- Added `*.bak` to `.gitignore` to prevent future accidents
+- Commit: `fc25a0a`
+
+**2. Added 3 New Mirror Summary Tests ✅**
+- `test_sectioned_format_version_3` — verifies 4-section format + version=3
+- `test_signature_pattern_detected` — verifies Starter+Finisher pattern detection
+- `test_growth_edge_lowest_signal` — verifies growth edge = lowest-confidence signal
+- CG tests now: **69 total** (28 handlers + 18 identity + 23 web) — all green
+- Commit: `2a0f595`
+
+**3. System Verification ✅**
+- CG Web: healthy on port 3006
+- Challenge selection: all 5 signal types resolve correctly
+- Mirror summary: all 4 sections present, version=3 confirmed
+- Signature patterns: Anchor+Drive, Starter+Finisher, Three-way momentum all resolve
+- Working tree: clean, synced to origin/master
+
+**4. Design Gap Identified (for Phase 1) ⚠️**
+- 4 signals have narrative templates but no dedicated challenges:
+  - `values_alignment`, `obstacle_persistence`, `challenge_completion`, `peer_recognition`
+- These can be used as growth edges but have no specific challenge to address them
+- Not blocking for Phase 0 — signals still contribute to comparative vector
+
+### CG — Test Suite (Updated)
+| Suite | Tests | Status |
+|-------|-------|--------|
+| Handler tests | 28 (25 + 3 new) | ✅ |
+| Identity tests | 18 | ✅ |
+| Web tests | 23 | ✅ |
+| **Total** | **69** | ✅ |
+
+### What's Next (No External Deps)
+| Priority | Item | Notes |
+|----------|------|-------|
+| P1 | Add challenges for 4 uncovered signals | values_alignment, obstacle_persistence, challenge_completion, peer_recognition |
+| P1 | Wire CG bot to actual Telegram | Needs `TELEGRAM_BOT_TOKEN` |
+| P2 | Phase 0 validation interviews | Test 0.1 paper prototype |
+| P2 | Deploy CG Web to Vercel | Needs vercel.com import |
+
+### CG — What's Built & Working
+| Component | Status |
+|-----------|--------|
+| Short-code identity (CG-XXXXXX) | ✅ 18 tests |
+| 5-phase conversation handlers | ✅ 28 tests |
+| Web server + SVG map + rate limiter | ✅ 23 tests |
+| Challenge library (18 challenges) | ✅ |
+| Enhanced mirror summary (sectioned, 10 patterns, growth edges) | ✅ |
+| Telegram polling bot | ✅ Built, needs token |
+| SQLite persistence | ✅ |
+| Backup file cleanup | ✅ |
+
+---
+
 ## 2026-03-26 22:00 Cairo (20:00 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ Enhanced CG Mirror Summary / 100 Tests Passing / 7/7 Services Up
