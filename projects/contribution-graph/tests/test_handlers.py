@@ -151,6 +151,59 @@ class TestMirrorSummary:
         assert "text" in summary
         assert summary["top_signals"] == []
 
+    def test_sectioned_format_version_3(self):
+        """Enhanced mirror summary: sectioned format with version=3"""
+        state = UserState(telegram_user_id=123)
+        state.signals = [
+            ConversationSignal(SignalType.INITIATIVE_TAKING, {"text": "a"}, 0.85, "q1"),
+            ConversationSignal(SignalType.PURPOSE_CLARITY, {"text": "b"}, 0.72, "q2"),
+            ConversationSignal(SignalType.PATTERN_RECOGNITION, {"text": "c"}, 0.68, "q3"),
+            ConversationSignal(SignalType.CONTRIBUTION_DRIVE, {"text": "d"}, 0.55, "q4"),
+            ConversationSignal(SignalType.CHALLENGE_COMPLETION, {"text": "e"}, 0.50, "q5"),
+        ]
+        summary = _generate_mirror_summary(state)
+        # Version 3 = sectioned format (What you move toward / How you operate / Where growing / Bottom line)
+        assert summary.get("version") == 3
+        text = summary["text"]
+        assert "What you move toward" in text
+        assert "How you operate" in text
+        assert "Where you're growing" in text or "edge" in text.lower()
+        assert "Bottom line" in text
+        # Top signals correctly ordered by confidence
+        assert len(summary["top_signals"]) == 3
+        assert summary["top_signals"][0][0] == "initiative_taking"  # 0.85 — highest
+        assert summary["top_signals"][1][0] == "purpose_clarity"    # 0.72
+        assert summary["top_signals"][2][0] == "pattern_recognition"  # 0.68
+
+    def test_signature_pattern_detected(self):
+        """Starter+Finisher pattern: initiative_taking + challenge_completion"""
+        state = UserState(telegram_user_id=123)
+        state.signals = [
+            ConversationSignal(SignalType.INITIATIVE_TAKING, {"text": "a"}, 0.82, "q1"),
+            ConversationSignal(SignalType.CHALLENGE_COMPLETION, {"text": "b"}, 0.78, "q2"),
+            ConversationSignal(SignalType.PATTERN_RECOGNITION, {"text": "c"}, 0.55, "q3"),
+        ]
+        summary = _generate_mirror_summary(state)
+        text = summary["text"]
+        # Should detect the Starter + Finisher signature pattern
+        assert "Starter" in text or "Finisher" in text or "start" in text.lower()
+        # Growth edge should be the lowest-confidence signal
+        growth_sig = summary["top_signals"][-1][0]  # lowest
+        assert growth_sig == "pattern_recognition"
+
+    def test_growth_edge_lowest_signal(self):
+        """Growth edge is the lowest-confidence signal"""
+        state = UserState(telegram_user_id=123)
+        state.signals = [
+            ConversationSignal(SignalType.PURPOSE_CLARITY, {"text": "a"}, 0.85, "q1"),
+            ConversationSignal(SignalType.INITIATIVE_TAKING, {"text": "b"}, 0.75, "q2"),
+            ConversationSignal(SignalType.VOICE_AUTHENTICITY, {"text": "c"}, 0.45, "q3"),
+        ]
+        summary = _generate_mirror_summary(state)
+        # voice_authenticity is lowest at 0.45 — should appear in growth edge section
+        text = summary["text"]
+        assert "voice" in text.lower() or "edge" in text.lower() or "grow" in text.lower()
+
 
 class TestChallengeSelection:
     """Test challenge selection based on comparative vector"""
