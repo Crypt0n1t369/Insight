@@ -18,7 +18,7 @@
 - Bot→Web map sync: ✅ (bot JSON + web SQLite share data)
 - **AI synthesis module: Enhanced** ✅ — sectioned mirror summary (What you move toward / How you operate / Where you're growing / Bottom line), 10 signature patterns, growth-edge nudges; needs OpenRouter for real LLM
 - CG Web persistence: ✅ SQLite (contribution_graph.db)
-- **Total CG tests: 73** (18 identity + 20 handlers + 23 web)
+- **Total CG tests: 88** (18 identity + 47 handlers + 23 web) — all passing
 
 **Key remaining decisions before Phase 1 build:**
 - Q6: Onboarding hook (first 5 minutes, specific challenge type + feedback)

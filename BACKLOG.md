@@ -1,12 +1,12 @@
 # BACKLOG.md - Task Queue
 
-## LAST UPDATED: 2026-03-26 15:47 UTC (Worker-1 session)
+## LAST UPDATED: 2026-03-26 20:50 UTC (Worker-1 session)
 
 ---
 
-## 📋 WORKER-1 SESSION SUMMARY — 2026-03-26 10:47 UTC
+## 📋 WORKER-1 SESSION SUMMARY — 2026-03-26 20:50 UTC
 
-**Status:** ✅ Contribution Graph Phase 0 review COMPLETE. All P0 items still blocked on user action. No unblocked build work.
+**Status:** ✅ CREDO credibility bugs (3) fixed. RLS decision still pending. All P0 code items blocked on user action.
 
 ### Services Verified This Session
 | Service | Port | Status |
@@ -61,6 +61,13 @@ Read: projects/contribution-graph/CONCEPT.md + PILOT.md
 ---
 
 ## ✅ COMPLETED (2026-03-25)
+
+### Credibility Engine Bugs Fixed ✅ (2026-03-26)
+- **Bug 1:** Endorsement formula now uses contribution `weight` (synthesis=5, idea=3, etc.) instead of flat +1. Endorser also earns +1 (encourages curation). Self-endorsement blocked.
+- **Bug 2:** `calculateTrustTier()` threshold fixed — elder=2000 now matches SCHEMA (was 1000).
+- **Bug 3:** `on_endorsement()` trigger updated in SCHEMA.md; `get_weight_for_type()` SQL function added; SPEC.md fully documented.
+- **Commit:** `dca8dfe` — 34/34 tests passing
+- **Files:** `src/services/contribution.ts`, `src/services/identity.ts`, `src/types/index.ts`, `SPEC.md`, `SCHEMA.md`
 
 ### ACT Specialist Agent ✅
 - **Added:** `act.ts` + `act.test.ts` (29 tests) — Acceptance and Commitment Therapy
@@ -140,7 +147,7 @@ Zero tests run. Three critical questions unanswered:
 - **Nothing to build right now** — all P0/P1/P2 code items are done or waiting on user
 - **Contribution Graph Phase 0 review DONE** — CONDITIONAL GO, validation sprint is the critical path
 - **All 639 tests passing** — no regressions
-- **Git is clean** — workspace synced to `6da0310`
+- **Git is clean** — workspace synced to `dca8dfe` (credibility bug fixes)
 
 ---
 
@@ -164,10 +171,10 @@ Zero tests run. Three critical questions unanswered:
 | State Mgmt | ✅ Solid | Zustand + React Query is the right stack |
 | GraphQL Schema | ⚠️ Incomplete | Missing `limit`/`offset` on `branchContributions`, no cursor pagination |
 
-**3 bugs to fix before build:**
-1. **Tier thresholds mismatch** — SPEC says Elder=80+, SCHEMA says Elder=2000. Pick one.
-2. **Contribution weight derivation** — SPEC says weight based on type (Research=3, etc.) but SCHEMA has raw `weight INTEGER` field. Need a `get_weight_for_type(type)` function.
-3. **Endorsement score formula missing** — `applyEndorsementScore` interface exists but the actual formula (does endorser credibility matter? Is it just `+contribution.weight`?) is undetermined.
+**3 bugs to fix before build — ALL FIXED ✅ (commit `dca8dfe`):**
+1. ✅ **Tier thresholds mismatch** — Fixed: elder=2000 in identity.ts and SCHEMA.md. SPEC.md now documents exact thresholds.
+2. ✅ **Contribution weight derivation** — Fixed: `getContributionWeight()` in contribution.ts, `get_weight_for_type()` in SCHEMA. SPEC.md has full weight table.
+3. ✅ **Endorsement score formula missing** — Fixed: Author earns `weight` per endorsement, endorser earns +1. Self-endorsement blocked. Fully documented in SPEC + SCHEMA.
 
 ---
 
@@ -200,17 +207,15 @@ Zero tests run. Three critical questions unanswered:
 ### MVP Build Decision: ✅ PROCEED
 
 **Rationale:**
-- SPEC is 80% complete — 3 bugs are small fixes
+- ✅ All 3 credibility bugs now resolved (dca8dfe)
 - SCHEMA is well-engineered — triggers and indexes are correct
 - The concept is genuinely differentiated (cybernetic credibility loop + anonymous synthetic characters)
 - Architecture can scale to Phase 2/3 without rework
 
-**Before starting build, fix these 3 things:**
-1. ✅ Pick tier thresholds and document in both SPEC and SCHEMA
-2. ✅ Define endorsement score formula precisely
-3. ✅ Decide on RLS vs. application-level auth for anonymous users
+**Before starting build, fix 1 remaining thing:**
+1. ⬜ Decide on RLS vs. application-level auth for anonymous users (acceptable risk to skip RLS for MVP)
 
-**After those fixes → ready for Phase 1 build.**
+**After that fix → ready for Phase 1 build.**
 
 **If the pilot runs and validates the core loop (≥7/10), this becomes the top-priority build over Audio Tool.**
 

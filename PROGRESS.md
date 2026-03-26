@@ -1,5 +1,64 @@
 ---
 
+## 2026-03-27 00:00 Cairo (22:00 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ CG 88 Tests / All Handlers Covered / All Services Up
+
+**This session: Added 15 command handler + phase completion tests, all pass.**
+
+### What Was Done This Session
+
+**1. 15 New Handler Tests Added ✅**
+Closed coverage gap for previously untested command and phase handlers:
+| Test Class | Tests | Coverage |
+|------------|-------|---------|
+| TestCommandHandlers | 9 | handle_start, handle_map, handle_continue, handle_notifications, handle_help |
+| TestPhaseNew | 1 | handle_phase_new redirect |
+| TestChallengeCompletion | 3 | Challenge completion flow |
+| TestPhaseCompleted | 2 | Returning completed user flow |
+
+- Discovered and documented: COMPLETED users who /continue get a fresh Phase 1 start (map only via /map)
+- All 88 CG tests passing (18 identity + 47 handlers + 23 web)
+- Commit: `d3877fa`
+
+**CG Test Suite (Updated):**
+| Suite | Tests | Status |
+|-------|-------|--------|
+| db/test_identity.py | 18 | ✅ |
+| tests/test_handlers.py | 47 (+15) | ✅ |
+| web/test_web.py | 23 | ✅ |
+| **Total** | **88** | ✅ |
+
+### CG — What's Built & Working
+| Component | Status |
+|-----------|--------|
+| Short-code identity (CG-XXXXXX) | ✅ 18 tests |
+| 5-phase conversation handlers | ✅ 47 tests |
+| Web server + SVG map + rate limiter | ✅ 23 tests |
+| Challenge library (22 challenges) | ✅ ALL 9 signals covered |
+| Enhanced mirror summary (sectioned, 10 patterns, growth edges) | ✅ |
+| Telegram polling bot | ✅ Built, needs token |
+| SQLite persistence (bot→web sync) | ✅ |
+| CG Web server (port 3006) | ✅ |
+
+### CG — What's Left (No External Deps)
+| Priority | Item | Notes |
+|----------|------|-------|
+| P1 | Wire CG bot to Telegram | Needs `TELEGRAM_BOT_TOKEN` |
+| P1 | Deploy CG Web to Vercel | Needs vercel.com import + env vars |
+| P2 | Phase 0 validation interviews | Test 0.1 paper prototype |
+
+### User Action Items (Still Blocking)
+| Priority | Item | Blocker |
+|----------|------|---------|
+| P0 | Add OpenRouter credits (~$5-10) | Unblocks real AI meditation + CG synthesis |
+| P0 | Deploy CG Web to Vercel | Needs vercel.com import + env vars |
+| P0 | Deploy Audio Tool to Vercel | Needs vercel.com import + env vars |
+| P1 | Add CG Telegram bot token | Connect bot to actual Telegram |
+| P1 | Review CG CONCEPT.md + PILOT.md | Phase 0 go/no-go |
+
+---
+
 ## 2026-03-26 23:00 Cairo (21:00 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ CG 73 Tests / 4 New Challenges Added / All 7 Services Up
