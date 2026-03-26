@@ -22,7 +22,7 @@ check_port() {
 }
 
 do_status() {
-    local services=("3000:Credo API" "3001:Audio Backend" "3002:Credo Frontend" "3003:Youth Platform" "5173:Audio Frontend" "8080:JCI Portal")
+    local services=("3000:Credo API" "3001:Audio Backend" "3002:Credo Frontend" "3003:Youth Platform" "3005:Audio Frontend" "8080:JCI Portal")
     echo ""
     echo "=== Service Status ==="
     all_ok=true
@@ -72,11 +72,11 @@ do_start() {
         sleep 3
         log_info "JCI Portal started on 8080"
     fi
-    if ! check_port 5173; then
-        cd "$WORKSPACE/projects/audio-transformation-tool/code/dist"
-        nohup npx serve -l 5173 -s . > /tmp/audio-frontend.log 2>&1 &
-        sleep 2
-        log_info "Audio Frontend started on 5173"
+    if ! check_port 3005; then
+        cd "$WORKSPACE/projects/audio-transformation-tool/code"
+        nohup npx vite --port 3005 > /tmp/audio-frontend.log 2>&1 &
+        sleep 5
+        log_info "Audio Frontend started on 3005"
     fi
     sleep 3
     do_status
@@ -89,7 +89,7 @@ do_stop() {
     pkill -f "next dev.*3002" && log_info "Credo Frontend stopped" || true
     pkill -f "uvicorn.*3003" && log_info "Youth Platform stopped" || true
     pkill -f "python3 webapp/server.py" && log_info "JCI Portal stopped" || true
-    pkill -f "serve -l 5173" && log_info "Audio Frontend stopped" || true
+    pkill -f "vite.*3005" && log_info "Audio Frontend stopped" || true
 }
 
 case "${1:-status}" in
