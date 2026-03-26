@@ -28,6 +28,15 @@
 | With satellite image | 132 (29%) |
 | Total solar potential | 629 MW |
 
+**4. Dashboard Regenerated ✅**
+- `docs/dashboard.html`: rebuilt from leads_dashboard.json with all 452 leads
+- Added search + state filter, inline industry tags
+- 558KB static HTML (no external dependencies beyond Tailwind CDN)
+
+**5. Git: 2 Commits Pushed ✅**
+- `6bc150b`: deduplicate + industry backfill
+- `3a78fff`: dashboard with 452 leads + generate_dashboard.py
+
 **Solar Scout — What's Left**
 - Outreach (all 452 = cold) — needs email infra + user strategy decision
 - Industry enrichment for 440 — needs Lursoft.lv API or manual research
