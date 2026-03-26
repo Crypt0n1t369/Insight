@@ -1,5 +1,79 @@
 ---
 
+## 2026-03-26 17:00 Cairo (15:00 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ CG Web Persistence + Service Manager + Richer Mirror Summary — 62 CG Tests Passing, 7/7 Services Up
+
+### What I Did This Session
+
+**1. CG Web Server Now Uses SQLite Persistence ✅**
+- `web/server.py`: switched `InMemoryStore` → `SQLiteInMemoryStore`
+- `web/store.py`: fixed `_init_schema` — was trying to execute `schema.sql` (PostgreSQL) in SQLite; now uses inline SQLite schema
+- DB file: `projects/contribution-graph/data/contribution_graph.db` (36KB, growing)
+- Verified: seeded a test user, queried their map API — data persists correctly
+
+**2. CG Web Server Added to service_manager.sh ✅**
+- `scripts/service_manager.sh`: added port 3006 to `do_status`, start, and stop
+- Start command: `CG_SERVER_SECRET=x CG_WEB_PORT=3006 python3 -m web.server`
+- Stop command: `pkill -f "web.server.*3006"`
+- Updated systemd unit description: `OpenClaw Workspace Services (Audio, Credo, Youth, JCI, CG Web)`
+- CG Web survives reboots via `systemctl --user start workspace-services`
+
+**3. Mirror Summary Rewritten — Confidence-Bucketed Narratives ✅**
+- `bot/handlers.py`: complete rewrite of `_generate_mirror_summary`
+- 6 signal types now have narrative templates with 3 confidence levels (high/med/low)
+- "Signature pattern" detection: 3 signal combinations get a combined mirror line (🪞)
+- Version bumped: 1 → 2 (format change: `top_signals` now list of tuples)
+- 3 tests failed initially (property vs method bug), fixed in same session
+
+**4. Services Restored ✅**
+- Audio Frontend (3005) and Credo Frontend (3002) restarted after incidental deaths
+- All 7 services verified up: 3000, 3001, 3002, 3003, 3005, 3006, 8080
+
+**5. Committed: `0f4ee1a` — "feat(contribution-graph): CG Web persistence + service manager + richer mirror summary"**
+
+### Tests: 62 CG Passing ✅
+| Suite | Tests | Status |
+|-------|-------|--------|
+| db/test_identity.py | 18 | ✅ |
+| tests/test_handlers.py | 21 | ✅ |
+| web/test_web.py | 23 | ✅ |
+
+### Services: 7/7 Up ✅
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ |
+| Audio Backend | 3001 | ✅ |
+| Credo Frontend | 3002 | ✅ |
+| Youth Platform | 3003 | ✅ |
+| Audio Frontend | 3005 | ✅ |
+| CG Web | 3006 | ✅ SQLite |
+| JCI Portal | 8080 | ✅ |
+
+### What's Left (Contribution Graph — No External Deps)
+
+| Item | Status | Notes |
+|------|--------|-------|
+| AI synthesis module | Stubbed | Template improved; needs OpenRouter credits for real LLM |
+| CG Telegram bot | Wired | Polling ready; needs `TELEGRAM_BOT_TOKEN` |
+| CG Web persistence | ✅ Done | SQLite store active |
+| CG Web in service_manager | ✅ Done | Will survive reboots |
+| CG Web → public URL | Blocked | Needs deployment |
+| CG Telegram → production | Blocked | Needs bot token + public URL |
+| CG PostgreSQL/Supabase | Blocked | Needs user Supabase credentials |
+| Phase 0 validation | Blocked | Needs user to run paper prototype interviews |
+
+### User Action Items (Still Blocking)
+
+| Priority | Item | Impact |
+|----------|------|--------|
+| P0 | Deploy Audio Tool to Vercel | Public URL + Telegram integration |
+| P0 | Add OpenRouter credits (~$5-10) | Unblocks real AI meditation + CG synthesis |
+| P1 | Review CG CONCEPT.md + PILOT.md | Phase 0 go/no-go |
+| P1 | Add CG Telegram bot token | Connects bot to actual Telegram |
+
+---
+
 ## 2026-03-26 15:58 Cairo (13:58 UTC) - Wakeup Session (Aton)
 
 ### Status: ✅ All Systems Nominal — 686 Tests Passing, 6/6 Services Up, Git Synced
