@@ -815,6 +815,52 @@ CHALLENGE_LIBRARY = {
         "duration_minutes": 45,
         "signal_targeted": "pattern_recognition",
     },
+    # ---------------------------------------------------------------------------
+    # STRATEGIC DECOMPOSITION (Type 4 — Break complex goals into executable steps)
+    # Maps to: purpose_clarity, initiative_taking
+    # Spec minimum: 2 simulated in Phase 1; we have 1, adding 1 more = 2 ✅
+    # ---------------------------------------------------------------------------
+    "business_strategic_001": {
+        "id": "business_strategic_001",
+        "category": "business",
+        "type": "strategic_decomposition",
+        "title": "The 90-Day Plan Challenge",
+        "description": (
+            "Think of something you want to accomplish in the next 3 months — "
+            "it can be personal, creative, professional, or social. "
+            "Now write a plan for the first 2 weeks only: "
+            "What are the 3 most important steps? "
+            "What's the one mistake most people make when trying to do this? "
+            "What would the first 3 days look like if you were serious about it? "
+            "Be honest about the obstacles. The plan should be realistic, not aspirational."
+        ),
+        "duration_minutes": 30,
+        "signal_targeted": "purpose_clarity",
+    },
+    # ---------------------------------------------------------------------------
+    # SYNTHESIS (Type 2 — Integrate multiple sources into coherent whole)
+    # Maps to: purpose_clarity, contribution_drive
+    # Spec minimum: 3 simulated + 1 real partner; we expand Impact with synthesis
+    # ---------------------------------------------------------------------------
+    "impact_synthesis_001": {
+        "id": "impact_synthesis_001",
+        "category": "impact",
+        "type": "synthesis",
+        "title": "The Perspective Synthesis Challenge",
+        "description": (
+            "Think of a problem in your community, school, or workplace that involves "
+            "more than one group of people. It could be a communication breakdown, "
+            "a resource conflict, or a shared challenge where different groups "
+            "have different perspectives. "
+            "Write a one-paragraph summary of the problem from each group's point of view — "
+            "as accurately as you can, not as you assume they see it. "
+            "Then: what's the one thing all groups probably agree on, even if they "
+            "disagree about everything else? "
+            "And one thing they probably can't agree on, no matter what?"
+        ),
+        "duration_minutes": 40,
+        "signal_targeted": "purpose_clarity",
+    },
 }
 
 
