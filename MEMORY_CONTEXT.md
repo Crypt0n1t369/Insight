@@ -27,6 +27,9 @@
 - Q7: Most motivating perk for target demographic
 - Q8: Next event for Test 0.2 (festival/acquisition)
 
+**Also now in the blueprint:**
+- IDENTITY-ARCHITECTURE.md: Full technical design for session continuity, secure identifier system, map delivery, and re-engagement
+
 ## Session Summary
 
 ### Session 2026-03-26 Morning (current)

@@ -74,9 +74,9 @@ do_start() {
     fi
     if ! check_port 3005; then
         cd "$WORKSPACE/projects/audio-transformation-tool/code"
-        nohup npx vite --port 3005 > /tmp/audio-frontend.log 2>&1 &
-        sleep 5
-        log_info "Audio Frontend started on 3005"
+        nohup npx vite preview --port 3005 --host 0.0.0.0 > /tmp/audio-frontend.log 2>&1 &
+        sleep 3
+        log_info "Audio Frontend started on 3005 (preview mode)"
     fi
     sleep 3
     do_status

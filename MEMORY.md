@@ -1,43 +1,26 @@
-# MEMORY.md - Session Context
+# MEMORY.md — Session Context
 
-## Session: 2026-03-24
+## Session: 2026-03-26
 
 ### Completed
 
-1. **Credo Backend Fixes** ✅
-   - Corrected Quadratic Voting logic (diminishing returns: weight = floor(sqrt(tokens))).
-   - Fixed `http-api.test.ts` to use correct contribution types and wallet address casing.
-   - Updated `integration.test.ts` to reflect the corrected voting weights.
-   - Verified 75/75 tests passing.
+1. **Contribution Graph — Full Discovery Flow Design** ✅
+   - DISCOVERY-FLOW.md: 5-phase conversational profiling (Opening → Orientation → Evidence → Mirror → First Stretch)
+   - DISCOVERY-FLOW-APPENDIX.md: Testing protocols, nudge library, 9 challenge options, 4 behavioral tests
+   - 25-nudge library organized in 5 move types (Return to Evidence, Seek the Question, Invert, Externalize, Speculate Forward)
+   - 9 challenge options across 3 tracks (Impact, Creative, Business)
+   - 4 live behavioral tests with full rubrics
 
-2. **Heartbeat & Bug Reporting** ✅
-   - Updated `HEARTBEAT.md` to check bug reports on port 3002 (frontend) instead of 3000.
-   - Fixed `setup-bug-reports.js` to handle Supabase schema cache errors.
-   - Verified all 4 platforms are healthy and responsive.
+2. **OpenClaw Update** ✅
+   - 2026.3.13 → 2026.3.24
+   - Workspace files backed up to ~/backups/openclaw-backup-20260326-114410/
 
-3. **System Audit** ✅
-   - Verified tests for Audio Tool (34 tests), JCI Org Manager (41 tests), and Youth Platform (24 tests) are all passing.
-   - Confirmed service ports:
-     - 3000: Credo API
-     - 3002: Credo Frontend
-     - 3001: Audio Tool Backend
-     - 5173: Audio Tool Frontend
-     - 3003: Youth Empowerment Platform
-     - 8080: JCI Org Manager
+### Next Steps (Contribution Graph)
 
-### Next Steps
-
-1. **Synthesis Platform Foundation**
-   - Start creating the directory structure for `projects/synthesis/` as defined in `PLATFORM.md`.
-   - Draft module interface specifications.
-
-2. **Audio Tool Enhancement**
-   - Add remaining protocols (GENERAL, TRAUMA_SAFE, BREATHWORK).
-   - Investigate upstream merge.
-
-3. **Paper Branch Pilot**
-   - Await user approval of the pilot plan in `PILOT.md`.
-   - Prepare Markdown templates for Google Forms.
+1. Q6: Define onboarding hook (first 5 minutes of value)
+2. Q7: Identify most motivating perk for 16–25 demographic
+3. Q8: Identify next event for Test 0.2 (festival/hackathon)
+4. Run Phase 0 tests: Test 0.1 (youth self-discovery desire), 0.2 (festival funnel), 0.3 (client willingness), 0.4 (attribution fairness)
 
 ### Last Updated
-2026-03-24 12:45 Cairo
+2026-03-26 12:30 Cairo
