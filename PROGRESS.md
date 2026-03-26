@@ -1,5 +1,40 @@
 ---
 
+## 2026-03-27 00:28 Cairo (22:28 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ Solar Scout — Data Cleaned: 452 unique leads, deduplicated, industry backfill
+
+**Session focus: Solar Scout data quality improvement. No external APIs or tokens needed.**
+
+### Solar Scout — What Was Done
+
+**1. Deduplication — 68 duplicates removed ✅**
+- `docs/leads_dashboard.json`: 520 → 452 unique leads
+- Kept entry with more populated fields per duplicate pair
+- Re-sequentialized IDs, regenerated CSV
+
+**2. Industry Backfill — 12 leads enriched ✅**
+- Matched against `real_companies.json` + `real_leads.json`
+- Industries now known: Pharmaceuticals, Dairy, Wood processing, Glass fiber, Electronics, Shipbuilding, Beverages, Insulation, Floor coverings
+- 440/452 still "unknown" — source files only had major companies
+
+**3. Data Quality Verified ✅**
+| Metric | Value |
+|--------|-------|
+| Unique leads | 452 |
+| With phone (+371) | 452 (100%) |
+| With email (valid) | 452 (100%) |
+| With decision maker | 452 (100%) |
+| With satellite image | 132 (29%) |
+| Total solar potential | 629 MW |
+
+**Solar Scout — What's Left**
+- Outreach (all 452 = cold) — needs email infra + user strategy decision
+- Industry enrichment for 440 — needs Lursoft.lv API or manual research
+- **Nothing buildable without external tokens**
+
+---
+
 ## 2026-03-27 00:00 Cairo (22:00 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ CG 88 Tests / All Handlers Covered / All Services Up
