@@ -1,5 +1,68 @@
 ---
 
+## 2026-03-27 01:00 Cairo (23:00 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ All 7 Services Up / 88 CG Tests Passing / Data Committed / Minor Duplicate Found
+
+**This session: System verification, data integrity check, doc commits.**
+
+### What Was Done This Session
+
+**1. All 7 Services Verified ✅**
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ |
+| Audio Backend | 3001 | ✅ |
+| Credo Frontend | 3002 | ✅ |
+| Youth Platform | 3003 | ✅ |
+| Audio Frontend | 3005 | ✅ |
+| CG Web | 3006 | ✅ SQLiteInMemoryStore |
+| JCI Portal | 8080 | ✅ |
+
+**2. Tests Verified ✅**
+- CG: 88 tests passing (18 identity + 47 handlers + 23 web) ✅
+- Audio: 34 vitest passing ✅
+
+**3. Data Integrity Check — Minor Duplicate Found ⚠️**
+- Email duplicate: `melrains@parks.lv` appears twice in leads_dashboard.csv
+- 452 rows total, 451 unique emails
+- **Impact:** Very low — same person appears twice (likely a data collection artifact)
+- **Fix:** Should be deduplicated (third occurrence?), needs user to verify which record to keep
+
+**4. Git Commits Made ✅**
+- `a6840c2` (solar-scout): docs: update PROGRESS - document new dashboard.html and generate_dashboard.py
+- `635f6fa` (workspace): docs(audio): update PROGRESS - timestamp + 21:28 UTC wakeup session entry
+
+### Solar Scout — ⚠️ Minor Data Issue
+- `melrains@parks.lv` appears twice in leads_dashboard.csv (ID collision or real duplicate)
+- All other 451 emails are unique
+- **Action needed:** User to verify if this is one person with two entries or a collection error
+
+### CG — What's Built & Working
+| Component | Status |
+|-----------|--------|
+| Short-code identity (CG-XXXXXX) | ✅ 18 tests |
+| 5-phase conversation handlers | ✅ 47 tests |
+| Web server + SVG map + rate limiter | ✅ 23 tests |
+| Challenge library (22 challenges) | ✅ ALL 9 signals covered |
+| Enhanced mirror summary (sectioned, 10 patterns, growth edges) | ✅ |
+| Telegram polling bot | ✅ Built, needs token |
+| SQLite persistence (bot→web sync) | ✅ |
+| CG Web server (port 3006) | ✅ |
+
+### User Action Items (Still Blocking)
+
+| Priority | Item | Blocker |
+|----------|------|---------|
+| P0 | Add OpenRouter credits (~$5-10) | Unblocks real AI meditation + CG synthesis |
+| P0 | Deploy CG Web to Vercel | Needs vercel.com import + env vars |
+| P0 | Deploy Audio Tool to Vercel | Needs vercel.com import + env vars |
+| P1 | Add CG Telegram bot token | Connect bot to actual Telegram |
+| P1 | Review CG CONCEPT.md + PILOT.md | Phase 0 go/no-go |
+| P2 | Verify Solar Scout duplicate | `melrains@parks.lv` appears twice |
+
+---
+
 ## 2026-03-27 00:28 Cairo (22:28 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ Solar Scout — Data Cleaned: 452 unique leads, deduplicated, industry backfill
