@@ -58,7 +58,7 @@ def _challenge_item(challenge: dict, idx: int) -> str:
     return f"""
     <g transform="translate(0, {idx * 30})">
         <text x="0" y="14" class="challenge-emoji">{emoji}</text>
-        <text x="24" y="14" class="challenge-title">{emoji} {title}</text>
+        <text x="24" y="14" class="challenge-title">{title}</text>
     </g>"""
 
 
