@@ -123,13 +123,12 @@ async function callOpenRouter(messages: any[], model: string = OPENROUTER_MODEL,
         })
     });
 
+    if (response.status === 402) {
+        console.warn("OpenRouter: insufficient credits — demo mode active");
+        return null;
+    }
     if (!response.ok) {
         const errorData = await response.text();
-        // Return null on credit errors → demo mode triggers cleanly without log spam
-        if (response.status === 402) {
-            console.warn("OpenRouter: insufficient credits — demo mode active");
-            return null;
-        }
         console.error(`OpenRouter API Error (${response.status}):`, errorData);
         throw new Error(`OpenRouter API Error: ${response.status}`);
     }
@@ -145,6 +144,15 @@ function cleanJson(text: string): string {
 
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', openRouterLinked: !!openRouterKey });
+});
+
+app.get('/api/protocols', (req, res) => {
+    const protocols = Object.values(CLINICAL_PROTOCOLS).map(
+        ({ id, name, description, variables, sonicCues }) => ({
+            id, name, description, variables, sonicCues
+        })
+    );
+    res.json(protocols);
 });
 
 app.post('/api/chat', async (req, res) => {
@@ -237,7 +245,21 @@ app.post('/api/chat', async (req, res) => {
 });
 
 app.post('/api/director', async (req, res) => {
-    const { input, triage, growthHistory } = req.body;
+    // Support both canonical field names and legacy test shapes
+    const input = req.body.input ?? req.body.userMessage ?? '';
+    const triage = req.body.triage ?? (req.body.sessionState ? { valence: 5, arousal: 5 } : null);
+    const growthHistory = req.body.growthHistory ?? [];
+
+    // Graceful fallback when triage data is missing or malformed
+    if (!input && (!triage || typeof triage.valence !== 'number')) {
+        return res.json({
+            methodology: "NSDR",
+            focus: "Grounding",
+            targetFeeling: "Calm",
+            intensity: "MODERATE",
+            rationale: "Fallback: insufficient input data"
+        });
+    }
 
     const directorTools = [
         {
@@ -261,7 +283,7 @@ app.post('/api/director', async (req, res) => {
     You are the "Insight Director". Triage the explorer and select a growth protocol.
     
     EXPLORER INPUT: "${input}"
-    STATE: Valence ${triage.valence}, Energy ${triage.arousal}
+    STATE: Valence ${triage?.valence ?? 5}, Energy ${triage?.arousal ?? 5}
     CONTEXT: ${JSON.stringify(growthHistory)}
 
     If they mention a Part, use IFS. If anxious, use NSDR or Grounding.
@@ -273,11 +295,11 @@ app.post('/api/director', async (req, res) => {
     try {
         const text = await callOpenRouter([{ role: "user", content: prompt }], DIRECTOR_MODEL, true);
         const parsed = JSON.parse(cleanJson(text || "{}"));
-        res.json(parsed);
+        return res.json(parsed);
     } catch (error) {
         console.error("Director error:", error);
         // Fallback default
-        res.json({
+        return res.json({
             methodology: "NSDR",
             focus: "Grounding",
             targetFeeling: "Calm",
