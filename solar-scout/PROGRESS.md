@@ -1,5 +1,49 @@
 # Solar Scout - Progress Tracker
 
+## 2026-03-27 04:58 Cairo (02:58 UTC) — Aton Wakeup
+
+### Status: ✅ Outreach Email Template Drafted / 11 Unknowns Verification Attempted
+
+**This session: Drafted outreach email template (Latvian + English) with merge tags, tier strategy, compliance notes. Attempted verification of 11 unknowns — Lursoft requires login, web search blocked on credits. Both remain blocked.**
+
+### What Was Done
+
+**1. Outreach Email Template Drafted ✅**
+- Created `docs/EMAIL_TEMPLATE.md` — professional Latvian + English bilingual templates
+- Includes merge tags for all company fields (name, decision maker, capacity, address, industry)
+- Tier strategy: 35 Tier 1 (confirmed manufacturing → send immediately), 11 Tier 2 (Manufacturing likely → verify first)
+- Compliance section: BCC requirement, unsubscribe, Latvian spam law
+- Tracking metrics: open rate >35%, reply rate >8%, calls booked >3
+
+**2. 11 Unknowns — Verification Attempted ⚠️**
+- Lursoft.lv → page not found without login credentials
+- Web search → 402 OpenRouter credits depleted
+- All 11 remain "Manufacturing (likely)" — blocked on credits
+- Companies: Riviera, Latsr, Kopa, JSC Latgales, Gerhard, Krass, Sent, Bermas, Len, Vests, Sakart
+
+### Current Data State
+
+| Metric | Value |
+|--------|-------|
+| Real manufacturing companies | **46** |
+| Tier 1 — Confirmed industry | 35 (76%) |
+| Tier 2 — Manufacturing (likely) | 11 (24%) |
+| Flagged non-manufacturers | 5 (removed from outreach) |
+| **Total solar potential** | **104.9 MW** |
+
+### 11 Companies Needing Manual Verification
+Riviera (2.5 MW), Latsr (2.2 MW), Kopa (2.2 MW), JSC Latgales (2.2 MW), Gerhard (2.0 MW), Krass (2.2 MW), Sent (2.1 MW), Bermas (1.9 MW), Len (2.4 MW), Vests (2.4 MW), Sakart (2.4 MW)
+→ Total unverified: ~24 MW → Recommend Lursoft.lv or +371 phone calls
+
+### What's Next
+1. **User: Top up OpenRouter credits** (unblocks AI research)
+2. **User: Approve 46-company outreach list** (email template ready to use)
+3. **User: Verify 11 unknowns** via Lursoft.lv or +371 calls
+4. **User: Set up email/SMTP infrastructure**
+
+### Files Created This Session
+- `docs/EMAIL_TEMPLATE.md` — outreach email template (bilingual Latvian/English)
+
 
 ## 2026-03-27 03:58 Cairo (01:58 UTC) — Aton Wakeup
 
