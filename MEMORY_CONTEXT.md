@@ -13,17 +13,17 @@
 - **Key file:** `docs/EMAIL_TEMPLATE.md` — outreach email template ready
 
 ### Contribution Graph (Kristaps' Life Work)
-- **Phase:** Build phase complete — all components built, tested, documented
-- **Location:** /home/drg/.openclaw/workspace/projects/contribution-graph/
-- **Git:** `d3877fa` + `8b62141` — CG 88 tests passing, 22 challenges, enhanced mirror summary
-- **Challenge library:** 22 challenges (Impact: 7, Creative: 7, Business: 8) — ALL 9 signal types covered
-- **Short-code identity:** ✅ 18 tests
-- **5-phase conversation handlers:** ✅ 47 tests
-- **Web server + SVG map + rate limiter:** ✅ 23 tests
-- **Telegram polling bot:** ✅ Wired + syncing to SQLite (bot→web map sync works)
-- **CG Web server:** Running on port 3006 with SQLite persistence
-- **AI synthesis module:** Enhanced template (sectioned mirror summary, 10 patterns, growth edges); needs OpenRouter for real LLM
-- **Total CG tests: 88** (18 identity + 47 handlers + 23 web) — all passing
+- **Phase:** Phase 0 validation materials drafted — ready for user review + execution
+- **Location:** `/home/drg/.openclaw/workspace/projects/contribution-graph/`
+- **Git:** `9d4cdaa` (workspace) — all Phase 0 test materials committed
+- **Test materials (all drafted):**
+  - `TEST_01_INTERVIEW_SCRIPT.md` — 5-screen prototype, 6 Qs, screener, consent script ✅
+  - `TEST_02_ATTRIBUTION_FAIRNESS.md` — task brief, claim template, attestation form, negotiation protocol, survey ✅
+  - `TEST_04_CLIENT_READINESS.md` — 1-pager, conversation guide, outreach email, problem template ✅
+  - `TEST_03_FESTIVAL.md` — NOT STARTED (needs event identification)
+- **Build tests:** 47/47 pytest passing (CG handlers — verified 2026-03-27)
+- **Web server:** Running on port 3006 with SQLite persistence ✅
+- **AI synthesis module:** Enhanced template; needs OpenRouter for real LLM
 
 ### Audio Tool
 - **Phase:** Operational (production)
