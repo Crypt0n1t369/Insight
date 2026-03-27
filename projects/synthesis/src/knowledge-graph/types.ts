@@ -57,6 +57,8 @@ export interface KGQuery {
     direction?: 'outbound' | 'inbound' | 'both'; // default 'both'
   };
   fullText?: string;
+  /** Maximum number of nodes to return (default: unlimited) */
+  limit?: number;
 }
 
 export interface KGResult {

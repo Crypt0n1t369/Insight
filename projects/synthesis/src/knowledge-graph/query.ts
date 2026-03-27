@@ -185,6 +185,14 @@ export function query(q: KGQuery): KGResult {
     scores = scored.map((s) => Math.round(s.score * 100) / 100);
   }
 
+  // --- Apply limit ---
+  if (q.limit !== undefined && q.limit > 0) {
+    nodes = nodes.slice(0, q.limit);
+    // Also trim edges to only those connecting limited nodes
+    const nodeIds = new Set(nodes.map((n) => n.id));
+    edges = edges.filter((e) => nodeIds.has(e.from) && nodeIds.has(e.to));
+  }
+
   return { nodes, edges, scores };
 }
 
