@@ -1,5 +1,75 @@
 ---
 
+## 2026-03-27 17:29 Cairo (15:29 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ Audio Backend Fixed + All 930 Tests Confirmed / OpenRouter Root Cause Identified
+
+**Root cause of demo mode: OpenRouter API key has ~3-11 token daily limit (free tier) — too low for JSON responses. Added X-Demo-Mode headers to all endpoints. Fixed /api/director returning {} bug.**
+
+### What Was Done This Session
+
+**1. Full Test Suite Confirmed ✅**
+- Synthesis Platform: **444** vitest ✅
+- Festival Coordinator: **140** pytest ✅
+- Credo (collaboration-platform): **137** vitest ✅
+- Contribution Graph: **110** pytest ✅
+- Audio Backend (workspace/server/): **34** vitest ✅
+- Audio Backend (code/server/ submodule): **17** vitest ✅
+- JCI Org Manager: **41** pytest ✅
+- Youth Empowerment Platform: **24** pytest ✅
+- **Total: 930 tests ✅**
+
+**2. OpenRouter Root Cause Identified 🔍**
+- API key has ~3-11 token daily limit (free tier) — **per-call limit exhausted in ~5 minutes**
+- Direct test: `max_tokens: 20` → 402; `max_tokens: 11` → 200 but truncated (7 tokens); now at ~3 tokens
+- Root cause: the API key's daily budget is near-zero, causing 402 on every meaningful API call
+- Demo mode is **correct fallback** — no fix possible without adding credits
+- AI features blocked until credits added (P0 — user action required)
+
+**3. Audio Backend Improvements ✅**
+- Added `X-Demo-Mode: credits_exhausted` header to `/api/chat` demo fallback (credits/402 case)
+- Added `X-Demo-Mode: malformed_response` header to `/api/chat` fallback (bad JSON parse)
+- Added `X-Demo-Mode: server_error` header to `/api/chat` catch block
+- **Fixed `/api/director` bug**: was returning `{}` on credits exhaustion (null||"{}"→"{}"→{})
+  - Now returns proper NSDR fallback with `X-Demo-Mode: credits_exhausted` header
+- Added `X-Demo-Mode: credits_exhausted` to `/api/meditation/generate` fallback
+- All 34 vitest tests still passing after changes
+- Server restarted with fixes in place
+
+**4. Submodule Synced ✅**
+- `projects/audio-transformation-tool/code` (submodule) updated to `b410f73`
+- Workspace root pushed to `55c8549`
+
+### All Services Status (15:50 UTC)
+| Service | Port | Status |
+|---------|------|--------|
+| Audio Backend | 3001 | ✅ `X-Demo-Mode: credits_exhausted` on all AI endpoints |
+| Audio Frontend | 3005 | ✅ |
+| Credo API | 3000 | ✅ |
+| CG Web | 3006 | ✅ |
+| JCI Portal | 8080 | ✅ |
+| Youth Platform | 3003 | ✅ |
+
+### ⚠️ BLOCKED — User Action Required
+| Priority | Item | Blocker |
+|----------|------|---------|
+| **P0** | **OpenRouter credits (~$5-10)** | openrouter.ai → add credits — key has ~3 token daily limit left; AI features blocked |
+| **P0** | **CG Test 0.1 — Review + recruit** | Review `projects/contribution-graph/TEST_01_INTERVIEW_SCRIPT.md` + recruit 10-12 participants |
+| **P0** | **CG Test 0.3 — Identify event** | Find 1 event in next 4-8 weeks |
+| **P0** | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
+| **P1** | **Solar Scout SMTP** | Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` → `send_emails.py --dry-run --all` → full send |
+| **P1** | **CG Telegram bot token** | BotFather → new token → `TELEGRAM_BOT_TOKEN` |
+| **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars |
+
+### Git Commits This Session
+| Repo | Commit | Description |
+|------|--------|-------------|
+| workspace root | `d706c20` | fix(audio): add X-Demo-Mode headers + fix /api/director empty-object bug |
+| audio submodule | `b410f73` | fix(server): add X-Demo-Mode headers + fix /api/director empty-object bug |
+| workspace root | `55c8549` | sync(audio): update submodule to b410f73 with X-Demo-Mode headers fix |
+
+---
+
 ## 2026-03-27 17:08 Cairo (15:08 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ 930 Tests Confirmed / Test Count Corrections Applied / Git Pushed

@@ -67,23 +67,29 @@
 
 > ⚠️ Previous "958" count was wrong: CG had no vitest tests (34 misattributed). Previous "913" count omitted the workspace root server/ integration tests (23 tests) from audio backend.
 
-## Service Status (2026-03-27 15:08 UTC)
+## Service Status (2026-03-27 15:50 UTC)
 
-All services healthy: 3000 ✅ | 3001 ✅ | 3003 ✅ | 3005 ✅ | 3006 ✅ | 8080 ✅
+All services healthy: 3000 ✅ | 3001 ✅ (X-Demo-Mode: credits_exhausted on all AI endpoints) | 3003 ✅ | 3005 ✅ | 3006 ✅ | 8080 ✅
 
 ## Git
 
-- **Workspace:** `440c138` — pushed to origin/master ✅
-- **Solar Scout:** Pushed and synced
+- **Workspace:** `55c8549` — pushed to origin/master ✅
+- **Solar Scout:** Pushed and synced (separate repo: `7238f4e`)
 
 ## What's Left (User Action Required)
 
 | Priority | Item | Blocker |
 |----------|------|---------|
+| **P0** | **OpenRouter credits (~$5-10)** | openrouter.ai → add credits — key has ~3 token daily limit (free tier); AI features blocked until credits added |
 | **P0** | **CG Test 0.1 — Review script + recruit** | Review `projects/contribution-graph/TEST_01_INTERVIEW_SCRIPT.md` + recruit 10–12 participants |
-| **P0** | **OpenRouter credits (~$5-10)** | openrouter.ai → add credits — unblocks: Solar Scout unknown verification, CG synthesis, audio AI |
 | **P0** | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks |
 | **P0** | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
 | **P1** | **Solar Scout SMTP** | Set SMTP env vars → `send_emails.py --dry-run --all` → `--test` → full send |
 | **P1** | **CG Telegram bot token** | BotFather → new token → `TELEGRAM_BOT_TOKEN` for Phase 2 |
 | **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars |
+
+## This Session (15:29 UTC)
+
+- **Root cause found**: OpenRouter 402 = free-tier daily limit exhausted (~3-11 tokens/call, too low for JSON)
+- **Audio backend fixed**: X-Demo-Mode headers added to all AI endpoints; /api/director {} bug fixed
+- **930 tests confirmed** ✅ | **Git pushed** ✅
