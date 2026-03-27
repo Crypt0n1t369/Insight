@@ -128,12 +128,12 @@ export async function startSession(input: SessionStartInput): Promise<SessionRes
 
 /**
  * POST /api/sessions/stream — streaming session via SSE.
- * Returns an async iterable of SessionEvent.
+ * onComplete receives: { sessionId, kgSessionNodeId, eventCount, protocol }
  */
 export async function streamSession(
   input: SessionStartInput,
   onEvent: (event: SessionEvent) => void,
-  onComplete: (result: { sessionId: string; kgSessionNodeId?: string }) => void,
+  onComplete: (result: { sessionId: string; kgSessionNodeId?: string; eventCount: number; protocol: string }) => void,
   onError: (err: Error) => void,
 ): { cancel: () => void } {
   const controller = new AbortController();
@@ -154,6 +154,7 @@ export async function streamSession(
 
       const decoder = new TextDecoder();
       let buffer = '';
+      let pos = 0;
 
       while (true) {
         const { done, value } = await reader.read();
@@ -161,22 +162,26 @@ export async function streamSession(
 
         buffer += decoder.decode(value, { stream: true });
         const lines = buffer.split('\n');
-        buffer = lines.pop() ?? '';
 
-        for (const line of lines) {
+        // Keep unprocessed partial line in buffer for next chunk
+        buffer = lines[lines.length - 1] ?? '';
+        // Only process complete lines (up to but not including the last line which may be partial)
+        const completeLines = lines.slice(0, -1);
+
+        for (const line of completeLines) {
           if (line.startsWith('event: ')) {
-            const eventType = line.slice(7).trim();
-            // Next line should be data:
-            const dataLineIdx = lines.indexOf(line) + 1;
-            if (dataLineIdx < lines.length && lines[dataLineIdx].startsWith('data: ')) {
-              const data = JSON.parse(lines[dataLineIdx].slice(6));
-              if (eventType === 'session-event') {
-                onEvent(data as SessionEvent);
-              } else if (eventType === 'session-complete') {
-                onComplete(data as { sessionId: string; kgSessionNodeId?: string });
-              } else if (eventType === 'error') {
-                onError(new Error((data as { error: string }).error));
-              }
+            pos = 1; // Next line is data
+          } else if (pos === 1 && line.startsWith('data: ')) {
+            pos = 0;
+            const data = JSON.parse(line.slice(6));
+            if (data.error != null) {
+              onError(new Error(data.error));
+            } else if (data.sessionId != null && data.eventCount != null) {
+              // session-complete event
+              onComplete(data as { sessionId: string; kgSessionNodeId?: string; eventCount: number; protocol: string });
+            } else {
+              // session-event
+              onEvent(data as SessionEvent);
             }
           }
         }

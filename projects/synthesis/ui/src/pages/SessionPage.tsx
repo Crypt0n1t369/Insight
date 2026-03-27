@@ -64,7 +64,7 @@ export function SessionPage() {
   const [rawInput, setRawInput] = useState('');
   const [userId] = useState('demo-user');
   const [events, setEvents] = useState<SessionEvent[]>([]);
-  const [result, setResult] = useState<{ protocol: string; eventCount: number; sessionId: string } | null>(null);
+  const [result, setResult] = useState<{ protocol: string; eventCount: number; sessionId: string; kgSessionNodeId?: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const streamRef = useRef<{ cancel: () => void } | null>(null);
@@ -116,9 +116,10 @@ export function SessionPage() {
       (event) => setEvents((prev) => [...prev, event]),
       (complete) => {
         setResult({
-          protocol: 'streaming',
-          eventCount: events.length + 1,
+          protocol: complete.protocol ?? 'general',
+          eventCount: complete.eventCount,
           sessionId: complete.sessionId,
+          kgSessionNodeId: complete.kgSessionNodeId,
         });
         setMode('idle');
         setLoading(false);

@@ -220,6 +220,61 @@ describe('POST /api/sessions/stream', () => {
     expect(eventCount).toBeGreaterThan(0);
     expect(complete).toBe(true);
   });
+
+  it('session-complete event includes eventCount and protocol', async () => {
+    if (!serverRunning) { console.warn('[SKIP] Server not running'); return; }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+
+    let completeData: { sessionId: string; eventCount: number; protocol: string } | null = null;
+
+    try {
+      const res = await fetch(`${BASE}/api/sessions/stream`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: 'stream-complete-test',
+          rawInput: 'I need help with focus',
+        }),
+        signal: controller.signal,
+      });
+
+      const reader = res.body!.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() ?? '';
+
+        for (const line of lines) {
+          if (line.startsWith('event: ')) {
+            const eventName = line.slice(7).trim();
+            if (eventName === 'session-complete') {
+              // Next line is data
+              const dataLineIdx = lines.indexOf(line) + 1;
+              if (dataLineIdx < lines.length && lines[dataLineIdx].startsWith('data: ')) {
+                completeData = JSON.parse(lines[dataLineIdx].slice(6));
+              }
+            }
+          }
+        }
+      }
+    } finally {
+      clearTimeout(timeout);
+    }
+
+    expect(completeData).not.toBeNull();
+    expect(typeof completeData!.eventCount).toBe('number');
+    expect(completeData!.eventCount).toBeGreaterThan(0);
+    expect(typeof completeData!.protocol).toBe('string');
+    expect(completeData!.protocol.length).toBeGreaterThan(0);
+  });
 });
 
 describe('GET /api/kg/query', () => {

@@ -166,17 +166,21 @@ app.post(
     res.flushHeaders();
 
     const sessionId = input.sessionId!;
+    let streamedEventCount = 0;
+    let streamedProtocol = 'general';
 
     try {
       // Stream events as they are produced
       for await (const event of orchestrator.streamSession(input)) {
+        streamedEventCount++;
+        streamedProtocol = event.protocol ?? streamedProtocol;
         res.write(`event: session-event\ndata: ${JSON.stringify(event)}\n\n`);
       }
 
-      // Send completion with full result
+      // Send completion with final stats
       const sessionNodeId = orchestrator.getSession(sessionId)?.id;
       res.write(
-        `event: session-complete\ndata: ${JSON.stringify({ sessionId, kgSessionNodeId: sessionNodeId })}\n\n`,
+        `event: session-complete\ndata: ${JSON.stringify({ sessionId, kgSessionNodeId: sessionNodeId, eventCount: streamedEventCount, protocol: streamedProtocol })}\n\n`,
       );
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);

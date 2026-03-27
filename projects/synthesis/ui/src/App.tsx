@@ -3,14 +3,16 @@ import { ProtocolsPage } from './pages/ProtocolsPage';
 import { SessionPage } from './pages/SessionPage';
 import { KGQueryPage } from './pages/KGQueryPage';
 import { StatsPage } from './pages/StatsPage';
+import { HistoryPage } from './pages/HistoryPage';
 
-type Tab = 'protocols' | 'session' | 'kg' | 'stats';
+type Tab = 'protocols' | 'session' | 'kg' | 'stats' | 'history';
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'protocols', label: 'Protocols' },
   { id: 'session', label: 'Run Session' },
-  { id: 'kg', label: 'Knowledge Graph' },
+  { id: 'kg', label: 'KG' },
   { id: 'stats', label: 'Stats' },
+  { id: 'history', label: 'History' },
 ];
 
 export function App() {
@@ -62,6 +64,7 @@ export function App() {
         {activeTab === 'session' && <SessionPage />}
         {activeTab === 'kg' && <KGQueryPage />}
         {activeTab === 'stats' && <StatsPage />}
+        {activeTab === 'history' && <HistoryPage />}
       </main>
     </div>
   );
