@@ -198,9 +198,9 @@ app.post('/api/chat', async (req, res) => {
         console.log("Sending to OpenRouter...");
         const text = await callOpenRouter(messages, OPENROUTER_MODEL, true);
         console.log("Raw OpenRouter Text:", text);
-        // null text = missing API key → use demo fallback directly
-        // empty parse result also means demo fallback
+        // null text = missing API key or 402 → demo fallback
         if (!text) {
+            res.set('X-Demo-Mode', 'credits_exhausted');
             return res.json({
                 reply: "I hear you. Tell me more about what you're experiencing — in demo mode, every word matters.",
                 shouldOfferMeditation: true,
@@ -215,6 +215,7 @@ app.post('/api/chat', async (req, res) => {
         const parsed = JSON.parse(cleanJson(text));
         if (!parsed || typeof parsed.reply !== 'string') {
             // Malformed response → demo fallback
+            res.set('X-Demo-Mode', 'malformed_response');
             return res.json({
                 reply: "I hear you. Tell me more about what you're experiencing — in demo mode, every word matters.",
                 shouldOfferMeditation: true,
@@ -233,6 +234,7 @@ app.post('/api/chat', async (req, res) => {
             console.error("Stack:", error.stack);
         }
         // Return graceful demo fallback with 200 — server-side errors should not break client
+        res.set('X-Demo-Mode', 'server_error');
         res.json({
             reply: "I hear you. Tell me more about what you're experiencing — in demo mode, every word matters.",
             shouldOfferMeditation: true,
@@ -296,11 +298,23 @@ app.post('/api/director', async (req, res) => {
 
     try {
         const text = await callOpenRouter([{ role: "user", content: prompt }], DIRECTOR_MODEL, true);
-        const parsed = JSON.parse(cleanJson(text || "{}"));
+        // null = credits exhausted or API error → demo fallback
+        if (!text) {
+            res.set('X-Demo-Mode', 'credits_exhausted');
+            return res.json({
+                methodology: "NSDR",
+                focus: "Grounding",
+                targetFeeling: "Calm",
+                intensity: "MODERATE",
+                rationale: "Demo mode — credits exhausted"
+            });
+        }
+        const parsed = JSON.parse(cleanJson(text));
         return res.json(parsed);
     } catch (error) {
         console.error("Director error:", error);
-        // Fallback default
+        // Fallback default — mark as demo mode
+        res.set('X-Demo-Mode', 'server_error');
         return res.json({
             methodology: "NSDR",
             focus: "Grounding",
@@ -346,6 +360,7 @@ app.post('/api/meditation/generate', async (req, res) => {
 
         // null response = missing API key → return protocol-specific demo content
         if (!textResponse) {
+            res.set('X-Demo-Mode', 'credits_exhausted');
             const demoMethodology = methodology as string;
             const demoBatches = DEMO_BATCHES[demoMethodology] || DEMO_BATCHES['DEFAULT'];
             const demoTitle = demoMethodology && demoMethodology !== 'undefined'
