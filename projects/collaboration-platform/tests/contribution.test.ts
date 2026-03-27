@@ -133,19 +133,26 @@ describe('ContributionService', () => {
   });
   
   it('should endorse contribution', async () => {
+    // Create a second user (endorser) distinct from the author
+    const endorser = await identityService.createAnonymousUser();
     const contrib = await contributionService.createContribution(testUser.id, {
       branch_id: testBranch.id,
       type: 'idea',
       content: 'Test idea'
     });
     
-    const endorsed = await contributionService.endorse(contrib.id, testUser.id);
+    const endorsed = await contributionService.endorse(contrib.id, endorser.id);
     
     expect(endorsed).not.toBeNull();
     expect(endorsed!.endorsements).toBe(1);
   });
   
   it('should sort contributions by endorsements', async () => {
+    // Create endorsers (testUser can't self-endorse)
+    const endorser1 = await identityService.createAnonymousUser();
+    const endorser2 = await identityService.createAnonymousUser();
+    const endorser3 = await identityService.createAnonymousUser();
+    
     const low = await contributionService.createContribution(testUser.id, {
       branch_id: testBranch.id,
       type: 'idea',
@@ -157,10 +164,10 @@ describe('ContributionService', () => {
       content: 'High endorsed'
     });
     
-    // Endorse high one 3 times
-    await contributionService.endorse(high.id, testUser.id);
-    await contributionService.endorse(high.id, testUser.id);
-    await contributionService.endorse(high.id, testUser.id);
+    // Endorse high one 3 times (low gets 0 endorsements)
+    await contributionService.endorse(high.id, endorser1.id);
+    await contributionService.endorse(high.id, endorser2.id);
+    await contributionService.endorse(high.id, endorser3.id);
     
     const result = await contributionService.getBranchContributions(testBranch.id);
     

@@ -68,13 +68,14 @@ describe('Credo Platform Integration', () => {
       let userWithContrib = await identityService.getUserById(user.id);
       expect(userWithContrib!.credibility_score).toBe(8); // 5 + 3
       
-      // 4. Endorse contribution (earns 1 credibility)
-      const endorsed = await contributionService.endorse(contribution.id, user.id);
+      // 4. Endorse contribution (earns 1 credibility) — use a second endorser (self-endorsement is blocked)
+      const endorser = await identityService.createAnonymousUser();
+      const endorsed = await contributionService.endorse(contribution.id, endorser.id);
       expect(endorsed!.endorsements).toBe(1);
       
-      // Check final credibility
+      // Check final credibility of author
       const finalUser = await identityService.getUserById(user.id);
-      expect(finalUser!.credibility_score).toBe(9); // 8 + 1
+      expect(finalUser!.credibility_score).toBe(11); // 5 (branch) + 3 (idea) + 3 (endorsement, weight=3)
     });
     
     it('should support nested contributions', async () => {
@@ -308,8 +309,8 @@ describe('Credo Platform Integration', () => {
       updated = await identityService.getUserById(user.id);
       expect(updated!.trust_tier).toBe('trusted');
       
-      // elder: 1000+
-      await identityService.updateCredibility(user.id, 500, 'Test');
+      // elder: 2000+ (per SPEC.md — code enforces elder=2000)
+      await identityService.updateCredibility(user.id, 1500, 'Test'); // 500 + 1500 = 2000
       updated = await identityService.getUserById(user.id);
       expect(updated!.trust_tier).toBe('elder');
     });
