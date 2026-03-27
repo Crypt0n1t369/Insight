@@ -72,6 +72,14 @@ const DEMO_BATCHES: Record<string, { text: string; instructions: SonicInstructio
     { text: "Have there been moments — exceptions — when you managed this problem better? What was different then?", instructions: [] },
     { text: "You are not the problem. The problem is something you are learning to relate to differently. You have the upper hand.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0, duration: 5 }] },
   ],
+  GENERAL: [
+    { text: "Welcome. Find a comfortable position and let your eyes close. Take a slow, deep breath... and another.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0.6, duration: 5 }] },
+    { text: "Feel the weight of your body against the surface beneath you. Feel your feet, your legs, your back — fully supported.", instructions: [] },
+    { text: "Bring your attention to your breath. Not changing it — just noticing. The rise of your chest... the fall. Breathing in... breathing out.", instructions: [] },
+    { text: "If an intention or focus arose for this session, gently hold it in awareness. Not grasping — just present.", instructions: [] },
+    { text: "Expand your awareness to include sounds, sensations, the space around you. You are part of all of this.", instructions: [] },
+    { text: "Take one more deep breath. Begin to return. Wiggle your fingers and toes. Open your eyes slowly. You are here.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0, duration: 5 }] },
+  ],
   DEFAULT: [
     { text: "Welcome. Find a comfortable position and close your eyes. Take a slow, deep breath.", instructions: [{ action: 'FADE_VOL', layer: 'atmosphere', targetValue: 0.6, duration: 5 }] },
     { text: "Feel the weight of your body. The ground beneath you. The air on your skin. You are safe in this moment.", instructions: [] },

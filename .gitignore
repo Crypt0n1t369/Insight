@@ -18,6 +18,15 @@ server/.env
 
 # Vitest build output (server/)
 server/*.js
+server/*.js.map
+server/*.d.ts
+server/*.d.ts.map
+
+# Root build output (from tsc)
+types.js
+types.d.ts
+types.js.map
+types.d.ts.map
 server/*.map
 server/*.d.ts
 
