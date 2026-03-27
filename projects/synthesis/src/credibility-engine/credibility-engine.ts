@@ -261,31 +261,72 @@ export function createAnonymousProfile(
 
 /**
  * Update profile after a contribution.
+ * Also persists the updated profile to the in-memory profileStore.
  */
 export function recordContribution(
   profile: AnonymousProfile,
   contributionScore: number
 ): AnonymousProfile {
-  return {
+  const updated: AnonymousProfile = {
     ...profile,
     credibilityScore: profile.credibilityScore + contributionScore,
     totalContributions: profile.totalContributions + 1,
     lastActivityAt: new Date(),
   };
+  profileStore.set(profile.anonId, updated);
+  return updated;
 }
 
 /**
  * Update profile after a vote is cast.
+ * Also persists the updated profile to the in-memory profileStore.
  */
 export function recordVote(
   profile: AnonymousProfile,
   voteCost: number
 ): AnonymousProfile {
-  return {
+  const updated: AnonymousProfile = {
     ...profile,
     credibilityScore: Math.max(0, profile.credibilityScore - voteCost),
     lastActivityAt: new Date(),
   };
+  profileStore.set(profile.anonId, updated);
+  return updated;
+}
+
+// ----------------------------------------------------------------
+// In-Memory Profile Store
+// ----------------------------------------------------------------
+
+/**
+ * Persistent (per-process) store of all anonymous profiles.
+ * Updated whenever recordContribution() or recordVote() is called.
+ * Used by getStats() to surface topContributors.
+ */
+const profileStore = new Map<string, AnonymousProfile>();
+
+/**
+ * Get a single profile by anonId (from the in-memory store).
+ * Returns undefined if the profile has never been recorded.
+ */
+export function getProfile(anonId: string): AnonymousProfile | undefined {
+  return profileStore.get(anonId);
+}
+
+/**
+ * Get all profiles currently in the store.
+ * Used by topContributors in getStats().
+ */
+export function getAllProfiles(): AnonymousProfile[] {
+  return Array.from(profileStore.values());
+}
+
+/**
+ * Clear the in-memory profile store.
+ * Exported primarily for use in test setup/teardown.
+ */
+export function clearProfileStore(): void {
+  profileStore.clear();
 }
 
 // ----------------------------------------------------------------

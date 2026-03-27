@@ -33,6 +33,9 @@ export {
   createAnonymousProfile,
   recordContribution,
   recordVote,
+  getProfile,
+  getAllProfiles,
+  clearProfileStore,
   // Contributions
   generateContributionId,
   createContribution,

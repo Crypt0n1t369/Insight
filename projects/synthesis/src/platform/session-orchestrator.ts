@@ -30,7 +30,10 @@ import type { KGNode, KGQuery, KGResult } from '../knowledge-graph/types.js';
 import {
   createAnonymousProfile,
   createContribution,
-  recordContribution as updateProfileContribution,
+  recordContribution as updateProfileOnContribution,
+  getProfile,
+  getAllProfiles,
+  rankProfiles,
   type ContributionType,
 } from '../credibility-engine/index.js';
 
@@ -314,7 +317,7 @@ export class SessionOrchestrator {
     const contentId = `session-${sessionId}`;
     const contentVersion = '1';
 
-    // use createContribution — it handles scoring internally
+    // Create the contribution record (generates a score internally)
     const contribution = createContribution({
       anonId,
       type: contributionType,
@@ -327,6 +330,14 @@ export class SessionOrchestrator {
       constructive: true,
       citations: 0,
     });
+
+    // Get or create the profile and update it with the contribution score
+    // (updateProfileOnContribution stores the updated profile in the in-memory profileStore)
+    let profile = getProfile(anonId);
+    if (!profile) {
+      profile = createAnonymousProfile(anonId);
+    }
+    updateProfileOnContribution(profile, contribution.score);
 
     return contribution.id;
   }
@@ -400,7 +411,9 @@ export class SessionOrchestrator {
         nodes: kgStats.nodes.length,
         edges: kgStats.edges.length,
       },
-      topContributors: [], // Would require iterating credibility profiles
+      topContributors: rankProfiles(getAllProfiles())
+        .slice(0, 10)
+        .map((p) => ({ anonId: p.anonId, credibilityScore: p.credibilityScore })),
       platformUptime,
     };
   }
