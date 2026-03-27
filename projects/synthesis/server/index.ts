@@ -5,8 +5,11 @@
  * Wires Express to the SessionOrchestrator for session management,
  * knowledge graph queries, and platform stats.
  *
+ * Auth: If SYNTHESIS_API_KEY env var is set, all /api/* routes require
+ * a valid X-API-Key header. Health endpoint is always public.
+ *
  * Endpoints:
- *   GET  /health              — health check
+ *   GET  /health              — health check (public)
  *   GET  /api/protocols       — list implemented protocols
  *   POST /api/sessions        — run a synthesis session (returns final result)
  *   POST /api/sessions/stream — run a synthesis session (SSE streaming)
@@ -22,14 +25,45 @@ import { randomUUID } from 'crypto';
 import { getOrchestrator, runSynthesisSession } from '../src/platform/index.js';
 import type { SessionStartInput, KGQuery } from '../src/platform/types.js';
 import { listImplementedProtocols } from '../src/specialist-agents/index.js';
+import { requireApiKey } from './middleware/auth.js';
 
 // ─── App setup ────────────────────────────────────────────────────────────────
 
 const app = express();
 const PORT = process.env.PORT ?? 3004;
+const API_KEY = process.env.SYNTHESIS_API_KEY;
 
-app.use(cors());
+// CORS: restrict to known origins in production, allow all in dev (no key)
+const corsOptions: cors.CorsOptions = API_KEY
+  ? {
+      origin: [
+        `http://localhost:3007`, // dev UI
+        `http://localhost:3005`, // audio frontend
+      ],
+      methods: ['GET', 'POST', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'X-API-Key', 'x-api-key'],
+      exposedHeaders: ['X-Demo-Mode'],
+    }
+  : {};
+
+// Note: cors applied per-route below for flexibility
+
+// ─── Global middleware ───────────────────────────────────────────────────────
+// NOTE: express.json must be registered BEFORE the /api prefix chain
+// so it fires first (Express evaluates app.use in registration order for
+// each request, not in depth-first prefix order).
+
 app.use(express.json());
+
+// CORS preflight handler — must precede requireApiKey so OPTIONS requests
+// don't get rejected for missing API key (browsers don't send auth headers on preflight)
+function corsPreflightHandler(req: Request, res: Response, next: NextFunction) {
+  cors(corsOptions)(req, res, () => next());
+}
+
+// CORS: applied per-route so we can pair with auth middleware
+app.use('/health', cors());
+app.use('/api', corsPreflightHandler, requireApiKey());
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 

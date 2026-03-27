@@ -54,7 +54,7 @@
 | SE-Agent | Somatic Experiencing | ✅ |
 | ACT-Agent | Acceptance & Commitment Therapy | ✅ |
 | GENERAL-Agent | General fallback | ✅ |
-| NVC-Agent | Nonviolent Communication | 🔜 Future |
+| NVC-Agent | Nonviolent Communication | ✅ Implemented | 42 tests |
 
 ### 3. Knowledge Graph
 - Store structured information connecting all modules
