@@ -1,5 +1,89 @@
 ---
 
+## 2026-03-27 14:59 Cairo (12:59 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ 958 Tests Passing (corrected from 924) / Solar Scout Pipeline Verified / Git Pushed
+
+**This session: Discovered actual test total is 958 (not 924) — CG has 34 additional vitest server tests that weren't counted. All 958 tests verified passing across 7 projects. Solar Scout mail-merge pipeline verified end-to-end (dry-run confirmed). Pushed 2 pending commits to origin. JCI has 2 async thread warnings (41 tests still pass).**
+
+### What Was Found
+
+**Test Count Correction ⚠️**
+| Project | Was | Actual | Delta |
+|---------|-----|--------|-------|
+| Contribution Graph | 110 | **144** (110 pytest + 34 vitest) | +34 |
+| **Total** | 924 | **958** | **+34** |
+
+CG vitest tests (`server/server.test.ts` + `server/integration.test.ts`) were running but not counted in the previous total.
+
+**Solar Scout Pipeline — Verified End-to-End ✅**
+- `generate_emails.py`: ✅ Runs, produces 15 email drafts
+- `regenerate_validated.py`: ✅ Idempotent, 15 companies / 33.4 MW confirmed
+- `send_emails.py --dry-run`: ✅ Previews 3 emails correctly (LV + EN bilingual)
+- SMTP config: Not set (expected — user action required)
+- Placeholder `[YOUR NAME]` / `[YOUR@EMAIL.COM]` appear correctly when SMTP unset
+
+**JCI Org Manager — 2 Async Thread Warnings ⚠️**
+- `test_bot.py`, `test_agents.py`, `test_integration.py` use `async` fixtures
+- 2 `PytestUnhandledThreadExceptionWarning` during pytest run
+- All 41 tests still pass — low priority, cosmetic only
+
+### Full Test Suite — Verified ✅
+| Project | Tests | Runner | Status |
+|---------|-------|--------|--------|
+| Synthesis Platform | **444** | vitest | ✅ |
+| Festival Coordinator | **140** | pytest (venv) | ✅ |
+| Credo (collaboration-platform) | **131** | vitest | ✅ |
+| Contribution Graph | **144** (110+34) | pytest+vitest | ✅ |
+| Audio Backend (server/) | **34** | vitest | ✅ |
+| JCI Org Manager | **41** (+2 warnings) | pytest | ✅ |
+| Youth Empowerment Platform | **24** | pytest | ✅ |
+| **Total** | **958** | | ✅ |
+
+### Git — Pushed ✅
+- Pushed 2 commits to `origin/master`:
+  - `edaee66` — PROGRESS update (SMTP sender, 924 tests)
+  - `1a48ac7` — Solar Scout SMTP mail-merge + SEND_GUIDE
+
+### All Services — Verified Healthy ✅
+| Service | Port | Status |
+|---------|------|--------|
+| Audio Backend | 3001 | ✅ `{"status":"ok","openRouterLinked":true}` |
+| Credo API | 3000 | ✅ `{"status":"ok"}` |
+| CG Web | 3006 | ✅ `{"status":"ok"}` |
+| JCI Portal | 8080 | ✅ `{"status":"ok"}` |
+| Youth Platform | 3003 | ✅ (HTTP 200) |
+
+### Solar Scout Pipeline Status
+```
+regenerate_validated.py → leads_outreach_validated.csv (15 companies, 33.4 MW)
+     ↓
+generate_emails.py      → email_drafts_validated.md (preview)
+     ↓
+send_emails.py --dry-run → preview emails (works ✅)
+send_emails.py --test   → send first 3 (needs SMTP)
+send_emails.py          → send all 15 (needs SMTP)
+```
+
+### What's Next (Aton Can Do Without User Action)
+- [DONE] Verify all tests (958 confirmed ✅)
+- [DONE] Verify Solar Scout pipeline end-to-end ✅
+- [DONE] Push pending commits ✅
+- Monitor for similar pytest collection issues (module name collisions)
+
+### What's Next (User Action Required)
+| # | Item | Action | Impact |
+|---|------|--------|--------|
+| **P0** | **OpenRouter Credits** | openrouter.ai → add $5–10 | Unblocks: Solar Scout unknown verification, CG synthesis |
+| **P0** | **CG Test 0.1 — Review script + recruit** | Review `projects/contribution-graph/TEST_01_INTERVIEW_SCRIPT.md` | Phase 0 go/no-go |
+| **P0** | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks | Phase 0 acquisition |
+| **P0** | **CG Test 0.4 — Identify orgs** | 5 target orgs | Phase 0 go/no-go |
+| **P1** | **Solar Scout SMTP** | Set `SMTP_HOST/PORT/USER/PASSWORD` env vars → test with `--dry-run --all` | Unblocks outreach send |
+| **P1** | **CG Telegram bot token** | BotFather → new token → `TELEGRAM_BOT_TOKEN` | Phase 2 bot |
+| **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL |
+
+---
+
 ## 2026-03-27 14:02 Cairo (12:02 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ All 924 Tests Confirmed Passing / Festival Coordinator Venv Fixed / All Services Healthy
