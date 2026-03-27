@@ -2,9 +2,9 @@
 
 ## 2026-03-27 01:58 Cairo (23:58 UTC) — Wakeup Session (Aton)
 
-### Status: ✅ All Services Up / CG 88 Tests / Audio 34 Tests / ⚠️ Audio Submodule Behind Origin
+### Status: ✅ All Services Up / CG 88 Tests / Audio 34 Tests / ✅ Audio Submodule Synced (build broken in upstream)
 
-**This session: Full system verification, audio submodule status assessed, audio backend log errors noted.**
+**This session: Full system verification, audio submodule synced to upstream, pre-existing build error discovered.**
 
 ### What Was Done This Session
 
@@ -15,37 +15,39 @@
 | Audio Backend | 3001 | ✅ 200 | Working, `/api/director` returns NSDR fallback |
 | Credo Frontend | 3002 | ✅ 200 | Next.js serving Credo landing page |
 | Youth Platform | 3003 | ✅ 200 | Running |
-| Audio Frontend | 3005 | ✅ 200 | Vite preview running |
+| Audio Frontend | 3005 | ✅ 200 | Vite preview running (serving old build) |
 | CG Web | 3006 | ✅ 200 | CG web interface |
 | JCI Portal | 8080 | ✅ 200 | JCI web portal |
 
 **2. Tests Verified ✅**
 - CG: 88 tests passing (18 identity + 47 handlers + 23 web) ✅
-- Audio: 34 vitest passing ✅
+- Audio workspace server: 34 vitest passing ✅
 
-**3. Audio Submodule Assessment ⚠️**
-- Submodule at `d348cd0` — 17 commits behind `origin/main` (`8562fd2`)
-- 3 local-only commits ahead of origin: 402 credits error fix, methodology enum expansion
-- Workspace-level server (`server/index.ts` on port 3001) already has 402 fix applied
-- Origin has meditation pipeline fixes (duration calc, error handling, progress UX, voice mapping)
-- **Recommendation:** Rebase local audio commits onto origin/main, then push to fork
+**3. Audio Submodule Synced ✅ — Build Error in Upstream ⚠️**
+- Reset submodule to origin/main (`8562fd2`) — meditation pipeline, voice selection, TTS improvements
+- Cherry-picked 2 local fixes onto origin/main (`d7f7394`):
+  - 402 credits handling: return null on OpenRouter credit exhaustion → demo mode triggers cleanly
+  - Methodology enum expansion: 9 protocols in `/api/director` schema (ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, IFS, SOMATIC_AGENCY, NSDR)
+- ⚠️ **Pre-existing build error in origin/main:** `components/LoadingGeneration.tsx` imports `CLINICAL_PROTOCOLS` from `server/protocols` — this path is not available in the Vite build context. Build fails. This is an upstream bug in `8562fd2`, not introduced by my changes.
+- Workspace git updated to submodule at `d7f7394`
 
 **4. Audio Backend Log Errors ⚠️**
 - `server/index.ts` logs show JSON parse errors from body-parser
-- Not service-breaking (health + API endpoints work) but indicates malformed requests hitting the server
-- May need input sanitization review
+- Not service-breaking (health + API endpoints work) but indicates malformed requests
+- **Not actionable without understanding what client is sending bad JSON**
 
 ### 🔴 P0 Blockers (User Action Required)
 | Item | Blocked By | Status |
 |------|-----------|--------|
-| Audio Tool Vercel deployment | Vercel account / domain | Awaiting drg |
+| Audio Tool Vercel deployment | Vercel account + domain | Awaiting drg |
+| Fix upstream build error | LoadingGeneration.tsx fix | Awaiting drg (or upstream fix) |
 | OpenRouter credits | Budget | Awaiting drg |
 | Telegram bot token | tg botFather | Awaiting drg |
 | CG Review & deploy | drg review | Awaiting drg |
 
 ### 📋 Next Steps (Priority Order)
-1. **Audio submodule sync** (P2): Rebase onto origin/main, push local fixes, restart service, verify
-2. **Audio backend log cleanup** (P2): Investigate JSON parse errors, add input validation
+1. **Fix LoadingGeneration.tsx build error** (P1): Remove or fix `import { CLINICAL_PROTOCOLS } from '../server/protocols'` — file is a React component, cannot import from Express server dir
+2. **Rebuild audio tool** (P1): After build fix, run `npm run build` + restart preview on 3005
 3. **Deploy Audio Tool to Vercel** (P0): Needs user action
 4. **Deploy CG** (P0): Needs user action + Telegram token
 
