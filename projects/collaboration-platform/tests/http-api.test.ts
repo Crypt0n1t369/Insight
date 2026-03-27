@@ -233,10 +233,11 @@ describe('Credo HTTP API Integration', () => {
     });
 
     it('PATCH /api/contributions/:id/vote votes on contribution', async () => {
-      const userId = await createUser('Vote User');
-      const branch = await createBranch(userId, 'Vote Test Branch');
-      const contrib = await createContribution(userId, branch.id, 'Vote Target', 'idea');
-      const { status, body } = await apiRequest('POST', `/api/contributions/${contrib.id}/endorse`, {}, userId);
+      const authorId = await createUser('Vote Author');
+      const voterId = await createUser('Vote Voter');
+      const branch = await createBranch(authorId, 'Vote Test Branch');
+      const contrib = await createContribution(authorId, branch.id, 'Vote Target', 'idea');
+      const { status, body } = await apiRequest('POST', `/api/contributions/${contrib.id}/endorse`, {}, voterId);
       expect(status).toBe(200);
       expect(body.success).toBe(true);
     });
