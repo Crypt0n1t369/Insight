@@ -51,7 +51,7 @@
 ### Festival Coordinator
 - **Phase:** Operational | **Status:** 140 pytest tests passing ✅
 
-## Test Suite (Verified 2026-03-27 14:44 UTC — Corrected)
+## Test Suite (Verified 2026-03-27 14:59 UTC — Corrected)
 
 | Project | Tests | Framework |
 |---------|-------|-----------|
@@ -59,12 +59,13 @@
 | Festival Coordinator | 140 | pytest (venv) |
 | Credo (collaboration-platform) | 137 | vitest |
 | Contribution Graph | 110 | pytest |
-| Audio Backend (server/) | 17 | vitest |
+| Audio Backend (workspace/server/ — running on 3001) | 34 | vitest |
+| Audio Backend (code/server/ — submodule) | 17 | vitest |
 | JCI Org Manager | 41 | pytest |
 | Youth Empowerment Platform | 24 | pytest |
-| **Total** | **913** | |
+| **Total** | **930** | |
 
-> ⚠️ Previous "958" count was wrong: CG had no vitest tests (34 misattributed), audio had 17 not 34 (vitest was broken until fixed this session).
+> ⚠️ Previous "958" count was wrong: CG had no vitest tests (34 misattributed). Previous "913" count omitted the workspace root server/ integration tests (23 tests) from audio backend.
 
 ## Service Status (2026-03-27 12:59 UTC)
 

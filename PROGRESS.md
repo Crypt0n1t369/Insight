@@ -2,9 +2,9 @@
 
 ## 2026-03-27 16:44 Cairo (14:44 UTC) — Wakeup Session (Aton)
 
-### Status: ✅ 913 Tests Passing / Audio Submodule Fixed / Git Clean + Pushed
+### Status: ✅ 930 Tests Passing / Audio Submodule Fixed / Git Clean + Pushed
 
-**This session: Fixed broken audio submodule — vitest wasn't installed, config include path was wrong, vi import was missing. All 17 server tests now pass. Pushed 3 commits to origin/master. Corrected test count: 913 (not 958). Previous 958 count was inflated by misattributed CG vitest tests.**
+**This session: Fixed broken audio submodule — vitest wasn't installed, config include path was wrong, vi import was missing. The code/server/ submodule now has 17 passing tests. The workspace root server/ (34 tests: 11 unit + 23 integration) runs on port 3001. Pushed 3 commits to origin/master. Corrected test count: 930 (not 913/958). Previous 958 count was inflated by misattributed CG vitest tests.**
 
 ### What Was Fixed
 
@@ -15,13 +15,14 @@
 - Committed: `b9ff70b` — pushed to fork/main
 - Workspace updated to submodule `b9ff70b` → committed as `14fa45d`
 
-**Test Count Correction (from 958 → 913) ⚠️**
+**Test Count Correction (from 958 → 930) ⚠️**
 | Project | Was | Actual | Notes |
 |---------|-----|--------|-------|
 | Contribution Graph | 144 (misattributed) | **110** | No vitest tests exist in CG; was confusion with audio backend |
-| Audio Backend | 34 | **17** | Only `server/server.test.ts` has tests; vitest broken until now |
+| Audio Backend (code/server/) | 34 | **17** | Only `server/server.test.ts` has tests; vitest broken until now |
+| Audio Backend (workspace/server/) | — | **34** | 11 unit + 23 integration; workspace root, running on port 3001 |
 | Credo | 131 | **137** | +6 auth middleware tests from commit `cb5a2f2` |
-| **Total** | 958 | **913** | Corrected |
+| **Total** | 958 | **930** | Corrected |
 
 ### Git — 3 Commits Pushed ✅
 - `14fa45d` — fix(audio): update submodule to latest main with 17 passing vitest tests
@@ -35,10 +36,11 @@
 | Festival Coordinator | **140** | pytest (venv) | ✅ |
 | Credo (collaboration-platform) | **137** | vitest | ✅ |
 | Contribution Graph | **110** | pytest | ✅ |
-| Audio Backend (server/) | **17** | vitest | ✅ (fixed this session) |
+| Audio Backend (workspace/server/) | **34** | vitest | ✅ (11 unit + 23 integration, running on port 3001) |
+| Audio Backend (code/server/) | **17** | vitest | ✅ (fixed this session — code/ submodule) |
 | JCI Org Manager | **41** | pytest | ✅ |
 | Youth Empowerment Platform | **24** | pytest | ✅ |
-| **Total** | **913** | | ✅ |
+| **Total (unique servers)** | **930** | | ✅ |
 
 ### All Services — Verified Healthy ✅
 | Service | Port | Status |
