@@ -5,7 +5,7 @@ import { VoiceId, MeditationConfig, ViewState } from '../types';
 import { storageService } from '../services/storageService';
 import { generateDailyContext } from '../services/geminiService';
 import { checkContraindications, ContraindicationCheck } from '../services/userHistoryService';
-import { CLINICAL_PROTOCOLS } from '../server/protocols';
+import { CLINICAL_PROTOCOLS } from '../services/protocols';
 import { cn } from '@/utils';
 
 export const LoadingGeneration: React.FC = () => {
