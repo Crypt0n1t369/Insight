@@ -67,9 +67,9 @@
 
 > ⚠️ Previous "958" count was wrong: CG had no vitest tests (34 misattributed). Previous "913" count omitted the workspace root server/ integration tests (23 tests) from audio backend.
 
-## Service Status (2026-03-27 12:59 UTC)
+## Service Status (2026-03-27 15:08 UTC)
 
-All services healthy: 3000 ✅ | 3001 ✅ | 3003 ✅ | 3006 ✅ | 8080 ✅
+All services healthy: 3000 ✅ | 3001 ✅ | 3003 ✅ | 3005 ✅ | 3006 ✅ | 8080 ✅
 
 ## Git
 
