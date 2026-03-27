@@ -1,5 +1,75 @@
 ---
 
+## 2026-03-27 21:05 Cairo (19:05 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ Orphaned Test Processes Cleaned / Solar-Scout Docstring Fixed / 462 Tests Pass / All 8 Services Healthy
+
+**This session: Cleaned up 2 orphaned vitest watch processes (360MB RAM freed, running since 16:03 UTC). Fixed solar-scout `send_emails.py` docstring (`--dry-run --all` → `--dry-run-all` to match actual argparse). Verified all 462 synthesis tests pass. All 8 services healthy. Committed and pushed.**
+
+### Cleanup — Orphaned Vitest Watchers ✅
+- PIDs 448371 + 451199 (vitest watch processes, ~360MB RAM total) — killed
+- Were spawned during 16:03–16:09 UTC test runs and left running
+- No adverse effect from killing — tests run fine in `--run` (non-watch) mode
+
+### Solar-Scout — Docstring Fix ✅
+- `send_emails.py` usage example had `--dry-run --all` but argparse defines `--dry-run-all`
+- Docstring corrected to `--dry-run-all`, committed `48658ed`, pushed to origin/master
+
+### All Services — Confirmed Healthy (19:05 UTC) ✅
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ `{"status":"ok"}` |
+| Audio Backend | 3001 | ✅ `{"status":"ok","openRouterLinked":true}` |
+| Youth Platform | 3003 | ✅ `{"status":"ok"}` |
+| Synthesis API | 3004 | ✅ `{"status":"ok"}` |
+| Audio Frontend | 3005 | ✅ HTTP 200 (Vite preview) |
+| CG Web | 3006 | ✅ `{"status":"ok"}` |
+| Synthesis UI | 3007 | ✅ HTTP 200 (Vite dev) |
+| JCI Portal | 8080 | ✅ `{"status":"ok"}` |
+
+### Test Suite — 462/462 Synthesis Tests Passing ✅
+```
+Test Files  14 passed (14)
+     Tests  462 passed (462)
+  Duration  6.34s
+```
+
+### Cron Status — 1 Issue Flagged ⚠️
+| Job | Enabled | Target | Status |
+|-----|---------|--------|--------|
+| Wakeup | ✅ | parent | ⚠️ 6 consecutive errors (edit-fail fallback pattern) |
+| Worker-1 | ❌ | isolated | Disabled — edit tool fails in isolated session |
+| Worker-2 | ❌ | isolated | Disabled — edit tool fails in isolated session |
+| Worker-3 | ✅ | isolated | ✅ OK (0 errors — doesn't need file edits) |
+
+**Wakeup issue:** Error message says "Edit tool failed in isolated session - switching to parent" — system appears to attempt isolated first even though `sessionTarget: "parent"`. Despite errors, parent fallback succeeds (this session running correctly). Low priority since output is delivered.
+
+### What's Left — All Blocked on User Action
+
+| Priority | Item | Blocker |
+|----------|------|---------|
+| **P0** | **OpenRouter credits (~$5-10)** | openrouter.ai → add credits — AI routing/synthesis blocked |
+| **P0** | **CG Test 0.1 — Review script + recruit** | Review `projects/contribution-graph/TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants |
+| **P0** | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks |
+| **P0** | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
+| **P1** | **Solar Scout SMTP** | Set SMTP env vars → `send_emails.py --dry-run-all` → `--test` → full send |
+| **P1** | **CG Telegram bot token** | BotFather → new token → `TELEGRAM_BOT_TOKEN` for Phase 2 |
+| **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars |
+| **P2** | **Supabase session persistence** | User sets up Supabase project |
+| **P2** | **Synthesis UI auth** | Blocked on Supabase setup |
+| **P3** | **google-gemini-cli-auth staleness** | Minor config warning — can disable plugin if desired |
+
+### What Aton Can Do Without User Action
+- [DONE] Kill orphaned vitest processes ✅ (~360MB RAM freed)
+- [DONE] Push solar-scout fix ✅
+- [DONE] Verify 462 synthesis tests pass ✅
+- [DONE] Verify all 8 services healthy ✅
+- [DONE] Update PROGRESS.md ✅
+- [TODO] Archive old PROGRESS entries (many entries from today could be consolidated)
+- [TODO] Push workspace git (no changes — already clean)
+
+---
+
 ## 2026-03-27 20:40 Cairo (18:40 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ KG Edge Filter Bug Fixed / 462 Tests Pass / All 8 Services Healthy / Platform Fully Operational
