@@ -593,7 +593,9 @@ CREATE TRIGGER credibility_tier_update
 
 ## Row Level Security
 
-### Enable RLS on All Tables
+> ⚠️ **DEFERRED to Phase 2 (2026-03-27)** — Anonymous users (UUID in localStorage) have no Supabase auth session, so `auth.uid()` returns NULL. RLS policies referencing `auth.uid()` will NOT work as intended. MVP uses application-level auth middleware instead. RLS to be re-implemented when proper auth (email/OAuth) is added.
+
+### Enable RLS on All Tables (Phase 2)
 
 ```sql
 -- Enable RLS
