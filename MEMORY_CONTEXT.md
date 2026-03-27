@@ -32,7 +32,8 @@
 ### Audio Tool (Audio Transformation Tool)
 - **Phase:** Operational (production)
 - **Ports:** 3001 (backend), 3005 (frontend)
-- **Status:** 34 vitest tests passing ✅
+- **Status:** 17 vitest tests passing ✅ (fixed this session: vitest wasn't installed, vi import missing, config include path wrong)
+- **Submodule:** `projects/audio-transformation-tool/code` — updated to `b9ff70b` (fork/main) — was at `990e5d6`
 - **9 protocols:** NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE — all demo mode working
 - **Known issue:** OpenRouter credits exhausted (402 → demo fallback)
 
@@ -50,18 +51,20 @@
 ### Festival Coordinator
 - **Phase:** Operational | **Status:** 140 pytest tests passing ✅
 
-## Test Suite (Verified 2026-03-27 12:59 UTC)
+## Test Suite (Verified 2026-03-27 14:44 UTC — Corrected)
 
 | Project | Tests | Framework |
 |---------|-------|-----------|
 | Synthesis Platform | 444 | vitest |
 | Festival Coordinator | 140 | pytest (venv) |
-| Credo (collaboration-platform) | 131 | vitest |
-| Contribution Graph | **144** (110 pytest + 34 vitest) | pytest + vitest |
-| Audio Backend (server/) | 34 | vitest |
+| Credo (collaboration-platform) | 137 | vitest |
+| Contribution Graph | 110 | pytest |
+| Audio Backend (server/) | 17 | vitest |
 | JCI Org Manager | 41 | pytest |
 | Youth Empowerment Platform | 24 | pytest |
-| **Total** | **958** | |
+| **Total** | **913** | |
+
+> ⚠️ Previous "958" count was wrong: CG had no vitest tests (34 misattributed), audio had 17 not 34 (vitest was broken until fixed this session).
 
 ## Service Status (2026-03-27 12:59 UTC)
 
