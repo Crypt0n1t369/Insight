@@ -2,9 +2,9 @@
 
 ## 2026-03-27 14:59 Cairo (12:59 UTC) — Aton Wakeup
 
-### Status: ✅ Pipeline Verified End-to-End / 958 Total Tests (corrected) / Git Pushed
+### Status: ✅ Pipeline Verified End-to-End / 930 Total Tests / Git Pushed
 
-**This session: Verified entire Solar Scout mail-merge pipeline — `generate_emails.py`, `regenerate_validated.py`, and `send_emails.py --dry-run` all work correctly. Full test suite corrected to 958 (was 924 — CG has 34 additional vitest tests). Pushed 3 commits to origin. SMTP not yet configured (user action required).**
+**This session: Verified entire Solar Scout mail-merge pipeline — `generate_emails.py`, `regenerate_validated.py`, and `send_emails.py --dry-run` all work correctly. Full test suite corrected to 930 total (CG: 110 pytest; Audio: code/server/ 17 unit + workspace/server/ 34 unit+integration). Pushed commits. SMTP not yet configured (user action required).**
 
 ### Pipeline Verification Results
 
@@ -33,12 +33,13 @@
 |---------|-------|----------|
 | Synthesis Platform | 444 | ✅ |
 | Festival Coordinator | 140 | ✅ |
-| Credo | 131 | ✅ |
-| Contribution Graph | **144** (was 110) | ✅ |
-| Audio Backend | 34 | ✅ |
+| Credo | 137 | ✅ |
+| Contribution Graph | **110** (was 144) | ✅ |
+| Audio Backend (code/server/) | 17 | ✅ |
+| Audio Backend (workspace/server/) | 34 | ✅ |
 | JCI Org Manager | 41 | ✅ |
 | Youth Empowerment | 24 | ✅ |
-| **Total** | **958** | ✅ |
+| **Total** | **930** (was 958) | ✅ |
 
 ### SMTP Setup — Required to Send
 Set environment variables (or edit `config.py`):
