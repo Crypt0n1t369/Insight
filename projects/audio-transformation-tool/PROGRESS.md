@@ -1,5 +1,59 @@
 # PROGRESS.md - Audio Transformation Tool
-*Updated — 2026-03-26 23:28 Cairo (21:28 UTC)*
+*Updated — 2026-03-27 13:39 Cairo (11:39 UTC)*
+
+---
+
+## 2026-03-27 11:39 UTC - Wakeup Session
+
+### Status: ✅ All Systems Healthy / Frontend Build Verified / Script + Docs Added
+
+**Frontend builds successfully from source. Added deployment script and API docs. Backend solid at 34/34 tests.**
+
+### What Was Done This Session
+1. ✅ **Frontend build verified** — `npm run build` succeeds cleanly in `code/` (12.83s, no errors)
+   - Previous PROGRESS.md note about "frontend source missing" was incorrect — source files (`App.tsx`, `index.tsx`, `components/`, etc.) ARE present
+   - `dist/assets/index-CaW7blR8.js` (825KB) rebuilt
+2. ✅ **Frontend restarted** — Fresh build served on port 3005
+3. ✅ **Backend confirmed healthy** — `{"status":"ok","openRouterLinked":true}` on port 3001
+4. ✅ **34/34 tests passing** — `server/` directory (2 test files)
+5. ✅ **New: `start.sh`** — One-command start script for backend/frontend/all/test
+   ```bash
+   ./start.sh all      # start both
+   ./start.sh test     # run 34 vitest tests
+   ./start.sh backend  # restart backend only
+   ```
+6. ✅ **New: `API.md`** — Full API reference for all 5 endpoints + demo mode docs
+7. ✅ **Git committed** — `fb27427` in workspace root
+
+### Verified Endpoints (2026-03-27 11:36 UTC)
+| Endpoint | Status |
+|----------|--------|
+| GET `/health` | ✅ `{"status":"ok","openRouterLinked":true}` |
+| GET `/api/protocols` | ✅ 9 protocols |
+| POST `/api/chat` | ✅ Demo fallback works |
+| POST `/api/director` | ✅ NSDR fallback works |
+| POST `/api/meditation/generate` | ✅ Demo batches (NSDR: 6, IFS: 6, others: 5) |
+
+### All Services Status (2026-03-27 11:36 UTC)
+| Component | Port | Status |
+|-----------|------|--------|
+| Audio Backend | 3001 | ✅ Running |
+| Audio Frontend | 3005 | ✅ Running (fresh build) |
+| Credo API | 3000 | ✅ Running |
+| Youth Platform | 3003 | ✅ Running |
+| Contribution Graph | 3006 | ✅ Running |
+| JCI Portal | 8080 | ✅ Running |
+
+### ⚠️ BLOCKED — User Action Required
+1. **Deploy to Vercel** → vercel.com → import Crypt0n1t369/Insight → Deploy (needed for public URL)
+2. **Add OpenRouter credits** → demo mode works but LLM features need credits
+
+### What's Next (Priority Order)
+1. **User deploys to Vercel** (P0 — user action needed)
+2. **Add OpenRouter credits** (P0 — user action needed)
+3. **Browser test** — verify full user flow in real browser (P1 — no browser in this environment)
+4. **Merge upstream commit 8562fd2** — improves duration calc, error handling, progress UX, voice mapping (P2)
+5. **Add remaining protocols to CLINICAL_PROTOCOLS** — GENERAL, TRAUMA_SAFE, BREATHWORK (P2)
 
 ---
 
