@@ -1,5 +1,59 @@
 ---
 
+## 2026-03-27 05:28 Cairo (03:28 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ CG Test 0.1 Interview Script Drafted / Audio Gitignore Fixed / All Tests Pass
+
+**This session: Drafted comprehensive Test 0.1 interview script (5 screens + 6 questions + screener). Fixed audio submodule .gitignore to ignore server/*.js, server/*.map build artifacts. All services verified healthy. All tests confirmed passing.**
+
+### What Was Done
+
+**1. CG Test 0.1 Interview Script — Drafted ✅**
+- Created `projects/contribution-graph/TEST_01_INTERVIEW_SCRIPT.md` — comprehensive Phase 0 validation materials
+- Includes: 5-screen paper prototype (annotated), 6-question interview script, screener questionnaire, consent script, per-session notes template
+- Screens: Hook/Onboarding → First Challenge → Signal Detected (Aha) → Contribution Map → Challenge Complete
+- Hard pass criteria: ≥7/10 intent-to-use + ≥5/10 specific Day-3 fear
+- Ready for user review before participant recruitment
+
+**2. Audio Submodule — Build Artifacts Ignored ✅**
+- Added `server/*.js`, `server/*.map`, `server/*.d.ts` to `.gitignore` in `projects/audio-transformation-tool/code/`
+- These are vitest-compiled TypeScript artifacts, not source — now properly ignored
+
+**3. All Services — Verified Healthy ✅**
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ 200 |
+| Audio Backend | 3001 | ✅ `openRouterLinked: true`, health ok |
+| Credo Frontend | 3002 | ✅ 200 (app working; /health 404 is expected) |
+| Youth Platform | 3003 | ✅ 200 |
+| Audio Frontend | 3005 | ✅ 200 |
+| CG Web | 3006 | ✅ 200 |
+| JCI Portal | 8080 | ✅ 200 |
+
+**4. All Tests — Confirmed Passing ✅**
+- CG (contribution-graph): **47/47 passing**
+- Audio Backend: healthy (demo mode — OpenRouter credits out)
+
+### P0 Blockers — User Action Required
+
+| # | Item | Action | Impact |
+|---|------|--------|--------|
+| 1 | **CG Test 0.1 — Review script + recruit** | Review `TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants, run sessions | Phase 0 go/no-go |
+| 2 | **OpenRouter Credits** | openrouter.ai → add $5-10 | Unblocks web research + AI features |
+| 3 | **Solar Scout — Verify 11 unknowns** | Lursoft.lv or +371 calls (Riviera, Latsr, Kopa, JSC Latgales, Gerhard, Krass, Sent, Bermas, Len, Vests, Sakart) | Clean 46-company outreach list |
+| 4 | **Audio Tool → Vercel** | vercel.com → import Crypt0n1t369/Insight → Deploy | Public URL + Telegram |
+| 5 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+
+### What's Next (Aton Can Do Without User Action)
+- [DONE] Draft Test 0.1 interview script ✅
+- [DONE] Fix audio .gitignore ✅
+- Draft Test 0.2 (attribution fairness) materials
+- Draft Test 0.4 (client readiness) conversation guide
+- Archive old PROGRESS entries
+- Review and update SPEC.md from prior decisions
+
+---
+
 ## 2026-03-27 04:39 Cairo (02:39 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ Workspace Synced / All Tests Verified / Services Healthy

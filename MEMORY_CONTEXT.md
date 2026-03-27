@@ -66,14 +66,16 @@ All 7 services up: 3000 ✅ | 3001 ✅ | 3002 ✅ | 3003 ✅ | 3005 ✅ | 3006 �
 
 ## Git
 
-- **Workspace:** `da07ceb` — docs: PROGRESS consolidation + solar-scout EMAIL_TEMPLATE
+- **Workspace:** `9697300` — docs: update MEMORY_CONTEXT - solar-scout 46 leads, EMAIL_TEMPLATE, git updated
 - **Solar Scout:** `00e3b48` — pushed to origin/master
 - **Synced with origin/master**
+- **Audio submodule:** server/*.js,*.map,*.d.ts now gitignored (build artifacts)
 
 ## What's Left (User Action Required)
 
 | Priority | Item | Blocker |
 |----------|------|---------|
+| **P0** | **CG Test 0.1 — Review script + recruit** | Review `projects/contribution-graph/TEST_01_INTERVIEW_SCRIPT.md` + recruit 10–12 participants (aged 18–30, in transition) |
 | P0 | Add OpenRouter credits (~$5-10) | Unblocks web research + CG synthesis + AI meditation |
 | P0 | Verify 11 Solar Scout leads | Lursoft.lv or +371 calls (Riviera, Latsr, Kopa, JSC Latgales, Gerhard, Krass, Sent, Bermas, Len, Vests, Sakart) |
 | P0 | Approve 46-company outreach list | Email template ready in solar-scout/docs/EMAIL_TEMPLATE.md |
