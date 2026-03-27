@@ -1,5 +1,71 @@
 ---
 
+## 2026-03-27 18:40 Cairo (16:40 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ API Key Auth Layer Added / 462 Synthesis Tests / All 8 Services Healthy
+
+**Added API key auth to Synthesis API. Auth properly enforced when SYNTHESIS_API_KEY env var is set; dev-mode bypass when unset. All 462 tests passing. Pushed to origin.**
+
+### What Was Done
+
+**New: API Key Auth Middleware** — `projects/synthesis/server/middleware/auth.ts`
+- `requireApiKey()` middleware — validates `X-API-Key` header
+- If `SYNTHESIS_API_KEY` env var is **unset** → dev mode, auth bypassed (backward compatible)
+- If env var is **set** → requires matching `X-API-Key` header:
+  - Missing → `401 {"code":"MISSING_API_KEY"}`
+  - Wrong → `403 {"code":"INVALID_API_KEY"}`
+  - Correct → request proceeds
+- `corsPreflightHandler()` → handles CORS preflight OPTIONS before auth (browsers don't send auth headers on preflight)
+- Health endpoint always public (no auth)
+- CORS restricted to `localhost:3007` + `localhost:3005` when key is set (dev origins only)
+
+**Updated `server/index.ts`**
+- Auth middleware wired to all `/api/*` routes
+- CORS applied per-route with auth, not globally
+- Preflight OPTIONS handled before auth check
+
+**Auth Verified (with key set):**
+| Request | Expected | Actual |
+|---------|----------|--------|
+| No key | 401 | ✅ 401 |
+| Wrong key | 403 | ✅ 403 |
+| Correct key | 200 | ✅ 200 |
+| GET /health (no key) | 200 | ✅ 200 |
+
+**Fixed: ARCHITECTURE.md**
+- NVC agent status corrected: `🔜 Future` → `✅ Implemented` (42 tests — most well-tested agent)
+
+**Audio Backend Restarted** — dropped at 16:39, back up within 5s
+
+### Test Suite — Confirmed
+| Project | Tests | Result |
+|---------|-------|--------|
+| Synthesis Platform | **462** | ✅ (+1 auth test) |
+| Audio Backend (workspace/server/) | **34** | ✅ |
+
+### All Services — Running ✅ (16:40 UTC)
+| Service | Port | Status |
+|---------|------|--------|
+| Audio Backend | 3001 | ✅ `{"status":"ok","openRouterLinked":true}` |
+| Audio Frontend | 3005 | ✅ HTTP 200 |
+| Credo API | 3000 | ✅ `{"status":"ok"}` |
+| CG Web | 3006 | ✅ HTTP 200 |
+| JCI Portal | 8080 | ✅ HTTP 200 |
+| Youth Platform | 3003 | ✅ `{"status":"ok"}` |
+| Synthesis API | 3004 | ✅ `{"status":"ok","service":"synthesis-platform"}` |
+| Synthesis UI | 3007 | ✅ HTTP 200 |
+
+**Git committed:** `8f05b66` — "feat(synthesis): add API key auth layer + CORS hardening"
+
+### What's Next
+- **User deploys Audio Tool to Vercel** (P0 — user action)
+- **User adds OpenRouter credits** (P0 — user action)
+- **User reviews CG Phase 0 validation materials** (P0 — user action)
+- **Supabase session persistence** (P2 — next Aton-buildable item)
+- **Auth integration in Synthesis UI** (P2 — once Supabase is set up)
+
+---
+
 ## 2026-03-27 18:13 Cairo (16:13 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ SSE Streaming Bug Fixed / Session History Tab Added / 461 Synthesis Tests / All Services Running
