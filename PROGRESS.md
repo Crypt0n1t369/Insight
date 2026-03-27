@@ -1,5 +1,65 @@
 ---
 
+## 2026-03-28 00:27 Cairo (22:27 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ All 8 Services Healthy / 51 Tests Pass / Deployment Guide Written
+
+**Careful review of full codebase + services. All P0 items remain blocked on user action. Wrote `DEPLOYMENT.md` to remove friction when user is ready to deploy. No code changes — nothing broken.**
+
+### All Services — Healthy (22:27 UTC) ✅
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ HTTP 200 |
+| Audio Backend | 3001 | ✅ HTTP 200 |
+| Youth Platform | 3003 | ✅ HTTP 200 |
+| Synthesis API | 3004 | ✅ 132 sessions, 148 KG nodes |
+| Audio Frontend | 3005 | ✅ HTTP 200 |
+| CG Web | 3006 | ✅ HTTP 200 |
+| Synthesis UI | 3007 | ✅ HTTP 200 |
+| JCI Portal | 8080 | ✅ HTTP 200 |
+
+### Tests — All Passing ✅
+- `workspace/server/`: 34/34 vitest ✅
+- `code/server/`: 17/17 vitest ✅
+
+### What I Examined This Session
+- **Supabase schema** (`code/supabase/schema.sql`): Comprehensive — 7 core tables + resolution engine + memory/vector system. RLS policies on all tables. Schema is production-ready.
+- **Supabase client** (`code/services/supabaseClient.ts`): PKCE auth flow, mock fallback when credentials missing — correctly implemented.
+- **Backend code** (`code/server/index.ts`): Demo mode returns `{error: "...", batches: [...], title: "..."}`. The `error` field is informational only (not a crash). Frontend pre-built — can't verify display behavior without browser.
+- **Frontend source**: Confirmed present at `code/` (Vite project root — `index.tsx`, `App.tsx`, `components/`, `services/`, etc.). Earlier notes about "missing source" were incorrect.
+- **Workspace vs code servers**: `workspace/server/` and `code/server/` are semantically identical (same protocols, same DEMO_BATCHES, same endpoints). Only difference: import paths due to different directory depth.
+- **DEMO_BATCHES**: 9 protocols, clinically-grounded scripts, FADE_VOL sonic cues. NSDR: 6 batches, others: 5-6 each.
+- **DEPLOYMENT.md written**: Step-by-step Vercel + Supabase setup guide at `projects/audio-transformation-tool/DEPLOYMENT.md`. Removes deployment friction for when user is ready.
+
+### Code/Schema Findings (Nothing Broken)
+- Schema is complete and well-engineered ✅
+- PKCE auth + session persistence wired up ✅
+- Mock fallback on missing Supabase credentials ✅
+- Demo mode always returns playable content ✅
+- No differences in backend logic between workspace/server and code/server ✅
+
+### 🚨 ALL P0 ITEMS STILL BLOCKED ON USER ACTION
+| # | Item | Blocker |
+|---|------|---------|
+| 1 | **OpenRouter credits** | openrouter.ai → add $5–10 (demo mode works fine) |
+| 2 | **Audio Tool → Vercel** | vercel.com → import Crypt0n1t369/Insight → add env vars (DEPLOYMENT.md written — ready to go) |
+| 3 | **CG Test 0.1 — Review + recruit** | Review `TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants |
+| 4 | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks |
+| 5 | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
+| 6 | **CG Telegram bot token** | BotFather → new token |
+| 7 | **Solar Scout: 11 unknowns** | Lursoft.lv lookup or +371 calls |
+| 8 | **Solar Scout: Approve outreach** | Review `docs/leads_outreach_real.json` + `EMAIL_TEMPLATE.md` |
+| 9 | **Supabase session persistence** | User sets up Supabase project (schema ready, DEPLOYMENT.md has steps) |
+
+### What Aton Can Do Without User Action
+- [DONE] Verify all 8 services healthy ✅
+- [DONE] Run test suites — 34+17 passing ✅
+- [DONE] Audit Supabase schema ✅
+- [DONE] Verify demo mode scripts clinically grounded ✅
+- [DONE] Write DEPLOYMENT.md (removes Vercel/Supabase friction) ✅
+
+---
+
 ## 2026-03-28 00:04 Cairo (22:04 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ All Services Healthy / Audio Tool Fully Audited / No Issues Found
