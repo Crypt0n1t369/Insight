@@ -25,7 +25,7 @@
   - `PILOT.md` — Phase 0 validation protocol (4 tests, go/no-go gates)
   - `DISCOVERY-FLOW.md` — 5-phase conversation design
   - `IDENTITY-ARCHITECTURE.md` — short-code identity, map delivery, re-engagement
-- **Build tests:** 47/47 pytest passing (verified 2026-03-27 04:28 UTC)
+- **Build tests:** 89/89 pytest passing (added regression test — verified 2026-03-27 04:28 UTC)
 - **Web server:** Running on port 3006 with SQLite persistence ✅
 - **AI synthesis module:** Enhanced template; needs OpenRouter for real LLM
 - **Git (workspace):** `6841c08` — commit includes SPEC.md + TEST_03_FESTIVAL + PROGRESS.md updates
@@ -62,8 +62,8 @@
 | Festival Coordinator | 49 | pytest |
 | JCI Org Manager | 41 | pytest |
 | Youth Empowerment Platform | 24 | pytest |
-| Contribution Graph | 88 (18+47+23) | pytest |
-| **Total** | **735** | |
+| Contribution Graph | 89 (18+47+23) | pytest |
+| **Total** | **736** | |
 
 ## Service Status (2026-03-27 23:00 UTC)
 

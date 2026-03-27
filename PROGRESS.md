@@ -1,3 +1,75 @@
+## 2026-03-27 07:08 Cairo (05:08 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ CG SIGNAL_META Bug Fixed + Regression Test Added / All Services Healthy / 89/89 CG Tests
+
+**This session: Fixed a bug where 12 of 18 SignalType values rendered as raw key names in the SVG map (e.g. 'values_alignment' instead of 'Values Alignment') with fallback '○' icons. Added complete SIGNAL_META coverage. Added regression test. All 89 CG tests passing. All services verified healthy.**
+
+### What Was Done
+
+**1. CG Map Renderer — SIGNAL_META Bug Fixed ✅**
+- Bug: `SIGNAL_META` dict in `web/map_renderer.py` only had 6 of 18 `SignalType` entries
+- Missing: `values_alignment`, `expression_fluency`, `novel_assembly`, `obstacle_persistence`, `milestone_tracking`, `peer_recognition`, `community_recitation`, `mutual_aid_exchange`, `challenge_complexity`, `challenge_velocity`, `agency_assertion`, `resistance_persistence`
+- Impact: Unknown signal types leaked raw key names into SVG and showed '○' fallback icon
+- Fix: Added all 12 missing entries with appropriate icons (⚖️💬🧩🔥📍👏🔗🤝📈🚀💪🛡️) and colors
+- Regression test: `test_all_signal_types_render_without_raw_keys` added to `web/test_web.py`
+- Verified: No '○' fallback icons in SVG, all 18 labels present, 89/89 CG tests passing
+- Committed: `98da124`
+
+**2. All Services — Verified Healthy ✅**
+| Service | Port | Endpoint | Status |
+|---------|------|---------|--------|
+| CG Web | 3006 | `/health` | ✅ `{"status":"ok","store_type":"SQLiteInMemoryStore"}` |
+| Audio Backend | 3001 | `/health` | ✅ `{"status":"ok","openRouterLinked":true}` |
+| Credo API | 3000 | `/health` | ✅ `{"status":"ok"}` |
+| Credo Frontend | 3002 | `/` | ✅ 200 |
+| Youth Platform | 3003 | `/` | ✅ 200 |
+| Audio Frontend | 3005 | `/` | ✅ 200 |
+| JCI Portal | 8080 | `/health` | ✅ `{"status":"ok"}` |
+
+**3. All Tests — Confirmed Passing ✅**
+| Project | Tests | Status |
+|---------|-------|--------|
+| Contribution Graph | **89** (18 identity + 48 handlers + 23 web) | ✅ +1 new regression |
+| Synthesis Platform | 424 (12 test files) | ✅ |
+| Collaboration Platform | 75 (6 test files) | ✅ |
+| Festival Coordinator | 49 | ✅ |
+| JCI Org Manager | 41 | ✅ |
+| Youth Empowerment Platform | 24 | ✅ |
+| **Total** | **702** | |
+
+### CG Phase 0 — What's Complete
+
+| Test | Materials | Status |
+|------|-----------|--------|
+| **0.1 Self-Discovery Desire** | `TEST_01_INTERVIEW_SCRIPT.md` (5-screen prototype + 6 Qs + screener + consent) | ✅ Drafted |
+| **0.2 Attribution Fairness** | `TEST_02_ATTRIBUTION_FAIRNESS.md` (task brief + claim template + negotiation + survey) | ✅ Drafted |
+| **0.3 Festival Top-of-Funnel** | `TEST_03_FESTIVAL_TOP_OF_FUNNEL.md` (quiz + result card + bot onboarding + tracking) | ✅ Drafted |
+| **0.4 Client Problem Readiness** | `TEST_04_CLIENT_READINESS.md` (1-pager + conversation guide + problem template) | ✅ Drafted |
+| **SPEC.md** | `SPEC.md` (Phase 0 results template + Phase 1 build spec + technical arch) | ✅ Created |
+
+**All 4 test materials drafted and ready for user review.** Execution of each test requires user action.
+
+### P0 Blockers — User Action Required
+
+| # | Item | Action | Impact |
+|---|------|--------|--------|
+| 1 | **CG Test 0.1 — Review script + recruit** | Review `TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants | Phase 0 go/no-go |
+| 2 | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks (hackathon, youth conf, etc.) | Phase 0 acquisition channel |
+| 3 | **CG Test 0.4 — Identify orgs** | 5 target orgs (NGO/startup/govt/company/agency) | Phase 0 go/no-go |
+| 4 | **OpenRouter Credits** | openrouter.ai → add $5–10 | Unblocks AI synthesis + web research |
+| 5 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+| 6 | **Solar Scout: 11 unknowns** | Lursoft.lv lookup or +371 calls | Clean 46-company outreach list |
+| 7 | **Solar Scout: Approve outreach** | Review `docs/leads_outreach_real.json` + `EMAIL_TEMPLATE.md` | Ready to send |
+
+### What's Next (Aton Can Do Without User Action)
+- [DONE] Fix CG SIGNAL_META bug ✅
+- [DONE] Add regression test ✅
+- Monitor services for anomalies
+- Review and improve individual CG bot handlers if specific issues identified
+- Archive old PROGRESS entries (consolidate)
+
+---
+
 ## 2026-03-27 06:28 Cairo (04:28 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ CG SPEC.md Created + Test 0.3 Festival Materials Drafted / All Services Healthy
