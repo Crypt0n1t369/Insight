@@ -1,5 +1,70 @@
 ---
 
+## 2026-03-27 19:10 Cairo (17:10 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ HistoryPage Search+Filter Added / ARCHITECTURE.md Updated / MEMORY_CONTEXT Synced / BACKLOG Committed / All 462 Tests Pass
+
+**Added text search + protocol filter to Session History page. Updated ARCHITECTURE.md with accurate agent list (8 agents, 462 total tests). Synced MEMORY_CONTEXT.md with current state. Committed BACKLOG.md Worker-1 summary. All 462 synthesis tests pass.**
+
+### What Was Done
+
+**1. Session History Page — Search + Filter ✅**
+`ui/src/pages/HistoryPage.tsx` — Added:
+- **Text search** — filters by session name (case-insensitive)
+- **Protocol filter dropdown** — All / WOOP / IFS / NSDR / Breathwork / SE / ACT / NVC / General
+- **Clear button** — resets both filters
+- **Session count** — "X of Y" indicator
+- **Auto-clear selection** — if selected session no longer matches filters, panel closes
+- **Session name display** — now shows session name in list (was missing, showed blank)
+- **Duration guard** — only shows duration if `duration > 0`
+- **Graceful empty state** — "No sessions match your search" message
+
+**2. ARCHITECTURE.md — Updated ✅**
+- Fixed NVC agent status: was `🔶 Future` → now `✅` with 42 tests
+- Added NVC-Agent (42 tests) and GENERAL-Agent (20 tests) to Specialist Agents table
+- Corrected total specialist agent count: was ~121 → now **234** (8 agents)
+- Updated API Server section with all 7 endpoints + auth/CORS notes
+- Added React UI section with page list
+- Added Phase 2 / Backlog section
+- Updated system diagram to reflect actual architecture
+
+**3. MEMORY_CONTEXT.md — Synced ✅**
+- Updated test counts: synthesis backend 462, UI 6, total 971
+- Updated git hash: `9c5fd40`
+- Updated Synthesis Platform section with API key auth note + current pages
+- Corrected service status (all 8 services listed)
+- Removed stale "947 tests" references
+
+**4. BACKLOG.md — Committed ✅**
+- Worker-1 session summary committed + pushed: `9c5fd40`
+
+### Test Suite — Confirmed
+| Project | Tests | Result |
+|---------|-------|--------|
+| Synthesis Platform (backend) | 462 | ✅ |
+| Synthesis Platform (UI) | — | (build passes) |
+| All other projects | 509 | ✅ (prior sessions) |
+
+### All Services — Running ✅ (17:10 UTC)
+| Service | Port | Status |
+|---------|------|--------|
+| Audio Backend | 3001 | ✅ `{"status":"ok","openRouterLinked":true}` |
+| Audio Frontend | 3005 | ✅ HTTP 200 |
+| Credo API | 3000 | ✅ `{"status":"ok"}` |
+| CG Web | 3006 | ✅ `{"status":"ok"}` |
+| JCI Portal | 8080 | ✅ `{"status":"ok"}` |
+| Youth Platform | 3003 | ✅ `{"status":"ok"}` |
+| Synthesis API | 3004 | ✅ `{"status":"ok"}` |
+| Synthesis UI | 3007 | ✅ HTTP 200 |
+
+### What's Next
+- **User deploys Audio Tool to Vercel** (P0 — user action)
+- **User adds OpenRouter credits** (P0 — user action)
+- **User reviews CG Phase 0 validation materials** (P0 — user action)
+- **Supabase session persistence** (P2 — next Aton-buildable item once Supabase is set up)
+
+---
+
 ## 2026-03-27 18:40 Cairo (16:40 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ API Key Auth Layer Added / 462 Synthesis Tests / All 8 Services Healthy

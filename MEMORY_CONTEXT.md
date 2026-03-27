@@ -11,8 +11,7 @@
   - `send_emails.py` — SMTP mail-merge sender (crash-resilient, per-email log) ✅
   - `docs/SEND_GUIDE.md` — Gmail/Mailgun/SendGrid setup guide ✅
   - Pipeline verified end-to-end: `generate_emails.py` → `regenerate_validated.py` → `send_emails.py --dry-run` ✅
-- **Data:** 15 validated companies / 33.4 MW (46 original → 15 validated after MX + non-mfg filtering)
-- **⚠️ Remaining 31 non-validatable** — null MX, localhost MX, NXDOMAIN, or non-manufacturers
+- **Data:** 15 validated companies / 33.4 MW
 - **Git:** `440c138` — latest pushed to origin/master
 
 ### Contribution Graph (CG — Kristaps' Life Work)
@@ -26,25 +25,25 @@
   - `TEST_03_FESTIVAL_TOP_OF_FUNNEL.md` — Typeform quiz (7 Qs, 4 archetypes), result card template, 7-day bot onboarding ✅
   - `TEST_04_CLIENT_READINESS.md` — 1-pager, conversation guide, outreach email, problem template ✅
   - `PILOT.md` — Phase 0 validation protocol (4 tests, go/no-go gates)
-- **Build tests:** 144 total (110 pytest + 34 vitest) ✅
+- **Build tests:** 110 pytest ✅
 - **Web server:** Running on port 3006 ✅
 
 ### Audio Tool (Audio Transformation Tool)
 - **Phase:** Operational (production)
 - **Ports:** 3001 (backend), 3005 (frontend)
-- **Status:** 17 vitest tests passing ✅
 - **Workspace server tests:** 34 vitest tests passing ✅
-- **Submodule:** `projects/audio-transformation-tool/code` — updated to `b9ff70b` (fork/main)
+- **Submodule tests:** 17 vitest tests passing ✅
+- **Submodule:** `projects/audio-transformation-tool/code` — at `b9ff70b` (fork/main)
 - **9 protocols:** NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE — all demo mode working
 - **Known issue:** OpenRouter credits exhausted (402 → demo fallback)
 
 ### Credo Collaboration Platform
 - **Phase:** Operational
-- **Ports:** 3000 (API)
+- **Port:** 3000 (API)
 - **Status:** 137 vitest tests passing ✅
 
 ### JCI Org Manager
-- **Phase:** Operational | **Port:** 8080 | **Status:** 41 pytest tests passing (2 async thread warnings — cosmetic only)
+- **Phase:** Operational | **Port:** 8080 | **Status:** 41 pytest tests passing ✅
 
 ### Youth Empowerment Platform
 - **Phase:** Operational | **Port:** 3003 | **Status:** 24 pytest tests passing ✅
@@ -52,11 +51,11 @@
 ### Festival Coordinator
 - **Phase:** Operational | **Status:** 140 pytest tests passing ✅
 
-## Test Suite (Verified 2026-03-27 16:13 UTC)
+## Test Suite (Verified 2026-03-27 17:07 UTC)
 
 | Project | Tests | Framework |
 |---------|-------|-----------|
-| Synthesis Platform (backend) | 461 | vitest |
+| Synthesis Platform (backend) | 462 | vitest |
 | Synthesis Platform (UI client) | 6 | vitest |
 | Festival Coordinator | 140 | pytest (venv) |
 | Credo (collaboration-platform) | 137 | vitest |
@@ -65,18 +64,26 @@
 | Audio Backend (code/server/ — submodule) | 17 | vitest |
 | JCI Org Manager | 41 | pytest |
 | Youth Empowerment Platform | 24 | pytest |
-| **Total** | **970** | |
+| **Total** | **971** | |
 
-> Updated 2026-03-27 16:13 UTC: +1 SSE streaming regression test. Total now 970.
+> Last updated 2026-03-27 17:07 UTC: synthesis API key auth layer added (462 backend + 6 UI).
 
-## Service Status (2026-03-27 16:13 UTC)
+## Service Status (2026-03-27 17:07 UTC)
 
-All services healthy: 3000 ✅ | 3001 ✅ | 3003 ✅ | 3005 ✅ | 3006 ✅ | 8080 ✅ | 3004 ✅ | 3007 ✅
+All 8 services healthy: 3000 ✅ | 3001 ✅ | 3003 ✅ | 3004 ✅ | 3005 ✅ | 3006 ✅ | 3007 ✅ | 8080 ✅
 
 ## Git
 
-- **Workspace:** `d38d30e` — pushed to origin/master ✅
-- **Solar Scout:** Pushed and synced (separate repo: `7238f4e`)
+- **Workspace:** `9c5fd40` — pushed to origin/master ✅ (BACKLOG.md Worker-1 session update)
+- **Solar Scout:** Pushed and synced (separate repo)
+
+## Synthesis Platform — Current State
+
+**API Key Auth:** ✅ Added — `SYNTHESIS_API_KEY` env var gates `/api/*` routes; dev-mode bypass when unset.
+
+**Pages (port 3007):** Protocols | Session Runner (blocking + SSE) | KG Query | Stats | History
+
+**Next buildable (P2):** Supabase session persistence (requires user to set up Supabase project)
 
 ## What's Left (User Action Required)
 
@@ -86,14 +93,12 @@ All services healthy: 3000 ✅ | 3001 ✅ | 3003 ✅ | 3005 ✅ | 3006 ✅ | 808
 | **P0** | **CG Test 0.1 — Review script + recruit** | Review `projects/contribution-graph/TEST_01_INTERVIEW_SCRIPT.md` + recruit 10–12 participants |
 | **P0** | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks |
 | **P0** | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
-| **P1** | **Solar Scout SMTP** | Set SMTP env vars → `send_emails.py --dry-run --all` → `--test` → full send |
+| **P1** | **Solar Scout SMTP** | Set SMTP env vars → `send_emails.py --dry-run-all` → `--test` → full send |
 | **P1** | **CG Telegram bot token** | BotFather → new token → `TELEGRAM_BOT_TOKEN` for Phase 2 |
 | **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars |
 
-## This Session (14:29 UTC)
+## This Session (17:07 UTC)
 
-- **947 tests confirmed** ✅ — all projects verified passing
-- **All 6 services healthy** ✅ — 3000, 3001, 3003, 3005, 3006, 8080
-- **MEMORY_CONTEXT updated** — test counts corrected (930→947), git hash updated
-- **PROGRESS.md updated** ✅ — pushed commit `4259354`
-- **Git is clean** ✅
+- BACKLOG.md committed + pushed ✅
+- All services verified healthy (8/8) ✅
+- 462 synthesis tests confirmed passing ✅

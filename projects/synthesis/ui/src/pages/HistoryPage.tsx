@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { queryKG, getSession, type KGNode } from '../api/client';
 
 interface SessionSummary {
@@ -9,6 +9,8 @@ interface SessionSummary {
   createdAt: string;
   duration?: number;
 }
+
+const ALL_PROTOCOL = '__all__';
 
 const PROTOCOL_LABELS: Record<string, string> = {
   woop: 'WOOP',
@@ -21,6 +23,18 @@ const PROTOCOL_LABELS: Record<string, string> = {
   general: 'General',
 };
 
+const PROTOCOL_OPTIONS = [
+  { value: ALL_PROTOCOL, label: 'All Protocols' },
+  { value: 'woop', label: 'WOOP' },
+  { value: 'ifs', label: 'IFS' },
+  { value: 'nsdr', label: 'NSDR' },
+  { value: 'breathwork', label: 'Breathwork' },
+  { value: 'se', label: 'Somatic Experiencing' },
+  { value: 'act', label: 'ACT' },
+  { value: 'nvc', label: 'NVC' },
+  { value: 'general', label: 'General' },
+];
+
 export function HistoryPage() {
   const [sessions, setSessions] = useState<SessionSummary[]>([]);
   const [selectedSession, setSelectedSession] = useState<KGNode | null>(null);
@@ -28,28 +42,31 @@ export function HistoryPage() {
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [searchText, setSearchText] = useState('');
+  const [protocolFilter, setProtocolFilter] = useState(ALL_PROTOCOL);
 
   async function loadHistory() {
     setLoading(true);
     setError(null);
     try {
-      const res = await queryKG({ type: 'session', limit: 20 });
+      const res = await queryKG({ type: 'session', limit: 50 });
       const summaries: SessionSummary[] = res.nodes
         .map((node) => {
           const m = (node as { metadata?: Record<string, unknown> }).metadata ?? {};
           const protocol = (m['protocol'] as string) ?? 'general';
           const eventCount = (m['eventCount'] as number) ?? 0;
-          const createdAt = (m['completedAt'] as string) ?? (node as { createdAt?: string }).createdAt ?? '';
+          const completedAt = (m['completedAt'] as string) ?? (node as { createdAt?: string }).createdAt ?? '';
           const startedAt = (m['startedAt'] as string) ?? '';
-          const duration = startedAt && createdAt
-            ? new Date(createdAt).getTime() - new Date(startedAt).getTime()
-            : undefined;
+          const duration =
+            startedAt && completedAt
+              ? new Date(completedAt).getTime() - new Date(startedAt).getTime()
+              : undefined;
           return {
             id: node.id,
             name: node.name,
             protocol,
             eventCount,
-            createdAt,
+            createdAt: completedAt,
             duration,
           };
         })
@@ -79,6 +96,22 @@ export function HistoryPage() {
     }
   }
 
+  // Filter sessions by search text + protocol
+  const filtered = useMemo(() => {
+    const q = searchText.trim().toLowerCase();
+    return sessions.filter((s) => {
+      const matchText =
+        !q || s.name.toLowerCase().includes(q) || s.protocol.toLowerCase().includes(q);
+      const matchProtocol = protocolFilter === ALL_PROTOCOL || s.protocol === protocolFilter;
+      return matchText && matchProtocol;
+    });
+  }, [sessions, searchText, protocolFilter]);
+
+  // Clear selection if currently selected session is no longer in filtered list
+  const selectedId = selectedSession?.id;
+  const isSelectedStillVisible = filtered.some((s) => s.id === selectedId);
+  const effectiveSelected = !isSelectedStillVisible ? null : selectedSession;
+
   function formatDate(iso: string): string {
     if (!iso) return '—';
     try {
@@ -87,6 +120,13 @@ export function HistoryPage() {
       return iso;
     }
   }
+
+  function clearFilters() {
+    setSearchText('');
+    setProtocolFilter(ALL_PROTOCOL);
+  }
+
+  const hasActiveFilters = searchText.trim() !== '' || protocolFilter !== ALL_PROTOCOL;
 
   return (
     <div style={{ padding: '24px', maxWidth: '900px' }}>
@@ -103,6 +143,7 @@ export function HistoryPage() {
             borderRadius: '8px',
             fontSize: '0.875rem',
             fontWeight: 500,
+            cursor: loading ? 'not-allowed' : 'pointer',
           }}
         >
           {loading ? 'Loading…' : '↻ Refresh'}
@@ -121,29 +162,95 @@ export function HistoryPage() {
         </p>
       )}
 
+      {/* Search + Filter bar */}
+      {hasLoaded && sessions.length > 0 && (
+        <div style={{ display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <input
+            type="text"
+            placeholder="Search sessions…"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            style={{
+              flex: '1 1 200px',
+              padding: '8px 12px',
+              background: '#111',
+              border: '1px solid #2a2a2a',
+              borderRadius: '8px',
+              color: '#e5e7eb',
+              fontSize: '0.875rem',
+              outline: 'none',
+            }}
+          />
+          <select
+            value={protocolFilter}
+            onChange={(e) => setProtocolFilter(e.target.value)}
+            style={{
+              padding: '8px 12px',
+              background: '#111',
+              border: '1px solid #2a2a2a',
+              borderRadius: '8px',
+              color: '#e5e7eb',
+              fontSize: '0.875rem',
+              outline: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            {PROTOCOL_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+          {hasActiveFilters && (
+            <button
+              onClick={clearFilters}
+              style={{
+                padding: '8px 12px',
+                background: 'transparent',
+                border: '1px solid #2a2a2a',
+                borderRadius: '8px',
+                color: '#6b7280',
+                fontSize: '0.8rem',
+                cursor: 'pointer',
+              }}
+            >
+              Clear
+            </button>
+          )}
+          <span style={{ color: '#6b7280', fontSize: '0.8rem', marginLeft: '4px' }}>
+            {filtered.length} of {sessions.length}
+          </span>
+        </div>
+      )}
+
       {hasLoaded && sessions.length === 0 && (
         <p style={{ color: '#6b7280', fontSize: '0.9rem' }}>No sessions found in the knowledge graph.</p>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: hasLoaded && selectedSession ? '1fr 1fr' : '1fr', gap: '16px' }}>
+      {hasLoaded && sessions.length > 0 && filtered.length === 0 && (
+        <p style={{ color: '#6b7280', fontSize: '0.9rem', marginBottom: '12px' }}>
+          No sessions match your search. Try a different name or protocol.
+        </p>
+      )}
+
+      <div style={{ display: 'grid', gridTemplateColumns: hasLoaded && effectiveSelected ? '1fr 1fr' : '1fr', gap: '16px' }}>
         {/* Session list */}
-        {sessions.length > 0 && (
+        {filtered.length > 0 && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {sessions.map((s) => (
+            {filtered.map((s) => (
               <button
                 key={s.id}
                 onClick={() => loadSessionDetail(s.id)}
                 disabled={loadingDetail}
                 style={{
-                  background: selectedSession?.id === s.id ? '#1a1a2a' : '#161616',
-                  border: `1px solid ${selectedSession?.id === s.id ? '#3b82f6' : '#2a2a2a'}`,
+                  background: effectiveSelected?.id === s.id ? '#1a1a2a' : '#161616',
+                  border: `1px solid ${effectiveSelected?.id === s.id ? '#3b82f6' : '#2a2a2a'}`,
                   borderRadius: '8px',
                   padding: '12px 16px',
                   textAlign: 'left',
-                  cursor: 'pointer',
+                  cursor: loadingDetail ? 'not-allowed' : 'pointer',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '4px',
+                  opacity: loadingDetail ? 0.6 : 1,
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -163,10 +270,13 @@ export function HistoryPage() {
                     {s.eventCount} event{s.eventCount !== 1 ? 's' : ''}
                   </span>
                 </div>
-                <div style={{ color: '#9ca3af', fontSize: '0.8rem' }}>
+                <div style={{ color: '#9ca3af', fontSize: '0.85rem', fontWeight: 500 }}>
+                  {s.name || '(unnamed session)'}
+                </div>
+                <div style={{ color: '#6b7280', fontSize: '0.75rem' }}>
                   {formatDate(s.createdAt)}
                 </div>
-                {s.duration && (
+                {s.duration != null && s.duration > 0 && (
                   <div style={{ color: '#6b7280', fontSize: '0.75rem' }}>
                     ~{Math.round(s.duration / 1000 / 60)}min
                   </div>
@@ -177,7 +287,7 @@ export function HistoryPage() {
         )}
 
         {/* Session detail panel */}
-        {selectedSession && (
+        {effectiveSelected && (
           <div
             style={{
               background: '#111',
@@ -204,38 +314,31 @@ export function HistoryPage() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {(() => {
-                const m = (selectedSession as { metadata?: Record<string, unknown> }).metadata ?? {};
+                const m = (effectiveSelected as { metadata?: Record<string, unknown> }).metadata ?? {};
                 return (
                   <>
-                    <DetailRow label="Name" value={selectedSession.name} />
-                    <DetailRow label="ID" value={selectedSession.id.slice(0, 16) + '…'} />
+                    <DetailRow label="Name" value={effectiveSelected.name || '(unnamed)'} />
+                    <DetailRow label="ID" value={effectiveSelected.id.slice(0, 16) + '…'} />
                     <DetailRow
                       label="Protocol"
                       value={PROTOCOL_LABELS[m['protocol'] as string] ?? (m['protocol'] as string) ?? '—'}
                     />
-                    <DetailRow
-                      label="Events"
-                      value={String(m['eventCount'] ?? 0)}
-                    />
+                    <DetailRow label="Events" value={String(m['eventCount'] ?? 0)} />
                     <DetailRow
                       label="Confidence"
                       value={typeof m['confidence'] === 'number' ? `${Math.round((m['confidence'] as number) * 100)}%` : '—'}
                     />
-                    <DetailRow
-                      label="Started"
-                      value={formatDate(m['startedAt'] as string ?? '')}
-                    />
-                    <DetailRow
-                      label="Completed"
-                      value={formatDate(m['completedAt'] as string ?? '')}
-                    />
+                    <DetailRow label="Started" value={formatDate(m['startedAt'] as string ?? '')} />
+                    <DetailRow label="Completed" value={formatDate(m['completedAt'] as string ?? '')} />
                   </>
                 );
               })()}
-              {selectedSession.description && (
+              {effectiveSelected.description && (
                 <div>
                   <span style={{ color: '#6b7280', fontSize: '0.75rem' }}>Description</span>
-                  <p style={{ color: '#d1d5db', fontSize: '0.875rem', marginTop: '2px' }}>{selectedSession.description}</p>
+                  <p style={{ color: '#d1d5db', fontSize: '0.875rem', marginTop: '2px' }}>
+                    {effectiveSelected.description}
+                  </p>
                 </div>
               )}
             </div>
@@ -250,7 +353,7 @@ function DetailRow({ label, value }: { label: string; value: string }) {
   return (
     <div style={{ display: 'flex', gap: '8px' }}>
       <span style={{ color: '#6b7280', fontSize: '0.8rem', minWidth: '80px' }}>{label}</span>
-      <span style={{ color: '#d1d5db', fontSize: '0.8rem' }}>{value}</span>
+      <span style={{ color: '#d1d5db', fontSize: '0.8rem', wordBreak: 'break-all' }}>{value}</span>
     </div>
   );
 }
