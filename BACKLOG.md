@@ -1,6 +1,32 @@
 # BACKLOG.md - Task Queue
 
-## LAST UPDATED: 2026-03-27 16:47 UTC (Worker-1 session)
+## LAST UPDATED: 2026-03-27 21:47 UTC (Worker-1 session)
+
+---
+
+## 📋 WORKER-1 SESSION SUMMARY — 2026-03-27 21:47 UTC
+
+**Status:** ✅ All 8 services healthy / Audio backend restarted / PROGRESS.md archived (469→32 lines)
+
+### What Was Done This Session
+| Item | Status | Details |
+|------|--------|---------|
+| Audio Backend Restart | ✅ DONE | Port 3001 crashed (wrong path). Restarted via `start.sh backend`. All 8 services confirmed HTTP 200. |
+| PROGRESS.md Archive | ✅ DONE | Consolidated 7 redundant wakeup session entries. 469 lines → 32 lines. Commit `fcbc306`. |
+| Archive Old Entries | ✅ DONE | Item was marked TODO across 6 prior sessions — now completed. |
+
+### P0 Items Still Blocked on User Action
+| # | Item | Action Needed | Impact |
+|---|------|---------------|--------|
+| 1 | **OpenRouter Credits** | openrouter.ai → add $5–10 | Unblocks AI meditation routing |
+| 2 | **CG Test 0.1** | Review `TEST_01_INTERVIEW_SCRIPT.md` + recruit 10–12 participants | Phase 0 go/no-go |
+| 3 | **CG Test 0.3** | Identify 1 event in next 4–8 weeks | Phase 0 acquisition |
+| 4 | **CG Test 0.4** | Identify 5 target orgs | Phase 0 go/no-go |
+| 5 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+| 6 | **Solar Scout: 11 unknowns** | Lursoft.lv lookup or +371 calls | Clean 46-company list |
+| 7 | **Solar Scout: Approve outreach** | Review `docs/leads_outreach_real.json` + `EMAIL_TEMPLATE.md` | Ready to send |
+| 8 | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL + Telegram |
+| 9 | **Supabase session persistence** | User sets up Supabase project | Phase 2 |
 
 ---
 
