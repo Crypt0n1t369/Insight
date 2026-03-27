@@ -1,5 +1,84 @@
 # Solar Scout - Progress Tracker
 
+## 2026-03-27 12:29 Cairo (10:29 UTC) — Aton Wakeup
+
+### Status: ✅ All 924 Tests Passing / SMTP Mail-Merge Sender Added / Pipeline Complete
+
+**This session: Confirmed all 924 tests passing across 7 projects. Built `send_emails.py` — SMTP mail-merge sender that reads from validated CSV and sends personalized LV+EN emails. Created `SEND_GUIDE.md` with 4 SMTP provider options (Gmail/Mailgun/SendGrid/custom). Fixed env-var precedence bug in config loading. All 15 validated companies now previewable with `python send_emails.py --dry-run`. All services healthy.**
+
+### What Was Done
+
+**1. Full Test Suite — Confirmed 924/924 Passing ✅**
+| Project | Tests | Status |
+|---------|-------|--------|
+| Synthesis Platform | 444 | ✅ |
+| Festival Coordinator | 140 | ✅ |
+| Collaboration Platform (Credo) | 131 | ✅ |
+| Contribution Graph | 110 | ✅ |
+| Audio Backend | 34 | ✅ |
+| JCI Org Manager | 41 | ✅ |
+| Youth Empowerment Platform | 24 | ✅ |
+| **Total** | **924** | ✅ |
+
+**2. Solar Scout — SMTP Mail-Merge Sender Added ✅**
+- `send_emails.py` — complete mail-merge sender
+  - `--dry-run`: preview first 3 emails (no SMTP connection)
+  - `--dry-run --all`: preview all 15 emails
+  - `--test`: send to first 3 recipients (real SMTP)
+  - Full send: all 15 companies with 30s delay between each
+  - One email per company: LV + EN as `multipart/alternative`
+  - Crash-resilient: `docs/sent_log.json` written after each send
+  - Config via env vars or `config.py` (SMTP_HOST/PORT/USER/PASSWORD, SENDER_*)
+  - Fix: env vars for SENDER_NAME/SENDER_EMAIL now correctly override config.py defaults
+- `docs/SEND_GUIDE.md` — SMTP setup guide
+  - 4 SMTP provider options (Gmail App Password, Mailgun, SendGrid, custom)
+  - Step-by-step: dry-run → test (3 emails) → full batch
+  - Latvian spam law compliance notes + troubleshooting table
+- Committed: `1a48ac7`
+
+### Current Data State
+
+| Metric | Value |
+|--------|-------|
+| Real manufacturing companies | **46** |
+| Validated (strict MX) | **15** (33.4 MW) |
+| Tier 1 — Confirmed industry | 35 (76%) |
+| Tier 2 — Manufacturing (likely) | 11 (24%) |
+| Flagged non-manufacturers | 5 (removed) |
+
+### Pipeline Status
+```
+regenerate_validated.py → leads_outreach_validated.csv
+                          ↓
+generate_emails.py      → email_drafts_validated.md  (preview)
+                          ↓
+send_emails.py --dry-run → preview emails (no SMTP)
+send_emails.py --test   → send first 3 (verify deliverability)
+send_emails.py          → send all 15 (full batch)
+```
+
+### All Services — Verified Healthy ✅
+| Service | Port | Status |
+|---------|------|--------|
+| Audio Backend | 3001 | ✅ |
+| Credo API | 3000 | ✅ |
+| CG Web | 3006 | ✅ |
+| Youth Platform | 3003 | ✅ |
+| JCI Portal | 8080 | ✅ |
+
+### What's Next (Priority Order)
+1. **User: Configure SMTP** — Gmail App Password or Mailgun/SendGrid (see `docs/SEND_GUIDE.md`)
+2. **User: Review + send** — `python send_emails.py --dry-run --all` then `--test` then full send
+3. **User: Verify 11 unknowns** via Lursoft.lv or +371 calls (could expand outreach to ~57 companies)
+4. **User: OpenRouter credits** — top up to unblock Solar Scout lead verification
+
+### Git Commits This Session
+| Commit | Description |
+|--------|-------------|
+| `1a48ac7` | solar-scout: add SMTP mail-merge sender + SEND_GUIDE |
+
+---
+
 ## 2026-03-27 04:58 Cairo (02:58 UTC) — Aton Wakeup
 
 ### Status: ✅ Outreach Email Template Drafted / 11 Unknowns Verification Attempted
