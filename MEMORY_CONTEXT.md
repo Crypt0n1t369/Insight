@@ -13,17 +13,22 @@
 - **Key file:** `docs/EMAIL_TEMPLATE.md` — outreach email template ready
 
 ### Contribution Graph (Kristaps' Life Work)
-- **Phase:** Phase 0 validation materials drafted — ready for user review + execution
+- **Phase:** Phase 0 validation materials COMPLETE — ready for user review + execution
 - **Location:** `/home/drg/.openclaw/workspace/projects/contribution-graph/`
-- **Git:** `9d4cdaa` (workspace) — all Phase 0 test materials committed
-- **Test materials (all drafted):**
+- **Git:** `6841c08` (workspace) — all Phase 0 docs + SPEC.md committed
+- **Key files:**
+  - `SPEC.md` — **NEWLY CREATED** — Phase 0 results template, Phase 1 build spec, technical arch, open questions tracker
   - `TEST_01_INTERVIEW_SCRIPT.md` — 5-screen prototype, 6 Qs, screener, consent script ✅
   - `TEST_02_ATTRIBUTION_FAIRNESS.md` — task brief, claim template, attestation form, negotiation protocol, survey ✅
+  - `TEST_03_FESTIVAL_TOP_OF_FUNNEL.md` — **NEWLY CREATED** — Typeform quiz (7 Qs, 4 archetypes), result card template, 7-day bot onboarding, Day-7 survey, funnel tracking, materials checklist, day-of pitch guide
   - `TEST_04_CLIENT_READINESS.md` — 1-pager, conversation guide, outreach email, problem template ✅
-  - `TEST_03_FESTIVAL.md` — NOT STARTED (needs event identification)
-- **Build tests:** 47/47 pytest passing (CG handlers — verified 2026-03-27)
+  - `PILOT.md` — Phase 0 validation protocol (4 tests, go/no-go gates)
+  - `DISCOVERY-FLOW.md` — 5-phase conversation design
+  - `IDENTITY-ARCHITECTURE.md` — short-code identity, map delivery, re-engagement
+- **Build tests:** 47/47 pytest passing (verified 2026-03-27 04:28 UTC)
 - **Web server:** Running on port 3006 with SQLite persistence ✅
 - **AI synthesis module:** Enhanced template; needs OpenRouter for real LLM
+- **Git (workspace):** `6841c08` — commit includes SPEC.md + TEST_03_FESTIVAL + PROGRESS.md updates
 
 ### Audio Tool
 - **Phase:** Operational (production)
