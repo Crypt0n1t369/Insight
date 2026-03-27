@@ -1,5 +1,68 @@
 ---
 
+## 2026-03-27 13:40 Cairo (11:40 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ Synthesis: 444 Tests (+20 GENERAL agent) / Solar Scout Committed / All 924 Tests Passing / Services Healthy
+
+**This session: Added 20 tests for the GENERAL fallback specialist agent in Synthesis Platform (was the only agent with 0 test coverage). Committed strict-MX validated outreach list + idempotent regeneration scripts for Solar Scout. All 924 tests pass across 7 projects.**
+
+### What Was Done
+
+**1. Synthesis Platform — GENERAL Agent Test Coverage ✅**
+- Created `src/specialist-agents/__tests__/general.test.ts` — 20 new tests
+- Covered: interface compliance (protocolId, displayName, description, defaultDuration), validate() behavior (always returns valid: true regardless of emotion/duration), run() structure (completion first/last, guidance events, valid SessionEventType values), closing transcript mentions WOOP/IFS/NSDR/Breathwork, AGENT_REGISTRY integration
+- All specialist agents now have test coverage
+- Synthesis total: 444 tests (was 424) ✅
+- Committed: `5a219d8`
+
+**2. Solar Scout — Validated Outreach Artifacts Committed ✅**
+- Added `docs/email_drafts_validated.md` — 15 bilingual Latvian/English email drafts
+- Added `docs/leads_outreach_validated.csv` — 15 companies with confirmed deliverable email
+- Added `generate_emails.py` — generates email drafts markdown from validated leads
+- Added `regenerate_validated.py` — idempotent MX re-validation + CSV regeneration
+- Riviera (null MX `0 .`) and Ventilacija (localhost MX) correctly excluded
+- Committed: `84490c6`
+
+**3. Full Test Suite — Confirmed ✅**
+| Project | Tests | Status |
+|---------|-------|--------|
+| Synthesis Platform | **444** (+20) | ✅ |
+| Festival Coordinator | 140 | ✅ |
+| Contribution Graph | 110 | ✅ |
+| Credo (collaboration-platform) | 131 | ✅ |
+| Audio Backend | 34 | ✅ |
+| JCI Org Manager | 41 | ✅ |
+| Youth Empowerment Platform | 24 | ✅ |
+| **Total** | **924** | ✅ |
+
+**4. All Services — Verified Healthy ✅**
+| Service | Port | Status |
+|---------|------|--------|
+| Audio Backend | 3001 | ✅ `{"status":"ok","openRouterLinked":true}` |
+| Credo API | 3000 | ✅ `{"status":"ok"}` |
+| Youth Platform | 3003 | ✅ `{"status":"ok"}` |
+| CG Web | 3006 | ✅ `{"status":"ok"}` |
+| JCI Portal | 8080 | ✅ `{"status":"ok"}` |
+
+### What's Next (Aton Can Do Without User Action)
+- [DONE] Add GENERAL agent tests ✅ (20 new, 444 total)
+- [DONE] Commit Solar Scout validated outreach + scripts ✅
+- Monitor services for anomalies
+- Consider knowledge-graph storage/query test coverage
+
+### P0 Blockers — User Action Required
+| # | Item | Action | Impact |
+|---|------|--------|--------|
+| **P0** | **CG Test 0.1 — Review script + recruit** | Review `projects/contribution-graph/TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants | Phase 0 go/no-go |
+| **P0** | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks | Phase 0 acquisition channel |
+| **P0** | **CG Test 0.4 — Identify orgs** | 5 target orgs | Phase 0 go/no-go |
+| **P0** | **OpenRouter Credits** | openrouter.ai → add $5–10 | Unblocks: Solar Scout unknowns, CG synthesis, audio AI |
+| **P1** | **Solar Scout — Approve outreach** | Review `solar-scout/docs/leads_outreach_validated.csv` + `email_drafts_validated.md` | 15 companies, 33.4 MW |
+| **P1** | **CG Telegram bot token** | BotFather → new token → set `TELEGRAM_BOT_TOKEN` | Phase 2 bot activation |
+| **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL + Telegram integration |
+
+---
+
 ## 2026-03-27 12:15 Cairo (10:15 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ Solar Scout Email Validation Fixed / 15 Valid Companies (33.4 MW) / 883 Tests Passing
