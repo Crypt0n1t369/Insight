@@ -1,5 +1,83 @@
 ---
 
+## 2026-03-27 09:45 Cairo (07:45 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ Audio Backend Demo Mode Synced to Code Submodule / JSON Error Handler Added / All 34 Tests Passing / All Services Healthy
+
+**This session: Discovered code submodule (projects/audio-transformation-tool/code/) was missing DEMO_BATCHES that the running workspace root server had. Ported all improvements: DEMO_BATCHES constant (162 lines, 9 protocols), fixed /api/chat (message alias + history default + demo fallback), updated /api/meditation/generate to use DEMO_BATCHES, added JSON error handler to suppress malformed body stack traces. All changes committed to both workspace root (225b3f9) and code submodule (846fc60). Server restarted, all 34 tests passing.**
+
+### What Was Done
+
+**1. Code Submodule — DEMO_BATCHES Added ✅**
+- `projects/audio-transformation-tool/code/server/index.ts` was missing DEMO_BATCHES (162 lines added)
+- All 9 protocols now have rich protocol-specific demo scripts: NSDR (6 batches), IFS (6), SOMATIC_AGENCY (5), ACT (5), FUTURE_SELF (5), WOOP (5), NVC (5), IDENTITY (5), NARRATIVE (5), DEFAULT (5)
+- Each batch has clinically-grounded script text + FADE_VOL atmosphere cues
+- Committed to code submodule: `846fc60`
+
+**2. /api/chat — Fixed for Robustness ✅**
+- Added `message` alias support (was only supporting `latestInput`)
+- Added `history = []` default to prevent `.map()` crash on undefined
+- Added proper empty body check → 400 with `{"reply": "Message is required.", "shouldOfferMeditation": false}`
+- Added demo fallback when OpenRouter unavailable (returns 200 with meditationData)
+- Previously: crashes on undefined history, no `message` alias, 500 error on OpenRouter failure
+
+**3. /api/meditation/generate — Demo Mode Enhanced ✅**
+- Returns protocol-specific DEMO_BATCHES when OpenRouter unavailable (previously returned bare `{ text: "Breathe..." }` fallback)
+- Returns DEMO_BATCHES in catch block instead of 500 error
+- Previously: missing API key → bare fallback; error → 500
+
+**4. JSON Error Handler — Stack Traces Suppressed ✅**
+- Added 4-line middleware to both running server and code submodule
+- Malformed JSON bodies now return `{"reply": "Invalid JSON in request body.", "shouldOfferMeditation": false}` instead of HTML stack trace
+- Previously: malformed body → 500 with full SyntaxError stack trace in response
+- Committed to workspace root: `225b3f9`
+
+**5. All Services — Verified Healthy ✅**
+| Service | Port | Status |
+|---------|------|--------|
+| Audio Backend | 3001 | ✅ `{"status":"ok","openRouterLinked":true}` |
+| Credo API | 3000 | ✅ `{"status":"ok"}` |
+| Youth Platform | 3003 | ✅ `{"status":"ok"}` |
+| CG Web | 3006 | ✅ `{"status":"ok"}` |
+| JCI Portal | 8080 | ✅ `{"status":"ok"}` |
+
+**6. All 34 Audio Backend Tests — Passing ✅**
+- 11 unit + 23 integration tests: all passing
+- Server restarted with JSON error handler fix in place
+
+### Git Commits
+| Commit | Description |
+|--------|-------------|
+| `846fc60` | Code submodule: DEMO_BATCHES + chat/meditation fixes + JSON error handler |
+| `225b3f9` | Workspace root: JSON error handler + sync code submodule pointer |
+
+### Test Summary — Audio Backend
+| File | Tests |
+|------|-------|
+| `server/server.test.ts` | 11 |
+| `server/integration.test.ts` | 23 |
+| **Total** | **34** |
+
+### What's Next (Aton Can Do Without User Action)
+- [DONE] Sync DEMO_BATCHES to code submodule ✅
+- [DONE] Fix malformed JSON stack traces ✅
+- [DONE] Fix /api/chat robustness ✅
+- [DONE] Verify all services healthy ✅
+- [DONE] Git sync ✅
+
+### P0 Blockers — User Action Required
+| # | Item | Action | Impact |
+|---|------|--------|--------|
+| **P0** | **CG Test 0.1 — Review script + recruit** | Review `projects/contribution-graph/TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants | Phase 0 go/no-go |
+| **P0** | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks | Phase 0 acquisition channel |
+| **P0** | **CG Test 0.4 — Identify orgs** | 5 target orgs | Phase 0 go/no-go |
+| **P0** | **OpenRouter Credits** | openrouter.ai → add $5–10 | Unblocks: Solar Scout unknowns, CG synthesis, audio AI |
+| **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL + Telegram integration |
+| **P1** | **Solar Scout — Approve outreach** | Review `solar-scout/docs/leads_outreach_real.json` + `EMAIL_TEMPLATE.md` | 46 companies, 104.9 MW |
+| **P1** | **CG Telegram bot token** | BotFather → new token | Phase 2 bot activation |
+
+---
+
 ## 2026-03-27 08:47 Cairo (06:47 UTC) — Worker-1 Session (Aton)
 
 ### Status: ✅ CREDO: 131 Tests (+56 new) / All Services Healthy / Git Synced
