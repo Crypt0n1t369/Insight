@@ -16,6 +16,11 @@ dist-ssr
 server/.env
 *.env
 
+# Vitest build output (server/)
+server/*.js
+server/*.map
+server/*.d.ts
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
