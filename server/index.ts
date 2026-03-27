@@ -40,6 +40,11 @@ async function callOpenRouter(messages: any[], model: string = OPENROUTER_MODEL,
 
     if (!response.ok) {
         const errorData = await response.text();
+        // Return null on credit errors → demo mode triggers cleanly without log spam
+        if (response.status === 402) {
+            console.warn("OpenRouter: insufficient credits — demo mode active");
+            return null;
+        }
         console.error(`OpenRouter API Error (${response.status}):`, errorData);
         throw new Error(`OpenRouter API Error: ${response.status}`);
     }
@@ -113,7 +118,7 @@ app.post('/api/director', async (req, res) => {
             parameters: {
                 type: "object",
                 properties: {
-                    methodology: { type: "string", enum: ["IFS", "SOMATIC_AGENCY", "NSDR", "GENERAL"] },
+                    methodology: { type: "string", enum: ["IFS", "SOMATIC_AGENCY", "NSDR", "ACT", "FUTURE_SELF", "WOOP", "NVC", "IDENTITY", "NARRATIVE"] },
                     focus: { type: "string" },
                     targetFeeling: { type: "string" },
                     intensity: { type: "string", enum: ["SOFT", "MODERATE", "DEEP"] },
