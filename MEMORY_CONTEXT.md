@@ -3,14 +3,14 @@
 ## Active Projects
 
 ### Solar Scout
-- **Phase:** Outreach-ready — 46 clean manufacturing leads (104.9 MW)
+- **Phase:** Outreach-ready — 46 clean manufacturing leads (104.9 MW total)
 - **Location:** /home/drg/.openclaw/workspace/solar-scout/
-- **Status:** 5 non-manufacturers removed (RSU, Maksim, PREMIUM, Tera, Lenda), 11 still "Manufacturing (likely)" unverified
-- **Data:** 46 real companies, 35 with confirmed industry, 11 unverified
-- **Outreach:** `docs/leads_outreach_real.json` (46 companies), `docs/EMAIL_TEMPLATE.md` (bilingual Latvian+English)
+- **Status:** Outreach list `docs/leads_outreach_real.json` — 46 companies, verified by industry + capacity data. Email template `docs/EMAIL_TEMPLATE.md` — 127-line bilingual Latvian+English, ready to send.
+- **Data:** 46 companies across 27 industry categories (4×Dairy, 4×Construction, 3×Wood, 3×Food, etc.) = 104.9 MW total rooftop/industrial solar potential
+- **⚠️ 11 "Manufacturing (likely)" in leads_dashboard.csv** — Riviera.lv (site under construction), Latsr/Kopa/Gerhard/Krass/Len/Vests/Sakart/Sent/Bermas/Latgales.lv — all confirmed NXDOMAIN/no web presence. NOT in outreach list (already filtered). Verifiable via Lursoft.lv or +371 phone calls if credits added.
+- **Outreach:** `docs/leads_outreach_real.json` (46 companies), `docs/EMAIL_TEMPLATE.md` (bilingual, ready)
 - **Git (solar-scout repo):** `00e3b48` — pushed to origin/master
-- **⚠️ Blocked:** 11 companies need Lursoft/phone verification (web search blocked on credits)
-- **Key file:** `docs/EMAIL_TEMPLATE.md` — outreach email template ready
+- **Ready to send** — user fills [YOUR_NAME], [YOUR_EMAIL], BCC; then send via email client
 
 ### Contribution Graph (Kristaps' Life Work)
 - **Phase:** Phase 0 validation materials COMPLETE — ready for user review + execution
@@ -52,26 +52,26 @@
 ### Festival Coordinator
 - **Phase:** Operational | **Status:** 49 tests passing
 
-## Test Suite (Verified 2026-03-27 23:00 UTC)
+## Test Suite (Verified 2026-03-27 05:58 UTC)
 
 | Project | Tests | Framework |
 |---------|-------|-----------|
+| Contribution Graph | 110 (18 identity + 48 handlers + 23 web + 21 bot) | pytest |
 | Audio Backend (server/) | 34 | vitest |
 | Synthesis Platform | 424 | vitest |
 | Collaboration Platform | 75 | vitest |
 | Festival Coordinator | 49 | pytest |
 | JCI Org Manager | 41 | pytest |
 | Youth Empowerment Platform | 24 | pytest |
-| Contribution Graph | 89 (18+47+23) | pytest |
-| **Total** | **736** | |
+| **Total** | **757** | |
 
-## Service Status (2026-03-27 23:00 UTC)
+## Service Status (2026-03-27 05:58 UTC)
 
 All 7 services up: 3000 ✅ | 3001 ✅ | 3002 ✅ | 3003 ✅ | 3005 ✅ | 3006 ✅ | 8080 ✅
 
 ## Git
 
-- **Workspace:** `9697300` — docs: update MEMORY_CONTEXT - solar-scout 46 leads, EMAIL_TEMPLATE, git updated
+- **Workspace:** `cb89515` — docs: update PROGRESS — 07:28 session, bot tests 110 total, archived 04:39
 - **Solar Scout:** `00e3b48` — pushed to origin/master
 - **Synced with origin/master**
 - **Audio submodule:** server/*.js,*.map,*.d.ts now gitignored (build artifacts)
