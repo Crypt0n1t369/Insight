@@ -102,5 +102,5 @@ All 8 services healthy: 3000 ✅ | 3001 ✅ | 3003 ✅ | 3004 ✅ | 3005 ✅ | 3
 - Reviewed full Synthesis platform — 462 tests passing, all 8 services healthy ✅
 - Found + fixed KG query edge consistency bug (`query.ts`) — edges now always filtered to match filtered node set ✅
 - Verified SSE streaming works end-to-end (anxious → Breathwork routing, events stream correctly) ✅
-- Committed: `3338dcf` — pushed to origin/master ✅
+- Committed: `d615a6c` — pushed to origin/master ✅
 - Platform stats: 92 sessions / 3472 events / 108 KG nodes / 56m uptime ✅
