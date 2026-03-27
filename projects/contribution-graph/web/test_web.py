@@ -199,6 +199,29 @@ class TestMapRenderer:
         assert "Empty User" in svg
         assert "<svg" in svg
 
+    def test_all_signal_types_render_without_raw_keys(self):
+        """Regression: all 18 SignalType values must render human-readable labels, not raw keys."""
+        from web.map_renderer import SIGNAL_META
+        all_signal_vector = {key: 0.75 for key in SIGNAL_META}
+        data = MapData(
+            short_code="CG-ALLSIG",
+            display_name="All Signals User",
+            phase=Phase.PHASE_3_EVIDENCE,
+            signals=[],
+            challenges=[],
+            comparative_vector=all_signal_vector,
+        )
+        svg = render_map_svg(data)
+        # No raw keys should appear as labels
+        assert "purpose_clarity" not in svg  # raw key must not leak
+        assert "○" not in svg  # no fallback icon should appear
+        # Every SIGNAL_META label must be present
+        for key, meta in SIGNAL_META.items():
+            assert meta["label"] in svg, f"Missing label for {key}"
+        # SVG must be a valid complete document
+        assert svg.strip().startswith("<svg")
+        assert svg.strip().endswith("</svg>")
+
 
 # =============================================================================
 # WEB SERVER TESTS

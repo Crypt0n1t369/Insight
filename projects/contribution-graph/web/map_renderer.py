@@ -22,13 +22,32 @@ class MapData:
 
 
 # Signal type → display metadata
+# Covers all SignalType enum values from bot/states.py
 SIGNAL_META = {
-    "purpose_clarity":       {"label": "Purpose Clarity",       "icon": "🎯", "color": "#7C3AED", "dim": 1},
-    "initiative_taking":     {"label": "Initiative",           "icon": "⚡", "color": "#F59E0B", "dim": 2},
-    "pattern_recognition":   {"label": "Pattern Recognition",  "icon": "🔍", "color": "#10B981", "dim": 3},
-    "voice_authenticity":    {"label": "Voice & Authenticity", "icon": "🎤", "color": "#EF4444", "dim": 4},
-    "contribution_drive":    {"label": "Contribution Drive",  "icon": "🌱", "color": "#3B82F6", "dim": 5},
-    "challenge_completion":   {"label": "Challenge Completion", "icon": "🏆", "color": "#8B5CF6", "dim": 6},
+    # Identity & Meaning
+    "purpose_clarity":        {"label": "Purpose Clarity",        "icon": "🎯", "color": "#7C3AED"},
+    "values_alignment":       {"label": "Values Alignment",       "icon": "⚖️",  "color": "#06B6D4"},
+    "contribution_drive":     {"label": "Contribution Drive",     "icon": "🌱", "color": "#3B82F6"},
+    # Creative Ability
+    "pattern_recognition":    {"label": "Pattern Recognition",   "icon": "🔍", "color": "#10B981"},
+    "expression_fluency":     {"label": "Expression Fluency",    "icon": "💬", "color": "#F472B6"},
+    "novel_assembly":         {"label": "Novel Assembly",         "icon": "🧩", "color": "#A78BFA"},
+    # Goal Pursuit
+    "initiative_taking":      {"label": "Initiative",            "icon": "⚡", "color": "#F59E0B"},
+    "obstacle_persistence":   {"label": "Obstacle Persistence",   "icon": "🔥", "color": "#EF4444"},
+    "milestone_tracking":     {"label": "Milestone Tracking",     "icon": "📍", "color": "#14B8A6"},
+    # Social Proof
+    "peer_recognition":       {"label": "Peer Recognition",      "icon": "👏", "color": "#FB923C"},
+    "community_recitation":   {"label": "Community Citation",    "icon": "🔗", "color": "#38BDF8"},
+    "mutual_aid_exchange":    {"label": "Mutual Aid Exchange",   "icon": "🤝", "color": "#4ADE80"},
+    # Challenge Status
+    "challenge_completion":    {"label": "Challenge Completion",  "icon": "🏆", "color": "#8B5CF6"},
+    "challenge_complexity":   {"label": "Challenge Complexity",   "icon": "📈", "color": "#F87171"},
+    "challenge_velocity":     {"label": "Challenge Velocity",    "icon": "🚀", "color": "#FBBF24"},
+    # Voice & Agency
+    "voice_authenticity":     {"label": "Voice & Authenticity",  "icon": "🎤", "color": "#EF4444"},
+    "agency_assertion":       {"label": "Agency Assertion",      "icon": "💪", "color": "#F97316"},
+    "resistance_persistence": {"label": "Resistance Persistence", "icon": "🛡️", "color": "#6B7280"},
 }
 
 DEFAULT_COLOR = "#6B7280"
