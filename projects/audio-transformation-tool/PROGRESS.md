@@ -1,5 +1,54 @@
 # PROGRESS.md - Audio Transformation Tool
-*Updated — 2026-03-27 13:39 Cairo (11:39 UTC)*
+*Updated — 2026-03-27 21:56 Cairo (19:56 UTC)*
+
+---
+
+## 2026-03-27 19:56 UTC - Wakeup Session
+
+### Status: ✅ Demo Mode Full Audit / All 9 Protocols Verified / 51 Tests Pass
+
+**Full demo mode audit completed. All 9 protocols return correct batch counts with clinically-grounded scripts. Frontend source confirmed present at `code/src/` + `code/services/` (earlier warnings about missing source were incorrect). Browser automation unavailable.**
+
+### Demo Mode — All 9 Protocols ✅
+| Protocol | Batches | Title | Notes |
+|----------|---------|-------|-------|
+| NSDR | 6 | Demo: NSDR | Body scan, physiological sigh, parasympathetic |
+| IFS | 6 | Demo: IFS | Parts work, unblending, Self-energy |
+| SOMATIC_AGENCY | 5 | Demo: SOMATIC_AGENCY | Embodiment, personal power |
+| ACT | 5 | Demo: ACT | Values, acceptance, committed action |
+| FUTURE_SELF | 5 | Demo: FUTURE_SELF | Continuity, motivation |
+| WOOP | 5 | Demo: WOOP | Wish-Outcome-Obstacle-Plan |
+| NVC | 5 | Demo: NVC | Observations, feelings, needs, requests |
+| IDENTITY | 5 | Demo: IDENTITY | Signature strengths, character |
+| NARRATIVE | 5 | Demo: NARRATIVE | Externalization, separate person from problem |
+
+**Chat fallback verified:** Demo returns `shouldOfferMeditation: true` + NSDR suggestion with proper messaging.
+
+### Tests — 51/51 Passing ✅
+- `workspace/server/`: 34 tests (11 unit + 23 integration) ✅
+- `code/server/` (submodule): 17 tests ✅
+
+### Frontend Source — CONFIRMED PRESENT ✅
+Earlier notes warned "frontend source missing" — **incorrect**. Verified present:
+- `code/src/` — React components, context, hooks, index.tsx, App.tsx, index.css
+- `code/services/` — audioService, geminiService, protocols, useMeditationGenerator, supabaseClient, etc.
+- `code/dist/` — pre-built (825KB JS, 125KB CSS, PWA-ready)
+- `npm run build` succeeds cleanly (12-14s)
+
+### ⚠️ BLOCKED — User Action Required
+1. **Deploy to Vercel** → vercel.com → import Crypt0n1t369/Insight → Deploy
+2. **Add OpenRouter credits** → demo mode works; LLM features need credits
+
+### What's Next (Priority Order)
+1. **User deploys to Vercel** (P0 — user action needed)
+2. **Add OpenRouter credits** (P0 — user action needed)
+3. **Browser test** — verify full user flow in real browser (P1)
+4. **Merge upstream commit 8562fd2** (P2 — no anthropics remote configured; would need to add)
+5. **Add remaining protocols** — GENERAL, TRAUMA_SAFE, BREATHWORK (defined in protocols.ts but not in CLINICAL_PROTOCOLS) (P2)
+
+---
+
+
 
 ---
 

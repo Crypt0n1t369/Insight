@@ -1,5 +1,75 @@
 ---
 
+## 2026-03-27 21:56 Cairo (19:56 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ All Services Healthy / 51 Tests Pass / Audio Demo Mode Verified / No Code Changes Needed
+
+**This session: Verified all 8 services healthy. Confirmed 34/34 workspace root + 17/17 code/ submodule tests pass. Audited all 9 protocol demo endpoints — all return correct batch counts and clinically-grounded scripts. Chat demo fallback verified. Frontend source confirmed present at `code/src/` + `code/services/`. Browser automation unavailable (no Chrome/Chromium on host). No issues found requiring code changes.**
+
+### Audio Backend — Demo Mode Full Audit ✅
+| Protocol | Batches | Title | Status |
+|----------|---------|-------|--------|
+| NSDR | 6 | Demo: NSDR | ✅ |
+| IFS | 6 | Demo: IFS | ✅ |
+| SOMATIC_AGENCY | 5 | Demo: SOMATIC_AGENCY | ✅ |
+| ACT | 5 | Demo: ACT | ✅ |
+| FUTURE_SELF | 5 | Demo: FUTURE_SELF | ✅ |
+| WOOP | 5 | Demo: WOOP | ✅ |
+| NVC | 5 | Demo: NVC | ✅ |
+| IDENTITY | 5 | Demo: IDENTITY | ✅ |
+| NARRATIVE | 5 | Demo: NARRATIVE | ✅ |
+
+**Chat demo fallback verified:** `"I hear you. Tell me more about what you're experiencing — in demo mode, every word matters."` + `shouldOfferMeditation: true` + NSDR suggestion.
+
+### Test Suites — Confirmed Passing ✅
+| Location | Tests | Result |
+|----------|-------|--------|
+| `workspace/server/` | 34 (11 unit + 23 integration) | ✅ |
+| `code/server/` (submodule) | 17 | ✅ |
+
+### All Services — Healthy (19:56 UTC) ✅
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ 200 |
+| Audio Backend | 3001 | ✅ 200 |
+| Youth Platform | 3003 | ✅ 200 |
+| Synthesis API | 3004 | ✅ 200 |
+| Audio Frontend | 3005 | ✅ 200 |
+| CG Web | 3006 | ✅ 200 |
+| Synthesis UI | 3007 | ✅ 200 |
+| JCI Portal | 8080 | ✅ 200 |
+
+### Verified: Frontend Source IS Present
+Earlier PROGRESS entries warned "frontend source missing" — **incorrect**. Confirmed present:
+- `code/src/` — React components, context, hooks, index.tsx, App.tsx
+- `code/services/` — audioService, geminiService, protocols, useMeditationGenerator, etc.
+- `code/dist/` — pre-built static assets (825KB JS, 125KB CSS)
+- `npm run build` succeeds cleanly in `code/` ✅
+
+### What's Left — All Blocked on User Action
+
+| Priority | Item | Blocker |
+|----------|------|---------|
+| **P0** | **OpenRouter credits (~$5-10)** | openrouter.ai → add credits |
+| **P0** | **CG Test 0.1 — Review script + recruit** | Review + recruit 10-12 participants |
+| **P0** | **CG Test 0.3 — Identify event** | Find 1 event in next 4-8 weeks |
+| **P0** | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
+| **P1** | **Solar Scout SMTP** | Set SMTP env vars → test → send |
+| **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars |
+| **P1** | **CG Telegram bot token** | BotFather → new token for Phase 2 |
+| **P2** | **Supabase session persistence** | User sets up Supabase project |
+| **P2** | **Synthesis UI auth** | Blocked on Supabase setup |
+
+### What Aton Can Do Now (No User Action)
+- [DONE] Verify all 8 services healthy ✅
+- [DONE] Run test suites (34+17=51 tests) ✅
+- [DONE] Audit demo mode all 9 protocols ✅
+- [DONE] Verify frontend source present ✅
+- [DONE] Update PROGRESS.md ✅
+- [TODO] Push workspace git (clean — no changes needed)
+
+---
+
 ## 2026-03-27 21:35 Cairo (19:35 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ All Services Healthy / 462 Tests Pass / Wakeup Cron Fixed (parent mode) / No Code Changes Needed
