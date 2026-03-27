@@ -1,5 +1,66 @@
 # Solar Scout - Progress Tracker
 
+## 2026-03-27 14:59 Cairo (12:59 UTC) — Aton Wakeup
+
+### Status: ✅ Pipeline Verified End-to-End / 958 Total Tests (corrected) / Git Pushed
+
+**This session: Verified entire Solar Scout mail-merge pipeline — `generate_emails.py`, `regenerate_validated.py`, and `send_emails.py --dry-run` all work correctly. Full test suite corrected to 958 (was 924 — CG has 34 additional vitest tests). Pushed 3 commits to origin. SMTP not yet configured (user action required).**
+
+### Pipeline Verification Results
+
+| Script | Result | Notes |
+|--------|--------|-------|
+| `generate_emails.py` | ✅ | 15 drafts, 33.4 MW confirmed |
+| `regenerate_validated.py` | ✅ | Idempotent, 31 invalid MX correctly removed |
+| `send_emails.py --dry-run` | ✅ | 3 emails previewed (LV + EN), correct merge tags |
+| SMTP credentials | ⏳ | Not configured — placeholders shown until SMTP set |
+
+### Current Outreach Data
+- **15 validated companies / 33.4 MW** (strict MX validation)
+- All emails bilingual LV + EN, personalized with decision-maker name
+- Per-email crash-resilient logging (`docs/sent_log.json`)
+- 30s delay between sends to avoid rate limiting
+
+### Git — 3 Commits Pushed This Session
+| Commit | Description |
+|--------|-------------|
+| `c05928b` | docs: update PROGRESS — 958 tests (CG corrected 110→144) |
+| `edaee66` | docs(solar-scout): update PROGRESS — 12:29 session, SMTP sender added |
+| `1a48ac7` | solar-scout: add SMTP mail-merge sender + SEND_GUIDE |
+
+### Full Test Suite — Corrected Count
+| Project | Tests | Verified |
+|---------|-------|----------|
+| Synthesis Platform | 444 | ✅ |
+| Festival Coordinator | 140 | ✅ |
+| Credo | 131 | ✅ |
+| Contribution Graph | **144** (was 110) | ✅ |
+| Audio Backend | 34 | ✅ |
+| JCI Org Manager | 41 | ✅ |
+| Youth Empowerment | 24 | ✅ |
+| **Total** | **958** | ✅ |
+
+### SMTP Setup — Required to Send
+Set environment variables (or edit `config.py`):
+```bash
+export SMTP_HOST=smtp.gmail.com      # or smtp.mailgun.org, etc.
+export SMTP_PORT=587
+export SMTP_USER=your@email.com
+export SMTP_PASSWORD="xxxx xxxx xxxx xxxx"
+export SENDER_NAME="Your Name"
+export SENDER_EMAIL=your@email.com
+export BCC_RECIPIENT=your@email.com   # receive BCC copy of all emails
+```
+Then:
+```bash
+python send_emails.py --dry-run --all   # preview all 15
+python send_emails.py --test             # send first 3 (real)
+python send_emails.py                     # send all 15 (real)
+```
+See `docs/SEND_GUIDE.md` for Gmail/Mailgun/SendGrid setup steps.
+
+---
+
 ## 2026-03-27 12:29 Cairo (10:29 UTC) — Aton Wakeup
 
 ### Status: ✅ All 924 Tests Passing / SMTP Mail-Merge Sender Added / Pipeline Complete
