@@ -2,7 +2,7 @@
 // Version: 0.1.0 (MVP)
 
 import { randomBytes, createHash } from 'crypto';
-import { User, CreateUserInput, UserSchema, TrustTier } from '../types/index.js';
+import { User, CreateUserInput, CreateUserSchema, UserSchema, TrustTier } from '../types/index.js';
 import { v4 as uuidv4 } from 'uuid';
 
 // In-memory storage for MVP (would be Supabase in production)
@@ -46,12 +46,14 @@ export class IdentityService {
    * No authentication required - this is the core innovation
    */
   async createAnonymousUser(input?: CreateUserInput): Promise<User> {
+    // Validate input against CreateUserSchema (enforces max 50 for display_name)
+    const validatedInput = input ? CreateUserSchema.parse(input) : undefined;
     const now = new Date().toISOString();
     
     const user: User = {
       id: uuidv4(),
       anonymous_id: generateAnonymousId(),
-      display_name: input?.display_name ?? null,
+      display_name: validatedInput?.display_name ?? null,
       avatar_seed: generateAvatarSeed(),
       trust_tier: 'newcomer',
       credibility_score: 0,
