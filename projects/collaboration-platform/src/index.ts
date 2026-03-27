@@ -9,13 +9,17 @@ import { identityService } from './services/identity.js';
 import { branchService } from './services/branch.js';
 import { contributionService } from './services/contribution.js';
 import { proposalService } from './services/proposal.js';
+import { moderationService } from './services/moderation.js';
+
+import { authenticate, optionalAuth, requireTier } from './middleware/auth.js';
 
 import type { 
   CreateUserInput, 
   CreateBranchInput, 
   CreateContributionInput,
   CreateProposalInput,
-  CreateVoteInput
+  CreateVoteInput,
+  CreateReportInput
 } from './types/index.js';
 
 const app = express();
@@ -118,16 +122,11 @@ app.get('/api/users/:id/contributions', async (req, res) => {
 // Branch Routes
 // ============================================
 
-// Create branch
-app.post('/api/branches', async (req, res) => {
+// Create branch (auth required)
+app.post('/api/branches', authenticate(), async (req, res) => {
   try {
     const input: CreateBranchInput = req.body;
-    const creatorId = req.headers['x-user-id'] as string;
-    
-    if (!creatorId) {
-      return res.status(401).json({ success: false, error: 'User ID required' });
-    }
-    
+    const creatorId = req.userId!;
     const branch = await branchService.createBranch(creatorId, input);
     res.status(201).json({ success: true, data: branch });
   } catch (error) {
@@ -202,16 +201,11 @@ app.get('/api/branches/:id/tree', async (req, res) => {
 // Contribution Routes
 // ============================================
 
-// Create contribution
-app.post('/api/contributions', async (req, res) => {
+// Create contribution (auth required)
+app.post('/api/contributions', authenticate(), async (req, res) => {
   try {
     const input: CreateContributionInput = req.body;
-    const authorId = req.headers['x-user-id'] as string;
-    
-    if (!authorId) {
-      return res.status(401).json({ success: false, error: 'User ID required' });
-    }
-    
+    const authorId = req.userId!;
     const contribution = await contributionService.createContribution(authorId, input);
     res.status(201).json({ success: true, data: contribution });
   } catch (error) {
@@ -255,15 +249,10 @@ app.get('/api/branches/:branchId/contributions', async (req, res) => {
   }
 });
 
-// Endorse contribution
-app.post('/api/contributions/:id/endorse', async (req, res) => {
+// Endorse contribution (auth required)
+app.post('/api/contributions/:id/endorse', authenticate(), async (req, res) => {
   try {
-    const userId = req.headers['x-user-id'] as string;
-    
-    if (!userId) {
-      return res.status(401).json({ success: false, error: 'User ID required' });
-    }
-    
+    const userId = req.userId!;
     const contribution = await contributionService.endorse(req.params.id, userId);
     if (!contribution) {
       return res.status(404).json({ success: false, error: 'Contribution not found' });
@@ -274,15 +263,10 @@ app.post('/api/contributions/:id/endorse', async (req, res) => {
   }
 });
 
-// Delete contribution (author only)
-app.delete('/api/contributions/:id', async (req, res) => {
+// Delete contribution (author only — authenticated)
+app.delete('/api/contributions/:id', authenticate(), async (req, res) => {
   try {
-    const userId = req.headers['x-user-id'] as string;
-    
-    if (!userId) {
-      return res.status(401).json({ success: false, error: 'User ID required' });
-    }
-    
+    const userId = req.userId!;
     const deleted = await contributionService.deleteContribution(req.params.id, userId);
     if (!deleted) {
       return res.status(404).json({ success: false, error: 'Contribution not found or not authorized' });
@@ -293,26 +277,19 @@ app.delete('/api/contributions/:id', async (req, res) => {
   }
 });
 
-// Update contribution (author only)
-app.patch('/api/contributions/:id', async (req, res) => {
+// Update contribution (author only — authenticated)
+app.patch('/api/contributions/:id', authenticate(), async (req, res) => {
   try {
-    const userId = req.headers['x-user-id'] as string;
-    
-    if (!userId) {
-      return res.status(401).json({ success: false, error: 'User ID required' });
-    }
-    
+    const userId = req.userId!;
     const { content } = req.body;
     if (!content || typeof content !== 'string') {
       return res.status(400).json({ success: false, error: 'Content is required' });
     }
-    
     const updated = await contributionService.updateContribution(
       req.params.id, 
       userId, 
       { content }
     );
-    
     if (!updated) {
       return res.status(404).json({ success: false, error: 'Contribution not found or not authorized' });
     }
@@ -322,22 +299,15 @@ app.patch('/api/contributions/:id', async (req, res) => {
   }
 });
 
-// Reply to contribution
-app.post('/api/contributions/:id/reply', async (req, res) => {
+// Reply to contribution (auth required)
+app.post('/api/contributions/:id/reply', authenticate(), async (req, res) => {
   try {
-    const authorId = req.headers['x-user-id'] as string;
-    
-    if (!authorId) {
-      return res.status(401).json({ success: false, error: 'User ID required' });
-    }
-    
+    const authorId = req.userId!;
     const input: CreateContributionInput = req.body;
     const reply = await contributionService.reply(req.params.id, authorId, input);
-    
     if (!reply) {
       return res.status(404).json({ success: false, error: 'Parent contribution not found' });
     }
-    
     res.status(201).json({ success: true, data: reply });
   } catch (error) {
     res.status(500).json({ success: false, error: String(error) });
@@ -371,16 +341,11 @@ app.get('/api/stats', async (_req, res) => {
 // Proposal Routes
 // ============================================
 
-// Create proposal
-app.post('/api/proposals', async (req, res) => {
+// Create proposal (auth required)
+app.post('/api/proposals', authenticate(), async (req, res) => {
   try {
     const input: CreateProposalInput = req.body;
-    const authorId = req.headers['x-user-id'] as string;
-    
-    if (!authorId) {
-      return res.status(401).json({ success: false, error: 'User ID required' });
-    }
-    
+    const authorId = req.userId!;
     const proposal = await proposalService.createProposal(authorId, input);
     res.status(201).json({ success: true, data: proposal });
   } catch (error) {
@@ -423,16 +388,11 @@ app.get('/api/branches/:branchId/proposals', async (req, res) => {
   }
 });
 
-// Vote on proposal
-app.post('/api/proposals/:id/vote', async (req, res) => {
+// Vote on proposal (auth required)
+app.post('/api/proposals/:id/vote', authenticate(), async (req, res) => {
   try {
     const input: CreateVoteInput = req.body;
-    const voterId = req.headers['x-user-id'] as string;
-    
-    if (!voterId) {
-      return res.status(401).json({ success: false, error: 'User ID required' });
-    }
-    
+    const voterId = req.userId!;
     const vote = await proposalService.vote(req.params.id, voterId, input);
     if (!vote) {
       return res.status(404).json({ success: false, error: 'Proposal not found' });
@@ -456,15 +416,10 @@ app.post('/api/proposals/:id/close', async (req, res) => {
   }
 });
 
-// Withdraw proposal
-app.post('/api/proposals/:id/withdraw', async (req, res) => {
+// Withdraw proposal (auth required — author only)
+app.post('/api/proposals/:id/withdraw', authenticate(), async (req, res) => {
   try {
-    const userId = req.headers['x-user-id'] as string;
-    
-    if (!userId) {
-      return res.status(401).json({ success: false, error: 'User ID required' });
-    }
-    
+    const userId = req.userId!;
     const proposal = await proposalService.withdrawProposal(req.params.id, userId);
     if (!proposal) {
       return res.status(404).json({ success: false, error: 'Proposal not found' });
@@ -489,18 +444,10 @@ app.get('/api/proposals/:id/votes', async (req, res) => {
 // Moderation Routes
 // ============================================
 
-import { moderationService } from './services/moderation.js';
-import type { CreateReportInput } from './types/index.js';
-
-// Create report
-app.post('/api/reports', async (req, res) => {
+// Create report (auth required)
+app.post('/api/reports', authenticate(), async (req, res) => {
   try {
-    const reporterId = req.headers['x-user-id'] as string;
-    
-    if (!reporterId) {
-      return res.status(401).json({ success: false, error: 'User ID required' });
-    }
-    
+    const reporterId = req.userId!;
     const input: CreateReportInput = req.body;
     const report = await moderationService.createReport(reporterId, input);
     res.status(201).json({ success: true, data: report });
