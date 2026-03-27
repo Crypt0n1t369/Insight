@@ -1,5 +1,92 @@
 ---
 
+## 2026-03-27 12:15 Cairo (10:15 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ Solar Scout Email Validation Fixed / 15 Valid Companies (33.4 MW) / 883 Tests Passing
+
+**This session: Discovered email validation bug — Riviera (null MX `0 .`) and Ventilacija (localhost MX `0 localhost.`) were incorrectly in the 16-company validated list. Regenerated with strict MX validation. Also found the CG bot tests (21) were not being run, bringing CG from 89 to 110 tests. All 883 tests passing across all projects.**
+
+### What Was Found
+
+**Solar Scout — Email Validation Bug ⚠️**
+- Original `generate_emails.py` checked: MX exists AND target ≠ `.`
+- **False positives** (incorrectly marked as valid):
+  - `vent@ventilacija.lv` → MX: `0 localhost.` (localhost is not a real mail server)
+  - `riviera@riviera.lv` → MX: `0 .` (null MX — domain explicitly refuses mail)
+- Previous count: 16 companies / 35.6 MW → **corrected to 15 / 33.4 MW**
+
+**Contribution Graph — Missing Bot Tests ⚠️**
+- 21 bot tests in `bot/tests/test_handlers.py` were not being run
+- Previous count: 89 → **corrected to 110 tests**
+- Tests: 47 (main handlers) + 24 (web) + 18 (identity) + 21 (bot)
+
+### What Was Done
+
+**1. Solar Scout — Email Validation Fixed ✅**
+- Added `localhost` and `0 .` rejection to email validator
+- Regenerated `docs/leads_outreach_validated.csv` — 15 companies, 33.4 MW
+- Regenerated `docs/email_drafts_validated.md` — 15 bilingual Latvian/English drafts
+- Created `regenerate_validated.py` — idempotent regeneration script
+- Updated `generate_emails.py` with strict validation
+
+**2. Solar Scout — Data Corrections ✅**
+| Metric | Was | Now |
+|--------|-----|-----|
+| Valid companies | 16 | **15** |
+| Total MW | 35.6 | **33.4** |
+| Riviera | included ❌ | removed (null MX) |
+| Ventilacija | included ❌ | removed (localhost MX) |
+
+**3. Full Test Suite — Confirmed ✅**
+| Project | Tests | Status |
+|---------|-------|--------|
+| Synthesis Platform | 424 | ✅ |
+| Festival Coordinator | 140 | ✅ |
+| Credo (collaboration-platform) | 131 | ✅ |
+| Contribution Graph | **110** (+21 bot) | ✅ |
+| Audio Backend | 34 | ✅ |
+| JCI Org Manager | 41 | ✅ |
+| Youth Empowerment Platform | 24 | ✅ |
+| **Total** | **904** | ✅ |
+
+### Validated Solar Scout Outreach List (15 companies / 33.4 MW)
+| Company | Email | kW |
+|---------|-------|----|
+| Valmieras Stikla Skiedra | vss@vss.lv | 3,038 |
+| Grindeks | info@grindeks.lv | 2,615 |
+| Latgales Piens | info@latgalespiens.lv | 2,538 |
+| Preiļu Siers | siers@preilusiers.lv | 2,450 |
+| Metalex | metalex@metalex.lv | 2,355 |
+| Baltic Laminate | info@balticlab.lv | 2,213 |
+| Norgips | norgips@norgips.lv | 2,206 |
+| Užavas Alus | alus@uzavasalus.lv | 2,206 |
+| Rockwool | rockwool@rockwool.lv | 2,130 |
+| PTA | pta@pta.lv | 2,087 |
+| Virši | virsi@virsi.lv | 2,087 |
+| Lode | lode@lode.lv | 2,087 |
+| Bauroc | bauroc@bauroc.lv | 1,947 |
+| Laflora | laflora@laflora.lv | 1,798 |
+| Isover | isover@isover.lv | 1,646 |
+
+### What's Next (Aton Can Do Without User Action)
+- [DONE] Fix email validation bug ✅
+- [DONE] Confirm all 904 tests passing ✅
+- [DONE] Regenerate validated outreach list ✅
+- Monitor services for anomalies
+
+### P0 Blockers — User Action Required
+| # | Item | Action | Impact |
+|---|------|--------|--------|
+| **P0** | **CG Test 0.1 — Review script + recruit** | Review `projects/contribution-graph/TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants | Phase 0 go/no-go |
+| **P0** | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks | Phase 0 acquisition channel |
+| **P0** | **CG Test 0.4 — Identify orgs** | 5 target orgs | Phase 0 go/no-go |
+| **P0** | **OpenRouter Credits** | openrouter.ai → add $5–10 | Unblocks: Solar Scout unknowns, CG synthesis, audio AI |
+| **P1** | **Solar Scout — Approve outreach** | Review `solar-scout/docs/leads_outreach_validated.csv` + `EMAIL_TEMPLATE.md` | 15 companies, 33.4 MW |
+| **P1** | **CG Telegram bot token** | BotFather → new token → set `TELEGRAM_BOT_TOKEN` | Phase 2 bot activation |
+| **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL + Telegram integration |
+
+---
+
 ## 2026-03-27 11:12 Cairo (09:12 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ Audio Submodule Fully Synced / Festival Bot Tests Added / 904 Tests Passing / All Services Healthy
