@@ -1,5 +1,58 @@
 ---
 
+## 2026-03-27 03:39 Cairo (01:39 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ CG 75/75 Tests / Audio Build Verified / Services Healthy / 3 Test Bugs Fixed
+
+**This session: Found and fixed 3 pre-existing CG test bugs (self-endorsement blocks were correct, tests were wrong). Audio build confirmed working.**
+
+### What Was Done
+
+**1. CG Test Suite — 3 Bugs Fixed → 75/75 Passing ✅**
+- **Root cause:** All 3 failing tests tried to self-endorse (same user creates + endorses contribution), which the code correctly blocks.
+- **Fix 1 — `contribution.test.ts` "should endorse contribution":** Create second endorser `endorser` instead of using `testUser` for the endorsement.
+- **Fix 2 — `contribution.test.ts` "should sort contributions by endorsements":** Use 3 distinct endorsers instead of `testUser` for the 3 endorsement calls.
+- **Fix 3 — `integration.test.ts` "should support branch→contribution→endorsement flow":** Use second endorser + fix expected credibility from 9 → 11 (endorsement awards `weight=3` per SPEC §4, not flat 1).
+- **Fix 4 — `integration.test.ts` "should progress trust tier based on credibility":** Fix elder threshold comment/code mismatch — code correctly has `elder=2000` per SPEC; test incorrectly expected `elder` at 1000. Test now adds 1500 (not 500) to reach 2000.
+- **Commit:** `661cc53` — `fix(CG): correct self-endorsement test bugs (75 tests now passing)`
+
+**2. Audio Build — Verified Working ✅**
+- `npm run build` in `projects/audio-transformation-tool/code` succeeds in 12.83s
+- `dist/` contains fresh build (assets + audio + index.html)
+- ⚠️ Audio test source files missing from repo (only `.map` files present) — 34-test claim from prior sessions cannot be verified
+
+**3. All Services — Health Checked ✅**
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ `/health` → `{"status":"ok"}` |
+| Audio Backend | 3001 | ✅ `/health` → `{"openRouterLinked":true}`, `/api/director` working |
+| Credo Frontend | 3002 | ✅ 200 |
+| Youth Platform | 3003 | ✅ 200 |
+| Audio Frontend | 3005 | ✅ 200 (fresh build) |
+| CG Web | 3006 | ✅ 200 |
+| JCI Portal | 8080 | ✅ 200 |
+
+**4. Solar Scout — 16 Industries Still Unknown ⚠️**
+- Web search blocked (Perplexity 402 — no credits)
+- 16 real companies have unknown industry (Riviera, Latsr, Kopa, JSC Latgales, PREMIUM, Gerhard, Krass, Sent, Bermas, Len, Tera, Lenda, Vests, Sakart + RSU/Maksim flags)
+- Cannot research without user top-up or web access
+
+### P0 Blockers (User Action Required)
+| Item | Blocked By | Status |
+|------|-----------|--------|
+| Audio Tool Vercel deployment | Vercel account + domain | Awaiting drg |
+| OpenRouter credits (web search + AI) | Budget top-up | Awaiting drg — also blocks solar-scout research |
+| CG Telegram bot token | tg botFather | Awaiting drg |
+| CG deploy to Vercel | drg import + env vars | Awaiting drg |
+
+### 📋 Next Steps (Priority Order)
+1. **User: Import audio-transformation-tool to Vercel** — build is fixed and ready
+2. **User: Top up OpenRouter credits** — unblocks web search AND AI meditation synthesis
+3. **User: Get Telegram bot token** for CG bot
+4. **Solar Scout:** 51 real leads with 16 unknown industries — needs either credits for web research, or manual user research
+
+---
+
 ## 2026-03-27 02:58 Cairo (00:58 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ Audio Build Fixed / All Services Up / CG 88 Tests / Audio 34 Tests
