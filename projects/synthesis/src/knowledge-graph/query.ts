@@ -140,10 +140,11 @@ export function query(q: KGQuery): KGResult {
     if (ids !== undefined && ids.length > 0) {
       const idSet = new Set(ids);
       nodes = nodes.filter((n) => idSet.has(n.id));
-      // Also filter edges to only those between filtered nodes
-      const nodeIds = new Set(nodes.map((n) => n.id));
-      edges = edges.filter((e) => nodeIds.has(e.from) && nodeIds.has(e.to));
     }
+
+    // Always sync edges to match filtered nodes (not just for ids filter)
+    const nodeIds = new Set(nodes.map((n) => n.id));
+    edges = edges.filter((e) => nodeIds.has(e.from) && nodeIds.has(e.to));
   }
 
   // --- Traversal ---
