@@ -1,84 +1,90 @@
 # Solar Scout - Progress Tracker
-## 2026-03-26 08:58 Cairo (06:58 UTC) - Wakeup Session (Aton)
 
-### Status: ✅ All Systems Nominal — 647 Tests Passing, 6/6 Services Up, Git Clean + Pushed
+## 2026-03-27 01:28 Cairo (23:28 UTC) — Aton Wakeup
 
-### What Was Verified This Session
+### Status: ✅ All Fixes Applied — 51 real leads, duplicate fixed, image paths corrected, 26 industries inferred
 
-**1. Full Test Suite — All 647 Tests Passing**
-| Project | Tests | Framework | Status |
-|---------|-------|-----------|--------|
-| Audio Tool (workspace root) | 34 | vitest | ✅ |
-| Audio Tool (submodule) | 34 | vitest | ✅ |
-| Synthesis Platform | 424 | vitest | ✅ |
-| Credo Collaboration Platform | 75 | vitest | ✅ |
-| Festival Coordinator | 49 | pytest | ✅ |
-| JCI Org Manager | 41 | pytest | ✅ |
-| Youth Empowerment Platform | 24 | pytest | ✅ |
-| **Total** | **647** | | **✅ All passing** |
+### What Was Done This Session
 
-**2. Health Check — 6/6 Services Verified**
-| Service | Port | Status | Details |
-|---------|------|--------|---------|
-| Audio Backend | 3001 | ✅ `/health` OK, openRouterLinked |
-| Audio Frontend | 3005 | ✅ HTTP 200 |
-| Credo API | 3000 | ✅ `/health` OK |
-| Credo Frontend | 3002 | ✅ HTTP 200 |
-| Youth Platform | 3003 | ✅ `/health` OK, vault_manager ready |
-| JCI Portal | 8080 | ✅ HTTP 200 |
+**1. CRITICAL DATA QUALITY FINDING + CORRECTION ⚠️**
+- Dataset has TWO groups: 51 real companies (`known_company`) + 400 synthetic (`generated`/`unknown`)
+- Original claim of "452 outreach-ready leads / 629 MW" was 9x inflated
+- **Real verified leads: 51 companies, 116.5 MW total potential**
 
-**3. Git Status**
-- **Clean + Pushed** — at `a1579ef`, synced with origin/master
-- 1 ahead-of-origin commit from last session (PROGRESS.md timestamp fix) → now pushed
+**2. Duplicate removed ✅**
+- `info@rigaplastics.lv` appeared twice (ID 7 and 52 — same owner, different addresses)
+- Removed ID 52, kept ID 7
 
-### Actions Taken This Session
+**3. Image paths corrected ✅**
+- 131 image paths: `output/images/` → `docs/images/` (images exist, links were broken)
 
-1. **Re-verified all 647 tests** across 7 projects — all passing ✅
-2. **Identified & fixed test count discrepancy**: Previous sessions claimed 681 tests, but actual count is 647 (34 workspace root + 34 submodule + 424 synthesis + 75 Credo + 49 Festival + 41 JCI + 24 Youth). Updated documentation to reflect accurate numbers.
-3. **Pushed lagging commit** to origin/master (`a1579ef`)
-4. **Health check warnings noted** (non-critical):
-   - H1/H8: PROGRESS.md was uncommitted → now committed & pushed ✅
-   - H18: Telegram groupPolicy=allowlist but groupAllowFrom empty → expected (no bot token)
-   - H11: Context low → addressed by updating PROGRESS.md
+**4. Industry inference (name-based) ✅ — 26 of 41 unknowns resolved**
+- Company name → industry mapping for: Bread producers, Dairy, Metalworking, HVAC, Heating, Packaging, Composites, etc.
+- Confidence: High (based on company name patterns + known Latvian brand knowledge)
+- 15 still "unknown" (Riviera, Kopa, Latsr, RSU, Kuršių Medienos, JSC Latgales, etc.)
 
-### All P0 Items Remain Blocked on User Action
-| # | Item | Action Needed | Impact |
-|---|------|---------------|--------|
-| 1 | Deploy Audio Tool to Vercel | vercel.com → import Crypt0n1t369/Insight → Deploy | Public URL + Telegram integration |
-| 2 | Add OpenRouter Credits | openrouter.ai/settings/keys → add $5-10 | Unblocks real AI meditation (402) |
-| 3 | Review Contribution Graph docs | Read projects/contribution-graph/CONCEPT.md + PILOT.md | Phase 0 go/no-go |
-| 4 | Review Credo Docs | Read projects/collaboration-platform/SPEC.md + SCHEMA.md + PILOT.md | MVP build decision |
-| 5 | Add TELEGRAM_BOT_TOKEN (Youth Platform) | Add to projects/youth-empowerment-platform/.env | Phase 2 Telegram bot |
-| 6 | Add TELEGRAM_BOT_TOKEN (Festival Coordinator) | Add to projects/festival-coordinator/.env | Phase 2 Telegram bot |
+---
 
-### What's Next (Priority Order)
-1. **User: Review Contribution Graph docs** — Phase 0 go/no-go (highest strategic priority)
-2. **User: Deploy Audio Tool to Vercel** (P0)
-3. **User: Add OpenRouter credits** (P0)
-4. **User: Review Credo docs** (P1)
-5. **User: Add Telegram tokens** (P2)
+## Accurate Data State
 
-**Nothing to build — all P0/P1 blocked on user-provided tokens or decisions.**
+### Real leads (51) — outreach-ready:
+| Metric | Value |
+|--------|-------|
+| Real companies | 51 |
+| With satellite image | 50 (98%) |
+| With decision maker | 51 (100%) |
+| With phone | 51 (100%) |
+| With industry classified | 36 (71%) — 26 inferred |
+| Total solar potential | 116.5 MW |
 
-### What I Did This Session
+### Industry distribution (51 real companies):
+| Industry | Count |
+|----------|-------|
+| unknown | 15 |
+| Dairy | 4 |
+| Food/Bread | 3 |
+| Metalworking | 2 |
+| Wood/Furniture | 2 |
+| Beverages | 2 |
+| Insulation | 2 |
+| Pharmaceuticals | 1 |
+| Pharmaceuticals/Cosmetics | 1 |
+| Horticulture/Peat | 1 |
+| Glass fiber | 1 |
+| Shipbuilding | 1 |
+| Plastic | 1 |
+| Textile | 1 |
+| Aluminum | 1 |
+| Electronics | 1 |
+| Heating | 1 |
+| HVAC | 1 |
+| Packaging | 1 |
+| Composites | 1 |
+| Agriculture/Horticulture | 1 |
+| Construction Materials | 1 |
+| Floor coverings | 1 |
 
-1. **Verified all 647 tests passing** across 7 projects
-2. **Confirmed all 6 services healthy** (3001, 3005, 3000, 3002, 3003, 8080)
-3. **Fixed test count documentation** in synthesis SPECS and PROGRESS.md:
-   - Corrected synthesis tests from 224 to 424 (7 specialist agents: WOOP, IFS, NSDR, BREATHWORK, SE, ACT, NVC)
-   - Updated all references to match actual implementation
-4. **Committed changes** to git with descriptive message
-5. **Updated PROGRESS.md** with current session findings
+### Synthetic leads (400) — NOT for outreach:
+- All have `@company.lv` synthetic emails
+- Retained in `leads_dashboard.json` (source: `generated` or `unknown`)
+- Exported separately: `docs/leads_outreach_real.json` + `.csv` (51 real only)
 
-### Next Session Plan
+---
 
-If this session is woken up again:
-1. **Re-verify services** (3001, 3005, 3000, 3002, 3003, 8080)
-2. **Re-run test suite** to confirm 647 tests still passing
-3. **Check for new git changes** since last session
-4. **Update PROGRESS.md** if any status changes
-5. **Document any new findings** or issues
+## What's Next (Priority Order)
 
-**No new development work possible** — all code tasks require user-provided secrets or decisions.
+1. **User: Verify inferred industries** — 26 classified from name patterns, mostly confident but sanity-check the edge cases (Riviera? RSU? Kopa?)
+2. **User: Decide on 400 synthetic leads** — keep or delete from main dashboard?
+3. **User: Approve outreach target** — all 51 or filter by industry/geography?
+4. **User: Set up email infrastructure** — SMTP or email API
 
-*Session completed: 2026-03-26 06:58 UTC*
+---
+
+## Files Modified This Session
+- `docs/leads_dashboard.json` — duplicate removed, image paths fixed, industries inferred (451 total)
+- `docs/leads_dashboard.csv` — regenerated
+- `docs/leads_outreach_real.json` — **NEW** — 51 real companies only for outreach
+- `docs/leads_outreach_real.csv` — **NEW** — 51 real companies CSV
+- `docs/dashboard.html` — regenerated
+- `infer_industry.py` — **NEW** — name-based industry inference script
+- `generate_dashboard.py` — ran successfully
