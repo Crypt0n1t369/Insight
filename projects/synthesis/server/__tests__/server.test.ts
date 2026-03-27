@@ -332,13 +332,16 @@ describe('GET /api/stats', () => {
     if (!serverRunning) { console.warn('[SKIP] Server not running'); return; }
     const data = await GET<{
       totalSessions: number;
-      totalProtocols: Record<string, number>;
+      totalEvents: number;
+      sessionsByProtocol: Record<string, number>;
       knowledgeGraphStats: { nodes: number; edges: number };
       topContributors: unknown[];
+      platformUptime: string;
     }>('/api/stats');
 
     expect(typeof data.totalSessions).toBe('number');
-    expect(typeof data.totalProtocols).toBe('object');
+    expect(typeof data.totalEvents).toBe('number');
+    expect(typeof data.sessionsByProtocol).toBe('object');
     expect(typeof data.knowledgeGraphStats.nodes).toBe('number');
     expect(typeof data.knowledgeGraphStats.edges).toBe('number');
     expect(Array.isArray(data.topContributors)).toBe(true);
