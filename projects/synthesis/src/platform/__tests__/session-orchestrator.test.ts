@@ -337,16 +337,20 @@ describe('SessionOrchestrator', () => {
 
       expect(stats).toMatchObject({
         totalSessions: expect.any(Number),
-        totalProtocols: expect.any(Object),
+        totalEvents: expect.any(Number),
+        sessionsByProtocol: expect.any(Object),
         knowledgeGraphStats: {
           nodes: expect.any(Number),
           edges: expect.any(Number),
         },
         topContributors: expect.any(Array),
+        platformUptime: expect.any(String),
       });
 
       expect(stats.totalSessions).toBeGreaterThan(0);
+      expect(stats.totalEvents).toBeGreaterThan(0);
       expect(stats.knowledgeGraphStats.nodes).toBeGreaterThan(0);
+      expect(stats.platformUptime).toMatch(/^\d+[hms]/)
     });
   });
 });

@@ -80,7 +80,8 @@ export interface KGSessionSummary {
 
 export interface SynthesisStats {
   totalSessions: number;
-  totalProtocols: Record<string, number>;
+  totalEvents: number;
+  sessionsByProtocol: Record<string, number>;
   knowledgeGraphStats: {
     nodes: number;
     edges: number;
@@ -89,6 +90,7 @@ export interface SynthesisStats {
     anonId: string;
     credibilityScore: number;
   }>;
+  platformUptime: string;
 }
 
 // ----------------------------------------------------------------

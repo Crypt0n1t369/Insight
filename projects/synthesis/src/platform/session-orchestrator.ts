@@ -75,6 +75,7 @@ function buildPriorSummary(priorSessions: SessionResult[]): string | undefined {
 export class SessionOrchestrator {
   private kgInitialized = false;
   private config: OrchestratorConfig;
+  private readonly startTime = Date.now();
 
   constructor(config: OrchestratorConfig = {}) {
     this.config = config;
@@ -371,14 +372,36 @@ export class SessionOrchestrator {
     const sessions = KG.query({ filters: { type: 'session' } });
     const kgStats = KG.query({}); // all nodes/edges
 
+    // Sum eventCount from all session node metadata
+    let totalEvents = 0;
+    for (const node of sessions.nodes) {
+      const m = (node as { metadata?: Record<string, unknown> }).metadata ?? {};
+      if (typeof m['eventCount'] === 'number') {
+        totalEvents += m['eventCount'] as number;
+      }
+    }
+
+    // Compute uptime string
+    const elapsedMs = Date.now() - this.startTime;
+    const totalSeconds = Math.floor(elapsedMs / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    const platformUptime =
+      hours > 0 ? `${hours}h ${minutes}m` :
+      minutes > 0 ? `${minutes}m ${seconds}s` :
+      `${seconds}s`;
+
     return {
       totalSessions: sessions.nodes.length,
-      totalProtocols: this.getProtocolStats(),
+      totalEvents,
+      sessionsByProtocol: this.getProtocolStats(),
       knowledgeGraphStats: {
         nodes: kgStats.nodes.length,
         edges: kgStats.edges.length,
       },
       topContributors: [], // Would require iterating credibility profiles
+      platformUptime,
     };
   }
 }
