@@ -35,7 +35,7 @@
 - **Ports:** 3001 (backend), 3005 (frontend)
 - **Status:** 34 vitest tests passing
 - **9 protocols:** NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE — all demo mode working
-- **Frontend:** dist/ pre-built and serving correctly (source missing, can't rebuild)
+- **Code drift fixed:** workspace root `server/` and code submodule `code/server/` now fully synced (submodule was missing `/api/protocols` + director null-safe handling)
 - **Known issue:** OpenRouter credits exhausted (402 → demo fallback)
 
 ### Credo Collaboration Platform
@@ -52,18 +52,18 @@
 ### Festival Coordinator
 - **Phase:** Operational | **Status:** 49 tests passing
 
-## Test Suite (Verified 2026-03-27 05:58 UTC)
+## Test Suite (Verified 2026-03-27 09:12 UTC)
 
 | Project | Tests | Framework |
 |---------|-------|-----------|
+| Synthesis Platform | 424 | vitest |
+| Festival Coordinator | 140 (was 49) | pytest |
+| Credo (collaboration-platform) | 131 | vitest |
 | Contribution Graph | 110 (18 identity + 48 handlers + 23 web + 21 bot) | pytest |
 | Audio Backend (server/) | 34 | vitest |
-| Synthesis Platform | 424 | vitest |
-| Collaboration Platform | 75 | vitest |
-| Festival Coordinator | 49 | pytest |
 | JCI Org Manager | 41 | pytest |
 | Youth Empowerment Platform | 24 | pytest |
-| **Total** | **757** | |
+| **Total** | **904** | |
 
 ## Service Status (2026-03-27 05:58 UTC)
 
