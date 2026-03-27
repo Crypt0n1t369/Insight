@@ -298,10 +298,28 @@ See `db/schema.sql` — 6 tables:
 
 ---
 
+## Build & QA Status
+
+**CG Web:** 3006 ✅ | **CG Bot:** Code complete, awaiting TELEGRAM_BOT_TOKEN  
+**Test suite:** 110 passing (89 CG system + 21 bot handlers)
+
+### Test Coverage
+| File | Tests | Coverage |
+|------|-------|----------|
+| `db/test_identity.py` | 18 | Short-code generation + verification |
+| `tests/test_handlers.py` | 47 | Conversation phase handlers, command routing |
+| `web/test_web.py` | 23 | Map rendering, rate limiting, API endpoints |
+| `bot/tests/test_handlers.py` | 21 | Command handlers, phase routing, state transitions |
+
+### Bug Fixes (Phase 0 Build)
+- **SIGNAL_META completeness (2026-03-27):** All 18 `SignalType` entries now have human-readable labels and icons in the SVG map renderer. Previously 12/18 were missing, causing raw key names (e.g. `values_alignment`) to leak into the UI. Committed `98da124`.
+- **Bot state sync (2026-03-27):** `TelegramBot._sync_to_map_store` correctly writes user phase, signals, and challenge completions to the CG Web SQLite store so the map URL is always current after bot interaction.
+
 ## Changelog
 
 | Version | Date | Changes |
 |---------|------|---------|
 | 0.1-draft | 2026-03-27 | Initial skeleton — all Phase 0 sections created, awaiting test results |
+| 0.1-draft | 2026-03-27 | Added Build & QA Status section; SIGNAL_META bug fix documented (98da124); bot handler tests added (21 passing) |
 
 *SPEC.md v0.1 | Contribution Graph | Aton ☀️🦞 | 2026-03-27*
