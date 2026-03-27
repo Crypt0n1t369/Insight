@@ -1,6 +1,6 @@
 # BACKLOG.md - Task Queue
 
-## LAST UPDATED: 2026-03-26 20:50 UTC (Worker-1 session)
+## LAST UPDATED: 2026-03-27 11:55 UTC (Worker-1 session)
 
 ---
 
@@ -69,6 +69,12 @@ SCHEMA.md updated: RLS deferred to Phase 2
 - **Bug 2:** `calculateTrustTier()` threshold fixed — elder=2000 now matches SCHEMA (was 1000).
 - **Bug 3:** `on_endorsement()` trigger updated in SCHEMA.md; `get_weight_for_type()` SQL function added; SPEC.md fully documented.
 - **Commit:** `dca8dfe` — 34/34 tests passing
+
+**Commit:** `cb5a2f2` — App-level auth middleware (authenticate/optionalAuth/requireTier) ✅
+- `src/middleware/auth.ts` — proper UUID v4 validation, 401/400/403 codes
+- All 10 protected route handlers updated from manual header checks to middleware
+- 6 new tests (auth-middleware.test.ts) — 137 total tests passing
+- Git pushed ✅
 - **Files:** `src/services/contribution.ts`, `src/services/identity.ts`, `src/types/index.ts`, `SPEC.md`, `SCHEMA.md`
 
 ### ACT Specialist Agent ✅
@@ -222,6 +228,20 @@ Zero tests run. Three critical questions unanswered:
    - Risk is acceptable for MVP (anonymous read-heavy app, content is public anyway)
 
 **→ CREDO MVP IS READY TO BUILD** ✅
+
+**Completed this session (2026-03-27):**
+- ✅ App-level auth middleware — `src/middleware/auth.ts` (cb5a2f2)
+  - `authenticate()` — validates x-user-id (UUID v4), 401/400/403 codes
+  - `optionalAuth()` — attaches user if header present
+  - `requireTier(minTier)` — enforces trust tier gates
+  - All 10 protected routes now use middleware (was manual header checks)
+
+**Still needed before deployment:**
+1. Supabase project setup (user action needed)
+2. `.env` with `SUPABASE_URL`, `SUPABASE_ANON_KEY`
+3. `supabase/migrations/001_*.sql` + `002_*.sql` applied to Supabase DB
+4. Frontend deployment (Vercel)
+5. Telegram bot token (Phase 2)
 
 **If the pilot runs and validates the core loop (≥7/10), this becomes the top-priority build over Audio Tool.**
 
