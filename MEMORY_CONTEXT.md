@@ -52,11 +52,11 @@
 ### Festival Coordinator
 - **Phase:** Operational | **Status:** 140 pytest tests passing ✅
 
-## Test Suite (Verified 2026-03-27 15:43 UTC)
+## Test Suite (Verified 2026-03-27 16:13 UTC)
 
 | Project | Tests | Framework |
 |---------|-------|-----------|
-| Synthesis Platform (backend) | 460 | vitest |
+| Synthesis Platform (backend) | 461 | vitest |
 | Synthesis Platform (UI client) | 6 | vitest |
 | Festival Coordinator | 140 | pytest (venv) |
 | Credo (collaboration-platform) | 137 | vitest |
@@ -65,13 +65,13 @@
 | Audio Backend (code/server/ — submodule) | 17 | vitest |
 | JCI Org Manager | 41 | pytest |
 | Youth Empowerment Platform | 24 | pytest |
-| **Total** | **969** | |
+| **Total** | **970** | |
 
-> Updated 2026-03-27 15:43 UTC: Synthesis backend = 460 (was 444); Added 6 Synthesis UI API client tests. Total now 969.
+> Updated 2026-03-27 16:13 UTC: +1 SSE streaming regression test. Total now 970.
 
-## Service Status (2026-03-27 15:43 UTC)
+## Service Status (2026-03-27 16:13 UTC)
 
-All services healthy: 3000 ✅ | 3001 ✅ (X-Demo-Mode: credits_exhausted on all AI endpoints) | 3003 ✅ | 3005 ✅ | 3006 ✅ | 8080 ✅ | 3004 ✅ | 3007 ✅ (Synthesis UI — NEW)
+All services healthy: 3000 ✅ | 3001 ✅ | 3003 ✅ | 3005 ✅ | 3006 ✅ | 8080 ✅ | 3004 ✅ | 3007 ✅
 
 ## Git
 

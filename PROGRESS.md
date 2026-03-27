@@ -1,5 +1,61 @@
 ---
 
+## 2026-03-27 18:13 Cairo (16:13 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ SSE Streaming Bug Fixed / Session History Tab Added / 461 Synthesis Tests / All Services Running
+
+**Fixed SSE streaming parser bug (wrong data pairing). Added session-complete eventCount+protocol to server. Added 5th tab: Session History. All 461 synthesis tests passing.**
+
+### Bugs Fixed
+
+**1. SSE parser in `ui/src/api/client.ts`**
+- Original: `lines.indexOf(line)` always found first occurrence, pairing every `event:` line with the first `data:` in the chunk — wrong for multi-event chunks
+- Fix: Position-based parsing — tracks whether last line was an `event:` directive, consumes the next `data:` line, resets
+
+**2. `session-complete` event missing stats in `server/index.ts`**
+- Original: Completion event sent `{ sessionId, kgSessionNodeId }` only — client couldn't show correct eventCount after streaming
+- Fix: Server tracks `streamedEventCount` and `streamedProtocol` during the streaming loop, sends all four fields
+
+**3. Session result stale eventCount in `SessionPage.tsx`**
+- Original: `eventCount: events.length + 1` used stale local state
+- Fix: Uses `eventCount` from the `session-complete` event callback; shows correct protocol label
+
+### New: Session History Tab
+
+**`ui/src/pages/HistoryPage.tsx`** — 5th tab (History)
+- Queries KG for `type=session` nodes, sorts by `completedAt` descending
+- Lists sessions: protocol badge, event count, relative timestamp
+- Click session → detail panel: name, protocol, eventCount, confidence, started/completed times
+- Gracefully handles `metadata` field (KG stores session data in `metadata`, not `properties`)
+
+### Test Suite — Confirmed
+| Project | Tests | Result |
+|---------|-------|--------|
+| Synthesis Platform | **461** | ✅ |
+| Audio Backend (workspace/server/) | **34** | ✅ |
+
+### All Services — Running ✅ (16:13 UTC)
+| Service | Port | Status |
+|---------|------|--------|
+| Audio Backend | 3001 | ✅ `{"status":"ok","openRouterLinked":true}` |
+| Audio Frontend | 3005 | ✅ HTTP 200 |
+| Credo API | 3000 | ✅ `{"status":"ok"}` |
+| CG Web | 3006 | ✅ HTTP 200 |
+| JCI Portal | 8080 | ✅ `{"status":"ok"}` |
+| Youth Platform | 3003 | ✅ `{"status":"ok"}` |
+| Synthesis API | 3004 | ✅ `{"status":"ok"}` |
+| **Synthesis UI** | **3007** | ✅ HTTP 200 |
+
+**Git committed:** `473a26f` — "feat(synthesis): fix SSE streaming, add session history tab"
+
+### What's Next
+- User deploys Audio Tool to Vercel (P0 — user action)
+- User adds OpenRouter credits (P0 — user action)
+- User reviews CG Phase 0 validation materials (P0 — user action)
+- Synthesis Platform: auth layer, persistent session storage via Supabase (P2)
+
+---
+
 ## 2026-03-27 17:43 Cairo (15:43 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ Synthesis Platform React UI Added / 466 Tests Pass / All 7 Services Running
