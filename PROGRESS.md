@@ -1,3 +1,82 @@
+## 2026-03-27 06:28 Cairo (04:28 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ CG SPEC.md Created + Test 0.3 Festival Materials Drafted / All Services Healthy
+
+**This session: Created `SPEC.md` — comprehensive Phase 0 results template and Phase 1 build blueprint for Contribution Graph. Drafted complete Test 0.3 (Festival Top-of-Funnel) materials — Typeform quiz design, result card template, 7-day Telegram onboarding flow, retention survey, tracking spreadsheet, materials checklist. All 47 CG tests passing. All services verified healthy.**
+
+### What Was Done
+
+**1. SPEC.md — Created ✅**
+- Created `projects/contribution-graph/SPEC.md` — the product specification document that didn't exist
+- Phase 0 results sections: one per test (0.1–0.4), each with pass criteria and results TBD
+- Design constraints section: filled from Phase 0 observations (TBD until tests run)
+- Problem backlog: from Test 0.4 client conversations (TBD until conversations run)
+- Objection map: compiled across all Phase 0 sessions
+- Phase 1 build specification: user journey, behavioral profiling engine (8 signal dimensions), challenge library structure, short-code identity, web map, Telegram bot, Phase 2 synergetic challenges
+- Technical architecture: stack table, environment variables, database schema overview
+- Open questions tracker: 7 questions Phase 0 must answer
+- Committed: `5180841`
+
+**2. Test 0.3 — Festival Top-of-Funnel Materials ✅**
+- Created `projects/contribution-graph/TEST_03_FESTIVAL_TOP_OF_FUNNEL.md` — full event activation playbook
+- **Event selection criteria:** Hackathon / youth conference / creative festival / startup meetup / university career day (4–8 weeks out, ≥100 attendees, booth access)
+- **Typeform quiz design:** 7 questions targeting 4 archetypes (Synthesizer, Igniter, Connector, Architect), result logic, conversion-optimized end screen with bot install CTA
+- **Result card design:** 1080×1080 PNG template (archetype name, quote, URL, QR code), Canva/Figma template guidance
+- **Telegram onboarding:** Day 0 (4 messages: welcome → hook → first signal → Day 1 challenge), Day 1–7 automated messages (challenge reminder, map update, Day-3 fear check, re-engagement, map preview, Day-7 survey)
+- **Day-7 retention survey:** 3 questions — challenge completion count, return reason (verbatim), product intent score
+- **Funnel tracking spreadsheet:** Columns for all 14 metrics, target benchmarks by stage
+- **Materials checklist:** 11-item pre-event checklist
+- **Day-of pitch guide:** 30-second pitch + objection handling scripts
+- Ready to use once event is identified — only event name, date, and QR code need plugging in
+- Committed: `5180841`
+
+**3. All Services — Verified Healthy ✅**
+| Service | Port | Endpoint | Status |
+|---------|------|---------|--------|
+| CG Web | 3006 | `/` | ✅ 200 |
+| Audio Backend | 3001 | `/health` | ✅ `{"status":"ok","openRouterLinked":true}` |
+| Credo API | 3000 | `/health` | ✅ `{"status":"ok"}` |
+| Credo Frontend | 3002 | `/` | ✅ 200 |
+| Youth Platform | 3003 | `/` | ✅ 200 |
+| Audio Frontend | 3005 | `/` | ✅ 200 |
+| JCI Portal | 8080 | `/` | ✅ 200 |
+
+**4. CG Tests — 47/47 Passing ✅**
+- `projects/contribution-graph/tests/test_handlers.py`: 47/47 passing (0.14s)
+- Warning: `CG_SERVER_SECRET` not set — expected for dev; noted in SPEC.md for production
+
+### CG Phase 0 — What's Now Complete
+
+| Test | Materials | Status |
+|------|-----------|--------|
+| **0.1 Self-Discovery Desire** | `TEST_01_INTERVIEW_SCRIPT.md` (5-screen prototype + 6 Qs + screener + consent) | ✅ Drafted |
+| **0.2 Attribution Fairness** | `TEST_02_ATTRIBUTION_FAIRNESS.md` (task brief + claim template + negotiation + survey) | ✅ Drafted |
+| **0.3 Festival Top-of-Funnel** | `TEST_03_FESTIVAL_TOP_OF_FUNNEL.md` (quiz + result card + bot onboarding + tracking) | ✅ Drafted |
+| **0.4 Client Problem Readiness** | `TEST_04_CLIENT_READINESS.md` (1-pager + conversation guide + problem template) | ✅ Drafted |
+| **SPEC.md** | `SPEC.md` (Phase 0 results template + Phase 1 build spec + technical arch) | ✅ Created |
+
+**All 4 test materials are now drafted and ready for user review.** Execution of each test requires user action.
+
+### P0 Blockers — User Action Required
+
+| # | Item | Action | Impact |
+|---|------|--------|--------|
+| 1 | **CG Test 0.1 — Review script + recruit** | Review `TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants | Phase 0 go/no-go |
+| 2 | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks (hackathon, youth conf, etc.) | Phase 0 acquisition channel |
+| 3 | **CG Test 0.4 — Identify orgs** | 5 target orgs (NGO/startup/govt/company/agency) | Phase 0 go/no-go |
+| 4 | **OpenRouter Credits** | openrouter.ai → add $5–10 | Unblocks AI synthesis + web research |
+| 5 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+| 6 | **Solar Scout: 11 unknowns** | Lursoft.lv lookup or +371 calls | Clean 46-company outreach list |
+
+### What's Next (Aton Can Do Without User Action)
+- [DONE] Create SPEC.md ✅
+- [DONE] Draft Test 0.3 festival materials ✅
+- Monitor services for anomalies
+- Update SPEC.md with Phase 0 decisions from other projects if any arise
+- Test and validate individual components if user provides a specific task
+
+---
+
 ## 2026-03-27 05:58 Cairo (03:58 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ Test 0.2 + Test 0.4 Materials Drafted / Old Entries Archived / Services Verified
@@ -175,74 +254,5 @@ Note: Running all projects via `python3 -m pytest projects/` triggers festival-c
 - Review CG PILOT.md and identify specific interview questions for Test 0.1
 - Clean up workspace git history if needed
 - Draft outreach email template for Solar Scout leads
-
----
-
-## 2026-03-27 03:58 Cairo (01:58 UTC) — Wakeup Session (Aton)
-
-### Status: ✅ Solar Scout: 5 Non-MFGs Removed / 46 Clean Leads / 104.9 MW / All Tests Pass
-
-**This session: Web research identified 3 more non-manufacturers (PREMIUM=car rental, Tera=medical retailer, Lenda=real estate). Combined with previously known RSU+Maksim = 5 total non-manufacturers removed from outreach list. 11 remaining unknowns classified as "Manufacturing (likely)". All tests verified.**
-
-### Solar Scout — 5 Non-Manufacturers Removed ✅
-Previously flagged: RSU (university), Maksim (retail chain)
-Newly discovered this session:
-- **PREMIUM** → premium.lv = car rental / VIP transfer service (NOT manufacturing)
-- **Tera** → tera.lv = medical/health products retailer (NOT manufacturing)
-- **Lenda** → lenda.lv = real estate agency (NOT manufacturing)
-
-### Remaining 11 Unknowns — Best-Effort Classification ✅
-All have no accessible website (domain doesn't resolve). Classified as "Manufacturing (likely)" based on:
-- Email domain patterns (@latsr.lv, @gerhard.lv, @krass.lv, etc.)
-- Location in industrial areas (Riga, Ventspils, Daugavpils, Jelgava)
-- JSC Latgales: Latgales region metalwork/logistics plausible; dairy=Latgales Piens at same address
-
-### Data Updated ✅
-- leads_dashboard.json: 5 non-manufacturers flagged with notes
-- leads_outreach_real.csv + .json: regenerated — **46 companies** (was 51)
-- dashboard.html: regenerated
-- Commit: `00e3b48`
-
-### Current Solar Scout State
-| Metric | Value |
-|--------|-------|
-| Manufacturing-ready leads | **46** |
-| Industry known | 35 (76%) |
-| Industry "Manufacturing (likely)" | 11 (24%) |
-| Non-manufacturers removed | 5 |
-| **Total solar potential** | **104.9 MW** |
-
-### 11 Companies Needing Manual Verification
-Riviera, Latsr, Kopa, JSC Latgales, Gerhard, Krass, Sent, Bermas, Len, Vests, Sakart
-→ Recommend Lursoft.lv lookup or direct +371 phone calls
-
-### All Services: ✅ All Healthy
-| Service | Port | Status |
-|---------|------|--------|
-| Credo API | 3000 | ✅ |
-| Audio Backend | 3001 | ✅ |
-| Credo Frontend | 3002 | ✅ |
-| Youth Platform | 3003 | ✅ |
-| Audio Frontend | 3005 | ✅ |
-| CG Web | 3006 | ✅ |
-| JCI Portal | 8080 | ✅ |
-
-### Tests Verified ✅
-- CG (collaboration-platform): **75/75 passing**
-- Audio server (workspace): **34/34 passing**
-
-### P0 Blockers (User Action Required)
-| Item | Blocked By | Status |
-|------|-----------|--------|
-| OpenRouter credits | Budget top-up | BLOCKS: web search + AI meditation synthesis |
-| Audio Tool Vercel deployment | Vercel account | Awaiting drg |
-| CG Telegram bot token | tg botFather | Awaiting drg |
-| CG deploy to Vercel | drg import + env vars | Awaiting drg |
-
-### What's Next (Priority Order)
-1. **User: Verify 11 unknowns** — Lursoft.lv lookup or call +371 numbers
-2. **User: Approve 46-company outreach list**
-3. **User: Email/SMTP infrastructure** for outreach
-4. **User: Top up OpenRouter credits**
 
 ---
