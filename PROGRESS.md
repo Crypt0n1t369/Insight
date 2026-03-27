@@ -1,5 +1,70 @@
 ---
 
+## 2026-03-28 01:35 Cairo (23:35 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ GENERAL Fixed in Running Server / All 8 Services Healthy / Committed + Pushed
+
+**Critical fix that was missed last session: The GENERAL protocol fix was applied to `code/server/` (submodule) but NOT to `workspace/server/` (the actual running server on port 3001). Discovered and fixed the running server. Synthesis API (port 3004) was down — restarted.**
+
+### What Was Fixed This Session
+- **GENERAL protocol missing from running server** — PROGRESS.md entry at 00:56 claimed the backend was fixed, but only `code/server/` (submodule) received the fix. The actual server on port 3001 (`workspace/server/`) was still missing GENERAL. When `methodology=GENERAL` was requested, it fell back to DEFAULT demo script.
+  - Fixed: Added GENERAL to `workspace/server/protocols.ts` CLINICAL_PROTOCOLS
+  - Fixed: Added GENERAL to `workspace/server/index.ts` DEMO_BATCHES (6 mindfulness batches)
+  - Verified: `/api/protocols` returns 10 protocols ✅
+  - Verified: `/api/meditation/generate` with `methodology=GENERAL` returns `"title":"Demo: GENERAL"` with 6 batches ✅
+  - Committed: `9743637` pushed to origin/master ✅
+
+- **Synthesis API restarted** — Port 3004 was not listening. Started fresh instance. Note: Uses in-memory SQLite — session data resets on restart (0 sessions, 16 nodes fresh). This is an architectural limitation.
+
+### All Services — Healthy (23:35 UTC) ✅
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ `{"status":"ok"}` |
+| Audio Backend | 3001 | ✅ Restarted with GENERAL fix — `{"status":"ok","openRouterLinked":true}` |
+| Youth Platform | 3003 | ✅ `{"status":"ok"}` |
+| Synthesis API | 3004 | ✅ Restarted — `{"status":"ok"}` (fresh in-memory store) |
+| Audio Frontend | 3005 | ✅ HTTP 200 |
+| CG Web | 3006 | ✅ `{"status":"ok"}` |
+| Synthesis UI | 3007 | ✅ HTTP 200 |
+| JCI Portal | 8080 | ✅ `{"status":"ok"}` |
+
+### Tests — All Passing ✅
+- `workspace/server/`: 34/34 vitest ✅
+- `code/server/` (submodule): 34/34 vitest ✅
+
+### Frontend Build ✅
+- `npm run build` succeeds in 12.86s — warnings only (chunk size, dynamic imports), no errors
+- Frontend source confirmed present at `code/` root (App.tsx, index.tsx, components/, services/) — NOT missing
+
+### Git ✅
+- Commit `9743637` pushed to origin/master ✅
+- Diff: +36 lines (GENERAL in protocols.ts + DEMO_BATCHES in index.ts)
+
+### 🚨 ALL P0 ITEMS STILL BLOCKED ON USER ACTION
+| # | Item | Blocker |
+|---|------|---------|
+| 1 | **OpenRouter credits** | openrouter.ai → add $5–10 (demo mode works fine) |
+| 2 | **Audio Tool → Vercel** | vercel.com → import Crypt0n1t369/Insight → add env vars (DEPLOYMENT.md written — ready) |
+| 3 | **CG Test 0.1 — Review + recruit** | Review `TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants |
+| 4 | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks |
+| 5 | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
+| 6 | **CG Telegram bot token** | BotFather → new token |
+| 7 | **Solar Scout: 11 unknowns** | Lursoft.lv lookup or +371 calls |
+| 8 | **Solar Scout: Approve outreach** | Review `docs/leads_outreach_real.json` + `EMAIL_TEMPLATE.md` |
+| 9 | **Supabase session persistence** | User sets up Supabase project (schema ready, DEPLOYMENT.md has steps) |
+
+### What Aton Can Do Without User Action
+- [DONE] Verify all 8 services healthy ✅
+- [DONE] Run test suites — 34/34 passing ✅
+- [DONE] Audit Supabase schema ✅
+- [DONE] Verify demo mode scripts clinically grounded ✅
+- [DONE] Write DEPLOYMENT.md ✅
+- [DONE] Fix GENERAL protocol mismatch in running server ✅ (2026-03-28 01:30 UTC)
+- [DONE] Verify frontend builds successfully ✅
+- [DONE] Git push workspace ✅
+
+---
+
 ## 2026-03-28 00:56 Cairo (22:56 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ Bug Fixed / GENERAL Protocol Added to Backend / 34 Tests Pass
