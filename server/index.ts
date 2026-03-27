@@ -89,6 +89,15 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
+// Handle malformed JSON gracefully — suppress stack traces from invalid request bodies
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (err.type === 'entity.parse.failed') {
+        console.warn("Malformed JSON received:", err.message);
+        return res.status(400).json({ reply: "Invalid JSON in request body.", shouldOfferMeditation: false });
+    }
+    next(err);
+});
+
 // Initialize Gemini & OpenRouter
 const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY || '' });
 const openRouterKey = process.env.OPENROUTER_API_KEY || '';
