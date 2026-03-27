@@ -52,11 +52,12 @@
 ### Festival Coordinator
 - **Phase:** Operational | **Status:** 140 pytest tests passing ✅
 
-## Test Suite (Verified 2026-03-27 14:59 UTC — Corrected)
+## Test Suite (Verified 2026-03-27 15:43 UTC)
 
 | Project | Tests | Framework |
 |---------|-------|-----------|
-| Synthesis Platform | 444 | vitest |
+| Synthesis Platform (backend) | 460 | vitest |
+| Synthesis Platform (UI client) | 6 | vitest |
 | Festival Coordinator | 140 | pytest (venv) |
 | Credo (collaboration-platform) | 137 | vitest |
 | Contribution Graph | 110 | pytest |
@@ -64,17 +65,17 @@
 | Audio Backend (code/server/ — submodule) | 17 | vitest |
 | JCI Org Manager | 41 | pytest |
 | Youth Empowerment Platform | 24 | pytest |
-| **Total** | **947** | |
+| **Total** | **969** | |
 
-> Test count corrected: CG = 110 (47 in tests/ + 21 in bot/tests/ + 42 in web/test_web.py), not 62. All tests pass.
+> Updated 2026-03-27 15:43 UTC: Synthesis backend = 460 (was 444); Added 6 Synthesis UI API client tests. Total now 969.
 
-## Service Status (2026-03-27 14:33 UTC)
+## Service Status (2026-03-27 15:43 UTC)
 
-All services healthy: 3000 ✅ | 3001 ✅ (X-Demo-Mode: credits_exhausted on all AI endpoints) | 3003 ✅ | 3005 ✅ | 3006 ✅ | 8080 ✅
+All services healthy: 3000 ✅ | 3001 ✅ (X-Demo-Mode: credits_exhausted on all AI endpoints) | 3003 ✅ | 3005 ✅ | 3006 ✅ | 8080 ✅ | 3004 ✅ | 3007 ✅ (Synthesis UI — NEW)
 
 ## Git
 
-- **Workspace:** `4259354` — pushed to origin/master ✅
+- **Workspace:** `d38d30e` — pushed to origin/master ✅
 - **Solar Scout:** Pushed and synced (separate repo: `7238f4e`)
 
 ## What's Left (User Action Required)

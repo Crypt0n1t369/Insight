@@ -3,12 +3,16 @@
 ## Active Projects
 
 ### 1. Synthesis Platform
-- **Status:** RUNNING — Fully Implemented
+- **Status:** RUNNING — Backend + UI
 - **Summary:** Unified wellness protocol orchestration platform with 8 specialist agents (WOOP, IFS, NSDR, BREATHWORK, SE, ACT, GENERAL, NVC)
 - **Path:** `projects/synthesis/`
-- **Tests:** 444/444 vitest passing ✅ (verified 2026-03-27)
+- **Tests:** 460/460 backend vitest + 6/6 UI API client tests ✅ (verified 2026-03-27)
+- **Runtime:**
+  - API Server: Port 3004 (Express — health, protocols, sessions, KG, stats)
+  - UI: Port 3007 (Vite + React — 4 pages: Protocols, Session Runner, KG Query, Stats)
 - **Agents:** WOOP, IFS, NSDR, BREATHWORK, SE (Somatic Experiencing), ACT, NVC (Nonviolent Communication), GENERAL — all 8 registered in AGENT_REGISTRY
-- **Recent:** Fixed endorsement test (self-endorsement blocked), all 13 test files green
+- **Recent (15:43 UTC):** Added React UI frontend (port 3007). Build succeeds (209KB gzipped). API streaming verified end-to-end.
+- **Git:** ✅ Committed `d38d30e`
 
 ### 2. Audio Transformation Tool
 - **Status:** Running + Server Unit Tests (17 tests)
