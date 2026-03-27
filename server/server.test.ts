@@ -5,7 +5,7 @@
  * Covers: health, protocols, chat, director, meditation generation.
  */
 
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
 import express from 'express';
 import cors from 'cors';
 import { GoogleGenAI } from '@google/genai';
