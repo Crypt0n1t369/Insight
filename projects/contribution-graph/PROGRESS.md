@@ -7,7 +7,7 @@
 **Current Runtime:**
 - CG Web Server: Port 3006 ✅ (SQLiteInMemoryStore — data persists to `data/contribution_graph.db`)
 - CG Bot: Built but not running (requires `TELEGRAM_BOT_TOKEN`)
-- Tests: 62 passing (21 handlers + 18 identity + 23 web) ✅
+- Tests: **110 pytest tests passing** (2026-03-27 verified) ✅
 - Challenge Library: 18 challenges ✅
 - Database: PostgreSQL schema in `db/schema.sql` (SQLite for dev/persistence) ✅
 - Rate Limiter: 3 attempts/min per IP ✅
