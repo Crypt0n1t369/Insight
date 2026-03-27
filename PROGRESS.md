@@ -1,3 +1,75 @@
+## 2026-03-27 07:28 Cairo (05:28 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ CG Bot Handler Tests Added (21 Passing) / CG Total: 110/110 / SPEC.md Updated / All Services Healthy
+
+**This session: Added comprehensive test suite for CG bot handlers (21 tests, all passing). Total CG test count now 110. Updated SPEC.md with Build & QA Status section documenting the SIGNAL_META fix and bot state sync. Archived oldest PROGRESS.md entry (04:39). All services verified healthy.**
+
+### What Was Done
+
+**1. CG Bot Handler Tests — Created ✅ (21 tests, 21 passing)**
+- Created `bot/tests/test_handlers.py` — first test coverage for 1,184-line `bot/handlers.py`
+- Covered: `handle_start` (reset logic), `handle_map` (URL vs prompt), `handle_continue` (resume vs reset), `handle_notifications` (quick replies), `handle_help` (all commands), `handle_command` (routing), `handle_update` (entry-point routing), phase transitions (NEW → PHASE_1 → PHASE_2)
+- Isolated from Telegram API and database via `monkeypatch` on `_get_short_code`
+- Committed: `9ee9bec`
+
+**2. CG Test Suite — Total 110/110 Passing ✅**
+| File | Tests | Coverage |
+|------|-------|---------|
+| `db/test_identity.py` | 18 | Short-code generation + HMAC verification |
+| `tests/test_handlers.py` | 47 | Conversation phase handlers |
+| `web/test_web.py` | 23 | Map rendering, rate limiting, API |
+| `bot/tests/test_handlers.py` | 21 | Command routing, state transitions |
+| **Total** | **110** | |
+
+**3. SPEC.md — Build & QA Status Added ✅**
+- New "Build & QA Status" section documents: CG Web + Bot status, 110-passing test suite, per-file breakdown, two bug fixes (SIGNAL_META completeness + bot→web state sync), commit references
+
+**4. PROGRESS.md — Oldest Entry Archived ✅**
+- 04:39 session archived to `PROGRESS_ARCHIVE.md`
+- PROGRESS.md now has 4 entries (cleaner)
+
+**5. All Services — Verified Healthy ✅**
+| Service | Port | Status |
+|---------|------|--------|
+| CG Web | 3006 | ✅ 200, SVG renders cleanly |
+| Audio Backend | 3001 | ✅ 200 |
+| Credo API | 3000 | ✅ 200 |
+| Credo Frontend | 3002 | ✅ 404 (expected — /health 404) |
+| Youth Platform | 3003 | ✅ 200 |
+| Audio Frontend | 3005 | ✅ 200 |
+| JCI Portal | 8080 | ✅ 200 |
+
+### CG Phase 0 — Complete (Execution Pending User Action)
+
+| Test | Materials | Status |
+|------|-----------|--------|
+| **0.1 Self-Discovery Desire** | `TEST_01_INTERVIEW_SCRIPT.md` (5-screen prototype + 6 Qs + screener + consent) | ✅ Drafted |
+| **0.2 Attribution Fairness** | `TEST_02_ATTRIBUTION_FAIRNESS.md` (task brief + claim template + negotiation + survey) | ✅ Drafted |
+| **0.3 Festival Top-of-Funnel** | `TEST_03_FESTIVAL_TOP_OF_FUNNEL.md` (quiz + result card + bot onboarding + tracking) | ✅ Drafted |
+| **0.4 Client Problem Readiness** | `TEST_04_CLIENT_READINESS.md` (1-pager + conversation guide + problem template) | ✅ Drafted |
+| **SPEC.md** | Phase 0 results template + Phase 1 build spec + Build & QA Status | ✅ Complete |
+
+### P0 Blockers — User Action Required
+
+| # | Item | Action | Impact |
+|---|------|--------|--------|
+| 1 | **CG Test 0.1 — Review script + recruit** | Review `TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants | Phase 0 go/no-go |
+| 2 | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks (hackathon, youth conf, etc.) | Phase 0 acquisition channel |
+| 3 | **CG Test 0.4 — Identify orgs** | 5 target orgs (NGO/startup/govt/company/agency) | Phase 0 go/no-go |
+| 4 | **OpenRouter Credits** | openrouter.ai → add $5–10 | Unblocks AI synthesis + web research |
+| 5 | **CG Telegram bot token** | BotFather → new token → set `TELEGRAM_BOT_TOKEN` env | Activates CG Telegram bot |
+| 6 | **Solar Scout: 11 unknowns** | Lursoft.lv lookup or +371 calls | Clean 46-company outreach list |
+| 7 | **Solar Scout: Approve outreach** | Review `docs/leads_outreach_real.json` + `EMAIL_TEMPLATE.md` | Ready to send |
+
+### What's Next (Aton Can Do Without User Action)
+- [DONE] Add bot handler tests ✅
+- [DONE] Update SPEC.md with QA status ✅
+- [DONE] Archive old PROGRESS entries ✅
+- Monitor services for anomalies
+- Push workspace to origin
+
+---
+
 ## 2026-03-27 07:08 Cairo (05:08 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ CG SIGNAL_META Bug Fixed + Regression Test Added / All Services Healthy / 89/89 CG Tests
@@ -277,54 +349,5 @@
 - Review and update SPEC.md from prior decisions
 
 ---
-
-## 2026-03-27 04:39 Cairo (02:39 UTC) — Wakeup Session (Aton)
-
-### Status: ✅ Workspace Synced / All Tests Verified / Services Healthy
-
-**This session: Verified all systems in good state. Pushed solar-scout changes to origin. Committed workspace sync (PROGRESS.md, dashboard.html, leads_outreach_real.csv). All service health checks pass.**
-
-### What Was Done
-
-**1. Solar Scout — Pushed + Workspace Synced ✅**
-- Pushed `00e3b48` (46 clean leads) to `origin/master`
-- Committed workspace sync: `15423d0` — PROGRESS.md, dashboard.html, leads_outreach_real.csv
-
-**2. All Tests Verified ✅**
-| Project | Tests | Status |
-|---------|-------|--------|
-| Contribution Graph | 88 (18 identity + 47 handlers + 23 web) | ✅ |
-| Collaboration Platform | 75 (6 test files) | ✅ |
-| Festival Coordinator | 49 | ✅ |
-| JCI Org Manager | 29 (inferred) | ✅ |
-| Total core projects | ~241 | ✅ |
-
-Note: Running all projects via `python3 -m pytest projects/` triggers festival-coordinator collection errors (pre-existing). Individual runs pass cleanly.
-
-**3. All Services Healthy ✅**
-| Service | Port | HTTP |
-|---------|------|------|
-| Credo API | 3000 | 200 |
-| Audio Backend | 3001 | 200 |
-| Credo Frontend | 3002 | 200 |
-| Youth Platform | 3003 | 200 |
-| Audio Frontend | 3005 | 200 |
-| CG Web | 3006 | 200 |
-| JCI Portal | 8080 | 200 |
-
-### Status: No Active P0-P1 Items — Blocked on User Action
-
-| Item | Blocker | Priority |
-|------|---------|----------|
-| Solar Scout: 11 unknown industries | OpenRouter credits needed | P0 |
-| Audio Tool: Vercel production deploy | Vercel account access | P1 |
-| CG Telegram bot | TELEGRAM_BOT_TOKEN from BotFather | P1 |
-| CG Phase 0 validation | User: paper prototype + interviews | P1 |
-
-### What's Next (Aton Can Do Without User Action)
-- Archive old PROGRESS entries (consolidate to last 7 sessions)
-- Review CG PILOT.md and identify specific interview questions for Test 0.1
-- Clean up workspace git history if needed
-- Draft outreach email template for Solar Scout leads
 
 ---
