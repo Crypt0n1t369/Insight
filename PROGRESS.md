@@ -1,5 +1,62 @@
 ---
 
+## 2026-03-27 20:40 Cairo (18:40 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ KG Edge Filter Bug Fixed / 462 Tests Pass / All 8 Services Healthy / Platform Fully Operational
+
+**This session: Found and fixed a subtle bug in the KG query engine where edges were not being filtered to match the post-filter node set (except in the `ids` filter branch). Verified SSE streaming works correctly. All 462 tests pass. Platform confirmed fully operational.**
+
+### Bug Fixed: KG Query Edge Consistency
+
+**Problem:** `KG.query()` filtered nodes by `type`/`tags`/`status` but only filtered edges in the `ids` filter branch. This caused edge counts to be stale after type-filtered queries.
+
+**Fix:** Moved edge-sync line (`edges = edges.filter(e => nodeIds.has(e.from) && nodeIds.has(e.to))`) to run after ALL node filters, not just `ids`. Now edges are always consistent with the filtered node set.
+
+**Verification:**
+- `GET /api/kg/query?type=session&limit=5` → 5 nodes, 0 edges (correct: sessions have edges to protocols, not to each other)
+- `GET /api/kg/query?limit=10` → 10 nodes, 4 edges with `uses_technique` type (correct: protocol→technique edges are returned)
+- All 462 tests pass ✅
+
+**Files changed:** `projects/synthesis/src/knowledge-graph/query.ts` — `3aed26b`
+
+### Platform Verification (End-to-End)
+
+| Test | Result |
+|------|--------|
+| `GET /health` | ✅ 200 — `{"status":"ok","service":"synthesis-platform"}` |
+| `GET /api/protocols` | ✅ 200 — 8 protocols, usage counts |
+| `GET /api/stats` | ✅ 200 — 92 sessions, 3472 events, 108 KG nodes, 56m uptime |
+| `GET /api/kg/query?type=session&limit=5` | ✅ 200 — 5 nodes, 0 edges (correct) |
+| `GET /api/kg/query?limit=10` | ✅ 200 — 10 nodes, 4 edges (correct) |
+| `GET /api/sessions/:id` | ✅ 200 — session node with full metadata |
+| `POST /api/sessions` (blocking) | ✅ 200 — "general" for "overwhelmed with work", 18 events |
+| `POST /api/sessions/stream` (SSE) | ✅ Streaming — "anxious about presentation" → Breathwork, events stream correctly |
+| 462 vitest tests | ✅ All pass |
+
+### What's Working
+- **5 UI pages** (Protocols, Session Runner, KG Query, Stats, History)
+- **8 specialist agents** (WOOP, IFS, NSDR, Breathwork, SE, ACT, NVC, General)
+- **SSE streaming** — live event feed during sessions
+- **KG persistence** — sessions stored with full metadata
+- **API key auth** layer (dev-mode bypass when `SYNTHESIS_API_KEY` unset)
+- **Platform stats** — totalSessions, totalEvents, sessionsByProtocol, platformUptime
+
+### What's Left (All Blocked on User Action)
+
+| Priority | Item | Blocker |
+|----------|------|---------|
+| **P0** | **OpenRouter credits (~$5-10)** | openrouter.ai → add credits — AI routing/synthesis blocked |
+| **P0** | **CG Test 0.1 — Review script + recruit** | Review `TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants |
+| **P0** | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks |
+| **P0** | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
+| **P1** | **Solar Scout SMTP** | Set SMTP env vars → `send_emails.py --dry-run-all` → full send |
+| **P1** | **CG Telegram bot token** | BotFather → new token for Phase 2 |
+| **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars |
+| **P2** | **Supabase session persistence** | User sets up Supabase project |
+| **P2** | **Synthesis UI auth** | Blocked on Supabase setup |
+
+---
+
 ## 2026-03-27 19:35 Cairo (17:35 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ Stats API Bug Fixed / 462 Tests Pass / All 8 Services Healthy
