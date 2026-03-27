@@ -97,8 +97,10 @@ All 8 services healthy: 3000 ✅ | 3001 ✅ | 3003 ✅ | 3004 ✅ | 3005 ✅ | 3
 | **P1** | **CG Telegram bot token** | BotFather → new token → `TELEGRAM_BOT_TOKEN` for Phase 2 |
 | **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars |
 
-## This Session (17:07 UTC)
+## This Session (18:40 UTC)
 
-- BACKLOG.md committed + pushed ✅
-- All services verified healthy (8/8) ✅
-- 462 synthesis tests confirmed passing ✅
+- Reviewed full Synthesis platform — 462 tests passing, all 8 services healthy ✅
+- Found + fixed KG query edge consistency bug (`query.ts`) — edges now always filtered to match filtered node set ✅
+- Verified SSE streaming works end-to-end (anxious → Breathwork routing, events stream correctly) ✅
+- Committed: `3338dcf` — pushed to origin/master ✅
+- Platform stats: 92 sessions / 3472 events / 108 KG nodes / 56m uptime ✅
