@@ -1,5 +1,34 @@
 # PROGRESS.md - Audio Transformation Tool
-*Updated — 2026-03-27 21:56 Cairo (19:56 UTC)*
+*Updated — 2026-03-28 00:56 Cairo (22:56 UTC)*
+
+---
+
+## 2026-03-28 00:56 UTC - Bug Fix Session
+
+### Status: ✅ GENERAL Protocol Added to Backend / All 10 Protocols Now Consistent
+
+**Found and fixed a bug: GENERAL protocol was in the frontend but missing from the backend.**
+
+| Where | Protocols |
+|-------|-----------|
+| Frontend `services/protocols.ts` | 10 (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, **GENERAL**) |
+| Backend `server/protocols.ts` (before) | 9 (missing GENERAL) |
+| Backend `server/protocols.ts` (after) | 10 (GENERAL added) |
+
+**Impact of bug:** When user selected GENERAL, backend silently fell back to NSDR → then to DEFAULT generic scripts. User heard wrong protocol content.
+
+**Fix:**
+1. Added GENERAL to `server/protocols.ts` CLINICAL_PROTOCOLS (mirrored from `services/protocols.ts`)
+2. Added GENERAL to `server/index.ts` DEMO_BATCHES (6 proper mindfulness batches)
+
+**Verified:**
+- `/api/protocols` now returns 10 protocols ✅
+- `/api/meditation/generate` with `methodology=GENERAL` returns `"title":"Demo: GENERAL"` with 6 batches ✅
+- 34/34 vitest tests pass ✅
+
+---
+
+## 2026-03-27 19:56 UTC - Wakeup Session
 
 ---
 
