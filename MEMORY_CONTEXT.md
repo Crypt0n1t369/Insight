@@ -32,15 +32,16 @@
 ### Audio Tool (Audio Transformation Tool)
 - **Phase:** Operational (production)
 - **Ports:** 3001 (backend), 3005 (frontend)
-- **Status:** 17 vitest tests passing ✅ (fixed this session: vitest wasn't installed, vi import missing, config include path wrong)
-- **Submodule:** `projects/audio-transformation-tool/code` — updated to `b9ff70b` (fork/main) — was at `990e5d6`
+- **Status:** 17 vitest tests passing ✅
+- **Workspace server tests:** 34 vitest tests passing ✅
+- **Submodule:** `projects/audio-transformation-tool/code` — updated to `b9ff70b` (fork/main)
 - **9 protocols:** NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE — all demo mode working
 - **Known issue:** OpenRouter credits exhausted (402 → demo fallback)
 
 ### Credo Collaboration Platform
 - **Phase:** Operational
 - **Ports:** 3000 (API)
-- **Status:** 131 vitest tests passing ✅
+- **Status:** 137 vitest tests passing ✅
 
 ### JCI Org Manager
 - **Phase:** Operational | **Port:** 8080 | **Status:** 41 pytest tests passing (2 async thread warnings — cosmetic only)
@@ -63,17 +64,17 @@
 | Audio Backend (code/server/ — submodule) | 17 | vitest |
 | JCI Org Manager | 41 | pytest |
 | Youth Empowerment Platform | 24 | pytest |
-| **Total** | **930** | |
+| **Total** | **947** | |
 
-> ⚠️ Previous "958" count was wrong: CG had no vitest tests (34 misattributed). Previous "913" count omitted the workspace root server/ integration tests (23 tests) from audio backend.
+> Test count corrected: CG = 110 (47 in tests/ + 21 in bot/tests/ + 42 in web/test_web.py), not 62. All tests pass.
 
-## Service Status (2026-03-27 15:50 UTC)
+## Service Status (2026-03-27 14:33 UTC)
 
 All services healthy: 3000 ✅ | 3001 ✅ (X-Demo-Mode: credits_exhausted on all AI endpoints) | 3003 ✅ | 3005 ✅ | 3006 ✅ | 8080 ✅
 
 ## Git
 
-- **Workspace:** `55c8549` — pushed to origin/master ✅
+- **Workspace:** `4259354` — pushed to origin/master ✅
 - **Solar Scout:** Pushed and synced (separate repo: `7238f4e`)
 
 ## What's Left (User Action Required)
@@ -88,8 +89,10 @@ All services healthy: 3000 ✅ | 3001 ✅ (X-Demo-Mode: credits_exhausted on all
 | **P1** | **CG Telegram bot token** | BotFather → new token → `TELEGRAM_BOT_TOKEN` for Phase 2 |
 | **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars |
 
-## This Session (15:29 UTC)
+## This Session (14:29 UTC)
 
-- **Root cause found**: OpenRouter 402 = free-tier daily limit exhausted (~3-11 tokens/call, too low for JSON)
-- **Audio backend fixed**: X-Demo-Mode headers added to all AI endpoints; /api/director {} bug fixed
-- **930 tests confirmed** ✅ | **Git pushed** ✅
+- **947 tests confirmed** ✅ — all projects verified passing
+- **All 6 services healthy** ✅ — 3000, 3001, 3003, 3005, 3006, 8080
+- **MEMORY_CONTEXT updated** — test counts corrected (930→947), git hash updated
+- **PROGRESS.md updated** ✅ — pushed commit `4259354`
+- **Git is clean** ✅
