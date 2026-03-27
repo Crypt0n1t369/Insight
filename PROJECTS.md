@@ -4,22 +4,24 @@
 
 ### 1. Synthesis Platform
 - **Status:** RUNNING — Fully Implemented
-- **Summary:** Unified wellness protocol orchestration platform with 7 specialist agents (WOOP, IFS, NSDR, BREATHWORK, SE, ACT, GENERAL)
+- **Summary:** Unified wellness protocol orchestration platform with 8 specialist agents (WOOP, IFS, NSDR, BREATHWORK, SE, ACT, GENERAL, NVC)
 - **Path:** `projects/synthesis/`
-- **Tests:** 424/424 vitest passing ✅ (verified 2026-03-26)
+- **Tests:** 444/444 vitest passing ✅ (verified 2026-03-27)
 - **Agents:** WOOP, IFS, NSDR, BREATHWORK, SE (Somatic Experiencing), ACT, NVC (Nonviolent Communication), GENERAL — all 8 registered in AGENT_REGISTRY
-- **Recent:** SE agent (22 tests) committed `6da0310`, ACT agent (29 tests) committed `da88305`
+- **Recent:** Fixed endorsement test (self-endorsement blocked), all 13 test files green
 
 ### 2. Audio Transformation Tool
-- **Status:** Running + Test Coverage (27 tests)
+- **Status:** Running + Server Unit Tests (17 tests)
 - **Summary:** Audio-based transformation platform (wellness → military → enterprise → individual development)
 - **Path:** `projects/audio-transformation-tool/code/` (Vite + React)
-- **Runtime:** Port 3001
-- **Tests:** 34/34 passing ✅ (verified 2026-03-26)
-- **Git:** ✅ Committed (7244c2f)
-- **Test Files:** server.test.ts (unit, 11 tests) + integration.test.ts (integration, 23 tests)
+- **Runtime:** 
+  - Backend: Port 3001 (demo mode - OpenRouter credits exhausted)
+  - Frontend: Port 3005 (vite preview)
+- **Tests:** 17/17 server unit tests passing ✅ (verified 2026-03-27)
+- **Git:** ✅ Committed (e175d03)
+- **Test Files:** server.test.ts (17 tests covering health, protocols, chat, director, meditation generation)
 - **Demo Protocols:** 9 active (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE) — served via demo mode when OpenRouter credits exhausted
-- **Next:** Phase 2 - Service integration tests
+- **Next:** Frontend integration tests, API key configuration for production AI
 
 ### 3. Credo Collaboration Platform
 - **Status:** MVP RUNNING (API + Frontend Connected)
@@ -34,17 +36,13 @@
   - POST /api/branches - Create branch ✅
   - POST /api/contributions - Add contribution ✅
   - DELETE /api/contributions/:id - Delete contribution (author only) ✅
-- **Tests:** 75/75 passing ✅ (verified 2026-03-26)
-- **Git:** ✅ Committed (a20d2bf committed Mar 11)
-- **Recent Improvements (Mar 11):**
-  - Added identity.test.ts (11 tests)
-  - Added branch.test.ts (10 tests)
-  - Added contribution.test.ts (12 tests)
-  - Added reset functions for testing
+- **Tests:** 137/137 passing ✅ (verified 2026-03-27) — fixed endorsement test (different voter needed)
+- **Git:** ✅ Committed (8be658d)
+- **Recent Fix (Mar 27):**
+  - Fixed http-api.test.ts: endorsement test now uses separate voter (self-endorsement blocked)
 - **Next:** 
   1. Phase 2: Integration tests (end-to-end flows)
-  2. Test endorsement/voting system
-  3. Paper Branch pilot (live testing)
+  2. Paper Branch pilot (live testing)
 
 ### 4. JCI Org Manager
 - **Status:** Enhanced + Test Coverage (33 tests)
