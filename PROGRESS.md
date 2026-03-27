@@ -1,5 +1,68 @@
 ---
 
+## 2026-03-27 22:07 Cairo (20:07 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ topContributors Bug Fixed / 462 Tests Pass / All 8 Services Healthy / Pushed
+
+**This session: Found and fixed a real bug — `topContributors` in `/api/stats` always returned `[]` because profiles were created but never stored. Added in-memory profileStore to credibility engine; `recordContribution()` and `recordVote()` now persist updated profiles. `getStats()` now returns ranked top contributors. Verified end-to-end: new sessions create profiles, stats endpoint returns them ranked. Server restarted to pick up changes. All 462 tests pass.**
+
+### Bug Fixed: topContributors Always Empty
+
+**Problem:** `SessionOrchestrator.recordContribution()` called `createContribution()` which returned a scored contribution, but the score was discarded and no profile was ever stored. `getStats()` returned `[]` for `topContributors`.
+
+**Fix — 3 files changed (62 insertions):**
+
+1. **`credibility-engine.ts`**: Added in-memory `profileStore` Map. `recordContribution()` and `recordVote()` now persist updated profiles. Added `getProfile(anonId)`, `getAllProfiles()`, `clearProfileStore()`.
+
+2. **`credibility-engine/index.ts`**: Exported new functions.
+
+3. **`session-orchestrator.ts`**: `recordContribution()` now gets/creates profile and calls `updateProfileOnContribution(profile, score)` to store it. `getStats()` now calls `rankProfiles(getAllProfiles()).slice(0,10)` instead of returning `[]`.
+
+**Verified end-to-end:**
+```
+POST /api/sessions (userId: "aton-test-user") → contributionId returned
+GET /api/stats → topContributors: [{"anonId":"synthesis-atontest","credibilityScore":67.5}]
+```
+
+### All Services — Healthy (20:07 UTC) ✅
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ 200 |
+| Audio Backend | 3001 | ✅ 200 |
+| Youth Platform | 3003 | ✅ 200 |
+| Synthesis API | 3004 | ✅ 200 (restarted, topContributors fixed) |
+| Audio Frontend | 3005 | ✅ 200 |
+| CG Web | 3006 | ✅ 200 |
+| Synthesis UI | 3007 | ✅ 200 |
+| JCI Portal | 8080 | ✅ 200 |
+
+### Test Suites — Confirmed Passing ✅
+| Project | Tests | Result |
+|---------|-------|--------|
+| Synthesis Platform | 462 | ✅ |
+
+### What's Left — All Blocked on User Action
+| Priority | Item | Blocker |
+|----------|------|---------|
+| **P0** | **OpenRouter credits (~$5-10)** | openrouter.ai → add credits |
+| **P0** | **CG Test 0.1 — Review script + recruit** | Review + recruit 10-12 participants |
+| **P0** | **CG Test 0.3 — Identify event** | Find 1 event in next 4-8 weeks |
+| **P0** | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
+| **P1** | **Solar Scout SMTP** | Set SMTP env vars → test → send |
+| **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars |
+| **P1** | **CG Telegram bot token** | BotFather → new token for Phase 2 |
+| **P2** | **Supabase session persistence** | User sets up Supabase project |
+| **P2** | **Synthesis UI auth** | Blocked on Supabase setup |
+
+### What Aton Can Do Now (No User Action)
+- [DONE] Fix topContributors bug ✅ (verified, committed `a0881e2`, pushed)
+- [DONE] Verify all 8 services healthy ✅
+- [DONE] Run test suites (462 tests) ✅
+- [DONE] Push workspace git ✅
+- [TODO] Archive old PROGRESS entries (consolidate today's many entries)
+
+---
+
 ## 2026-03-27 21:56 Cairo (19:56 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ All Services Healthy / 51 Tests Pass / Audio Demo Mode Verified / No Code Changes Needed
