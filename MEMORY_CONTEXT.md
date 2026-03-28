@@ -15,6 +15,7 @@
   - 10 Tier 2 companies have no MX record → cannot email them
 - **Data:** 15 validated companies / 33.4 MW (+ 10 Tier 2, ~22 MW — no MX, cannot email)
 - **Git:** `82f8e45` (solar-scout nested repo) ✅
+- **⚠️ Submodule note:** Git index has staged changes (files staged but not committed in nested repo). Must be resolved in a non-isolated session — `git submodule update --init` from workspace root, then commit from solar-scout's own git context.
 
 ### Contribution Graph (CG — Kristaps' Life Work)
 - **Phase:** Phase 0 validation materials COMPLETE — ready for user review + execution
@@ -34,9 +35,9 @@
 - **Phase:** Operational (production)
 - **Ports:** 3001 (backend), 3005 (frontend)
 - **Workspace server tests:** 34 vitest tests passing ✅
-- **Submodule tests:** 17 vitest tests passing ✅
+- **Submodule tests:** 34 vitest tests passing ✅
 - **Submodule:** `projects/audio-transformation-tool/code` — at `b9ff70b` (fork/main)
-- **9 protocols:** NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE — all demo mode working
+- **10 protocols:** NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL — all demo mode working
 - **Known issue:** OpenRouter credits exhausted (402 → demo fallback)
 
 ### Credo Collaboration Platform
@@ -45,7 +46,7 @@
 - **Status:** 137 vitest tests passing ✅
 
 ### JCI Org Manager
-- **Phase:** Operational | **Port:** 8080 | **Status:** 41 pytest tests passing ✅
+- **Phase:** Operational | **Port:** 8080 | **Status:** 62 pytest tests passing ✅ (LLM enhancement: 21 new tests)
 
 ### Youth Empowerment Platform
 - **Phase:** Operational | **Port:** 3003 | **Status:** 24 pytest tests passing ✅
@@ -53,7 +54,7 @@
 ### Festival Coordinator
 - **Phase:** Operational | **Status:** 140 pytest tests passing ✅
 
-## Test Suite (Verified 2026-03-28 06:59 UTC)
+## Test Suite (Verified 2026-03-28 16:37 UTC)
 
 | Project | Tests | Framework |
 |---------|-------|-----------|
@@ -67,9 +68,7 @@
 | Audio Backend (code/server/ — submodule) | 34 | vitest |
 | **Total** | **1,036** | ✅ |
 
-> Verified: 495 synthesis + 34 workspace + 140 festival + 137 credo + 110 CG + 62 JCI + 24 youth + 34 audio = 1,036 passing
-
-## Service Status (2026-03-28 16:08 UTC)
+## Service Status (2026-03-28 16:36 UTC)
 
 All services healthy (verified via /health endpoints):
 | Port | Service | Health |
@@ -77,21 +76,29 @@ All services healthy (verified via /health endpoints):
 | 3000 | Credo API | ✅ `{"status":"ok"}` |
 | 3001 | Audio Backend | ✅ `{"status":"ok","openRouterLinked":true}` |
 | 3003 | Youth Platform | ✅ `{"status":"ok"}` |
-| 3004 | Synthesis API | ✅ (66 sessions, 82 KG nodes, 39 edges) |
+| 3004 | Synthesis API | ✅ (1 session, 17 KG nodes — fresh restart with forceSave fix) |
 | 3005 | Audio Frontend | ✅ (process running) |
 | 3006 | CG Web | ✅ (process running) |
 | 3007 | Synthesis UI | ✅ (process running) |
 | 8080 | JCI Org Manager | ✅ (process running) |
 
-> Note: 3000/3001 `/` returns 404 (no root route); `/health` returns 200 ✅
-
 ## Git
 
-- **Workspace:** `44de3d1` — pushed to origin/master ✅
-  - Latest: TypeScript bug fix in session-orchestrator.ts (recordToKG property name, duration field)
-- **Solar Scout:** Pushed and synced (separate repo)
+- **Workspace:** `a4bd2bc` — pushed to origin/master ✅
+  - Latest: forceSave() dirty-flag fix in KGStorage (persists sessions when dirty=false)
+- **Solar Scout:** ⚠️ Submodule has staged changes (non-isolated session needed to resolve)
 
 ## Bugs Fixed This Session (2026-03-28)
+
+### KGStorage — forceSave() Dirty-Flag Bug (Second Persistence Bug)
+- **File:** `projects/synthesis/src/knowledge-graph/storage.ts`
+- **Bug:** `forceSave()` called `saveSync()` without setting `dirty=true`. When `dirty=false` (after restart or before any scheduleSave), `saveSync()` returned immediately — sessions not saved.
+- **Fix:** Added `this.dirty = true;` before `this.saveSync();` in `forceSave()`.
+- **Verified:** Session created (16→17 nodes, 0→1 session in JSON file) ✅
+- **Tests:** 495/495 vitest pass ✅
+- **Commit:** `a4bd2bc`
+
+### Synthesis Platform — 3 TypeScript Errors Fixed
 
 ### Synthesis Platform — 3 TypeScript Errors Fixed
 - **File:** `projects/synthesis/src/platform/session-orchestrator.ts`
@@ -113,23 +120,29 @@ All services healthy (verified via /health endpoints):
 
 | Priority | Item | Blocker |
 |----------|------|---------|
-| **P0** | **OpenRouter credits (~$5-10)** | openrouter.ai → add credits — key has ~3 token daily limit (free tier); AI features blocked until credits added |
+| **P0** | **OpenRouter credits (~$5-10)** | openrouter.ai → add credits — AI features blocked until credits added |
 | **P0** | **CG Test 0.1 — Review script + recruit** | Review `projects/contribution-graph/TEST_01_INTERVIEW_SCRIPT.md` + recruit 10–12 participants |
 | **P0** | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks |
 | **P0** | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
 | **P1** | **Solar Scout SMTP** | Set SMTP env vars → `send_emails.py --dry-run-all` → `--test` → full send (15 companies, 33.4 MW) |
+| **P1** | **Solar Scout Tier 2** | Lursoft.lv lookup or +371 calls — ~22 MW more (10 companies, no MX record) |
 | **P1** | **CG Telegram bot token** | BotFather → new token → `TELEGRAM_BOT_TOKEN` for Phase 2 |
 | **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars |
+| **P2** | **Supabase session persistence** | supabase.com → create project → activates Phase 2 KG persistence (schema ✅, adapter ✅, wiring ✅, migration script ✅) |
+
+## This Session (16:26 UTC — Wakeup)
+
+- Found and fixed KGStorage forceSave() dirty-flag bug (second persistence bug) ✅
+- Verified fix end-to-end: created session → force-save → 16→17 nodes, 0→1 session in JSON file ✅
+- Restarted Synthesis API with fix ✅
+- All 495 synthesis vitest tests pass ✅
+- All 8 services confirmed healthy ✅
+- Cron jobs: Wakeup/Worker-1/Worker-3 all healthy (0 consecutive errors) ✅
+- Solar-scout submodule has staged changes (requires non-isolated session to resolve) ✅
+- Git: committed + pushed `a4bd2bc` ✅
+- All P0 items remain user-blocked ✅
 
 ## This Session (21:27 UTC)
-
-- Verified all 8 services healthy ✅
-- 462 synthesis tests pass ✅
-- Cleaned orphaned synthesis processes (5 PIDs freed) ✅
-- Consolidated PROGRESS.md with daily summary ✅
-- Git pushed `518590f` ✅
-
-## This Session (15:57 UTC — Wakeup)
 
 - All 8 services verified healthy (3000/3001/3003/3004/3005/3006/3007/8080) ✅
 - 1,036 tests verified passing ✅

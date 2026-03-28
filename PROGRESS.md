@@ -1,5 +1,84 @@
 ---
 
+## 2026-03-28 18:26 Cairo (16:26 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ KG forceSave Bug Fixed / 495 Synthesis Tests Pass / All 8 Services Healthy / Pushed
+
+**Found and fixed a second KG persistence bug: `forceSave()` called `saveSync()` without setting `dirty=true`, so sessions were NOT persisted when `dirty=false` (e.g., after server restart or when no `scheduleSave()` had fired yet). Verified fix end-to-end: created session → force-save → confirmed 17 nodes / 1 session correctly written to JSON file. All 495 synthesis tests pass. All 8 services healthy. Pushed `a4bd2bc`.**
+
+### Bug Fixed — forceSave() Not Persisting (Second Persistence Bug)
+
+**Problem:** `forceSave()` called `saveSync()` which returns immediately if `dirty=false`. After server restart (fresh in-memory state, `dirty=false`), sessions were NOT saved to disk even when force-save was called. This is the SECOND persistence bug found this week (first was wrong path at 05:07 UTC, second was this dirty-flag issue).
+
+**Root Cause:** `saveSync()` has guard `if (!this.dirty) return;`. `forceSave()` didn't set `dirty=true` before calling it.
+
+**Fix (1 line in `storage.ts`):**
+```typescript
+forceSave(): void {
+  if (this.saveTimer !== null) { clearTimeout(this.saveTimer); this.saveTimer = null; }
+  this.dirty = true; // ADDED — ensures saveSync() persists regardless of dirty flag
+  this.saveSync();
+}
+```
+
+**Verification:**
+- Server restarted → 16 seed nodes, 0 sessions in memory ✅
+- Created test session → `POST /api/sessions` → 1 session in KG ✅
+- `POST /api/kg/force-save` → JSON file updated: 16→17 nodes, 0→1 session ✅
+- All 495 synthesis vitest tests pass ✅
+
+**Git:** Committed `a4bd2bc` — pushed to origin/master ✅
+
+### All Services — Healthy (16:36 UTC) ✅
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ `{"status":"ok"}` |
+| Audio Backend | 3001 | ✅ `{"status":"ok","openRouterLinked":true}` |
+| Youth Platform | 3003 | ✅ `{"status":"ok"}` |
+| Synthesis API | 3004 | ✅ (fresh restart, 1 session, autosave active) |
+| Audio Frontend | 3005 | ✅ HTTP 200 |
+| CG Web | 3006 | ✅ HTTP 200 |
+| Synthesis UI | 3007 | ✅ HTTP 200 |
+| JCI Portal | 8080 | ✅ HTTP 200 |
+
+### Cron — All Healthy ✅
+| Worker | Status | Consecutive Errors |
+|--------|--------|---------------------|
+| Wakeup | ✅ ok | 0 |
+| Worker-1 | ✅ ok | 0 |
+| Worker-3 | ✅ ok | 0 |
+
+### Git — Clean (except solar-scout staged changes — see below) ✅
+- Workspace: `a4bd2bc` — 1 commit this session, pushed ✅
+
+### ⚠️ Solar-Scout Submodule — Staged Changes (Non-Isolated Action Required)
+The `solar-scout/` nested git repo has changes staged in its index but not committed:
+```
+M solar-scout/PROGRESS.md
+ M solar-scout/docs/OUTREACH_PLAN.md
+ M solar-scout/docs/SEND_GUIDE.md
+ M solar-scout/docs/email_drafts_validated.md
+ M solar-scout/docs/leads_outreach_validated.csv
+ M solar-scout/generate_emails.py
+ M solar-scout/send_emails.py
+```
+These are STAGED (in git index) but not in the worktree. This is a non-critical inconsistency. **Must be resolved in a non-isolated session** (run `git submodule update --init` from workspace root, or `git reset HEAD solar-scout/` inside solar-scout, then commit from the submodule's own git context).
+
+### All P0 Items Still Blocked on User Action ⚠️
+| # | Item | Action Needed | Impact |
+|---|------|---------------|--------|
+| 1 | **Solar Scout SMTP** | `export SMTP_HOST=... SMTP_USER=...` | Fires 15 emails (33.4 MW) — **highest near-term ROI** |
+| 2 | **OpenRouter credits** | openrouter.ai → add $5–10 | Unblocks AI meditation (402 error) |
+| 3 | **CG Test 0.1** | Review `TEST_01_INTERVIEW_SCRIPT.md` + recruit | Phase 0 go/no-go |
+| 4 | **CG Test 0.3** | Identify 1 event (4–8 wks out) | Phase 0 acquisition |
+| 5 | **CG Test 0.4** | Identify 5 target orgs | Phase 0 go/no-go |
+| 6 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+| 7 | **Solar Scout Tier 2** | Lursoft.lv lookup or +371 calls | ~22 MW more (10 companies) |
+| 8 | **Audio Tool → Vercel** | vercel.com → import repo + env vars | Public URL + Telegram |
+| 9 | **Supabase persistence** | supabase.com → create project | Phase 2 KG persistence |
+
+---
+
 ## 2026-03-28 17:57 Cairo (15:57 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ All 1,036 Tests Pass / All Services Healthy / Git Clean / Nothing Buildable Without User Action
