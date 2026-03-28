@@ -186,7 +186,7 @@ export class SessionOrchestrator {
     // ── Step 6: Persist session + events to DB (when Supabase is primary) ─
     // Safe to call unconditionally: no-ops in JSON-file mode.
     // When Supabase is active, sessions land in the sessions table with full event history.
-    if (input.recordToKg !== false) {
+    if (input.recordToKG !== false) {
       const db = await getKGDatabase();
       if (db.isSupabasePrimary()) {
         const dbSession: DBSession = {
@@ -200,7 +200,7 @@ export class SessionOrchestrator {
           routingReasoning: reasoning,
           detectedEmotion: contextPackage.detectedEmotion,
           emotionReasoning: routeOutput.reasoning,
-          recordToKg: input.recordToKg !== false,
+          recordToKg: input.recordToKG ?? true,
           recordContribution: input.recordContribution !== false,
           contributionId,
           createdAt: startedAt,
@@ -212,7 +212,7 @@ export class SessionOrchestrator {
           phase: e.phase,
           audioUrl: e.audioUrl,
           transcript: e.transcript,
-          duration: e.durationMs ? Math.round(e.durationMs / 1000) : undefined,
+          duration: e.duration,
           metadata: {},
           createdAt: new Date(Date.now() + i * 1000).toISOString(), // approximate per-event timestamps
         }));
