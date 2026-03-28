@@ -83,9 +83,10 @@ All services healthy (verified via /health endpoints):
 
 ## Git
 
-- **Workspace:** `bf82937` — pushed to origin/master ✅
-  - Latest: docs(PROGRESS): add 17:56 UTC wakeup — 1,002 tests, 8 services, all clean
+- **Workspace:** `66821db` — pushed to origin/master ✅
+  - Latest: docs(PROGRESS): add 18:58 UTC wakeup — health_check.sh fixed, 8/8 services verified
 - **Solar Scout:** clean at `0ee07b6` ✅
+- **health_check.sh:** Fixed 2026-03-28 18:58 UTC — now checks all 8 services (was missing 3004/3006/3007), removed stale 3002, committed `7a10b62` ✅
 
 ## Bugs Fixed This Session (2026-03-28)
 
