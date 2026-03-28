@@ -12,22 +12,18 @@
 - alert: |
     Contribution Graph Web down! Run: cd projects/contribution-graph && CG_WEB_PORT=3006 python3 -m web.server &
 
-## Credo Platform Health Check
-- description: Verify Credo API and Frontend are running
+## Credo API Health Check
+- description: Verify Credo API is running on port 3000
 - frequency: 15m
 - action: |
-    curl -s http://localhost:3000/health | grep -q "ok" && echo "API: OK" || echo "API: FAIL"
-    curl -s http://localhost:3002 | grep -q "Credo" && echo "Frontend: OK" || echo "Frontend: FAIL"
+    curl -s http://localhost:3000/health | grep -q "ok" && echo "Credo API: OK" || echo "Credo API: FAIL"
 - alert: |
-    Credo Platform down! API or Frontend not responding.
+    Credo API down! Run: cd projects/collaboration-platform && npm run dev &
 
-## Bug Report Processor
-- description: Check for new bug reports and spawn analysis
-- frequency: 30m
+## Audio Backend Health Check
+- description: Verify Audio Backend is running on port 3001
+- frequency: 15m
 - action: |
-    REPORTS=$(curl -s "http://localhost:3002/api/bug-reports?status=pending" | grep -c '"status":"pending"' || echo "0")
-    if [ "$REPORTS" -gt "0" ]; then
-      echo "Found $REPORTS pending bug report(s) - requires agent attention"
-    fi
+    curl -s http://localhost:3001/health | grep -q '"status": "ok"' && echo "Audio Backend: OK" || echo "Audio Backend: FAIL"
 - alert: |
-    New bug reports need analysis! Run: node scripts/bug-processor.js list
+    Audio Backend down! Run: cd workspace && bash server/start.sh backend &
