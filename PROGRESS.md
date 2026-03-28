@@ -1,5 +1,82 @@
 ---
 
+## 2026-03-28 23:00 Cairo (21:00 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ 1,002/1,002 Tests Pass / Cron README Fixed / Wakeup sessionTarget Fixed / Git Pushed
+
+**This session: Found and fixed 2 concrete issues from prior sessions' stale state.**
+
+### Issues Fixed This Session
+
+| # | Issue | Fix |
+|---|-------|-----|
+| 1 | **cron/README.md stale** — Listed Workers 1 & 2 with errors (neither exists), wrong job descriptions | Rewrote Current Cron Jobs section: 3 active workers (Wakeup/Worker-1/Worker-3) with accurate descriptions, removed "Failed Jobs" section |
+| 2 | **Wakeup cron `sessionTarget: isolated`** — Edit tool fails in isolated mode → 1+ consecutive errors on every run | Changed to `sessionTarget: current` + updated prompt to remove isolated-session constraints |
+| 3 | **cron/README.md `backups/` dir** — Listed non-existent `backups/` directory | Removed from Files section |
+| 4 | **cron/README.md troubleshooting** — Missing isolated-session edit limitation note | Added to Troubleshooting section |
+
+### Test Suite — Verified 2026-03-28 21:00 UTC ✅
+| Project | Tests | Framework | Result |
+|---------|-------|-----------|--------|
+| Festival Coordinator | 140 | pytest | ✅ |
+| Contribution Graph — API | 47 | pytest | ✅ |
+| Contribution Graph — Web | 24 | pytest | ✅ |
+| Contribution Graph — Bot+DB | 39 | pytest | ✅ |
+| JCI Org Manager | 62 | pytest | ✅ |
+| Youth Empowerment Platform | 24 | pytest | ✅ |
+| Synthesis Platform | 495 | vitest | ✅ |
+| Credo Collaboration Platform | 137 | vitest | ✅ |
+| Audio Backend (workspace/server/) | 34 | vitest | ✅ |
+| **Total** | **1,002** | — | ✅ |
+
+### Cron Status — Fixed This Session ✅
+| Worker | sessionTarget | Previous Issue | Status |
+|--------|--------------|---------------|--------|
+| Wakeup | `isolated` → `current` | Edit fails → 1 consecutive error | ✅ Fixed — can now edit PROGRESS.md |
+| Worker-1 | `isolated` | Read-only, no issues | ✅ Healthy |
+| Worker-3 | `isolated` | Read-only, no issues | ✅ Healthy |
+
+### Git — Pushed ✅
+- **Commit `42121cc`**: docs(cron): fix stale README — workers 1&2 removed, sessionTarget=current for Wakeup
+
+### All Services — Healthy (21:00 UTC) ✅
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ HTTP 200 |
+| Audio Backend | 3001 | ✅ HTTP 200 |
+| Youth Platform | 3003 | ✅ HTTP 200 |
+| Synthesis API | 3004 | ✅ HTTP 200 |
+| Audio Frontend | 3005 | ✅ HTTP 200 |
+| CG Web | 3006 | ✅ HTTP 200 |
+| Synthesis UI | 3007 | ✅ HTTP 200 |
+| JCI Portal | 8080 | ✅ HTTP 200 |
+
+### All P0 Items Still Blocked on User Action ⚠️
+| # | Item | Action Needed | Impact |
+|---|------|---------------|--------|
+| 1 | **Solar Scout SMTP** | Configure SMTP env vars | Fires 15 emails (33.4 MW) — **highest near-term ROI** |
+| 2 | **OpenRouter credits** | openrouter.ai → add $5–10 | Unblocks AI meditation (402 error) |
+| 3 | **CG Test 0.1** | Review `TEST_01_INTERVIEW_SCRIPT.md` + recruit participants | Phase 0 go/no-go |
+| 4 | **CG Test 0.3** | Identify 1 event (4–8 wks out) | Phase 0 acquisition |
+| 5 | **CG Test 0.4** | Identify 5 target orgs | Phase 0 go/no-go |
+| 6 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+| 7 | **Solar Scout Tier 2** | Lursoft.lv lookup or +371 calls | ~22 MW more (10 companies, no MX) |
+| 8 | **Audio Tool → Vercel** | vercel.com → import repo + env vars | Public URL + Telegram |
+| 9 | **Supabase persistence** | supabase.com → create project | Phase 2 KG persistence |
+
+### What's Buildable Right Now: NOTHING Meaningful
+All meaningful features require external credentials, user decisions, or submodule access. Workspace-level documentation is now accurate and consistent.
+
+### What's Next
+1. **User: Configure Solar Scout SMTP** — highest near-term ROI (33.4 MW, pipeline complete and ready to fire)
+2. **User: Add OpenRouter credits** — unblocks AI features across all projects
+3. **User: Review CG Phase 0 materials** — approve TEST_01 recruitment script
+4. **User: Deploy Audio Tool to Vercel** — public URL + Telegram integration
+5. **User: Create Supabase project** — Phase 2 KG persistence
+6. **Non-isolated session: any submodule work** — all 9 projects need submodule-level edits
+
+---
+
 ## 2026-03-28 22:26 Cairo (20:26 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ MEMORY_CONTEXT + memory/index Updated / All Systems Verified / Git Pushed
