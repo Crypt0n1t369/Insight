@@ -21,7 +21,7 @@ start_backend() {
     [ -n "$pid" ] && kill $pid 2>/dev/null || true
     sleep 1
     
-    cd "$SCRIPT_DIR"
+    cd "$CODE_DIR"
     PORT=$PORT_BACKEND nohup /home/drg/.npm-global/bin/tsx server/index.ts > "$LOG_DIR/backend.log" 2>&1 &
     local backend_pid=$!
     sleep 3
