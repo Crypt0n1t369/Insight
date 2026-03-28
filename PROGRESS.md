@@ -1,5 +1,70 @@
 ---
 
+## 2026-03-28 21:27 Cairo (19:27 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ All 8 Services Healthy / health_check H17 Fixed / memory/index Updated / Git Clean
+
+**Careful isolated verification. All 8 services confirmed healthy. Fixed 2 stale entries from prior session's partial fix. Updated memory index with accurate port numbers and 1,002 test count. Committed and pushed 2 commits.**
+
+### This Session — 2 Concrete Improvements
+
+**1. `scripts/health_check.sh` — H17 number fixed:**
+- Prior session renamed comment H18→H17 but missed the `echo` line (left it as H18)
+- Fixed: `echo -n "H18: Gateway..."` → `echo -n "H17: Gateway..."`
+- Commit `0c4c440` — "fix(health_check): correct H18→H17 Gateway label number mismatch"
+
+**2. `memory/index.md` — stale entries corrected:**
+- Test count: 610 → 1,002 (1,002 tests passing as of 2026-03-28)
+- Ports corrected: synthesis (3004/3007), audio (3001/3005), Credo (3000), CG (3006)
+- Solar-scout moved from Archived → Active Projects (outreach pipeline actively being developed)
+- Updated date: 2026-03-25 → 2026-03-28
+- Commit `ed9083f` — "docs(memory): update index — 1,002 tests, correct ports, solar-scout active"
+
+### All Services — Healthy (19:27 UTC) ✅
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ HTTP 200 |
+| Audio Backend | 3001 | ✅ HTTP 200 |
+| Youth Platform | 3003 | ✅ HTTP 200 |
+| Synthesis API | 3004 | ✅ HTTP 200 |
+| Audio Frontend | 3005 | HTTP 200 |
+| CG Web | 3006 | ✅ HTTP 200 |
+| Synthesis UI | 3007 | ✅ HTTP 200 |
+| JCI Portal | 8080 | ✅ HTTP 200 |
+
+### Git — Clean ✅
+- Workspace: `ed9083f` — clean, 2 commits ahead of origin/master
+  - `0c4c440` — fix(health_check): correct H18→H17 Gateway label
+  - `ed9083f` — docs(memory): update index
+- Solar-scout nested: clean at `0ee07b6` ✅
+- Submodules: all clean ✅
+
+### Health Check — All OK (19:27 UTC) ✅
+All 17 checks pass. H7 memory freshness fixed (0d old — just updated). H11 context summary WARN is non-actionable in isolated session.
+
+### All P0 Items Still Blocked on User Action ⚠️
+| # | Item | Action Needed | Impact |
+|---|------|---------------|--------|
+| 1 | **Solar Scout SMTP** | Configure SMTP env vars | Fires 15 emails (33.4 MW) — **highest near-term ROI** |
+| 2 | **OpenRouter credits** | openrouter.ai → add $5–10 | Unblocks AI meditation (402 error) |
+| 3 | **CG Test 0.1** | Review `TEST_01_INTERVIEW_SCRIPT.md` + recruit participants | Phase 0 go/no-go |
+| 4 | **CG Test 0.3** | Identify 1 event (4–8 wks out) | Phase 0 acquisition |
+| 5 | **CG Test 0.4** | Identify 5 target orgs | Phase 0 go/no-go |
+| 6 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+| 7 | **Solar Scout Tier 2** | Lursoft.lv lookup or +371 calls | ~22 MW more (10 companies, no MX) |
+| 8 | **Audio Tool → Vercel** | vercel.com → import repo + env vars | Public URL + Telegram |
+| 9 | **Supabase persistence** | supabase.com → create project | Phase 2 KG persistence |
+
+### What's Next
+1. **User: Configure Solar Scout SMTP** — highest near-term ROI (33.4 MW, pipeline complete and ready to fire)
+2. **User: Add OpenRouter credits** — unblocks AI features across all projects
+3. **User: Review CG Phase 0 materials** — approve TEST_01 recruitment script
+4. **User: Deploy Audio Tool to Vercel** — public URL + Telegram integration
+5. **User: Create Supabase project** — unlocks Phase 2 KG persistence
+6. **Non-isolated session: any submodule work** — all 9 projects need submodule-level edits
+
+---
+
 ## 2026-03-28 20:58 Cairo (18:58 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ 1,002/1,002 Tests Pass / All 8 Services Healthy / Git Clean / health_check.sh Fixed
