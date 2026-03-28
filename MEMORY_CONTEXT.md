@@ -1,10 +1,10 @@
 === ATON CONTEXT ===
-Generated: 2026-03-28 21:56 UTC (wakeup session)
+Generated: 2026-03-29 00:27 UTC (wakeup cron session)
 
 ## Active Projects
 
 ### audio-transformation-tool
-- **Status:** Active (verified 2026-03-28)
+- **Status:** Active (verified 2026-03-29)
 - **Backend:** Running on port 3001, 10 protocols (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL)
 - **Demo mode:** Working — clinically-grounded scripts for all 10 protocols
 - **OpenRouter:** Linked (demo mode, no credits spent)
@@ -13,12 +13,13 @@ Generated: 2026-03-28 21:56 UTC (wakeup session)
 - **Deployment:** DEPLOYMENT.md written — Vercel + Supabase ready
 
 ### synthesis (Knowledge Graph Platform)
-- **Status:** Active (verified 2026-03-28)
+- **Status:** Active (verified 2026-03-29)
 - **API:** Running on port 3004
 - **KG persistence:** Fixed — autosave (60s interval) + forceSave endpoint working
 - **KGDatabaseAdapter:** Wired to orchestrator, Supabase stub ready
 - **Supabase schema:** Drafted at docs/SUPABASE_SCHEMA.md
 - **Tests:** 495 vitest passing
+- **KG live:** 102 nodes, 48 edges, 86 sessions (verified 2026-03-29)
 
 ### Solar Scout (Latvia Commercial Solar Outreach)
 - **Status:** Active — outreach pipeline ready to fire
@@ -36,7 +37,7 @@ Generated: 2026-03-28 21:56 UTC (wakeup session)
 ### Contribution Graph (CG)
 - **Status:** Active
 - **Web:** Running on port 3006
-- **Tests:** 110 pytest passing (API + Web + Bot + DB)
+- **Tests:** 110 pytest passing (47 API + 24 Web + 39 Bot/DB)
 - **Phase 0:** TEST_01 script written — awaiting user recruitment approval
 - **Telegram bot:** Token needed (BotFather)
 
@@ -55,7 +56,7 @@ Generated: 2026-03-28 21:56 UTC (wakeup session)
 - **Platform:** Running on port 3003
 - **Tests:** 24 pytest passing
 
-## Key Recent Decisions (2026-03-27/28)
+## Key Recent Decisions (2026-03-28/29)
 
 | Date | Decision | Impact |
 |------|----------|--------|
@@ -66,18 +67,17 @@ Generated: 2026-03-28 21:56 UTC (wakeup session)
 | 2026-03-28 | KGDatabaseAdapter wired to orchestrator | Supabase Phase 2 ready |
 | 2026-03-28 | run_all_tests.sh created | No more pytest cache collisions |
 | 2026-03-28 | Health check: 6→8 services, 3002 removed | Accurate service count |
-| 2026-03-28 | Cron sessionTarget: isolated → current for Wakeup | Fixes edit failures |
 | 2026-03-27 | Credo RLS deferred, auth middleware wired | Simpler Phase 1 |
 | 2026-03-27 | JCI LLM Enhancement (OpenRouter) | Engagement agent active |
 | 2026-03-27 | CG Conditional GO | Phase 0 approval gating |
 
 ## Quick Status
-- **Memory:** Fresh (2026-03-28)
-- **Health:** 17 checks passing (H11 WARN non-actionable in isolated session)
-- **Tests:** 1,002 passing (all suites)
+- **Memory:** Fresh (2026-03-29)
+- **Health:** 17 checks passing (H11 WARN non-actionable)
+- **Tests:** 1,002 passing (9 suites: 495 Synthesis + 137 Credo + 110 CG + 140 Festival + 62 JCI + 34 Audio + 24 Youth)
 - **Services:** 8/8 healthy (ports 3000/3001/3003/3004/3005/3006/3007/8080)
-- **Git:** Workspace clean, all nested repos clean
-- **Cron:** Wakeup (sessionTarget=current) + Worker-1 + Worker-3 all healthy (0 consecutive errors)
+- **Git:** Workspace clean except local MEMORY_CONTEXT.md change (this session)
+- **Cron:** Wakeup + Worker-1 + Worker-3 all healthy (0 consecutive errors)
 
 ## P0 Blockers (All User Action Required)
 | # | Item | Action Needed | Impact |
@@ -91,3 +91,20 @@ Generated: 2026-03-28 21:56 UTC (wakeup session)
 | 7 | Solar Scout Tier 2 | Lursoft.lv or +371 calls | ~22 MW more |
 | 8 | Audio Tool → Vercel | vercel.com → import + env vars | Public URL + Telegram |
 | 9 | Supabase persistence | supabase.com → create project | Phase 2 KG persistence |
+
+## MEMORY_CONTEXT.md Recurring Degradation Issue
+- **Problem:** System auto-regenerates MEMORY_CONTEXT.md with degraded content (~18 lines vs 93 lines). Happens every ~30 min.
+- **Last fixed:** 2026-03-28 21:56 UTC (session `48d21e4`)
+- **Root cause:** System's auto-generation on session start overwrites file with minimal content
+- **Status:** This session restored again (4th degradation cycle — 2026-03-29 00:27 UTC)
+
+## JCI RuntimeWarning — Cannot Fix (Submodule)
+- `test_llm.py:232` RuntimeWarning: coroutine was never awaited
+- 21 tests pass (62 total in JCI suite) — cosmetic only
+- `projects/jci-org-manager/` is a git submodule — requires non-isolated session to fix
+
+## Git Submodules
+- `Perplexica/` — v1.12.1-5
+- `projects/audio-transformation-tool/code` — heads/main
+- `projects/jci-org-manager` — heads/festival-bot
+- `solar-scout/` — nested git repo (workspace synced)
