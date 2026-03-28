@@ -233,7 +233,7 @@ else
 fi
 
 # H17: OpenClaw Gateway
-echo -n "H18: Gateway... " | tee -a $LOG_FILE
+echo -n "H17: Gateway... " | tee -a $LOG_FILE
 if pgrep -f "openclaw-gateway" > /dev/null 2>&1; then
     echo "OK" | tee -a $LOG_FILE
 else
