@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { startSession, streamSession, type SessionEvent, type SessionStartInput } from '../api/client';
+import { startSession, streamSession, type SessionEvent } from '../api/client';
 
 type Mode = 'idle' | 'blocking' | 'streaming';
 

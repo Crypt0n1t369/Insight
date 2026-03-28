@@ -71,8 +71,14 @@ export interface KGNode {
   id: string;
   type: string;
   name: string;
+  description?: string;
   tags: string[];
   properties: Record<string, unknown>;
+  // Session node fields
+  sessionId?: string;
+  protocol?: string;
+  startedAt?: string;
+  completedAt?: string;
 }
 
 export interface KGEdge {
@@ -130,7 +136,7 @@ export async function startSession(input: SessionStartInput): Promise<SessionRes
  * POST /api/sessions/stream — streaming session via SSE.
  * onComplete receives: { sessionId, kgSessionNodeId, eventCount, protocol }
  */
-export async function streamSession(
+export function streamSession(
   input: SessionStartInput,
   onEvent: (event: SessionEvent) => void,
   onComplete: (result: { sessionId: string; kgSessionNodeId?: string; eventCount: number; protocol: string }) => void,
