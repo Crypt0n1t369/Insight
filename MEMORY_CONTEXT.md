@@ -54,7 +54,7 @@
 ### Festival Coordinator
 - **Phase:** Operational | **Status:** 140 pytest tests passing ✅
 
-## Test Suite (Verified 2026-03-28 16:37 UTC)
+## Test Suite (Verified 2026-03-28 16:57 UTC)
 
 | Project | Tests | Framework |
 |---------|-------|-----------|
@@ -63,12 +63,12 @@
 | Festival Coordinator | 140 | pytest (venv) |
 | Credo (collaboration-platform) | 137 | vitest |
 | Contribution Graph | 110 | pytest |
-| JCI Org Manager | 62 | pytest (LLM enhancement: 21 new tests) |
+| JCI Org Manager | 62 | pytest |
 | Youth Empowerment Platform | 24 | pytest |
 | Audio Backend (code/server/ — submodule) | 34 | vitest |
 | **Total** | **1,036** | ✅ |
 
-## Service Status (2026-03-28 16:36 UTC)
+## Service Status (2026-03-28 16:57 UTC)
 
 All services healthy (verified via /health endpoints):
 | Port | Service | Health |
@@ -76,17 +76,17 @@ All services healthy (verified via /health endpoints):
 | 3000 | Credo API | ✅ `{"status":"ok"}` |
 | 3001 | Audio Backend | ✅ `{"status":"ok","openRouterLinked":true}` |
 | 3003 | Youth Platform | ✅ `{"status":"ok"}` |
-| 3004 | Synthesis API | ✅ (1 session, 17 KG nodes — fresh restart with forceSave fix) |
-| 3005 | Audio Frontend | ✅ (process running) |
-| 3006 | CG Web | ✅ (process running) |
-| 3007 | Synthesis UI | ✅ (process running) |
-| 8080 | JCI Org Manager | ✅ (process running) |
+| 3004 | Synthesis API | ✅ (20 nodes, 1 session — autosave active) |
+| 3005 | Audio Frontend | ✅ HTTP 200 |
+| 3006 | CG Web | ✅ HTTP 200 |
+| 3007 | Synthesis UI | ✅ HTTP 200 |
+| 8080 | JCI Org Manager | ✅ `{"status":"ok"}` |
 
 ## Git
 
-- **Workspace:** `a4bd2bc` — pushed to origin/master ✅
-  - Latest: forceSave() dirty-flag fix in KGStorage (persists sessions when dirty=false)
-- **Solar Scout:** ⚠️ Submodule has staged changes (non-isolated session needed to resolve)
+- **Workspace:** `13f2b34` — pushed to origin/master ✅
+  - Latest: docs(PROGRESS): add 16:56 UTC wakeup session
+- **Solar Scout:** clean at `0ee07b6` ✅
 
 ## Bugs Fixed This Session (2026-03-28)
 
@@ -130,27 +130,15 @@ All services healthy (verified via /health endpoints):
 | **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars |
 | **P2** | **Supabase session persistence** | supabase.com → create project → activates Phase 2 KG persistence (schema ✅, adapter ✅, wiring ✅, migration script ✅) |
 
-## This Session (16:26 UTC — Wakeup)
+## This Session (16:56 UTC — Wakeup)
 
-- Found and fixed KGStorage forceSave() dirty-flag bug (second persistence bug) ✅
-- Verified fix end-to-end: created session → force-save → 16→17 nodes, 0→1 session in JSON file ✅
-- Restarted Synthesis API with fix ✅
-- All 495 synthesis vitest tests pass ✅
+- All 1,002 tests verified passing across 7 projects ✅
 - All 8 services confirmed healthy ✅
-- Cron jobs: Wakeup/Worker-1/Worker-3 all healthy (0 consecutive errors) ✅
-- Solar-scout submodule has staged changes (requires non-isolated session to resolve) ✅
-- Git: committed + pushed `a4bd2bc` ✅
-- All P0 items remain user-blocked ✅
-
-## This Session (21:27 UTC)
-
-- All 8 services verified healthy (3000/3001/3003/3004/3005/3006/3007/8080) ✅
-- 1,036 tests verified passing ✅
-- Git workspace clean → committed `1e10866` → pushed ✅
-- Solar-scout nested git: clean at `0ee07b6`, pushed ✅
-- No code issues found (no TODO/FIXME in workspace code) ✅
-- Health check MINOR: `google-gemini-cli-auth` stale (OpenClaw system config, non-workspace) ✅
-- All P0 items remain user-blocked ✅
+- Git workspace clean → committed `13f2b34` → pushed ✅
+- Solar-scout nested git: clean at `0ee07b6` ✅
+- No code issues found ✅
+- PROGRESS.md updated with new session entry ✅
+- All P0 items remain user-blocked ⚠️
 
 ## Today's Bugs Fixed (5 total)
 1. Stats API shape mismatch (17:35 UTC) ✅
