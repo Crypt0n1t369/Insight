@@ -140,7 +140,7 @@ fi
 # H14: All Services Health
 echo -n "H14: Services... " | tee -a $LOG_FILE
 SERVICES_OK=0
-SERVICES_TOTAL=6
+SERVICES_TOTAL=8
 SERVICES_LIST=""
 
 # Check Credo API (3000)
@@ -159,14 +159,6 @@ else
     SERVICES_LIST="${SERVICES_LIST}audio-backend(DOWN) "
 fi
 
-# Check Credo Frontend (3002)
-if curl -s -o /dev/null -w "%{http_code}" http://localhost:3002 2>/dev/null | grep -q "200"; then
-    SERVICES_OK=$((SERVICES_OK + 1))
-    SERVICES_LIST="${SERVICES_LIST}credo-frontend "
-else
-    SERVICES_LIST="${SERVICES_LIST}credo-frontend(DOWN) "
-fi
-
 # Check Youth Platform (3003)
 if curl -s -o /dev/null -w "%{http_code}" http://localhost:3003/health 2>/dev/null | grep -q "200"; then
     SERVICES_OK=$((SERVICES_OK + 1))
@@ -175,12 +167,36 @@ else
     SERVICES_LIST="${SERVICES_LIST}youth-platform(DOWN) "
 fi
 
+# Check Synthesis API (3004)
+if curl -s -o /dev/null -w "%{http_code}" http://localhost:3004/health 2>/dev/null | grep -q "200"; then
+    SERVICES_OK=$((SERVICES_OK + 1))
+    SERVICES_LIST="${SERVICES_LIST}synthesis-api "
+else
+    SERVICES_LIST="${SERVICES_LIST}synthesis-api(DOWN) "
+fi
+
 # Check Audio Frontend (3005)
 if curl -s -o /dev/null -w "%{http_code}" http://localhost:3005 2>/dev/null | grep -q "200"; then
     SERVICES_OK=$((SERVICES_OK + 1))
     SERVICES_LIST="${SERVICES_LIST}audio-frontend "
 else
     SERVICES_LIST="${SERVICES_LIST}audio-frontend(DOWN) "
+fi
+
+# Check CG Web (3006)
+if curl -s -o /dev/null -w "%{http_code}" http://localhost:3006/health 2>/dev/null | grep -q "200"; then
+    SERVICES_OK=$((SERVICES_OK + 1))
+    SERVICES_LIST="${SERVICES_LIST}cg-web "
+else
+    SERVICES_LIST="${SERVICES_LIST}cg-web(DOWN) "
+fi
+
+# Check Synthesis UI (3007)
+if curl -s -o /dev/null -w "%{http_code}" http://localhost:3007 2>/dev/null | grep -q "200"; then
+    SERVICES_OK=$((SERVICES_OK + 1))
+    SERVICES_LIST="${SERVICES_LIST}synthesis-ui "
+else
+    SERVICES_LIST="${SERVICES_LIST}synthesis-ui(DOWN) "
 fi
 
 # Check JCI Portal (8080)
@@ -216,15 +232,7 @@ else
     echo "WARN - ${DISK_USED}% used" | tee -a $LOG_FILE
 fi
 
-# H17: Credo API (port 3000)
-echo -n "H17: Credo API... " | tee -a $LOG_FILE
-if curl -s http://localhost:3000/health 2>/dev/null | grep -q "ok"; then
-    echo "OK" | tee -a $LOG_FILE
-else
-    echo "WARN - not responding on port 3000" | tee -a $LOG_FILE
-fi
-
-# H18: OpenClaw Gateway
+# H17: OpenClaw Gateway
 echo -n "H18: Gateway... " | tee -a $LOG_FILE
 if pgrep -f "openclaw-gateway" > /dev/null 2>&1; then
     echo "OK" | tee -a $LOG_FILE
