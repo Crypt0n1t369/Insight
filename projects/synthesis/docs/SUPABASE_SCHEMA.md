@@ -301,11 +301,25 @@ SUPABASE_SERVICE_KEY=your-service-role-key  # server-side only
 - [x] Schema designed (this document)
 - [ ] Supabase project created by user
 - [ ] Schema applied (`supabase/schema.sql`)
-- [ ] Phase 1 adapter implemented
-- [ ] Phase 1 tests written
-- [ ] Phase 1 deployed to production
+- [x] Phase 1 adapter interface implemented (`src/knowledge-graph/database-storage.ts`)
+- [x] Phase 1 tests written (33 tests — `__tests__/database-storage.test.ts`)
+- [ ] Phase 1 deployed to production (requires user to create Supabase project)
 - [ ] JSON → Supabase migration run
 - [ ] Phase 2/3 (future)
+
+## Implementation Notes
+
+**Phase 1 (KGDatabaseAdapter — shipped ✅):**
+- `src/platform/database/types.ts` — DB-level TypeScript types
+- `src/knowledge-graph/database-storage.ts` — `KGDatabaseAdapter` interface + `KGStoragePassthroughAdapter` (default) + `SupabaseKGStorage` (Phase 2)
+- `getKGDatabase()` factory: activates Supabase only when `DATABASE_ADAPTER=supabase` env var is set
+- When Supabase not configured: passthrough to existing JSON-file KGStorage (transparent, no behavior change)
+
+**To activate Supabase (Phase 2):**
+1. User creates Supabase project at supabase.com
+2. Apply schema: `supabase/schema.sql`
+3. Set env vars: `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `DATABASE_ADAPTER=supabase`
+4. Run migration: `scripts/migrate-json-to-supabase.ts` (one-time)
 
 ---
 
