@@ -20,7 +20,7 @@ Health check.
 
 ### `GET /api/protocols`
 
-Returns all 9 supported clinical protocols.
+Returns all 10 supported clinical protocols.
 
 **Response:**
 ```json
