@@ -1,5 +1,71 @@
 ---
 
+## 2026-03-28 12:56 Cairo (10:56 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ All 1,002 Tests Pass / 3 Bugs Fixed / Git Clean / Solar Scout Updated to 36 Companies
+
+**This session: Found and fixed 3 bugs. (1) `run_all_tests.sh` had stale CG Web count (63→24). (2) `run_all_tests.sh` was missing CG Bot+DB tests (39 tests from `bot/tests/` + `db/`). (3) JCI `test_weekly_summary_falls_back_gracefully` lacked LLM mock causing RuntimeWarning. Solar Scout outreach list confirmed at 36 companies / 82.6 MW (+ 10 Tier 2 / ~22.4 MW). All 1,002 tests verified passing. Git clean. All P0 items remain user-blocked.**
+
+### Bugs Fixed This Session
+
+| # | File | Issue | Fix |
+|---|------|-------|-----|
+| 1 | `scripts/run_all_tests.sh` | CG Web comment said 63 tests, only 24 run | Fixed comment to `(24 tests)` |
+| 2 | `scripts/run_all_tests.sh` | Missing 39 CG tests (`bot/tests/` + `db/`) | Added `CG Bot+DB (39 tests)` section |
+| 3 | `tests/test_llm.py` (JCI submodule) | `test_weekly_summary_falls_back_gracefully` lacked `_llm` mock → RuntimeWarning | Added `agent._llm = MagicMock(); agent._llm.is_configured = False` |
+
+### Full Test Suite — 1,002 Tests Passing ✅
+| Project | Tests | Status |
+|---------|-------|--------|
+| Festival Coordinator | 140 | ✅ |
+| Contribution Graph — API (`tests/`) | 47 | ✅ |
+| Contribution Graph — Web (`web/`) | 24 | ✅ |
+| Contribution Graph — Bot+DB (`bot/tests/` + `db/`) | 39 | ✅ |
+| JCI Org Manager | 62 | ✅ |
+| Youth Empowerment Platform | 24 | ✅ |
+| Synthesis Platform | 495 | ✅ |
+| Credo Collaboration Platform | 137 | ✅ |
+| Audio Backend | 34 | ✅ |
+| **Total** | **1,002** | ✅ |
+
+> **Discovery:** `run_all_tests.sh` was missing 39 CG tests from `bot/tests/` + `db/`. Now added. Total confirmed at 1,002 (was undercounted at 963 before this fix).
+
+### Solar Scout — Confirmed at 36 Companies / 82.6 MW
+- Tier 1 (ready to send): **36 companies / 82.6 MW** ✅
+- Tier 2 (needs verification): **10 companies / ~22.4 MW** (Riviera, Latsr, Kopa, JSC Latgales, Gerhard, Krass, Sent, Bermas, Len, Vests)
+- `python send_emails.py --dry-run-all` → confirms all 36 emails generate correctly
+- SMTP configuration is the only blocker (user action needed)
+
+### All P0 Items Still Blocked on User Action ⚠️
+| # | Item | Action Needed | Impact |
+|---|------|---------------|--------|
+| 1 | **OpenRouter credits** | openrouter.ai → add $5–10 | AI features blocked (402 error) |
+| 2 | **CG Test 0.1** | Review `TEST_01_INTERVIEW_SCRIPT.md` + recruit 10–12 participants | Phase 0 go/no-go |
+| 3 | **CG Test 0.3** | Identify 1 event in next 4–8 weeks | Phase 0 acquisition |
+| 4 | **CG Test 0.4** | Identify 5 target orgs for Phase 0 | Phase 0 go/no-go |
+| 5 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+| 6 | **Solar Scout SMTP** | Set `SMTP_HOST`, `SMTP_USER`, `SENDER_*` env vars | Fires 36 emails (82.6 MW) — pipeline verified |
+| 7 | **Solar Scout: 10 Tier 2** | Lursoft.lv lookup or +371 calls | 10 companies (~22.4 MW) need verification |
+| 8 | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL + Telegram |
+| 9 | **Supabase session persistence** | supabase.com → create project | Phase 2 KG persistence |
+
+### What's Buildable Right Now: NOTHING
+All meaningful features require external credentials or user decisions.
+
+### What's Next (User Actions Needed)
+1. **Solar Scout SMTP** — highest near-term ROI (36 emails, 82.6 MW, ready to fire)
+2. **Top up OpenRouter credits** — unblocks AI features across all projects
+3. **Review CG Phase 0 materials** — approve TEST_01 recruitment script
+4. **Deploy Audio Tool to Vercel** — public URL + Telegram integration
+
+### Git Commits This Session
+| Commit | Description |
+|--------|-------------|
+| `6a93133` | docs(MEMORY_CONTEXT): update Solar Scout numbers (15→36 companies, 33.4→82.6 MW) |
+| `7a74ffe` | docs(PROGRESS): update Solar Scout numbers; fix run_all_tests.sh CG counts; fix JCI test mock |
+
+---
+
 ## 2026-03-28 12:26 Cairo (10:26 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ All 8 Services Healthy / 1,002 Tests Pass / Audio 10 Protocols Verified / Wakeup Cron Healthy / Git Clean
