@@ -54,21 +54,20 @@
 ### Festival Coordinator
 - **Phase:** Operational | **Status:** 140 pytest tests passing ✅
 
-## Test Suite (Verified 2026-03-28 16:57 UTC)
+## Test Suite (Verified 2026-03-28 17:33 UTC)
 
 | Project | Tests | Framework |
 |---------|-------|-----------|
 | Synthesis Platform (projects/synthesis/) | 495 | vitest |
-| Workspace server (workspace/server/) | 34 | vitest |
+| Credo Platform | 137 | vitest |
 | Festival Coordinator | 140 | pytest (venv) |
-| Credo (collaboration-platform) | 137 | vitest |
-| Contribution Graph | 110 | pytest |
+| Contribution Graph (API+Web+Bot+DB) | 110 | pytest |
 | JCI Org Manager | 62 | pytest |
 | Youth Empowerment Platform | 24 | pytest |
-| Audio Backend (code/server/ — submodule) | 34 | vitest |
-| **Total** | **1,036** | ✅ |
+| Audio Backend (workspace/server/) | 34 | vitest |
+| **Total** | **1,002** | ✅ |
 
-## Service Status (2026-03-28 16:57 UTC)
+## Service Status (2026-03-28 17:33 UTC)
 
 All services healthy (verified via /health endpoints):
 | Port | Service | Health |
@@ -76,7 +75,7 @@ All services healthy (verified via /health endpoints):
 | 3000 | Credo API | ✅ `{"status":"ok"}` |
 | 3001 | Audio Backend | ✅ `{"status":"ok","openRouterLinked":true}` |
 | 3003 | Youth Platform | ✅ `{"status":"ok"}` |
-| 3004 | Synthesis API | ✅ (20 nodes, 1 session — autosave active) |
+| 3004 | Synthesis API | ✅ `{"status":"ok"}` |
 | 3005 | Audio Frontend | ✅ HTTP 200 |
 | 3006 | CG Web | ✅ HTTP 200 |
 | 3007 | Synthesis UI | ✅ HTTP 200 |
@@ -84,8 +83,8 @@ All services healthy (verified via /health endpoints):
 
 ## Git
 
-- **Workspace:** `13f2b34` — pushed to origin/master ✅
-  - Latest: docs(PROGRESS): add 16:56 UTC wakeup session
+- **Workspace:** `ba84fe1` — pushed to origin/master ✅
+  - Latest: docs(PROGRESS): add 17:33 UTC wakeup session — all 1,002 tests pass
 - **Solar Scout:** clean at `0ee07b6` ✅
 
 ## Bugs Fixed This Session (2026-03-28)
@@ -130,14 +129,14 @@ All services healthy (verified via /health endpoints):
 | **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars |
 | **P2** | **Supabase session persistence** | supabase.com → create project → activates Phase 2 KG persistence (schema ✅, adapter ✅, wiring ✅, migration script ✅) |
 
-## This Session (16:56 UTC — Wakeup)
+## This Session (17:33 UTC — Wakeup)
 
-- All 1,002 tests verified passing across 7 projects ✅
-- All 8 services confirmed healthy ✅
-- Git workspace clean → committed `13f2b34` → pushed ✅
+- All 1,002 tests verified passing (run_all_tests.sh: 495 synthesis + 137 credo + 140 festival + 110 CG + 62 JCI + 24 youth + 34 audio) ✅
+- All 8 services confirmed healthy (3000/3001/3003/3004/3005/3006/3007/8080 → 200) ✅
+- Git workspace clean → committed `ba84fe1` → pushed ✅
 - Solar-scout nested git: clean at `0ee07b6` ✅
-- No code issues found ✅
-- PROGRESS.md updated with new session entry ✅
+- No TODO/FIXME/BUG comments in workspace source ✅
+- PROGRESS.md: consolidated duplicate top entries (15:57 and 18:56 UTC both claimed all-clear with conflicting counts: 1,036 vs 1,002) ✅
 - All P0 items remain user-blocked ⚠️
 
 ## Today's Bugs Fixed (5 total)
