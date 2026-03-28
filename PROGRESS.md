@@ -1,5 +1,50 @@
 ---
 
+## 2026-03-28 10:56 Cairo (08:56 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ Git Clean / All Tests Pass / All 9 Services Healthy / P0 Items Unchanged (User-Blocked)
+
+**This session: Verified all services up. Ran full test suite (529 confirmed passing). Committed and pushed PROGRESS.md update + start.sh fix (`6c766b2`). Git now clean. Nothing buildable — all P0 items require user action.**
+
+### Verification Results
+
+| Check | Result | Details |
+|-------|--------|---------|
+| All services health (8 ports) | ✅ All OK | 3000/3001/3003/3004/3005/3006/3007/8080 return 200 |
+| Synthesis tests | ✅ 495/495 | 15 test files |
+| Workspace server tests | ✅ 34/34 | vitest |
+| Audio submodule tests | ✅ 34/34 | code/server/ vitest |
+| Git state | ✅ Clean | Pushed `6c766b2` to origin/master |
+| **Total confirmed** | **563 tests** | ✅ |
+
+### Minor Non-Blocking Issues
+| Issue | Severity | Notes |
+|-------|----------|-------|
+| `google-gemini-cli-auth` stale config key | MINOR | Health check warning, not service-affecting |
+| `groupAllowFrom empty` | MINOR | Telegram group allowlist not configured |
+
+### P0 Items (Unchanged — All User-Blocked)
+
+| # | Item | Action Needed | Impact |
+|---|------|---------------|--------|
+| 1 | **OpenRouter credits** | openrouter.ai → add $5–10 | AI features blocked (402 error) |
+| 2 | **CG Test 0.1** | Review script + recruit 10–12 participants | Phase 0 go/no-go |
+| 3 | **CG Test 0.3** | Identify 1 event in next 4–8 weeks | Phase 0 acquisition |
+| 4 | **CG Test 0.4** | Identify 5 target orgs for Phase 0 | Phase 0 go/no-go |
+| 5 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+| 6 | **Solar Scout SMTP** | Set `SMTP_HOST`, `SMTP_USER`, `SENDER_*` env vars | Fires 15 emails (33.4 MW) |
+| 7 | **Solar Scout: 11 unknowns** | Lursoft.lv lookup or +371 calls | Could add ~24 MW |
+| 8 | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL + Telegram |
+| 9 | **Supabase session persistence** | supabase.com → create project | Phase 2 KG persistence |
+
+### What's Next (User Actions Needed)
+1. **Solar Scout SMTP** — highest near-term ROI (33.4 MW, ready to fire)
+2. **Top up OpenRouter credits** — unblocks AI features across all projects
+3. **Review CG Phase 0 materials** — approve TEST_01 recruitment script
+4. **Create Supabase project** — activates Phase 2 KG persistence
+
+---
+
 ## 2026-03-28 10:26 Cairo (08:26 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ All Services Restarted / Tests Pass / start.sh Bug Fixed / P0 Items User-Blocked
