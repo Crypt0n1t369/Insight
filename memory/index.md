@@ -16,7 +16,7 @@
 
 ## Active Projects
 - synthesis (port 3004 API, port 3007 UI) — WOOP + SE agents, KG graph, 495 vitest
-- audio-transformation-tool (port 3001 backend, port 3005 frontend) — 9 protocols, demo mode
+- audio-transformation-tool (port 3001 backend, port 3005 frontend) — 10 protocols (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL), demo mode
 - collaboration-platform / Credo (port 3000 API) — RLS, credibility engine
 - jci-org-manager (port 8080) — LLM engagement agent
 - festival-coordinator — Phase 2 pending Telegram bot

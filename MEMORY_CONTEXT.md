@@ -1,34 +1,92 @@
 === ATON CONTEXT ===
-Generated: 2026-03-28 19:56 UTC
+Generated: 2026-03-28 20:26 UTC
 
 ## Active Projects
-- synthesis (port 3004 API, port 3007 UI) — KG persistence + autosave, 495 vitest ✅
-- audio-transformation-tool (ports 3001 backend / 3005 frontend) — 10 protocols, demo mode, OpenRouter linked ✅
-- collaboration-platform / Credo (port 3000) — credibility engine, app-level auth, 137 vitest ✅
-- jci-org-manager (port 8080) — LLM engagement agent, 62 pytest ✅
-- festival-coordinator — Phase 2 pending Telegram bot token
-- youth-empowerment-platform (port 3003) — SEED methodology, 24 pytest ✅
-- contribution-graph (port 3006 web) — Phase 0 materials ready, 110 pytest ✅
-- solar-scout (outreach pipeline) — 15 validated companies (33.4 MW), SMTP ready, awaiting GO from user
 
-## Key Decisions
-### Memory System Architecture
-- **Decision:** Use hybrid approach (TF-IDF now, vector embeddings later)
-### Context Management Approach
-- **Decision:** File-based context with auto-generation, not Mem0 cloud
-### KG Persistence
-- **Decision:** JSON file primary (saves every 60s autosave + on dirty), Supabase adapter stub ready to activate
+### audio-transformation-tool
+- **Status:** Active (verified 2026-03-28)
+- **Backend:** Running on port 3001, 10 protocols (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL)
+- **Demo mode:** Working — clinically-grounded scripts for all 10 protocols
+- **OpenRouter:** Linked (demo mode, no credits spent)
+- **Frontend:** Running on port 3005 (Vite preview)
+- **Tests:** 34 vitest passing (workspace/server/)
+- **Deployment:** DEPLOYMENT.md written — Vercel + Supabase ready
 
-## Recent Sessions
-- 2026-03-28 19:56 UTC (Wakeup): All 1,002 tests pass, 8/8 services healthy, git clean, H17 label fixed
-- 2026-03-28 19:27 UTC (Wakeup): 2 fixes (H17 label, memory/index stale entries), committed and pushed
-- 2026-03-28 18:58 UTC (Wakeup): 8/8 services, health_check.sh fixed (added 3004/3006/3007, removed stale 3002)
-- 2026-03-28 16:26 UTC (Wakeup): KG forceSave dirty-flag bug fixed (synthesis), pushed
-- 2026-03-28 15:45 UTC (Wakeup): KG persistence autosave added, KG sessions now persisting correctly
+### synthesis (Knowledge Graph Platform)
+- **Status:** Active (verified 2026-03-28)
+- **API:** Running on port 3004
+- **KG persistence:** Fixed — autosave (60s interval) + forceSave endpoint working
+- **KGDatabaseAdapter:** Wired to orchestrator, Supabase stub ready
+- **Supabase schema:** Drafted at docs/SUPABASE_SCHEMA.md
+- **Tests:** 495 vitest passing
+
+### Solar Scout (Latvia Commercial Solar Outreach)
+- **Status:** Active — outreach pipeline ready to fire
+- **Validated:** 15 companies / 33.4 MW (MX-validated, SMTP-ready)
+- **Tier 2:** 10 companies / ~22 MW (no MX, needs Lursoft lookup)
+- **SMTP flag:** `--smtp-check` added — pre-flight validation
+- **Git:** Nested repo at solar-scout/, workspace synced
+
+### Credo Collaboration Platform
+- **Status:** Active
+- **API:** Running on port 3000
+- **Tests:** 137 vitest passing
+- **Auth:** RLS deferred, middleware wired
+
+### Contribution Graph (CG)
+- **Status:** Active
+- **Web:** Running on port 3006
+- **Tests:** 110 pytest passing (API + Web + Bot + DB)
+- **Phase 0:** TEST_01 script written — awaiting user recruitment approval
+- **Telegram bot:** Token needed (BotFather)
+
+### JCI Org Manager
+- **Status:** Active
+- **Portal:** Running on port 8080
+- **LLM Enhancement:** OpenRouter-powered engagement agent (21 new tests)
+- **Tests:** 62 pytest passing
+
+### Festival Coordinator
+- **Status:** Active
+- **Tests:** 140 pytest passing
+
+### Youth Empowerment Platform
+- **Status:** Active
+- **Platform:** Running on port 3003
+- **Tests:** 24 pytest passing
+
+## Key Recent Decisions (2026-03-27/28)
+
+| Date | Decision | Impact |
+|------|----------|--------|
+| 2026-03-28 | KGStorage autosave (60s) + forceSave endpoint | Sessions persist correctly |
+| 2026-03-28 | forceSave() sets dirty=true before saveSync | Force-save now works post-restart |
+| 2026-03-28 | Solar Scout --smtp-check flag | SMTP pre-flight validation |
+| 2026-03-28 | Solar Scout 15→36 companies | Validated list expanded |
+| 2026-03-28 | KGDatabaseAdapter wired to orchestrator | Supabase Phase 2 ready |
+| 2026-03-28 | run_all_tests.sh created | No more pytest cache collisions |
+| 2026-03-28 | health_check.sh: 6→8 services, 3002 removed | Accurate service count |
+| 2026-03-27 | Credo RLS deferred, auth middleware wired | Simpler Phase 1 |
+| 2026-03-27 | JCI LLM Enhancement (OpenRouter) | Engagement agent active |
+| 2026-03-27 | CG Conditional GO | Phase 0 approval gating |
 
 ## Quick Status
-- Memory: Fresh (today)
-- Health: 17 checks — H11 WARN (context low, expected in isolated session), all others OK
-- Context: Updated 2026-03-28 19:56 UTC
-- Budget: $10/day cap — Tier 3/4 routing for routine tasks
-- All 9 P0 items blocked on user action
+- **Memory:** Fresh (2026-03-28)
+- **Health:** 17 checks passing (health_check.sh)
+- **Tests:** 1,002 passing (all suites)
+- **Services:** 8/8 healthy (ports 3000/3001/3003/3004/3005/3006/3007/8080)
+- **Git:** Workspace clean, all nested repos clean
+- **Cron:** Wakeup + Worker-1 + Worker-3 all healthy (0 consecutive errors)
+
+## P0 Blockers (All User Action Required)
+| # | Item | Action Needed | Impact |
+|---|------|---------------|--------|
+| 1 | Solar Scout SMTP | Configure SMTP env vars | Fires 15 emails (33.4 MW) |
+| 2 | OpenRouter credits | openrouter.ai → add $5–10 | Unblocks AI meditation |
+| 3 | CG Test 0.1 | Review TEST_01_INTERVIEW_SCRIPT.md + recruit | Phase 0 go/no-go |
+| 4 | CG Test 0.3 | Identify 1 event (4–8 wks out) | Phase 0 acquisition |
+| 5 | CG Test 0.4 | Identify 5 target orgs | Phase 0 go/no-go |
+| 6 | CG Telegram bot token | BotFather → new token | Phase 2 bot |
+| 7 | Solar Scout Tier 2 | Lursoft.lv or +371 calls | ~22 MW more |
+| 8 | Audio Tool → Vercel | vercel.com → import + env vars | Public URL + Telegram |
+| 9 | Supabase persistence | supabase.com → create project | Phase 2 KG persistence |
