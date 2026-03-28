@@ -1,5 +1,78 @@
 ---
 
+## 2026-03-28 08:34 Cairo (06:34 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ DB Adapter Wired to Orchestrator / Migration Script Written / 495+34 Tests Pass / All 8 Services / Pushed
+
+**No user action needed — pure code work. Found and fixed a real integration gap: KGDatabaseAdapter existed but was never called from the orchestrator.**
+
+### What Was Built This Session
+
+**KGDatabaseAdapter — Phase 1 Integration ✅**
+| Item | Status | Details |
+|------|--------|---------|
+| Orchestrator wiring | ✅ DONE | `runSession()` now calls `db.saveSession(dbSession, events)` when Supabase is primary |
+| Migration script | ✅ DONE | `scripts/migrate-json-to-supabase.ts` — one-time bulk-upsert of KG snapshot to Supabase |
+| SUPABASE_SCHEMA.md | ✅ UPDATED | Marked wiring + migration script done |
+| Tests | ✅ 529 passing | 495 synthesis + 34 workspace server |
+| Git | ✅ Pushed `dd223cc` | feat(synthesis): wire KGDatabaseAdapter into orchestrator + write migration script |
+
+**Before:** `KGDatabaseAdapter` was implemented but `saveSession()` was a no-op and never called. Sessions only landed as KG nodes.
+
+**After:** When `DATABASE_ADAPTER=supabase` is set:
+1. `runSession()` calls `db.saveSession(session, events)` with full session metadata + all events
+2. Sessions land in `sessions` table with full event history
+3. Migration script bulk-migrates existing KG snapshot to Supabase
+
+**Migration script (`scripts/migrate-json-to-supabase.ts`):**
+```
+SUPABASE_URL=xxx SUPABASE_SERVICE_KEY=xxx npx tsx scripts/migrate-json-to-supabase.ts
+```
+- Idempotent: uses upsert, re-runnable
+- Migrates: kg_nodes, kg_edges, sessions, profiles
+- Note: session_events cannot be migrated (were in-memory only, lost on server restart)
+
+### All Services — Healthy (06:34 UTC) ✅
+| Service | Port | HTTP |
+|---------|------|------|
+| Credo API | 3000 | ✅ 200 |
+| Audio Backend | 3001 | ✅ 200 |
+| Youth Platform | 3003 | ✅ 200 |
+| Synthesis API | 3004 | ✅ 200 |
+| Audio Frontend | 3005 | ✅ 200 |
+| CG Web | 3006 | ✅ 200 |
+| Synthesis UI | 3007 | ✅ 200 |
+| JCI Portal | 8080 | ✅ 200 |
+
+### Tests — 529 Passing ✅
+- `projects/synthesis/`: **495/495 vitest** ✅ (15 test files)
+- `workspace/server/`: **34/34 vitest** ✅
+
+### Git — Pushed ✅
+- **Commit `dd223cc`**: feat(synthesis): wire KGDatabaseAdapter into orchestrator + write migration script
+
+### 🚨 ALL P0 ITEMS STILL BLOCKED ON USER ACTION
+| # | Item | Blocker |
+|---|------|---------|
+| 1 | **OpenRouter credits** | openrouter.ai → add $5–10 (Perplexity also affected) |
+| 2 | **Audio Tool → Vercel** | vercel.com → import Crypt0n1t369/Insight → add env vars |
+| 3 | **CG Test 0.1 — Review + recruit** | Review `TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants |
+| 4 | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks |
+| 5 | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
+| 6 | **CG Telegram bot token** | BotFather → new token |
+| 7 | **Solar Scout: SMTP** | Configure `SMTP_HOST`, `SMTP_USER`, `SENDER_*` env vars |
+| 8 | **Solar Scout: Tier 2 verify** | Lursoft.lv login required (10 companies, ~24 MW potential) |
+| 9 | **Supabase project** | Create at supabase.com → activates Phase 2 KG persistence (schema ready, adapter shipped ✅, orchestrator wired ✅, migration script ready ✅) |
+
+### What's Next (Priority Order)
+1. **Create Supabase project** (~$0/mo tier) → activates Phase 2 KG persistence (all infrastructure ready: schema ✅, adapter ✅, orchestrator wiring ✅, migration script ✅)
+2. **Configure Solar Scout SMTP** → fires 36 emails (82.6 MW ready, highest near-term ROI)
+3. **Add OpenRouter credits** (~$5–10) → restores AI features + web search
+4. **Review CG Phase 0 materials** → approve TEST_01 or request changes
+5. **Deploy Audio Tool to Vercel** → public URL + Telegram integration
+
+---
+
 ## 2026-03-28 08:10 Cairo (06:10 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ KGDatabaseAdapter Implemented / 495/495 Tests Pass / All 8 Services Healthy / Pushed
