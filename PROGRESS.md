@@ -1,5 +1,69 @@
 ---
 
+## 2026-03-29 03:26 Cairo (01:26 UTC) — Wakeup Cron (Aton)
+
+### Status: ✅ All Systems Healthy / All 1,002 Tests Pass / 🚨 2 CRITICAL Security Issues Found
+
+**This session: Verified all 8 services HTTP 200, MEMORY_CONTEXT.md fix holding (111 lines), full test suite passes (all 9 suites exit 0). Discovered 2 CRITICAL security issues: `exec.security=full` and `Telegram groupPolicy=open`. Worker-1's recent error was just a BACKLOG.md edit failure — nothing broken.**
+
+### Verification Results — All Clean ✅
+
+| Check | Result | Details |
+|-------|--------|---------|
+| All 8 services | ✅ HTTP 200 | 3000/3001/3003/3004/3005/3006/3007/8080 |
+| MEMORY_CONTEXT.md | ✅ 111 lines | Detailed content, fix holding |
+| Tests | ✅ 1,002 passing | All 9 suites exit 0 (JCI/Festival/CG/Synthesis/Credo/Audio/Youth) |
+| Git workspace | ✅ Clean | No uncommitted changes |
+| Solar Scout nested | ✅ Clean | `e2f3b1e` |
+| Worker-1 error | ℹ️ Non-breaking | Edit failure on BACKLOG.md only — services/tests unaffected |
+| No TODO/FIXME/BUG | ✅ None | workspace scripts/server/ clean |
+
+### 🚨 CRITICAL SECURITY ISSUES — Requires User Approval to Fix
+
+These require explicit approval per the healthcheck skill. **I will not apply fixes without your go-ahead** — these are config changes that affect gateway behavior.
+
+#### Issue 1: `tools.exec.security` = `"full"` ⚠️ CRITICAL
+
+- **What:** `tools.exec.security` is set to `"full"` in gateway config — no restrictions on shell commands
+- **Risk:** Any compromised session or prompt injection could run arbitrary commands as the user
+- **Fix:** Change to `"allowlist"` and define an allowlist of safe commands
+- **Your approval needed:** Run `gateway config.patch` to change exec security mode
+- **Impact:** Will require defining command allowlist; may break some existing workflows
+
+#### Issue 2: `channels.telegram.groupPolicy` = `"open"` ⚠️ CRITICAL
+
+- **What:** Telegram bot accepts messages from any group without restriction
+- **Risk:** If bot token is ever configured with a real bot, any group can message it
+- **Note:** Current bot_token is empty, so no active risk right now
+- **Fix:** Change to `"restricted"` — only accept from known group IDs listed in `telegram_groups.json`
+- **Your approval needed:** Run `gateway config.patch` to change groupPolicy
+
+### All P0 Items Still Blocked on User Action ⚠️
+
+| # | Item | Action Needed | Impact |
+|---|------|---------------|--------|
+| 1 | **Solar Scout SMTP** | Configure SMTP env vars | Fires 15 emails (33.4 MW) — **highest near-term ROI** |
+| 2 | **OpenRouter credits** | openrouter.ai → add $5–10 | Unblocks AI meditation (402 error) |
+| 3 | **CG Test 0.1** | Review `TEST_01_INTERVIEW_SCRIPT.md` + recruit participants | Phase 0 go/no-go |
+| 4 | **CG Test 0.3** | Identify 1 event (4–8 wks out) | Phase 0 acquisition |
+| 5 | **CG Test 0.4** | Identify 5 target orgs | Phase 0 go/no-go |
+| 6 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+| 7 | **Solar Scout Tier 2** | Lursoft.lv lookup or +371 calls | ~22 MW more (10 companies, no MX) |
+| 8 | **Audio Tool → Vercel** | vercel.com → import repo + env vars | Public URL + Telegram |
+| 9 | **Supabase persistence** | supabase.com → create project | Phase 2 KG persistence |
+
+### What's Buildable Right Now: NOTHING Meaningful
+All meaningful features require external credentials, user decisions, or submodule access. Workspace-level code is clean, TypeScript compiles cleanly, no stale TODOs.
+
+### What's Next
+1. **User: Approve security fixes** — `exec.security` + `groupPolicy` (approval required)
+2. **User: Configure Solar Scout SMTP** — highest near-term ROI (33.4 MW, pipeline ready)
+3. **User: Add OpenRouter credits** — unblocks AI features across all projects
+4. **User: Review CG Phase 0 materials** — approve TEST_01 recruitment script
+5. **Non-isolated session: JCI RuntimeWarning fix** — submodule edit required (test_llm.py:232)
+
+---
+
 ## 2026-03-29 02:57 Cairo (00:57 UTC) — Wakeup Cron (Aton)
 
 ### Status: ✅ MEMORY_CONTEXT.md Fix Confirmed Working / All 1,002 Tests Pass / All 8 Services Healthy
