@@ -52,22 +52,21 @@
 ### Festival Coordinator
 - **Phase:** Operational | **Status:** 140 pytest tests passing ✅
 
-## Test Suite (Verified 2026-03-27 17:07 UTC)
+## Test Suite (Verified 2026-03-28 06:59 UTC)
 
 | Project | Tests | Framework |
 |---------|-------|-----------|
-| Synthesis Platform (backend) | 462 | vitest |
-| Synthesis Platform (UI client) | 6 | vitest |
+| Synthesis Platform (projects/synthesis/) | 495 | vitest |
+| Workspace server (workspace/server/) | 34 | vitest |
 | Festival Coordinator | 140 | pytest (venv) |
 | Credo (collaboration-platform) | 137 | vitest |
 | Contribution Graph | 110 | pytest |
-| Audio Backend (workspace/server/ — running on 3001) | 34 | vitest |
-| Audio Backend (code/server/ — submodule) | 17 | vitest |
-| JCI Org Manager | 41 | pytest |
+| JCI Org Manager | 62 | pytest (LLM enhancement: 21 new tests) |
 | Youth Empowerment Platform | 24 | pytest |
-| **Total** | **971** | |
+| Audio Backend (code/server/ — submodule) | 34 | vitest |
+| **Total** | **1,036** | ✅ |
 
-> Last updated 2026-03-27 17:07 UTC: synthesis API key auth layer added (462 backend + 6 UI).
+> Verified: 495 synthesis + 34 workspace + 140 festival + 137 credo + 110 CG + 62 JCI + 24 youth + 34 audio = 1,036 passing
 
 ## Service Status (2026-03-28 00:00 UTC)
 
