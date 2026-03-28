@@ -1,5 +1,60 @@
 ---
 
+## 2026-03-28 10:26 Cairo (08:26 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ All Services Restarted / Tests Pass / start.sh Bug Fixed / P0 Items User-Blocked
+
+**This session: Found 4 services down (3001/3004/3005/3007). Restarted all. Fixed broken audio start.sh (wrong server path: `server/` → `code/server/`). All test suites confirmed passing.**
+
+### What Was Down (and Restarted)
+
+| Port | Service | Status |
+|------|---------|--------|
+| 3001 | Audio Backend | ✅ Restarted (was crashed — start.sh had wrong path) |
+| 3004 | Synthesis API | ✅ Restarted |
+| 3005 | Audio Frontend | ✅ Restarted |
+| 3007 | Synthesis UI | ✅ Restarted |
+| 3002 | Credo Frontend | ✅ Restarted |
+
+### Bug Fixed
+- **Audio start.sh**: `start_backend()` was `cd "$SCRIPT_DIR"` then running `tsx server/index.ts`, but server lives in `$CODE_DIR/server/index.ts`. Fixed to `cd "$CODE_DIR"` before running tsx. Backend now starts correctly.
+
+### Verification Results
+
+| Check | Result | Details |
+|-------|--------|---------|
+| All services health (9 ports) | ✅ All OK | 3000/3001/3003/3004/3005/3006/3007/8080 return 200, 3002 returns 404 (next dev — expected) |
+| Synthesis tests | ✅ 495/495 | projects/synthesis vitest |
+| Credo tests | ✅ 137/137 | projects/collaboration-platform vitest |
+| CG tests | ✅ 110/110 | pytest |
+| JCI tests | ✅ 62/62 | pytest |
+| Festival tests | ✅ 140/140 | pytest |
+| Youth tests | ✅ 24/24 | pytest |
+| Audio backend tests | ✅ 34/34 | vitest |
+| Git state | ⚠️ Uncommitted | start.sh fix pending commit |
+
+### P0 Items (Unchanged — All User-Blocked)
+
+| # | Item | Action Needed | Impact |
+|---|------|---------------|--------|
+| 1 | **OpenRouter credits** | openrouter.ai → add $5–10 | AI features blocked (402 error) |
+| 2 | **CG Test 0.1** | Review script + recruit 10–12 participants | Phase 0 go/no-go |
+| 3 | **CG Test 0.3** | Identify 1 event in next 4–8 weeks | Phase 0 acquisition |
+| 4 | **CG Test 0.4** | Identify 5 target orgs for Phase 0 | Phase 0 go/no-go |
+| 5 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+| 6 | **Solar Scout SMTP** | Set `SMTP_HOST`, `SMTP_USER`, `SENDER_*` env vars | Fires 15 emails (33.4 MW) |
+| 7 | **Solar Scout: 11 unknowns** | Lursoft.lv lookup or +371 calls | Could add ~24 MW |
+| 8 | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL + Telegram |
+| 9 | **Supabase session persistence** | supabase.com → create project | Phase 2 KG persistence |
+
+### What's Next (User Actions Needed)
+1. **Solar Scout SMTP** — highest near-term ROI (33.4 MW, ready to fire)
+2. **Top up OpenRouter credits** — unblocks AI features across all projects
+3. **Review CG Phase 0 materials** — approve TEST_01 recruitment script
+4. **Create Supabase project** — activates Phase 2 KG persistence
+
+---
+
 ## 2026-03-28 09:26 Cairo (07:26 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ All 1,036 Tests Pass / All 9 Services Healthy / Git Clean / P0 Items User-Blocked
