@@ -1,5 +1,5 @@
 === ATON CONTEXT ===
-Generated: 2026-03-28 20:26 UTC
+Generated: 2026-03-28 21:00 UTC
 
 ## Active Projects
 
@@ -66,6 +66,7 @@ Generated: 2026-03-28 20:26 UTC
 | 2026-03-28 | KGDatabaseAdapter wired to orchestrator | Supabase Phase 2 ready |
 | 2026-03-28 | run_all_tests.sh created | No more pytest cache collisions |
 | 2026-03-28 | health_check.sh: 6→8 services, 3002 removed | Accurate service count |
+| 2026-03-28 | Cron sessionTarget: isolated → current for Wakeup | Fixes edit failures |
 | 2026-03-27 | Credo RLS deferred, auth middleware wired | Simpler Phase 1 |
 | 2026-03-27 | JCI LLM Enhancement (OpenRouter) | Engagement agent active |
 | 2026-03-27 | CG Conditional GO | Phase 0 approval gating |
@@ -76,7 +77,7 @@ Generated: 2026-03-28 20:26 UTC
 - **Tests:** 1,002 passing (all suites)
 - **Services:** 8/8 healthy (ports 3000/3001/3003/3004/3005/3006/3007/8080)
 - **Git:** Workspace clean, all nested repos clean
-- **Cron:** Wakeup + Worker-1 + Worker-3 all healthy (0 consecutive errors)
+- **Cron:** Wakeup (sessionTarget=current) + Worker-1 + Worker-3 all healthy (0 consecutive errors)
 
 ## P0 Blockers (All User Action Required)
 | # | Item | Action Needed | Impact |
