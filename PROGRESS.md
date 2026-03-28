@@ -1,5 +1,63 @@
 ---
 
+## 2026-03-28 07:07 Cairo (05:07 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ KGStorage Path Bug Fixed / 42 Sessions Preserved / All 8 Services Healthy / 462/462 Tests Pass
+
+**Found and fixed a real persistence bug that caused the synthesis KG to run in-memory-only since server boot. The DATA_DIR path had one too many `../` levels, pointing to `/home/drg/data/synthesis/` instead of `workspace/data/synthesis/`. Session data (42 sessions, 58 nodes, 30 edges) was dumped via API, written to correct path, server restarted — now persists correctly.**
+
+### Bug Fixed — KGStorage JSON Persistence Path
+| | Before (broken) | After (fixed) |
+|--|--|--|
+| **Path** | `/home/drg/data/synthesis/` (4 levels up from file) | `/home/drg/.openclaw/workspace/data/synthesis/` (3 levels up) |
+| **Exists** | ❌ Never created | ✅ Created + snapshot written |
+| **Data persisted** | ❌ 42 sessions in-memory only, lost on restart | ✅ Will persist on restart |
+| **Code** | `../../../../../data/synthesis` (5 levels — wrong) | `../../../../data/synthesis` (4 levels — correct) |
+
+**Root cause:** `../../../../../` = 5 levels up from `src/knowledge-graph/` = workspace parent `/home/drg/`, not workspace root. Comment said "4 up" but code had 5. Also fixed comment to say "3 up".
+
+**Recovery:** Dumped current KG (58 nodes, 30 edges) via HTTP API → wrote to correct snapshot path → restarted server → verified 42 sessions restored.
+
+### All Services — Healthy (05:07 UTC) ✅
+| Service | Port | HTTP |
+|---------|------|------|
+| Credo API | 3000 | ✅ 200 |
+| Audio Backend | 3001 | ✅ 200 |
+| Youth Platform | 3003 | ✅ 200 |
+| Synthesis API | 3004 | ✅ 200 (42 sessions, 58 nodes, 30 edges — PERSISTED) |
+| Audio Frontend | 3005 | ✅ 200 |
+| CG Web | 3006 | ✅ 200 |
+| Synthesis UI | 3007 | ✅ 200 |
+| JCI Portal | 8080 | ✅ 200 |
+
+### Tests — 462/462 Passing ✅
+- `projects/synthesis/`: **462/462 vitest** ✅ (all 14 test files)
+
+### Git — Pushed ✅
+- **Commit `6e67677`**: fix(synthesis): correct KGStorage DATA_DIR path (4→3 up from file)
+
+### 🚨 ALL P0 ITEMS STILL BLOCKED ON USER ACTION
+| # | Item | Blocker |
+|---|------|---------|
+| 1 | **OpenRouter credits** | openrouter.ai → add $5–10 (Perplexity also affected) |
+| 2 | **Audio Tool → Vercel** | vercel.com → import Crypt0n1t369/Insight → add env vars |
+| 3 | **CG Test 0.1 — Review + recruit** | Review `TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants |
+| 4 | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks |
+| 5 | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
+| 6 | **CG Telegram bot token** | BotFather → new token |
+| 7 | **Solar Scout: SMTP** | Configure `SMTP_HOST`, `SMTP_USER`, `SENDER_*` env vars |
+| 8 | **Solar Scout: Tier 2 verify** | Lursoft.lv login required (10 companies, ~24 MW potential) |
+| 9 | **Supabase session persistence** | User creates Supabase project → schema ready, implementation blocked |
+
+### What's Next (Priority Order)
+1. **Configure Solar Scout SMTP** → fires 36 emails (82.6 MW ready, highest near-term ROI)
+2. **Review CG Phase 0 materials** → approve TEST_01 or request changes
+3. **Add OpenRouter credits** → restores AI features + web search
+4. **Deploy Audio Tool to Vercel** → public URL + Telegram integration
+5. **Create Supabase project** → unlocks P2 implementation (schema already drafted)
+
+---
+
 ## 2026-03-28 06:26 Cairo (04:26 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ All 8 Services Healthy / 462/462 Synthesis Tests Pass / Git Clean / Supabase Schema Drafted
