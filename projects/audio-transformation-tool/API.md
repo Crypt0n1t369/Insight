@@ -38,7 +38,7 @@ Returns all 9 supported clinical protocols.
 }
 ```
 
-**Protocols:** NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE
+**Protocols (10):** NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL
 
 ---
 
@@ -139,6 +139,7 @@ Generates a meditation session with protocol-specific scripts.
 | NVC | 5 |
 | IDENTITY | 5 |
 | NARRATIVE | 5 |
+| GENERAL | 6 |
 
 ---
 
