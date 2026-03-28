@@ -82,6 +82,7 @@ export class KGStorage {
       clearTimeout(this.saveTimer);
       this.saveTimer = null;
     }
+    this.dirty = true; // Ensure saveSync() persists regardless of dirty flag state
     this.saveSync();
   }
 
