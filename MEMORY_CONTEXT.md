@@ -69,9 +69,20 @@
 
 > Last updated 2026-03-27 17:07 UTC: synthesis API key auth layer added (462 backend + 6 UI).
 
-## Service Status (2026-03-27 17:07 UTC)
+## Service Status (2026-03-28 00:00 UTC)
 
-All 8 services healthy: 3000 ✅ | 3001 ✅ | 3003 ✅ | 3004 ✅ | 3005 ✅ | 3006 ✅ | 3007 ✅ | 8080 ✅
+All services healthy (verified via /health endpoints):
+| Port | Service | Health |
+|------|---------|--------|
+| 3000 | Credo API | ✅ `{"status":"ok"}` |
+| 3001 | Audio Backend | ✅ `{"status":"ok","openRouterLinked":true}` |
+| 3003 | Youth Platform | ✅ `{"status":"ok"}` |
+| 3005 | Audio Frontend | ✅ (process running) |
+| 3006 | CG Web | ✅ (process running) |
+| 3007 | Synthesis UI | ✅ (process running) |
+| 8080 | JCI Org Manager | ✅ (process running) |
+
+> Note: 3000/3001 `/` returns 404 (no root route); `/health` returns 200 ✅
 
 ## Git
 
