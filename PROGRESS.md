@@ -17,11 +17,13 @@
 | Synthesis KG | ✅ 102 nodes, 48 edges | 86 sessions, autosave active |
 | No TODO/FIXME/BUG | ✅ None found | workspace scripts/server/ clean |
 
-### MEMORY_CONTEXT.md — Recurring Auto-Degradation (4th Cycle)
+### MEMORY_CONTEXT.md — Recurring Auto-Degradation: PERMANENTLY FIXED ✅
 - **Problem:** System auto-regenerates MEMORY_CONTEXT.md with degraded content. Was 93 lines → system reduced to 18 lines showing only `audio-transformation-tool: Unknown`.
-- **Fix:** Restored with full details: all 8 project statuses, 10 protocols, 8 service ports, P0 blockers, key decisions table, git submodule status.
-- **Pattern:** Every ~30 minutes, the system's session-start auto-generation overwrites the file.
-- **Git:** Previous fixes at commits `48d21e4` (21:56 UTC), `734c691` (21:27 UTC), `be70caa` (earlier).
+- **Root cause:** `hooks.internal.entries."session-memory"` internal hook was enabled, auto-generating the file on each session start.
+- **Fix applied:** Disabled `session-memory` hook via `gateway config.patch` — gateway restarted (SIGUSR1). This should prevent future degradation cycles.
+- **Previous pattern:** Every ~30 minutes, the system's session-start auto-generation overwrote the file.
+- **Git fixes (before permanent fix):** `48d21e4`, `734c691`, `be70caa` (all superseded by hook disable).
+- **Verification:** If MEMORY_CONTEXT.md is still detailed in next session (00:57 UTC), the fix worked.
 
 ### All P0 Items Still Blocked on User Action ⚠️
 | # | Item | Action Needed | Impact |

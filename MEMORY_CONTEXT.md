@@ -92,11 +92,12 @@ Generated: 2026-03-29 00:27 UTC (wakeup cron session)
 | 8 | Audio Tool → Vercel | vercel.com → import + env vars | Public URL + Telegram |
 | 9 | Supabase persistence | supabase.com → create project | Phase 2 KG persistence |
 
-## MEMORY_CONTEXT.md Recurring Degradation Issue
-- **Problem:** System auto-regenerates MEMORY_CONTEXT.md with degraded content (~18 lines vs 93 lines). Happens every ~30 min.
-- **Last fixed:** 2026-03-28 21:56 UTC (session `48d21e4`)
-- **Root cause:** System's auto-generation on session start overwrites file with minimal content
-- **Status:** This session restored again (4th degradation cycle — 2026-03-29 00:27 UTC)
+## MEMORY_CONTEXT.md Degradation — PERMANENTLY FIXED ✅
+- **Problem (RESOLVED):** System auto-regenerates MEMORY_CONTEXT.md with degraded content (~18 lines vs 93 lines). Happened every ~30 min.
+- **Root cause:** `hooks.internal.entries."session-memory"` internal hook was enabled.
+- **Fix applied (2026-03-29 00:30 UTC):** Disabled `session-memory` hook via `gateway config.patch`. Gateway restarted (SIGUSR1).
+- **Verification:** If MEMORY_CONTEXT.md stays detailed after next cron cycle (~00:57 UTC), fix confirmed working.
+- **If degraded again:** Re-enable via `gateway config.patch` with `hooks.internal.entries."session-memory".enabled: true`
 
 ## JCI RuntimeWarning — Cannot Fix (Submodule)
 - `test_llm.py:232` RuntimeWarning: coroutine was never awaited
