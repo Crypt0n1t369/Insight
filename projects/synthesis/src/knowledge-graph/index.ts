@@ -105,6 +105,11 @@ export function getStats(): { nodes: number; edges: number; byType: Record<strin
   return getStorage().stats();
 }
 
+/** Force-persist the in-memory KG to the JSON snapshot file (bypasses debounce). */
+export function forceSave(): void {
+  getStorage().forceSave();
+}
+
 export function resetStorage(): void {
   _resetStorage();
   initialized = false;

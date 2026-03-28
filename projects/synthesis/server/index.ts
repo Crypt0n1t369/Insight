@@ -14,6 +14,7 @@
  *   POST /api/sessions        — run a synthesis session (returns final result)
  *   POST /api/sessions/stream — run a synthesis session (SSE streaming)
  *   GET  /api/kg/query        — query the knowledge graph
+ *   POST /api/kg/force-save   — force-persist KG to disk (bypass debounce)
  *   GET  /api/sessions/:id    — get session from KG
  *   GET  /api/stats           — platform statistics
  */
@@ -24,6 +25,7 @@ import { randomUUID } from 'crypto';
 
 import { getOrchestrator, runSynthesisSession } from '../src/platform/index.js';
 import type { SessionStartInput, KGQuery } from '../src/platform/types.js';
+import { forceSave as kgForceSave, getSnapshot as kgGetSnapshot } from '../src/knowledge-graph/index.js';
 import { listImplementedProtocols } from '../src/specialist-agents/index.js';
 import { requireApiKey } from './middleware/auth.js';
 
@@ -278,6 +280,25 @@ app.get('/api/stats', (_req: Request, res: Response) => {
   const stats = orchestrator.getStats();
 
   res.json(stats);
+});
+
+/**
+ * POST /api/kg/force-save — force-persist the in-memory KG to disk (bypasses debounce).
+ * Useful for diagnostics and for ensuring session data survives server restarts.
+ */
+app.post('/api/kg/force-save', (_req: Request, res: Response) => {
+  kgForceSave();
+  const snap = kgGetSnapshot();
+  res.json({
+    saved: true,
+    nodeCount: snap.nodes.length,
+    edgeCount: snap.edges.length,
+    savedAt: snap.savedAt,
+    byType: snap.nodes.reduce<Record<string, number>>((acc, n) => {
+      acc[n.type] = (acc[n.type] ?? 0) + 1;
+      return acc;
+    }, {}),
+  });
 });
 
 // ─── Start ────────────────────────────────────────────────────────────────────

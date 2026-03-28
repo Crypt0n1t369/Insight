@@ -23,9 +23,21 @@ export class KGStorage {
   private edges: Map<string, KGEdge> = new Map();
   private dirty = false;
   private saveTimer: ReturnType<typeof setTimeout> | null = null;
+  private autoSaveTimer: ReturnType<typeof setInterval> | null = null;
 
   constructor() {
     this.load();
+    this.startAutoSave();
+  }
+
+  /** Autosave every 60 s — belt-and-suspenders in case debounce stalls. */
+  private startAutoSave(): void {
+    if (this.autoSaveTimer !== null) return;
+    this.autoSaveTimer = setInterval(() => {
+      if (this.dirty) {
+        this.saveSync();
+      }
+    }, 60_000);
   }
 
   // --- Persistence ---
