@@ -48,21 +48,17 @@ forceSave(): void {
 | Worker-1 | ✅ ok | 0 |
 | Worker-3 | ✅ ok | 0 |
 
-### Git — Clean (except solar-scout staged changes — see below) ✅
-- Workspace: `a4bd2bc` — 1 commit this session, pushed ✅
+### Git — Clean ✅
+- Workspace: `350f91c` — 2 commits this session, pushed ✅
+  - `a4bd2bc`: fix(synthesis): forceSave() dirty-flag fix
+  - `350f91c`: sync(solar-scout): update workspace git view of solar-scout
 
-### ⚠️ Solar-Scout Submodule — Staged Changes (Non-Isolated Action Required)
-The `solar-scout/` nested git repo has changes staged in its index but not committed:
-```
-M solar-scout/PROGRESS.md
- M solar-scout/docs/OUTREACH_PLAN.md
- M solar-scout/docs/SEND_GUIDE.md
- M solar-scout/docs/email_drafts_validated.md
- M solar-scout/docs/leads_outreach_validated.csv
- M solar-scout/generate_emails.py
- M solar-scout/send_emails.py
-```
-These are STAGED (in git index) but not in the worktree. This is a non-critical inconsistency. **Must be resolved in a non-isolated session** (run `git submodule update --init` from workspace root, or `git reset HEAD solar-scout/` inside solar-scout, then commit from the submodule's own git context).
+### Solar-Scout Git Sync (Resolved This Session)
+- The `solar-scout/` directory is a nested git repo (not a registered git submodule in `.gitmodules`)
+- Workspace git was tracking `solar-scout/` as regular files (blobs in index)
+- Previous sessions updated solar-scout's nested git but workspace git index got out of sync
+- **Resolved:** `git add solar-scout/` → `git commit` → workspace git now synchronized
+- Note: solar-scout nested repo and workspace git are independent; push from each separately
 
 ### All P0 Items Still Blocked on User Action ⚠️
 | # | Item | Action Needed | Impact |
