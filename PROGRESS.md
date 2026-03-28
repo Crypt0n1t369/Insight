@@ -1,5 +1,66 @@
 ---
 
+## 2026-03-28 06:26 Cairo (04:26 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ All 8 Services Healthy / 462/462 Synthesis Tests Pass / Git Clean / Supabase Schema Drafted
+
+**Careful deliberate session. All 8 services confirmed HTTP 200. Synthesis tests: 462/462 pass. Git clean. Drafted `docs/SUPABASE_SCHEMA.md` — full PostgreSQL schema + TypeScript interfaces + migration plan for synthesis session persistence. All P0 items remain blocked on user action.**
+
+### All Services — Healthy (04:26 UTC) ✅
+| Service | Port | HTTP |
+|---------|------|------|
+| Credo API | 3000 | ✅ 200 |
+| Audio Backend | 3001 | ✅ 200 |
+| Youth Platform | 3003 | ✅ 200 |
+| Synthesis API | 3004 | ✅ 200 |
+| Audio Frontend | 3005 | ✅ 200 |
+| CG Web | 3006 | ✅ 200 |
+| Synthesis UI | 3007 | ✅ 200 |
+| JCI Portal | 8080 | ✅ 200 |
+
+### Tests — 462/462 Passing ✅
+- `projects/synthesis/`: **462/462 vitest** ✅ (all 14 test files)
+
+### Git — Pushed ✅
+- **Commit `f9d1992`**: docs(synthesis) — draft Supabase schema for session persistence (P2)
+
+### What Was Done This Session
+**Supabase Schema Design — `projects/synthesis/docs/SUPABASE_SCHEMA.md` ✅**
+- Full PostgreSQL schema: `profiles`, `sessions`, `session_events`, `kg_nodes`, `kg_edges`, `contributions`, `credibility_scores`
+- TypeScript interfaces matching existing `types.ts` (backward compatible)
+- `KGDatabaseAdapter` interface (storage swap without changing `KGStorage` API)
+- 3-phase migration plan: dual-write → read-from-Supabase → full Supabase with RLS
+- Ready to implement the moment user creates Supabase project
+
+### What's Buildable Right Now (No User Action Needed)
+| Item | Notes |
+|------|-------|
+| Supabase schema design | ✅ Drafted — `docs/SUPABASE_SCHEMA.md` |
+| Phase 1 adapter | Can implement once Supabase project exists |
+| Synthesis P2 items | All require Supabase project setup first |
+
+### 🚨 ALL P0 ITEMS STILL BLOCKED ON USER ACTION
+| # | Item | Blocker |
+|---|------|---------|
+| 1 | **OpenRouter credits** | openrouter.ai → add $5–10 (Perplexity also affected) |
+| 2 | **Audio Tool → Vercel** | vercel.com → import Crypt0n1t369/Insight → add env vars |
+| 3 | **CG Test 0.1 — Review + recruit** | Review `TEST_01_INTERVIEW_SCRIPT.md`, recruit 10–12 participants |
+| 4 | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks |
+| 5 | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
+| 6 | **CG Telegram bot token** | BotFather → new token |
+| 7 | **Solar Scout: SMTP** | Configure `SMTP_HOST`, `SMTP_USER`, `SENDER_*` env vars |
+| 8 | **Solar Scout: Tier 2 verify** | Lursoft.lv login required (10 companies, 22.4 MW) |
+| 9 | **Supabase session persistence** | User creates Supabase project → schema ready, implementation blocked |
+
+### What's Next (Priority Order)
+1. **Configure Solar Scout SMTP** → fires 36 emails (82.6 MW ready, highest near-term ROI)
+2. **Review CG Phase 0 materials** → approve TEST_01 or request changes
+3. **Add OpenRouter credits** → restores AI features + web search
+4. **Deploy Audio Tool to Vercel** → public URL + Telegram integration
+5. **Create Supabase project** → unlocks P2 implementation (schema already drafted)
+
+---
+
 ## 2026-03-28 05:56 Cairo (03:56 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ All Services Healthy / 496/496 Tests Pass / All P0 Items Blocked on User Action / Web Search Unavailable
