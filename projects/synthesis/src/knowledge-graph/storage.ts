@@ -8,8 +8,8 @@ import type { KGNode, KGEdge, KGStorageSnapshot } from './types.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // workspace root = projects/synthesis/src/knowledge-graph/storage.ts
-// 4 up = workspace root, then data/synthesis
-const DATA_DIR = join(__dirname, '../../../../../data/synthesis');
+// 3 up = workspace root, then data/synthesis
+const DATA_DIR = join(__dirname, '../../../../data/synthesis');
 const SNAPSHOT_FILE = join(DATA_DIR, 'knowledge-graph.json');
 
 function ensureDataDir(): void {
