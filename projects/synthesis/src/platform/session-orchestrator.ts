@@ -37,6 +37,9 @@ import {
   type ContributionType,
 } from '../credibility-engine/index.js';
 
+import { getKGDatabase } from '../knowledge-graph/database-storage.js';
+import type { DBSession, DBSessionEvent } from './database/types.js';
+
 import type {
   SessionResult,
   SessionStartInput,
@@ -178,6 +181,43 @@ export class SessionOrchestrator {
         eventCount: events.length,
         confidence,
       });
+    }
+
+    // ── Step 6: Persist session + events to DB (when Supabase is primary) ─
+    // Safe to call unconditionally: no-ops in JSON-file mode.
+    // When Supabase is active, sessions land in the sessions table with full event history.
+    if (input.recordToKg !== false) {
+      const db = await getKGDatabase();
+      if (db.isSupabasePrimary()) {
+        const dbSession: DBSession = {
+          id: sessionId,
+          profileId: input.userId,
+          protocol: selectedProtocol,
+          startedAt,
+          completedAt,
+          eventCount: events.length,
+          confidence,
+          routingReasoning: reasoning,
+          detectedEmotion: contextPackage.detectedEmotion,
+          emotionReasoning: routeOutput.reasoning,
+          recordToKg: input.recordToKg !== false,
+          recordContribution: input.recordContribution !== false,
+          contributionId,
+          createdAt: startedAt,
+        };
+        const dbEvents: DBSessionEvent[] = events.map((e, i) => ({
+          id: undefined, // SERIAL — assigned by DB
+          sessionId,
+          type: e.type as 'guidance' | 'prompt' | 'transition' | 'completion',
+          phase: e.phase,
+          audioUrl: e.audioUrl,
+          transcript: e.transcript,
+          duration: e.durationMs ? Math.round(e.durationMs / 1000) : undefined,
+          metadata: {},
+          createdAt: new Date(Date.now() + i * 1000).toISOString(), // approximate per-event timestamps
+        }));
+        await db.saveSession(dbSession, dbEvents);
+      }
     }
 
     return {

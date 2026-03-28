@@ -303,8 +303,9 @@ SUPABASE_SERVICE_KEY=your-service-role-key  # server-side only
 - [ ] Schema applied (`supabase/schema.sql`)
 - [x] Phase 1 adapter interface implemented (`src/knowledge-graph/database-storage.ts`)
 - [x] Phase 1 tests written (33 tests — `__tests__/database-storage.test.ts`)
+- [x] Orchestrator wired: `runSession()` calls `db.saveSession()` when Supabase is primary
+- [ ] JSON → Supabase migration run (`scripts/migrate-json-to-supabase.ts`)
 - [ ] Phase 1 deployed to production (requires user to create Supabase project)
-- [ ] JSON → Supabase migration run
 - [ ] Phase 2/3 (future)
 
 ## Implementation Notes
@@ -314,12 +315,14 @@ SUPABASE_SERVICE_KEY=your-service-role-key  # server-side only
 - `src/knowledge-graph/database-storage.ts` — `KGDatabaseAdapter` interface + `KGStoragePassthroughAdapter` (default) + `SupabaseKGStorage` (Phase 2)
 - `getKGDatabase()` factory: activates Supabase only when `DATABASE_ADAPTER=supabase` env var is set
 - When Supabase not configured: passthrough to existing JSON-file KGStorage (transparent, no behavior change)
+- Orchestrator wired: `runSession()` calls `db.saveSession(dbSession, dbEvents)` after KG recording — only fires when Supabase is primary (safe no-op in JSON mode)
+- Migration script: `scripts/migrate-json-to-supabase.ts` — bulk-upserts existing KG nodes/edges/sessions to Supabase (idempotent, one-time)
 
 **To activate Supabase (Phase 2):**
 1. User creates Supabase project at supabase.com
 2. Apply schema: `supabase/schema.sql`
 3. Set env vars: `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, `DATABASE_ADAPTER=supabase`
-4. Run migration: `scripts/migrate-json-to-supabase.ts` (one-time)
+4. Run migration: `SUPABASE_URL=xxx SUPABASE_SERVICE_KEY=xxx npx tsx scripts/migrate-json-to-supabase.ts` (one-time)
 
 ---
 
