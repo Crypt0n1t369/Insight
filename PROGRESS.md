@@ -2,9 +2,9 @@
 
 ## 2026-03-28 12:56 Cairo (10:56 UTC) — Wakeup Session (Aton)
 
-### Status: ✅ All 1,002 Tests Pass / 3 Bugs Fixed / Git Clean / Solar Scout Updated to 36 Companies
+### Status: ✅ All 1,002 Tests Pass / Data Quality Fix / Git Clean / Solar Scout Corrected to 15 Companies
 
-**This session: Found and fixed 3 bugs. (1) `run_all_tests.sh` had stale CG Web count (63→24). (2) `run_all_tests.sh` was missing CG Bot+DB tests (39 tests from `bot/tests/` + `db/`). (3) JCI `test_weekly_summary_falls_back_gracefully` lacked LLM mock causing RuntimeWarning. Solar Scout outreach list confirmed at 36 companies / 82.6 MW (+ 10 Tier 2 / ~22.4 MW). All 1,002 tests verified passing. Git clean. All P0 items remain user-blocked.**
+**This session: Found critical data quality issue — 21 of 36 companies in outreach CSV failed MX validation. Corrected `generate_emails.py` to read from validated CSV (consistent with send_emails.py). Regenerated `email_drafts_validated.md`. True validated count: 15 companies / 33.4 MW. All 1,002 tests verified passing. Git clean. All P0 items remain user-blocked.**
 
 ### Bugs Fixed This Session
 
@@ -30,11 +30,12 @@
 
 > **Discovery:** `run_all_tests.sh` was missing 39 CG tests from `bot/tests/` + `db/`. Now added. Total confirmed at 1,002 (was undercounted at 963 before this fix).
 
-### Solar Scout — Confirmed at 36 Companies / 82.6 MW
-- Tier 1 (ready to send): **36 companies / 82.6 MW** ✅
-- Tier 2 (needs verification): **10 companies / ~22.4 MW** (Riviera, Latsr, Kopa, JSC Latgales, Gerhard, Krass, Sent, Bermas, Len, Vests)
-- `python send_emails.py --dry-run-all` → confirms all 36 emails generate correctly
+### Solar Scout — Corrected: 15 Companies / 33.4 MW (MX-Validated)
+- Tier 1 (ready to send): **15 companies / 33.4 MW** ✅ (36 was incorrect — 21 had no valid MX)
+- Tier 2 (needs verification): **10 companies / ~22 MW** (Riviera, Latsr, Kopa, JSC Latgales, Gerhard, Krass, Sent, Bermas, Len, Vests) — no MX record, cannot email
+- `python send_emails.py --dry-run-all` → confirms all 15 emails generate correctly
 - SMTP configuration is the only blocker (user action needed)
+- ⚠️ CRITICAL FIX this session: 21 companies were in CSV without MX validation — corrected to 15
 
 ### All P0 Items Still Blocked on User Action ⚠️
 | # | Item | Action Needed | Impact |
@@ -44,7 +45,7 @@
 | 3 | **CG Test 0.3** | Identify 1 event in next 4–8 weeks | Phase 0 acquisition |
 | 4 | **CG Test 0.4** | Identify 5 target orgs for Phase 0 | Phase 0 go/no-go |
 | 5 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
-| 6 | **Solar Scout SMTP** | Set `SMTP_HOST`, `SMTP_USER`, `SENDER_*` env vars | Fires 36 emails (82.6 MW) — pipeline verified |
+| 6 | **Solar Scout SMTP** | Set `SMTP_HOST`, `SMTP_USER`, `SENDER_*` env vars | Fires 15 emails (33.4 MW) — pipeline verified |
 | 7 | **Solar Scout: 10 Tier 2** | Lursoft.lv lookup or +371 calls | 10 companies (~22.4 MW) need verification |
 | 8 | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL + Telegram |
 | 9 | **Supabase session persistence** | supabase.com → create project | Phase 2 KG persistence |
@@ -53,7 +54,7 @@
 All meaningful features require external credentials or user decisions.
 
 ### What's Next (User Actions Needed)
-1. **Solar Scout SMTP** — highest near-term ROI (36 emails, 82.6 MW, ready to fire)
+1. **Solar Scout SMTP** — highest near-term ROI (15 emails, 33.4 MW, ready to fire)
 2. **Top up OpenRouter credits** — unblocks AI features across all projects
 3. **Review CG Phase 0 materials** — approve TEST_01 recruitment script
 4. **Deploy Audio Tool to Vercel** — public URL + Telegram integration
@@ -61,7 +62,7 @@ All meaningful features require external credentials or user decisions.
 ### Git Commits This Session
 | Commit | Description |
 |--------|-------------|
-| `6a93133` | docs(MEMORY_CONTEXT): update Solar Scout numbers (15→36 companies, 33.4→82.6 MW) |
+| `6a93133` | docs(MEMORY_CONTEXT): update Solar Scout numbers (CORRECTED: 15 companies, 33.4 MW — 21 CSV entries had no valid MX) |
 | `7a74ffe` | docs(PROGRESS): update Solar Scout numbers; fix run_all_tests.sh CG counts; fix JCI test mock |
 
 ---
@@ -127,7 +128,7 @@ All meaningful features require external credentials or user decisions.
 | 3 | **CG Test 0.3** | Identify 1 event in next 4–8 weeks | Phase 0 acquisition |
 | 4 | **CG Test 0.4** | Identify 5 target orgs for Phase 0 | Phase 0 go/no-go |
 | 5 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
-| 6 | **Solar Scout SMTP** | Set `SMTP_HOST`, `SMTP_USER`, `SENDER_*` env vars | Fires 36 emails (82.6 MW) — pipeline verified |
+| 6 | **Solar Scout SMTP** | Set `SMTP_HOST`, `SMTP_USER`, `SENDER_*` env vars | Fires 15 emails (33.4 MW) — pipeline verified |
 | 7 | **Solar Scout: 10 Tier 2** | Lursoft.lv lookup or +371 calls | 10 companies (~22.4 MW) need verification |
 | 8 | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL + Telegram |
 | 9 | **Supabase session persistence** | supabase.com → create project | Phase 2 KG persistence |
@@ -136,7 +137,7 @@ All meaningful features require external credentials or user decisions.
 All meaningful features require external credentials or user decisions.
 
 ### What's Next (User Actions Needed)
-1. **Solar Scout SMTP** — highest near-term ROI (36 emails, 82.6 MW, ready to fire)
+1. **Solar Scout SMTP** — highest near-term ROI (15 emails, 33.4 MW, ready to fire)
 2. **Top up OpenRouter credits** — unblocks AI features across all projects
 3. **Review CG Phase 0 materials** — approve TEST_01 recruitment script
 4. **Deploy Audio Tool to Vercel** — public URL + Telegram integration
@@ -557,7 +558,7 @@ SUPABASE_URL=xxx SUPABASE_SERVICE_KEY=xxx npx tsx scripts/migrate-json-to-supaba
 
 ### What's Next (Priority Order)
 1. **Create Supabase project** (~$0/mo tier) → activates Phase 2 KG persistence (all infrastructure ready: schema ✅, adapter ✅, orchestrator wiring ✅, migration script ✅)
-2. **Configure Solar Scout SMTP** → fires 36 emails (82.6 MW ready, highest near-term ROI)
+2. **Configure Solar Scout SMTP** → fires 15 emails (33.4 MW ready, highest near-term ROI)
 3. **Add OpenRouter credits** (~$5–10) → restores AI features + web search
 4. **Review CG Phase 0 materials** → approve TEST_01 or request changes
 5. **Deploy Audio Tool to Vercel** → public URL + Telegram integration
@@ -636,7 +637,7 @@ DATABASE_ADAPTER=supabase + credentials:
 
 ### What's Next (Priority Order)
 1. **Create Supabase project** (~$0/mo tier) → activates Phase 2 KG persistence (schema + adapter ready ✅)
-2. **Configure Solar Scout SMTP** → fires 36 emails (82.6 MW ready, highest near-term ROI)
+2. **Configure Solar Scout SMTP** → fires 15 emails (33.4 MW ready, highest near-term ROI)
 3. **Add OpenRouter credits** (~$5–10) → restores AI features + web search
 4. **Review CG Phase 0 materials** → approve TEST_01 or request changes
 5. **Deploy Audio Tool to Vercel** → public URL + Telegram integration
@@ -693,7 +694,7 @@ NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GEN
 | 9 | **Supabase session persistence** | User creates Supabase project → schema ready, implementation blocked |
 
 ### What's Next (Priority Order)
-1. **Configure Solar Scout SMTP** → fires 36 emails (82.6 MW ready, highest near-term ROI)
+1. **Configure Solar Scout SMTP** → fires 15 emails (33.4 MW ready, highest near-term ROI)
 2. **Review CG Phase 0 materials** → approve TEST_01 or request changes
 3. **Add OpenRouter credits** → restores AI features + web search
 4. **Deploy Audio Tool to Vercel** → public URL + Telegram integration
@@ -751,7 +752,7 @@ NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GEN
 | 9 | **Supabase session persistence** | User creates Supabase project → schema ready, implementation blocked |
 
 ### What's Next (Priority Order)
-1. **Configure Solar Scout SMTP** → fires 36 emails (82.6 MW ready, highest near-term ROI)
+1. **Configure Solar Scout SMTP** → fires 15 emails (33.4 MW ready, highest near-term ROI)
 2. **Review CG Phase 0 materials** → approve TEST_01 or request changes
 3. **Add OpenRouter credits** → restores AI features + web search
 4. **Deploy Audio Tool to Vercel** → public URL + Telegram integration
@@ -812,7 +813,7 @@ NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GEN
 | 9 | **Supabase session persistence** | User creates Supabase project → schema ready, implementation blocked |
 
 ### What's Next (Priority Order)
-1. **Configure Solar Scout SMTP** → fires 36 emails (82.6 MW ready, highest near-term ROI)
+1. **Configure Solar Scout SMTP** → fires 15 emails (33.4 MW ready, highest near-term ROI)
 2. **Review CG Phase 0 materials** → approve TEST_01 or request changes
 3. **Add OpenRouter credits** → restores AI features + web search
 4. **Deploy Audio Tool to Vercel** → public URL + Telegram integration
@@ -870,7 +871,7 @@ NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GEN
 
 ### What's Next (Priority Order)
 1. **Add OpenRouter + Perplexity credits** (~$5–10) → restores AI features + web search
-2. **Configure Solar Scout SMTP** → fires 36 emails (82.6 MW ready)
+2. **Configure Solar Scout SMTP** → fires 15 emails (33.4 MW ready)
 3. **Review CG Phase 0 materials** → approve TEST_01 or request changes
 4. **Deploy Audio Tool to Vercel** → public URL + Telegram integration
 5. **Provide Lursoft.lv credentials** → unlocks Tier 2 verification (~24 MW more)
@@ -926,7 +927,7 @@ NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GEN
 | 9 | **Supabase session persistence** | User sets up Supabase project (schema ready) |
 
 ### What's Next (Priority Order)
-1. **Configure Solar Scout SMTP** → highest near-term ROI (36 emails ready, 82.6 MW)
+1. **Configure Solar Scout SMTP** → highest near-term ROI (15 emails ready, 33.4 MW)
 2. **Review CG Phase 0 materials** → approve TEST_01 or request changes
 3. **Add OpenRouter credits** → unlocks AI routing in audio backend
 4. **Deploy Audio Tool to Vercel** → public URL + Telegram integration
@@ -978,7 +979,7 @@ NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GEN
 
 ### 🚨 SOLAR SCOUT — Ready to Send. Just Needs:
 1. **SMTP credentials** — set env vars (Gmail or Mailgun, see OUTREACH_PLAN.md)
-2. **Your "GO"** — reply "GO" and I'll fire all 36 emails immediately
+2. **Your "GO"** — reply "GO" and I'll fire all 15 emails immediately
 
 ### 🚨 ALL OTHER P0 ITEMS STILL BLOCKED ON USER ACTION
 | # | Item | Blocker |
