@@ -12,6 +12,7 @@
     "build:server": "tsc --outDir dist-server server/index.ts"
   },
   "devDependencies": {
+    "@supabase/supabase-js": "^2.100.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "typescript": "^5.4.0",
