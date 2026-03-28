@@ -1,5 +1,84 @@
 ---
 
+## 2026-03-28 11:26 Cairo (09:26 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ All Services Healthy / 1,019 Tests Pass / CG Web Tests Fixed / Wakeup Cron Erroring (Isolated Edit Tool)
+
+**This session: Full system check. Fixed CG web tests (flask missing from research venv → installed, 110 tests now pass). All 9 services healthy. Git clean. Wakeup cron has 6 consecutive errors — isolated session can't use edit tool → falls back to parent (busy with this conversation) → cron can't deliver. All P0 items remain user-blocked.**
+
+### What Was Fixed
+- **CG web tests**: `source ~/.venv/research/bin/activate && pip install flask flask-cors` → web/test_web.py now runs (63 tests added). CG total: 47 → **110 tests passing**.
+
+### Verification Results
+
+| Check | Result | Details |
+|-------|--------|---------|
+| All services health (8 ports) | ✅ All OK | 3000/3001/3003/3004/3005/3006/3007/8080 return 200 |
+| Synthesis tests | ✅ 495/495 | 15 vitest files |
+| Workspace server tests | ✅ 34/34 | vitest |
+| Audio backend tests | ✅ 17/17 | code/server/ vitest |
+| CG tests | ✅ 110/110 | pytest (flask fixed) |
+| JCI tests | ✅ 62/62 | pytest (2 RuntimeWarnings — non-blocking) |
+| Festival tests | ✅ 140/140 | pytest |
+| Youth tests | ✅ 24/24 | pytest |
+| Credo tests | ✅ 137/137 | vitest |
+| Git state | ✅ Clean | No changes to commit |
+| **Total** | **1,019 tests** | ✅ |
+
+### ⚠️ Wakeup Cron Job Failing (6 Consecutive Errors)
+
+**Problem:** `Wakeup` cron (id: `07bca1cf`) runs every 30 min but fails with:
+```
+Edit tool failed in isolated session - switching to parent
+```
+- Configured `sessionTarget: parent` (correct), but system first attempts isolated run
+- Isolated session can't use edit tool → falls back to `parent`
+- Parent session is occupied → cron job can't deliver → `lastDeliveryStatus: not-delivered`
+- 6 consecutive errors, `lastRunStatus: error`
+
+**Workers status:**
+| Worker | Enabled | Session | Status | Notes |
+|--------|---------|---------|--------|-------|
+| Wakeup | ✅ | parent | ❌ error (6x) | Edit fails in isolated → parent busy |
+| Worker-1 | ❌ | isolated | error | DISABLED — edit fails in isolated |
+| Worker-2 | ❌ | isolated | error | DISABLED — edit fails in isolated |
+| Worker-3 | ✅ | isolated | ✅ ok | Doesn't edit files — only reads |
+
+**Action needed:** Either (a) fix the cron to not attempt isolated run first, or (b) make the Wakeup prompt not use the edit tool (e.g., switch to `sessionTarget: isolated` and remove all edit references).
+
+### Minor Non-Blocking Issues
+
+| Issue | Severity | Notes |
+|-------|----------|-------|
+| `google-gemini-cli-auth` stale warning | MINOR | OpenClaw plugin auth check — not in workspace files, non-service-affecting |
+| `groupAllowFrom empty` | MINOR | Telegram group allowlist not configured |
+| JCI RuntimeWarnings | MINOR | 2 RuntimeWarnings in test_llm.py — tests pass (62/62), not functional |
+
+### P0 Items (All User-Blocked — No Change)
+
+| # | Item | Action Needed | Impact |
+|---|------|---------------|--------|
+| 1 | **OpenRouter credits** | openrouter.ai → add $5–10 | AI features blocked (402 error) |
+| 2 | **CG Test 0.1** | Review `TEST_01_INTERVIEW_SCRIPT.md` + recruit 10–12 participants | Phase 0 go/no-go |
+| 3 | **CG Test 0.3** | Identify 1 event in next 4–8 weeks | Phase 0 acquisition |
+| 4 | **CG Test 0.4** | Identify 5 target orgs for Phase 0 | Phase 0 go/no-go |
+| 5 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+| 6 | **Solar Scout SMTP** | Set `SMTP_HOST`, `SMTP_USER`, `SENDER_*` env vars | Fires 15 emails (33.4 MW) |
+| 7 | **Solar Scout: 11 unknowns** | Lursoft.lv lookup or +371 calls | Could add ~24 MW |
+| 8 | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL + Telegram |
+| 9 | **Supabase session persistence** | supabase.com → create project | Phase 2 KG persistence |
+
+### What's Buildable Right Now
+**Nothing significant** — all meaningful features require external credentials or user decisions.
+
+### What's Next (User Actions Needed)
+1. **Solar Scout SMTP** — highest near-term ROI (33.4 MW, code ready to fire)
+2. **Top up OpenRouter credits** — unblocks AI features across all projects
+3. **Review CG Phase 0 materials** — approve TEST_01 recruitment script
+4. **Fix Wakeup cron** — change prompt to not use edit tool, or fix isolated-session edit limitation
+
+---
+
 ## 2026-03-28 10:56 Cairo (08:56 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ Git Clean / All Tests Pass / All 9 Services Healthy / P0 Items Unchanged (User-Blocked)
