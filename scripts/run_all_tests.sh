@@ -13,8 +13,11 @@ echo "=== Festival Coordinator (140 tests) ==="
 echo "=== Contribution Graph - API (47 tests) ==="
 (cd "${WORKSPACE}/projects/contribution-graph" && source "${VENV}" && python -m pytest tests/ -q)
 
-echo "=== Contribution Graph - Web (63 tests) ==="
+echo "=== Contribution Graph - Web (24 tests) ==="
 (cd "${WORKSPACE}/projects/contribution-graph" && source "${VENV}" && python -m pytest web/ -q)
+
+echo "=== Contribution Graph - Bot+DB (39 tests) ==="
+(cd "${WORKSPACE}/projects/contribution-graph" && source "${VENV}" && python -m pytest bot/tests/ db/ -q)
 
 echo "=== JCI Org Manager (62 tests) ==="
 (cd "${WORKSPACE}/projects/jci-org-manager" && source "${VENV}" && python -m pytest tests/ -q)

@@ -61,8 +61,8 @@
 | 3 | **CG Test 0.3** | Identify 1 event in next 4–8 weeks | Phase 0 acquisition |
 | 4 | **CG Test 0.4** | Identify 5 target orgs for Phase 0 | Phase 0 go/no-go |
 | 5 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
-| 6 | **Solar Scout SMTP** | Set `SMTP_HOST`, `SMTP_USER`, `SENDER_*` env vars | Fires 15 emails (33.4 MW) |
-| 7 | **Solar Scout: 11 unknowns** | Lursoft.lv lookup or +371 calls | Could add ~24 MW |
+| 6 | **Solar Scout SMTP** | Set `SMTP_HOST`, `SMTP_USER`, `SENDER_*` env vars | Fires 36 emails (82.6 MW) — pipeline verified |
+| 7 | **Solar Scout: 10 Tier 2** | Lursoft.lv lookup or +371 calls | 10 companies (~22.4 MW) need verification |
 | 8 | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL + Telegram |
 | 9 | **Supabase session persistence** | supabase.com → create project | Phase 2 KG persistence |
 
@@ -70,7 +70,7 @@
 All meaningful features require external credentials or user decisions.
 
 ### What's Next (User Actions Needed)
-1. **Solar Scout SMTP** — highest near-term ROI (33.4 MW, ready to fire)
+1. **Solar Scout SMTP** — highest near-term ROI (36 emails, 82.6 MW, ready to fire)
 2. **Top up OpenRouter credits** — unblocks AI features across all projects
 3. **Review CG Phase 0 materials** — approve TEST_01 recruitment script
 4. **Deploy Audio Tool to Vercel** — public URL + Telegram integration
