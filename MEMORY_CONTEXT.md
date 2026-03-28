@@ -3,16 +3,16 @@
 ## Active Projects
 
 ### Solar Scout
-- **Phase:** Outreach-ready — 15 validated companies (strict MX validation, 33.4 MW)
+- **Phase:** Outreach-ready — 36 validated companies (strict MX validation, 82.6 MW)
 - **Location:** `/home/drg/.openclaw/workspace/solar-scout/`
 - **Status:** 
-  - `docs/leads_outreach_validated.csv` — 15 companies, confirmed deliverable email, strict MX validation ✅
+  - `docs/leads_outreach_validated.csv` — 36 companies, confirmed deliverable email, strict MX validation ✅
   - `docs/email_drafts_validated.md` — 15 bilingual LV+EN email drafts ✅
   - `send_emails.py` — SMTP mail-merge sender (crash-resilient, per-email log) ✅
   - `docs/SEND_GUIDE.md` — Gmail/Mailgun/SendGrid setup guide ✅
   - Pipeline verified end-to-end: `regenerate_validated.py` → `generate_emails.py` → `send_emails.py --dry-run` ✅
   - DNS check confirms: all 11 "Manufacturing (likely)" companies have no valid MX (null/NO MX) — correctly filtered
-- **Data:** 15 validated companies / 33.4 MW
+- **Data:** 36 validated companies / 82.6 MW (+ 10 Tier 2, ~22.4 MW)
 - **Git:** `2a3e217` — latest pushed to origin/master ✅ (2026-03-27 20:26 UTC)
 
 ### Contribution Graph (CG — Kristaps' Life Work)
@@ -104,7 +104,7 @@ All services healthy (verified via /health endpoints):
 | **P0** | **CG Test 0.1 — Review script + recruit** | Review `projects/contribution-graph/TEST_01_INTERVIEW_SCRIPT.md` + recruit 10–12 participants |
 | **P0** | **CG Test 0.3 — Identify event** | Find 1 event in next 4–8 weeks |
 | **P0** | **CG Test 0.4 — Identify orgs** | 5 target orgs for Phase 0 |
-| **P1** | **Solar Scout SMTP** | Set SMTP env vars → `send_emails.py --dry-run-all` → `--test` → full send (15 companies, 33.4 MW) |
+| **P1** | **Solar Scout SMTP** | Set SMTP env vars → `send_emails.py --dry-run-all` → `--test` → full send (36 companies, 82.6 MW) |
 | **P1** | **CG Telegram bot token** | BotFather → new token → `TELEGRAM_BOT_TOKEN` for Phase 2 |
 | **P1** | **Audio Tool → Vercel** | vercel.com → import + env vars |
 
