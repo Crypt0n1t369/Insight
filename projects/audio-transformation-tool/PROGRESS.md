@@ -1,5 +1,64 @@
 # PROGRESS.md - Audio Transformation Tool
-*Updated — 2026-03-28 00:56 Cairo (22:56 UTC)*
+*Updated — 2026-03-28 13:57 Cairo (11:57 UTC)*
+
+---
+
+## 2026-03-28 11:57 UTC - Wakeup Session
+
+### Status: ✅ Frontend Protocol Tests Added / API Docs Fixed / All 43 Tests Passing
+
+**Careful, targeted improvements: added frontend test infrastructure, fixed API docs, verified everything works.**
+
+### What Was Done This Session
+1. ✅ **Frontend protocol tests added** — Created `services/protocols.test.ts` with 9 tests:
+   - All 10 protocols exported correctly
+   - Each protocol has required fields (id, name, description, systemInput, variables, sonicCues)
+   - Sonic cue frequencies in valid binaural range (1-40Hz)
+   - NSDR, IFS, GENERAL specifically validated
+   - All atmospheres valid (deep-space, rain, stream, silence)
+2. ✅ **Vitest config for frontend** — `code/vitest.config.ts` targets `services/**/*.test.ts`
+3. ✅ **API.md fixed** — Now documents all 10 protocols (was 9), added GENERAL's 6 demo batches to table
+4. ✅ **All tests pass:**
+   - Backend (workspace root `server/`): **34/34** ✅
+   - Frontend services (`code/`): **9/9** ✅
+   - Total: **43/43** tests passing
+5. ✅ **Services verified healthy:**
+   - Backend (3001): `{"status":"ok","openRouterLinked":true}` ✅
+   - Frontend (3005): HTTP 200 ✅
+6. ✅ **All 10 protocols verified live:**
+   - NSDR (6 batches), IFS (6), SOMATIC_AGENCY (5), ACT (5), FUTURE_SELF (5), WOOP (5), NVC (5), IDENTITY (5), NARRATIVE (5), GENERAL (6) ✅
+7. ✅ **Git committed:**
+   - Submodule `code/`: `84400d7` — "feat: add frontend protocol tests (9 tests) + vitest config"
+   - Parent repo: `10f7039` — sync submodule
+
+### Current System State
+| Component | Status |
+|-----------|--------|
+| Backend (port 3001) | ✅ Running, healthy |
+| Frontend (port 3005) | ✅ Running, HTTP 200 |
+| Backend tests | ✅ 34/34 passing |
+| Frontend protocol tests | ✅ 9/9 passing |
+| Demo mode (all 10 protocols) | ✅ Working |
+| Build | ✅ Succeeds (13.16s) |
+
+### What's Working End-to-End
+- `GET /health` → `{"status":"ok","openRouterLinked":true}`
+- `GET /api/protocols` → 10 protocols (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL)
+- `POST /api/chat` → Demo fallback with `meditationData` (NSDR)
+- `POST /api/director` → NSDR fallback
+- `POST /api/meditation/generate` → Protocol-specific demo batches (5-6 each)
+
+### ⚠️ BLOCKED — User Action Required
+1. **Deploy to Vercel** → vercel.com → import Crypt0n1t369/Insight → Deploy
+2. **Add OpenRouter credits** → credits exhausted; LLM features need credits
+
+### What's Next (Priority Order)
+1. **User deploys to Vercel** (P0 — user action needed)
+2. **Add OpenRouter credits** (P0 — user action needed)
+3. **Browser test** — verify full user flow in real browser (P1 — no browser in this environment)
+4. **Merge upstream commit 8562fd2** — improves duration calc, error handling, progress UX, voice mapping (P2 — deferred; conflicts with demo mode)
+5. **Add frontend API client tests** — test the fetch/API layer against live backend (P2)
+6. **Add remaining protocols** — TRAUMA_SAFE, BREATHWORK (P3 — defined in original spec, not yet in codebase)
 
 ---
 
