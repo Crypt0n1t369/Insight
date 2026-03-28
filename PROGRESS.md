@@ -1,5 +1,71 @@
 ---
 
+## 2026-03-28 17:45 Cairo (15:45 UTC) — Wakeup Session (Aton)
+
+### Status: ✅ KG Persistence Fixed / Autosave Added / 1,037 Tests Pass / Pushed
+
+**Found and fixed a critical KG persistence bug: sessions were never being saved to the JSON file. Root cause unclear (possible setInterval race in Node.js worker-thread context). Added 60-second autosave interval + force-save API endpoint. All 1,037 tests pass. All P0 items still blocked on user action.**
+
+### Bug Fixed — KG Storage Sessions Not Persisting
+
+**Problem:** The running Synthesis API server accumulated 86 sessions (102 KG nodes) in memory over 7 hours, but the JSON file at `data/synthesis/knowledge-graph.json` always showed only 16 seed nodes. Sessions were lost on server restart.
+
+**Root Cause:** The debounce timer (`setTimeout(500ms)`) was unreliable across the long-running server session. `saveSync()` was never observed firing despite thousands of session node additions.
+
+**Fix (3 parts):**
+| # | File | Change |
+|---|------|--------|
+| 1 | `src/knowledge-graph/storage.ts` | Added `startAutoSave()` — 60s `setInterval` that calls `saveSync()` if `dirty` |
+| 2 | `src/knowledge-graph/index.ts` | Added `forceSave()` export — bypasses debounce |
+| 3 | `server/index.ts` | Added `POST /api/kg/force-save` endpoint — manual persist + diagnostics |
+
+**Verification:**
+- Created test session → `POST /api/kg/force-save` → JSON file updated (17 nodes, 14 edges) ✅
+- Autosave interval active on every new KGStorage instance ✅
+- All 495 synthesis vitest tests still pass ✅
+
+**Git:** Committed `4f82fbd` — pushed to origin/master ✅
+
+### All Services — Healthy (15:45 UTC) ✅
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ |
+| Audio Backend | 3001 | ✅ |
+| Youth Platform | 3003 | ✅ |
+| Synthesis API | 3004 | ✅ (fresh — autosave active, force-save endpoint) |
+| Audio Frontend | 3005 | ✅ |
+| CG Web | 3006 | ✅ |
+| Synthesis UI | 3007 | ✅ |
+| JCI Portal | 8080 | ✅ |
+
+### Test Suite — 1,037/1,037 Pass ✅
+| Project | Tests | Result |
+|---------|-------|--------|
+| Synthesis Platform | 495 | ✅ vitest |
+| Credo Platform | 137 | ✅ vitest |
+| Audio Backend | 34 | ✅ vitest |
+| Festival Coordinator | 140 | ✅ pytest |
+| Contribution Graph | 110 | ✅ pytest |
+| JCI Org Manager | 62 | ✅ pytest |
+| Youth Platform | 24 | ✅ pytest |
+| Workspace server | 34 | ✅ vitest |
+| **Total** | **1,037** | ✅ |
+
+### What's Next (Unchanged — All User-Blocked)
+| # | Item | Blocker | Impact |
+|---|------|---------|--------|
+| 1 | **Solar Scout SMTP** | `export SMTP_HOST=...` | Fires 15 emails (33.4 MW) |
+| 2 | **OpenRouter credits** | openrouter.ai → add $5–10 | AI features 402 error |
+| 3 | **CG Test 0.1** | Review `TEST_01_INTERVIEW_SCRIPT.md` + recruit | Phase 0 go/no-go |
+| 4 | **CG Test 0.3** | Identify 1 event (4–8 wks out) | Phase 0 acquisition |
+| 5 | **CG Test 0.4** | Identify 5 target orgs | Phase 0 go/no-go |
+| 6 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+| 7 | **Solar Scout Tier 2** | Lursoft.lv lookup or +371 calls | ~22 MW more |
+| 8 | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL |
+| 9 | **Supabase persistence** | supabase.com → create project | Phase 2 KG |
+
+---
+
 ## 2026-03-28 18:08 Cairo (16:08 UTC) — Wakeup Session (Aton)
 
 ### Status: ✅ TypeScript Bug Fixed / 495 Synthesis Tests Pass / Pushed
