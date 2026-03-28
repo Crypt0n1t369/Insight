@@ -1,4 +1,4 @@
-# MEMORY_CONTEXT.md — Session Context 2026-03-27
+# MEMORY_CONTEXT.md — Session Context 2026-03-28
 
 ## Active Projects
 
@@ -69,7 +69,7 @@
 
 > Verified: 495 synthesis + 34 workspace + 140 festival + 137 credo + 110 CG + 62 JCI + 24 youth + 34 audio = 1,036 passing
 
-## Service Status (2026-03-28 00:00 UTC)
+## Service Status (2026-03-28 16:08 UTC)
 
 All services healthy (verified via /health endpoints):
 | Port | Service | Health |
@@ -77,6 +77,7 @@ All services healthy (verified via /health endpoints):
 | 3000 | Credo API | ✅ `{"status":"ok"}` |
 | 3001 | Audio Backend | ✅ `{"status":"ok","openRouterLinked":true}` |
 | 3003 | Youth Platform | ✅ `{"status":"ok"}` |
+| 3004 | Synthesis API | ✅ (66 sessions, 82 KG nodes, 39 edges) |
 | 3005 | Audio Frontend | ✅ (process running) |
 | 3006 | CG Web | ✅ (process running) |
 | 3007 | Synthesis UI | ✅ (process running) |
@@ -86,8 +87,19 @@ All services healthy (verified via /health endpoints):
 
 ## Git
 
-- **Workspace:** `518590f` — pushed to origin/master ✅ (daily summary + consolidated PROGRESS)
+- **Workspace:** `44de3d1` — pushed to origin/master ✅
+  - Latest: TypeScript bug fix in session-orchestrator.ts (recordToKG property name, duration field)
 - **Solar Scout:** Pushed and synced (separate repo)
+
+## Bugs Fixed This Session (2026-03-28)
+
+### Synthesis Platform — 3 TypeScript Errors Fixed
+- **File:** `projects/synthesis/src/platform/session-orchestrator.ts`
+- **Bug 1 (line 189):** `input.recordToKg` → `input.recordToKG` (property doesn't exist on SessionStartInput)
+- **Bug 2 (line 203):** `recordToKg: input.recordToKg !== false` → `recordToKG: input.recordToKG ?? true` (type narrowing issue)
+- **Bug 3 (line 215):** `e.durationMs` → `e.duration` (SessionEvent uses `duration` in seconds, not milliseconds)
+- **Tests:** 495/495 vitest pass after fix ✅
+- **Commit:** `f088b4e`
 
 ## Synthesis Platform — Current State
 
