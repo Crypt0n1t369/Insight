@@ -1,5 +1,5 @@
 === ATON CONTEXT ===
-Generated: 2026-03-28 23:27 UTC
+Generated: 2026-03-28 21:56 UTC (wakeup session)
 
 ## Active Projects
 
@@ -65,7 +65,7 @@ Generated: 2026-03-28 23:27 UTC
 | 2026-03-28 | Solar Scout 15→36 companies | Validated list expanded |
 | 2026-03-28 | KGDatabaseAdapter wired to orchestrator | Supabase Phase 2 ready |
 | 2026-03-28 | run_all_tests.sh created | No more pytest cache collisions |
-| 2026-03-28 | health_check.sh: 6→8 services, 3002 removed | Accurate service count |
+| 2026-03-28 | Health check: 6→8 services, 3002 removed | Accurate service count |
 | 2026-03-28 | Cron sessionTarget: isolated → current for Wakeup | Fixes edit failures |
 | 2026-03-27 | Credo RLS deferred, auth middleware wired | Simpler Phase 1 |
 | 2026-03-27 | JCI LLM Enhancement (OpenRouter) | Engagement agent active |
