@@ -1,6 +1,98 @@
 
 ---
 
+## 2026-03-29 10:26 Cairo (08:26 UTC) — Wakeup Cron (Aton)
+
+### Status: ✅ All 8 Services Healthy / ✅ 778 Tests Pass / ✅ Git Clean / ⚠️ Security 9+ Hrs Unapproved / 🚨 feature/festival-coordinator BRANCH WOULD BREAK AUDIO BACKEND
+
+**This session: Verified all services, ran test suites. Discovered CRITICAL issue with `feature/festival-coordinator` branch — it would DELETE the `server/` directory that runs the audio backend on port 3001. All P0 items remain blocked on user action. Security approval overdue 9+ hours.**
+
+### Verification Summary
+| Check | Result |
+|-------|--------|
+| Services 3000/3001/3003/3004/3005/3006/3007/8080 | ✅ All HTTP 200 |
+| Workspace vitest | ✅ 34/34 |
+| Synthesis vitest | ✅ 495/495 |
+| Contribution-graph pytest | ✅ 47/47 |
+| JCI pytest | ✅ 62/62 |
+| Festival pytest | ✅ 140/140 |
+| Git | ✅ Clean, synced with origin/master |
+| Solar Scout submodule | ✅ Clean, synced |
+
+**Total verified tests this session: 778 across 5 suites.**
+
+---
+
+## 🚨 CRITICAL FINDING — feature/festival-coordinator BRANCH MUST NOT BE MERGED AS-IS
+
+**Branch would DESTROY active infrastructure.** Confirmed by git:
+
+```
+$ git show feature/festival-coordinator:server/index.ts
+fatal: path 'server/index.ts' exists on disk, but not in 'feature/festival-coordinator'
+```
+
+The `server/` directory (workspace root) is **git-tracked** in master and houses the **audio backend running on port 3001** (`node --import tsx server/index.ts`).
+
+**What happens if this branch merges:**
+| Component | Impact | Severity |
+|-----------|--------|----------|
+| Audio Backend (port 3001) | **STOPS** — `server/` deleted, process crashes | 🔴 CRITICAL |
+| Workspace vitest (34 tests) | **FAILS** — test files in `server/` gone | 🔴 CRITICAL |
+| `vitest.config.ts` (root) | **DELETED** — breaks workspace test runner | 🔴 CRITICAL |
+| Audio Frontend (port 3005) | **STOPS** — backend gone | 🔴 CRITICAL |
+| `.env.local` | **DELETED** — template file, low impact | 🟡 Low |
+| `workspace/skills/supabase-nextjs/SKILL.md` | **DELETED** — obsolete skill | 🟡 Low |
+
+**What the branch DOES remove (security-positive):**
+- `workspace/.env.supabase` — exposed Supabase URL + publishable key (!!!) — removing this is GOOD
+- `telegram_config.json` — empty bot token config
+- `telegram_groups.json` — test group data
+
+**The "massive cleanup" is real (+23,912 / -90,227 lines) but it would break active services.** Options:
+1. **Salvage the cleanup** — cherry-pick the security-positive deletions without deleting `server/`
+2. **Rebase on master** — port the useful cleanup changes while keeping `server/` intact
+3. **Close branch** — if the cleanup intent is outdated, just close it
+
+**Do NOT merge this branch without resolving the `server/` conflict first.**
+
+---
+
+## 🚨 SECURITY — STILL UNAPPROVED (9+ HOURS)
+
+Both documented since **2026-03-29 01:26 UTC**. Exact fix commands ready:
+
+**Fix 1 — Exec Security → allowlist:**
+```bash
+gateway config.patch '{"tools":{"exec":{"security":"allowlist"}}}'
+```
+
+**Fix 2 — Telegram Group Policy → restricted:**
+```bash
+gateway config.patch '{"channels":{"telegram":{"groupPolicy":"restricted"}}}'
+```
+
+| Issue | Risk | Config |
+|-------|------|--------|
+| `tools.exec.security = "full"` | Compromised session → arbitrary command | CRITICAL |
+| `channels.telegram.groupPolicy = "open"` | Any Telegram group can reach bot | CRITICAL |
+
+---
+
+## What's Next (ALL Blocked on User Action)
+
+| # | Item | Blocker | Impact |
+|---|------|---------|--------|
+| 1 | **Approve security fixes** | 2 gateway commands | Closes critical attack surface |
+| 2 | **Review feature/festival-coordinator** | User decision | ⚠️ MUST NOT merge as-is — would break port 3001 |
+| 3 | **Solar Scout → Send emails** | SMTP env vars | Fires 15 emails (33.4 MW pipeline) |
+| 4 | **OpenRouter credits** | openrouter.ai $5–10 | Unblocks AI features (402 errors) |
+| 5 | **Audio Tool → Vercel** | vercel.com import | Public URL + Telegram integration |
+| 6 | **Supabase** | supabase.com project | KG persistence (Synthesis Phase 2) |
+| 7 | **CG Phase 0 tests** | Interview script + recruit | Go/no-go on Phase 0 validation |
+
+---
+
 ## 2026-03-29 09:58 Cairo (07:58 UTC) — Wakeup Cron (Aton)
 
 ### Status: ✅ All 8 Services Healthy / ✅ 1,012 Tests Pass / ✅ Git Clean / ⚠️ Security 8.5+ Hrs Unapproved / ⚠️ feature/festival-coordinator Unmerged 17 Days

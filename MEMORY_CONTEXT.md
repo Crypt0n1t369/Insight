@@ -1,5 +1,5 @@
 === ATON CONTEXT ===
-Generated: 2026-03-29 09:56 Cairo (07:56 UTC)
+Generated: 2026-03-29 10:26 Cairo (08:26 UTC)
 
 ## Active Projects
 
@@ -10,10 +10,11 @@ Generated: 2026-03-29 09:56 Cairo (07:56 UTC)
 - **P0 blocker:** User must configure SMTP env vars (Gmail App Password / Mailgun / SendGrid)
 - **Docs:** solar-scout/docs/SEND_GUIDE.md
 
-### Audio Transformation Tool — DEMO MODE READY, VERCEL PENDING ⚠️
-- **Status:** Demo mode active, 10 protocols, backend (3001) healthy
+### Audio Transformation Tool — DEMO MODE RUNNING ⚠️
+- **Status:** Backend (3001) running from workspace root `server/` — demo mode, 10 protocols
+- **⚠️ CRITICAL:** `workspace/server/` is git-tracked; feature/festival-coordinator branch would DELETE it
 - **Working:** NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL
-- **P0 blocker:** Vercel deployment needed for public URL + Telegram integration
+- **P0 blocker:** Vercel deployment for public URL + Telegram integration
 - **No OpenRouter credits:** AI features return 402 errors
 
 ### Synthesis Platform — RUNNING ✅
@@ -31,32 +32,30 @@ Generated: 2026-03-29 09:56 Cairo (07:56 UTC)
 - All services healthy, tests passing
 - No immediate action needed
 
-## Notable: feature/festival-coordinator Branch (Unmerged — 17 Days Stale)
-- `git log master..feature/festival-coordinator` shows **+13,975 additions**, NOT cleanup:
-  - **NEW youth-empowerment-platform/**: Full Spark platform (SPEC, SCHEMA, STRATEGY, PILOT, BACKLOG, README, INTEGRATION, FINAL_REPORT + Next.js frontend + tests/)
-  - **NEW festival-coordinator/ORGANIZER_TOOLS.md**: Tier 1-3 organizer commands
-  - Enhanced festival RESEARCH.md (trust tiers, qualification system, vouch mechanics)
-  - Enhanced festival IMPLEMENTATION_PLAN.md (VolunteerProfile model, onboarding quiz)
-- Branch is from March 12 (17 days old) — user should review and decide: merge, rebase, or close
-- Previously mischaracterized as "90K deletions cleanup" — actually significant new project work
+## 🚨 CRITICAL — feature/festival-coordinator Branch: DO NOT MERGE AS-IS
+- **Confirmed:** Branch would DELETE `workspace/server/` which runs audio backend on port 3001
+- **Impact if merged:** Audio backend stops, 34 workspace vitest tests fail, frontend (3005) stops
+- **Why it's dangerous:** `server/` is git-tracked in master; branch does not contain it
+- **What branch DOES right:** Removes exposed `.env.supabase` (Supabase URL + key), obsolete skills, test configs
+- **Options:** Rebase cleanup on master keeping server/, OR cherry-pick security fixes, OR close branch
 
 ## Key Blockers (User Action Required)
 | # | Item | Blocker |
 |---|------|---------|
-| 1 | **Solar Scout email send** | SMTP env vars not configured |
-| 2 | **OpenRouter credits** | openrouter.ai → add $5–10 |
-| 3 | **Audio Tool → Vercel** | vercel.com → import + env vars |
-| 4 | **Supabase** | supabase.com → create project |
-| 5 | **CG Test 0.1** | Review interview script + recruit |
-| 6 | **CG Test 0.3/0.4** | Identify event + 5 orgs |
+| 1 | **Approve security fixes** | `exec.security=allowlist` + `groupPolicy=restricted` — 9+ HOURS overdue |
+| 2 | **Solar Scout email send** | SMTP env vars not configured |
+| 3 | **OpenRouter credits** | openrouter.ai → add $5–10 |
+| 4 | **Audio Tool → Vercel** | vercel.com → import + env vars |
+| 5 | **Supabase** | supabase.com → create project |
+| 6 | **CG Test 0.1** | Review interview script + recruit |
 
-## Security Issues (CRITICAL — Awaiting Approval Since 2026-03-29 01:26 UTC — 8+ HOURS)
+## Security Issues (CRITICAL — Awaiting Approval Since 2026-03-29 01:26 UTC — 9+ HOURS)
 - `tools.exec.security = "full"` — should be `"allowlist"` 
 - `channels.telegram.groupPolicy = "open"` — should be `"restricted"`
 - **Approval needed:** `/approve` the security fixes
 
 ## Quick Status
 - Services: 8/8 HTTP 200 (3000/3001/3003/3004/3005/3006/3007/8080) ✅
-- Tests: 1,012 passing (6 suites verified): workspace 34, synthesis 495, CG 47, JCI 62, festival 140, audio-backend 34 ✅
+- Tests: 778 passing this session (workspace 34, synthesis 495, CG 47, JCI 62, festival 140)
 - Git: clean ✅
-- Cron: running OK, no consecutive errors ✅
+- Cron: running OK ✅
