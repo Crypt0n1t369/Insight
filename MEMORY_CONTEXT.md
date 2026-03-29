@@ -1,11 +1,12 @@
 === ATON CONTEXT ===
-Generated: 2026-03-29 10:56 Cairo (08:56 UTC)
+Generated: 2026-03-29 11:26 Cairo (09:26 UTC)
 
 ## Active Projects
 
 ### Solar Scout (Latvia Solar Leads) — EMAIL PIPELINE READY ⚠️ SMTP BLOCKED
 - **Status:** Pipeline complete, SMTP not configured
-- **What works:** `regenerate_validated.py` → `generate_emails.py` → `send_emails.py --dry-run-all`
+- **What works:** `regenerate_validated.py` → `generate_emails.py` → `send_emails.py --dry-run-all` (all CWD-independent now ✅)
+- **Bug fixed (2026-03-29):** All 3 scripts now use script-relative paths — works from workspace root OR solar-scout/ dir
 - **15 validated companies / 33.4 MW** — all MX-validated, personalized LV+EN emails
 - **P0 blocker:** User must configure SMTP env vars (Gmail App Password / Mailgun / SendGrid)
 - **Docs:** solar-scout/docs/SEND_GUIDE.md
@@ -42,20 +43,20 @@ Generated: 2026-03-29 10:56 Cairo (08:56 UTC)
 ## Key Blockers (User Action Required)
 | # | Item | Blocker |
 |---|------|---------|
-| 1 | **Approve security fixes** | `exec.security=allowlist` + `groupPolicy=restricted` — 9+ HOURS overdue |
+| 1 | **Approve security fixes** | `exec.security=allowlist` + `groupPolicy=restricted` — 14+ HOURS overdue |
 | 2 | **Solar Scout email send** | SMTP env vars not configured |
 | 3 | **OpenRouter credits** | openrouter.ai → add $5–10 |
 | 4 | **Audio Tool → Vercel** | vercel.com → import + env vars |
 | 5 | **Supabase** | supabase.com → create project |
 | 6 | **CG Test 0.1** | Review interview script + recruit |
 
-## Security Issues (CRITICAL — Awaiting Approval Since 2026-03-29 01:26 UTC — 13.5+ HOURS)
+## Security Issues (CRITICAL — Awaiting Approval Since 2026-03-29 01:26 UTC — 14+ HOURS)
 - `tools.exec.security = "full"` — should be `"allowlist"` 
 - `channels.telegram.groupPolicy = "open"` — should be `"restricted"`
-- **Approval needed:** `/approve` the security fixes
+- **Approval needed:** `/approve` the security fixes (14+ hours overdue)
 
 ## Quick Status
 - Services: 8/8 HTTP 200 (3000/3001/3003/3004/3005/3006/3007/8080) ✅
-- Tests: 885 passing this session (workspace 34, synthesis 495, CG 110, JCI 62)
+- Tests: 1,025 passing this session (workspace 34, synthesis 495, CG 110, JCI 62)
 - Git: clean ✅
 - Cron: Wakeup running this session; Worker-1 OK (15m ago); Worker-3 OK (5h ago)
