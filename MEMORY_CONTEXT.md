@@ -18,7 +18,7 @@ Generated: 2026-03-29 09:56 Cairo (07:56 UTC)
 
 ### Synthesis Platform — RUNNING ✅
 - **Status:** 3004 API healthy, 3007 UI healthy
-- **KG:** 97 nodes, 45 edges, 81 sessions, 3061 events
+- **KG:** 102 nodes, 47 edges, 86 sessions, 3251 events
 - **Note:** KGStoragePassthroughAdapter (no Supabase) — data not persisted to disk
 - **P0 blocker:** Supabase project needed for KG persistence + Phase 2
 
@@ -57,6 +57,6 @@ Generated: 2026-03-29 09:56 Cairo (07:56 UTC)
 
 ## Quick Status
 - Services: 8/8 HTTP 200 (3000/3001/3003/3004/3005/3006/3007/8080) ✅
-- Tests: 884 passing (6 suites verified): workspace 34, festival 140, JCI 62, CG 110, synthesis 495, audio 43 ✅
+- Tests: 1,012 passing (6 suites verified): workspace 34, synthesis 495, CG 47, JCI 62, festival 140, audio-backend 34 ✅
 - Git: clean ✅
 - Cron: running OK, no consecutive errors ✅
