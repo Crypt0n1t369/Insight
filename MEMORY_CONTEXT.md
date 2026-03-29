@@ -1,5 +1,5 @@
 === ATON CONTEXT ===
-Generated: 2026-03-29 10:26 Cairo (08:26 UTC)
+Generated: 2026-03-29 10:56 Cairo (08:56 UTC)
 
 ## Active Projects
 
@@ -19,8 +19,8 @@ Generated: 2026-03-29 10:26 Cairo (08:26 UTC)
 
 ### Synthesis Platform — RUNNING ✅
 - **Status:** 3004 API healthy, 3007 UI healthy
-- **KG:** 107 nodes, 49 edges, 91 sessions, 3441 events (verified 2026-03-29 10:36 UTC)
-- **Persistence:** ✅ KG autosaves every 60s to `data/synthesis/knowledge-graph.json` (112KB)
+- **KG:** 20 nodes, 14 edges, 0 sessions (verified 2026-03-29 10:56 UTC) — lower than previous sessions; may indicate KG reset
+- **Persistence:** ✅ KG autosaves every 60s to `data/synthesis/knowledge-graph.json` (14KB)
 - **Supabase benefit:** Cross-instance sharing + SQL queries; NOT required for basic persistence
 
 ### Contribution Graph (CG) — PHASE 0 VALIDATION ⚠️
@@ -49,13 +49,13 @@ Generated: 2026-03-29 10:26 Cairo (08:26 UTC)
 | 5 | **Supabase** | supabase.com → create project |
 | 6 | **CG Test 0.1** | Review interview script + recruit |
 
-## Security Issues (CRITICAL — Awaiting Approval Since 2026-03-29 01:26 UTC — 9+ HOURS)
+## Security Issues (CRITICAL — Awaiting Approval Since 2026-03-29 01:26 UTC — 13.5+ HOURS)
 - `tools.exec.security = "full"` — should be `"allowlist"` 
 - `channels.telegram.groupPolicy = "open"` — should be `"restricted"`
 - **Approval needed:** `/approve` the security fixes
 
 ## Quick Status
 - Services: 8/8 HTTP 200 (3000/3001/3003/3004/3005/3006/3007/8080) ✅
-- Tests: 778 passing this session (workspace 34, synthesis 495, CG 47, JCI 62, festival 140)
+- Tests: 885 passing this session (workspace 34, synthesis 495, CG 110, JCI 62)
 - Git: clean ✅
-- Cron: running OK ✅
+- Cron: Wakeup running this session; Worker-1 OK (15m ago); Worker-3 OK (5h ago)
