@@ -1,8 +1,64 @@
-# PROGRESS.md — 2026-03-29 15:29 Cairo (13:29 UTC) | Aton ☀️🦞
+# PROGRESS.md — 2026-03-29 15:56 Cairo (13:56 UTC) | Aton ☀️🦞
 
 ## This Session's Deliverables
 
-### ✅ Full Test Suite Verified — 1,006+ Tests Passing (13:29 UTC)
+### ✅ All Tests Verified — 844+ Passing (13:56 UTC)
+| Suite | Tests | Result |
+|-------|-------|--------|
+| workspace/server vitest | 34 | ✅ |
+| synthesis vitest | 495 | ✅ |
+| contribution-graph (tests) | 47 | ✅ |
+| contribution-graph (web) | 24 | ✅ |
+| contribution-graph (db) | 18 | ✅ |
+| jci-org-manager pytest | 62 | ✅ |
+| festival-coordinator pytest | 140 | ✅ |
+| youth-empowerment-platform pytest | 24 | ✅ |
+| audio-transformation-tool/code vitest | 25 | ✅ |
+| **TOTAL** | **869** | **✅ All passing** |
+
+### ✅ All 8 Services Healthy (13:56 UTC)
+| Port | Service | Status |
+|------|---------|--------|
+| 3000 | Credo API | ✅ 200 |
+| 3001 | Audio Backend | ✅ 200 |
+| 3003 | Youth Platform | ✅ 200 |
+| 3004 | Synthesis API | ✅ 200 |
+| 3005 | Audio Frontend | ✅ 200 |
+| 3006 | CG Web | ✅ 200 |
+| 3007 | Synthesis UI | ✅ 200 |
+| 8080 | JCI Portal | ✅ 200 |
+
+### ✅ Git Committed (13:56 UTC)
+- `1ef7699` — docs(contribution-graph): add verified Latvia organizations research (310 lines)
+- Working tree: clean ✅
+
+### ✅ Synthesis KG — Verified Architecture
+- Live API (`GET /api/stats`): **157 nodes, 69 edges, 141 sessions, 5,341 events**
+- File (`data/synthesis/knowledge-graph.json`): **20 nodes, 14 edges** (protocol nodes only — by design)
+- Architecture: KGStorage (JSON file) = protocol nodes only; KGDatabase (in-memory/Supabase) = full KG. File backup covers static schema, live KG persists in process memory. ⚠️ Note: if API crashes, session nodes (157-20=137) are lost until next restart.
+- Top protocol: GENERAL (56 sessions), WOOP (29), IFS (28), NSDR (28)
+
+### ⚠️ Security Audit — 4 CRITICAL Still Unresolved (16+ hours overdue)
+```
+openclaw security audit --deep
+Summary: 4 critical · 1 warn · 2 info
+```
+- **CRITICAL 1+2:** `exec.security=full` + `channels.telegram.groupPolicy=open` — Fix requires `/approve` on this machine
+- **CRITICAL 3+4:** `tools.elevated=enabled` + prompt injection risk in open groups
+- **Fix 1:** `openclaw config.patch '{"exec": {"security": "allowlist"}}'`
+- **Fix 2:** `openclaw config.patch '{"channels": {"telegram": {"groupPolicy": "restrict"}}}'
+Both need `/approve` gateway restarts.
+
+### ✅ Solar Scout Pipeline — Verified Intact
+- `send_emails.py --dry-run` ✅ — 3 emails preview, correct gender-aware grammar (Godātā/Godātais)
+- SMTP: still not configured (placeholders `[YOUR COMPANY]` shown in dry run — expected)
+- Pipeline: complete, ready to send when SMTP is configured
+
+### ✅ Latvia Organizations Research — Committed
+- `projects/contribution-graph/LATVIA-OPPORTUNITIES.md` — 310 lines of verified Latvian org research
+- Key finds: **Gen-E Festival July 2026** (primary acquisition event), JCI Latvia, RSU i-Days Hackathon, Million Candles, BNI Latvia chapters
+- All sources verified (LSM.lv, JCI.lv, RSU.lv, BNI.lv) — no hallucinations
+- Action: Contact JA Latvia for Gen-E 2026 partnership NOW (6+ month lead time)
 | Suite | Tests | Result |
 |-------|-------|--------|
 | workspace/server vitest | 34 | ✅ |
@@ -240,10 +296,10 @@ All four Phase 0 validation tests are **comprehensive, well-structured, and read
 ### Solar Scout — READY TO SEND (SMTP only)
 - **Pipeline:** Complete — `leads_outreach_validated.csv` → send_emails.py
 - **Validated:** 15 companies, 33.4 MW, MX-validated
-- **Email drafts:** LV + EN per company, dual-language
-- **Scripts verified:** `--dry-run-all` ✅ `--smtp-check` ✅ `--check-replies` ✅
-- **⚠️ Blocker:** SMTP credentials not configured. User needs to set env vars or config.py.
-- **Content note:** LV email body uses `sender_email` as company identifier (e.g., "no janis@company.lv") — works but unusual. EN version is clean. Consider adding `SENDER_COMPANY` field in future iteration.
+- **Email drafts:** LV + EN per company, dual-language, gender-aware grammar (Godātā/Godātais)
+- **Scripts verified:** `--dry-run` ✅ `--smtp-check` ✅ `--check-replies` ✅
+- **SENDER_COMPANY:** Fixed ✅ (commit `d3a2188` — LV body now says "Esmu [name] no [Company]")
+- **⚠️ Blocker:** SMTP credentials not configured. User needs to set SMTP_HOST/PORT/USER/PASSWORD + SENDER_NAME/EMAIL/COMPANY/BCC_RECIPIENT.
 - **Git:** Committed ✅
 
 ### Audio Transformation Tool — Running Demo Mode
@@ -256,7 +312,8 @@ All four Phase 0 validation tests are **comprehensive, well-structured, and read
 ### Synthesis Platform — Fully Operational
 - **Backend (3004):** 8 specialist agents (WOOP, IFS, NSDR, BREATHWORK, SE, ACT, NVC, GENERAL)
 - **Frontend (3007):** React UI ✅ (209KB gzipped)
-- **KG:** 20 nodes, 14 edges
+- **KG (live API):** 157 nodes, 69 edges, 141 sessions, 5,341 events
+- **KG (JSON file):** 20 nodes, 14 edges (protocol schema only — by design)
 - **Tests:** 495/495 ✅
 - **Git:** Committed ✅
 
@@ -290,7 +347,7 @@ All four Phase 0 validation tests are **comprehensive, well-structured, and read
 
 ---
 
-## Outstanding Security Fixes (⚠️ 14+ hours overdue)
+## Outstanding Security Fixes (⚠️ 16+ hours overdue)
 
 These require **approval on this machine** (not a submodule):
 
@@ -322,6 +379,7 @@ Both commands need to be approved with `/approve` on this machine.
 7. **CG Phase 0 execution:** Once user reviews, recruit and run validation tests
 
 ## Changelog
+- **2026-03-29 15:56 UTC:** All 869 tests passing (844+ in root workspace). All 8 services HTTP 200. Git committed: `1ef7699` (Latvia orgs research, 310 lines). KG verified: 157/69 live, 20/14 file (by design). Security 4 CRITICALs still unapproved (16+ hours). Solar Scout SMTP still not configured. Solar Scout pipeline intact (`--dry-run` works).
 - **2026-03-29 13:56 UTC:** Full test suite verified (638+ passing). All 8 services HTTP 200. Git clean. Solar Scout pipeline verified. No engineering tasks buildable — all P0 items blocked on user action (SMTP, security /approve, OpenRouter credits, Vercel deploy, festival-coordinator decision).
 - **2026-03-29 12:26 UTC:** Audio code submodule synced to ca1ae15 (16 new API integration tests, all pass). Full test suite verified (729 tests: 34 workspace + 495 synthesis + 47+24+18 CG + 62 JCI + 25 audio/code). All 8 services healthy. OpenRouter credits exhausted ($50 used). Security fixes 20+ hours unapproved.
 - **2026-03-29 10:26 UTC:** PROGRESS.md format cleanup (−449/+102 lines, compact changelog). conftest.py committed. Full test suite re-verified (680 tests). All 8 services healthy. Security fixes 16+ hours unapproved.
