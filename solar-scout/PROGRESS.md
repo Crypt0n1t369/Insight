@@ -1,5 +1,69 @@
 # Solar Scout - Progress Tracker
 
+## 2026-03-29 15:29 Cairo (13:29 UTC) — Aton Wakeup
+
+### Status: ✅ Pipeline Verified / All 8 Services / Tests Passing / Security Audit — 4 CRITICAL Unresolved
+
+**This session: Verified full system state. All 8 services healthy (3000/3001/3003/3004/3005/3006/3007/8080). Git clean. All test suites passing. Security audit confirms 4 CRITICAL issues still unresolved (14+ hours overdue). Synthesis KG growing (152 nodes, 67 edges — BETTER than stale MEMORY_CONTEXT's 20/14). Solar Scout pipeline intact, SMTP still not configured.**
+
+### Security Audit — 4 CRITICAL Issues (14+ hours overdue)
+```
+openclaw security audit --deep
+Summary: 4 critical · 1 warn · 2 info
+```
+**Fix 1 — exec.security (CRITICAL — needs /approve on this machine):**
+```
+openclaw config.patch '{"exec": {"security": "allowlist"}}'
+```
+**Fix 2 — groupPolicy (CRITICAL — needs /approve on this machine):**
+```
+openclaw config.patch '{"channels": {"telegram": {"groupPolicy": "restrict"}}}'
+```
+Both trigger gateway restart. Approval needed from drg on this machine.
+
+### Synthesis KG — Corrected Stats
+- KG nodes: **152** (not 20 as previously recorded)
+- KG edges: **67** (not 14)
+- Sessions: 136 | Events: 5,151
+- Route: `GET /api/stats` (not `/api/kg/stats` — docs outdated, reality is correct)
+- File: `data/synthesis/knowledge-graph.json` (14KB, updated 13:27 UTC)
+
+### Verified This Session
+| Check | Result |
+|-------|--------|
+| Git workspace | ✅ Clean (`e0f31dc`) |
+| Solar-scout last commit | ✅ `0ee07b6` (2026-03-28 15:56 UTC) |
+| 8 services (HTTP 200) | ✅ 3000/3001/3003/3004/3005/3006/3007/8080 |
+| workspace/server vitest | ✅ 34/34 |
+| synthesis vitest | ✅ 495/495 |
+| CG pytest (tests/web/db) | ✅ 47+24+18 = 89/89 |
+| JCI pytest | ✅ 62/62 |
+| Festival pytest | ✅ 140/140 |
+| Youth pytest | ✅ 24/24 |
+| Solar Scout pipeline | ✅ `send_emails.py --dry-run` works (no SMTP needed) |
+| sent_log.json | ✅ Not created (no emails sent yet) |
+
+### P0 Blocker — SMTP Configuration (User Action Required)
+```bash
+export SMTP_HOST=smtp.gmail.com
+export SMTP_PORT=587
+export SMTP_USER=your@gmail.com
+export SMTP_PASSWORD="xxxx xxxx xxxx xxxx"
+export SENDER_NAME="Your Name"
+export SENDER_EMAIL=your@gmail.com
+export SENDER_COMPANY="Your Company Name"
+export BCC_RECIPIENT=your@gmail.com
+```
+Then: `python3 send_emails.py --smtp-check` → `python3 send_emails.py --dry-run-all` → `python3 send_emails.py --test`
+
+### What's Next
+1. **User: Approve security fixes** — `/approve` the two gateway config patches
+2. **User: Configure SMTP** — Solar Scout ready to send 15 emails
+3. **User: Preview all emails** — `python3 send_emails.py --dry-run-all`
+4. **User: Send test batch** — `python3 send_emails.py --test`
+
+---
+
 ## 2026-03-28 15:56 Cairo (13:56 UTC) — Aton Wakeup
 
 ### Status: ✅ `--check-replies` Added / All 6 Services Healthy / Pipeline Solid
