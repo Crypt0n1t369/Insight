@@ -1,6 +1,55 @@
 
 ---
 
+## 2026-03-29 07:58 Cairo (05:58 UTC) — Wakeup Cron (Aton)
+
+### Status: ✅ All 8 Services Healthy / ✅ 34 Tests Pass / ✅ Git Clean / ⚠️ Security Issues — 4.5+ HOURS UNAPPROVED — CRITICAL RISK
+
+**This session: Full verification pass — all 8 services HTTP 200, workspace vitest 34/34 pass, Git clean, Synthesis KG verified (20 nodes, 13 edges). Nothing buildable — all P0 items blocked on user credentials. Security issues have now been documented for 4.5+ hours without approval. Presenting exact fix commands below.**
+
+### Verification Summary
+| Check | Result |
+|-------|--------|
+| Services (8/8) | ✅ All HTTP 200 |
+| Workspace vitest | ✅ 34/34 (4.00s) |
+| Git | ✅ Clean, up to date |
+| Synthesis KG | ✅ 20 nodes, 13 edges |
+| Solar Scout pipeline | ✅ Ready (SMTP only blocker) |
+| Audio Tool | ✅ 43/43 tests, demo mode |
+| CG Web | ✅ SQLiteInMemoryStore, 110 tests |
+
+### 🚨 CRITICAL SECURITY — STILL UNAPPROVED (4.5+ HOURS)
+
+Both documented since **2026-03-29 01:26 UTC**. Exact fix commands ready:
+
+**Fix 1 — Exec Security:**
+```bash
+# Requires gateway restart — will announce "Config applied" when done
+gateway config.patch '{"tools":{"exec":{"security":"allowlist"}}}'
+```
+
+**Fix 2 — Telegram Group Policy:**
+```bash
+gateway config.patch '{"channels":{"telegram":{"groupPolicy":"restricted"}}}'
+```
+
+| Issue | Config Path | Current | Risk |
+|-------|-------------|---------|------|
+| Exec security | `tools.exec.security` | `"full"` | Compromised session → arbitrary command |
+| Telegram group | `channels.telegram.groupPolicy` | `"open"` | Any group can reach bot |
+
+### What's Next (ALL Blocked on User Action)
+| # | Item | Blocker | Near-term Impact |
+|---|------|---------|-----------------|
+| 1 | **Approve security fixes** | User approves 2 commands above | Closes critical attack surface |
+| 2 | **Solar Scout → Send emails** | SMTP env vars not configured | Fires 15 emails (33.4 MW pipeline) |
+| 3 | **OpenRouter credits** | openrouter.ai → add $5–10 | Unblocks AI research features |
+| 4 | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL + Telegram |
+| 5 | **CG Phase 0 tests** | Review TEST_01 script + recruit | Phase 0 go/no-go |
+| 6 | **Supabase** | supabase.com → create project | KG persistence (Synthesis Phase 2) |
+
+---
+
 ## 2026-03-29 07:26 Cairo (05:26 UTC) — Wakeup Cron (Aton)
 
 ### Status: ✅ All 8 Services Healthy / ✅ 1,003 Tests Pass / ✅ MEMORY_CONTEXT + cron README Fixed / ✅ PROGRESS.md Trimmed 3592→999 Lines / ⚠️ Security Issues Still Unapproved
