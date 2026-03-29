@@ -1,6 +1,39 @@
-# PROGRESS.md — 2026-03-29 09:56 UTC | Aton ☀️🦞
+# PROGRESS.md — 2026-03-29 12:26 Cairo (10:26 UTC) | Aton ☀️🦞
 
 ## This Session's Deliverables
+
+### ✅ PROGRESS.md Format Cleanup + CG conftest.py Committed
+- **PROGRESS.md:** Trimmed from verbose per-session logs to compact changelog format (−449/+102 lines). Archived detailed session history.
+- **conftest.py:** Committed `projects/contribution-graph/tests/conftest.py` (was untracked since 2026-03-29 09:26 UTC session).
+- **Commit:** `47e851a` — "docs: trim PROGRESS.md to compact changelog format"
+
+### ✅ Full Test Suite Re-Verification (2026-03-29 10:26 UTC)
+All 680 tests pass cleanly:
+- `workspace/` vitest: **34/34** ✅
+- `projects/synthesis/` vitest: **495/495** ✅
+- `projects/contribution-graph/tests/` pytest: **47/47** ✅ (zero warnings)
+- `projects/contribution-graph/web/` pytest: **24/24** ✅
+- `projects/contribution-graph/db/` pytest: **18/18** ✅
+- `projects/jci-org-manager/` pytest: **62/62** ✅ (6 non-breaking event-loop warnings)
+
+All 8 services confirmed healthy (10:33 UTC):
+- Port 3000 (Credo API): `{"status":"ok"}` ✅
+- Port 3001 (Audio Backend): `{"status":"ok","openRouterLinked":true}` ✅
+- Port 3003 (Youth Platform): `{"status":"ok"}` ✅
+- Port 3004 (Synthesis API): `{"status":"ok"}` ✅
+- Port 3005 (Audio UI): Vite preview ✅
+- Port 3006 (CG Web): `{"status":"ok"}` ✅
+- Port 3007 (Synthesis UI): Vite dev ✅
+- Port 8080 (JCI Portal): `{"status":"ok"}` ✅
+
+### ⚠️ Security Fixes Still Unresolved (16+ hours overdue)
+- `exec.security = "full"` → should be `"allowlist"` — needs `/approve` on this machine
+- `channels.telegram.groupPolicy = "open"` → should be `"restrict"` — needs `/approve`
+- `openclaw security audit --deep` confirms 4 critical + 1 warn + 2 info
+
+---
+
+## Previous Session (2026-03-29 09:56 UTC)
 
 ### ✅ Contribution Graph — CG_SERVER_SECRET Warning Fixed
 - **File:** `projects/contribution-graph/tests/conftest.py` (new)
@@ -124,7 +157,8 @@ Both commands need to be approved with `/approve` on this machine.
 ---
 
 ## Changelog
-- **2026-03-29:** Fixed CG CG_SERVER_SECRET warning (conftest.py). Full test suite verified (34+495+47+24+18+62 = 680 tests). All 8 services healthy. Phase 0 test materials reviewed.
+- **2026-03-29 10:26 UTC:** PROGRESS.md format cleanup (−449/+102 lines, compact changelog). conftest.py committed. Full test suite re-verified (680 tests). All 8 services healthy. Security fixes 16+ hours unapproved.
+- **2026-03-29 09:56 UTC:** Fixed CG CG_SERVER_SECRET warning (conftest.py). Full test suite verified (680 tests). All 8 services healthy. Phase 0 test materials reviewed.
 - **2026-03-27:** All projects at stable baseline. CG Phase 0 drafts complete. Audio tool frontend added.
 - **2026-03-26:** Synthesis KG launched. Audio backend demo mode. JCI tests 41/41.
 - **2026-03-25:** Solar Scout pipeline complete, 15 companies validated.
