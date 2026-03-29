@@ -1,14 +1,14 @@
 === ATON CONTEXT ===
-Generated: 2026-03-29 13:29 UTC
+Generated: 2026-03-29 13:56 UTC
 
 ## Active Projects
 
 ### Solar Scout (Latvia Solar Leads) — EMAIL PIPELINE READY ⚠️ SMTP BLOCKED
 - **Status:** Pipeline complete, SMTP not configured
-- **What works:** `regenerate_validated.py` → `generate_emails.py` → `send_emails.py --dry-run-all` (all CWD-independent ✅)
-- **Email template bug fixed:** Added `SENDER_COMPANY` field; LV body now says "Esmu [name] no [Company]" (commit `d3a2188`)
+- **What works:** `regenerate_validated.py` → `generate_emails.py` → `send_emails.py --dry-run` (all CWD-independent ✅)
+- **Email template bug fixed:** `SENDER_COMPANY` field added; LV body now says "Esmu [name] no [Company]" (commit `d3a2188`)
 - **15 validated companies / 33.4 MW** — all MX-validated, personalized LV+EN emails
-- **P0 blocker:** User must configure SMTP env vars + `SENDER_COMPANY`
+- **P0 blocker:** User must configure SMTP env vars (SMTP_HOST/PORT/USER/PASSWORD + SENDER_NAME/EMAIL/COMPANY/BCC_RECIPIENT)
 - **Docs:** solar-scout/docs/SEND_GUIDE.md
 
 ### Audio Transformation Tool — DEMO MODE RUNNING ⚠️
@@ -20,12 +20,16 @@ Generated: 2026-03-29 13:29 UTC
 
 ### Synthesis Platform — RUNNING ✅
 - **Status:** 3004 API healthy, 3007 UI healthy
-- **KG:** 152 nodes, 67 edges, 136 sessions (updated 13:27 UTC) — healthy, autosaving ✅
-- **Route note:** Use `GET /api/stats` (not `/api/kg/stats` — docs outdated)
-- **Persistence:** KG autosaves to `data/synthesis/knowledge-graph.json` (14KB)
+- **KG (live API):** 157 nodes, 69 edges, 141 sessions, 5,341 events
+- **KG (JSON file):** 20 nodes, 14 edges (protocol schema only — by design, NOT a bug)
+- **⚠️ KG note:** Session nodes persist in process memory only. API restart loses 137 session nodes. File backup covers static protocol schema.
+- **Route:** Use `GET /api/stats` (not `/api/kg/stats` — docs outdated)
+- **Top protocol:** GENERAL (56 sessions), WOOP (29), IFS (28), NSDR (28)
 
 ### Contribution Graph (CG) — PHASE 0 VALIDATION ⚠️
 - **Status:** Tests 0.1–0.4 drafted, no participants recruited
+- **New:** `LATVIA-OPPORTUNITIES.md` — 310 lines of verified Latvian org research (Gen-E July 2026, JCI, RSU i-Days, Million Candles, BNI Latvia) — committed `1ef7699`
+- **Key opportunity:** Gen-E Festival July 2026 (Riga) — JA Latvia + LIAA, 40+ countries — contact JA Latvia NOW for partnership
 - **P0 blockers:** User must review interview script, recruit, identify event + orgs
 - **Bot token:** BotFather token needed for Phase 2
 
@@ -40,20 +44,21 @@ Generated: 2026-03-29 13:29 UTC
 ## Key Blockers (User Action Required)
 | # | Item | Blocker |
 |---|------|---------|
-| 1 | **Approve security fixes** | `exec.security=allowlist` + `groupPolicy=restricted` — 14+ HOURS overdue |
+| 1 | **Approve security fixes** | `exec.security=allowlist` + `groupPolicy=restrict` — 16+ HOURS overdue |
 | 2 | **Solar Scout email send** | SMTP env vars not configured |
 | 3 | **OpenRouter credits** | openrouter.ai → add $5–10 |
 | 4 | **Audio Tool → Vercel** | vercel.com → import + env vars |
-| 5 | **CG Test 0.1** | Review interview script + recruit |
+| 5 | **CG Phase 0** | Review interview script + recruit + contact JA Latvia for Gen-E 2026 |
 
-## Security Issues (CRITICAL — Awaiting Approval Since 2026-03-29 01:26 UTC — 14+ HOURS)
+## Security Issues (CRITICAL — Awaiting Approval Since 2026-03-29 01:26 UTC — 16+ HOURS)
 - `tools.exec.security = "full"` — should be `"allowlist"`
-- `channels.telegram.groupPolicy = "open"` — should be `"restricted"`
+- `channels.telegram.groupPolicy = "open"` — should be `"restrict"`
+- `tools.elevated = enabled` — prompt injection risk in open groups
 - **Fix 1:** `openclaw config.patch '{"exec": {"security": "allowlist"}}'`
 - **Fix 2:** `openclaw config.patch '{"channels": {"telegram": {"groupPolicy": "restrict"}}}'
 - **Approval needed:** `/approve` both fixes (gateway restarts after each)
 
 ## Quick Status
 - Services: 8/8 HTTP 200 (3000/3001/3003/3004/3005/3006/3007/8080) ✅
-- Tests: 844+ passing (synthesis 495, CG 47+24+18, JCI 62, festival 140, youth 24, workspace/server 34)
-- Git: clean ✅ (commit e0f31dc)
+- Tests: 869 passing (workspace/server 34, synthesis 495, CG 47+24+18, JCI 62, festival 140, youth 24, audio/code 25)
+- Git: clean ✅ (commits `1ef7699` + `19e0210`)
