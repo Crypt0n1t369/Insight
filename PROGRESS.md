@@ -1,5 +1,45 @@
 ---
 
+## 2026-03-29 03:58 Cairo (01:58 UTC) — Wakeup Cron (Aton)
+
+### Status: ✅ All Systems Healthy / All 1,002 Tests Pass / 🚨 2 CRITICAL Security Issues / 🛠️ service_manager.sh Fixed
+
+**This session: Verified all 9 services HTTP 200 on /health, ran full test suite (all suites exit 0), updated memory/index.md (stale since Feb 28), fixed service_manager.sh to include Synthesis API(3004) and Synthesis UI(3007), committed 2 changes.**
+
+### Verification Results — All Clean ✅
+
+| Check | Result | Details |
+|-------|--------|---------|
+| All 9 services | ✅ HTTP 200 | 3000/3001/3002/3003/3004/3005/3006/3007/8080 on /health |
+| Tests | ✅ All passing | Festival(140) + CG(110) + JCI(62) + Youth(24) + Synthesis(495) + Credo(137) + Audio(34) = 1,002 |
+| Git workspace | ✅ Clean | 2 commits this session (memory/index.md, service_manager.sh) |
+| No TODO/FIXME/BUG | ✅ None | festival-coordinator TODOs are protected by bot.py admin check |
+| MEMORY_CONTEXT.md | ✅ Fine | 111 lines, fix holding |
+
+### 🛠️ Fix Applied: service_manager.sh — Missing Synthesis Services
+
+**Problem:** `scripts/service_manager.sh` was missing Synthesis API (port 3004) and Synthesis UI (3007) from both `do_status` and `do_start`/`do_stop` functions. Also had overly-broad `pkill` pattern for Audio Backend that could match Synthesis API.
+
+**Fix:** Added 3004 and 3007 to all three functions. Changed Audio Backend stop pattern from `tsx server/index.ts` to `audio_backend.log` to avoid killing Synthesis API. Changed Synthesis API stop pattern from `node.*tsx.*server/index.ts` to `synthesis_api.log`.
+
+**Tested:** `do_stop` → all 9 services stopped ✓. `do_start` → all 9 services restarted ✓. `do_status` → all 9 show OK ✓.
+
+### 🔍 Investigation: festival-coordinator TODOs
+
+**Finding: NOT REAL.** Two `# TODO: Add admin check` comments in `handlers.py:298,324` appear unprotected, but `bot.py` calls these handlers only through `create_task_start` and `add_reward_start`, both of which call `_admin_check(update)` first. The handlers themselves don't need duplicate checks.
+
+### What's Buildable Right Now: NOTHING Meaningful
+All meaningful features require external credentials, user decisions, or submodule access. Workspace-level code is clean.
+
+### What's Next
+1. **User: Approve security fixes** — `exec.security` + `groupPolicy` (approval required)
+2. **User: Configure Solar Scout SMTP** — highest near-term ROI (33.4 MW, pipeline ready)
+3. **User: Add OpenRouter credits** — unblocks AI features across all projects
+4. **User: Deploy Audio Tool to Vercel** — vercel.com → import repo + env vars
+5. **User: Create Supabase project** — unlocks Phase 2 KG persistence
+
+---
+
 ## 2026-03-29 03:26 Cairo (01:26 UTC) — Wakeup Cron (Aton)
 
 ### Status: ✅ All Systems Healthy / All 1,002 Tests Pass / 🚨 2 CRITICAL Security Issues Found
