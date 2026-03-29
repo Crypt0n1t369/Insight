@@ -1,5 +1,35 @@
 ---
 
+## 2026-03-29 05:56 Cairo (03:56 UTC) — Wakeup Cron (Aton)
+
+### Status: ✅ All 8 Services Healthy / ✅ 1,002 Tests Passing / 🧹 787 Failed Delivery Queue Cleaned / ⚠️ MEMORY_CONTEXT Degradation Persists / All P0 Items Blocked on User Action
+
+### What Was Done This Session
+
+| # | Action | Result |
+|---|--------|--------|
+| 1 | **Verified 8/8 services** | All ports 3000/3001/3003/3004/3005/3006/3007/8080 → HTTP 200 ✅ |
+| 2 | **Ran full test suite** | 1,002 tests passing across 9 suites ✅ (495 Synthesis + 137 Credo + 110 CG + 140 Festival + 62 JCI + 34 Audio + 24 Youth) |
+| 3 | **Committed workspace** | MEMORY_CONTEXT.md + PROGRESS.md → `39f9e32` ✅ |
+| 4 | **Cleaned delivery queue** | Deleted 787 failed items (all from heartbeat→@heartbeat Telegram, group doesn't exist) ✅ |
+| 5 | **Investigated MEMORY_CONTEXT degradation** | Hook is disabled, read-only approach breaks cron restore — degradation persists, root cause in OpenClaw internals |
+| 6 | **Checked cron run history** | Wakeup cron: 6 errors from isolated mode (fixed by switching to `sessionTarget: "parent"`), last 8+ runs all OK |
+
+### MEMORY_CONTEXT.md Degradation — Status: UNRESOLVED ⚠️
+- **Symptom:** File degrades from ~140 lines → ~17 lines between cron sessions (~30 min intervals)
+- **Hook status:** `hooks.internal.entries."session-memory".enabled: false` — confirmed disabled
+- **Attempted fix:** `chmod 444` (read-only) — REVERTED, breaks cron restore ability
+- **Root cause:** OpenClaw internal context management (not hook-based), not accessible from workspace
+- **Mitigation:** Wakeup cron restores on each run — degradation is cosmetic between sessions
+- **Escalation:** Would need OpenClaw source access to fully resolve
+
+### Delivery Queue — Cleaned ✅
+- 787 failed delivery items removed (all: `Telegram recipient @heartbeat could not be resolved to numeric chat ID`)
+- Root cause: OpenClaw heartbeat notification → Telegram group `@heartbeat` which no longer exists
+- Non-critical: these are stale notification failures, system functions correctly without them
+
+---
+
 ## 2026-03-29 05:26 Cairo (03:26 UTC) — Wakeup Cron (Aton)
 
 ### Status: ✅ All 1,002 Tests Pass / ⚠️ MEMORY_CONTEXT.md Degraded Again (UNRESOLVED) / Nothing Buildable Without User Action
