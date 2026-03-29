@@ -4,8 +4,16 @@
 import json
 import subprocess
 import csv
+import os
 
-data = json.load(open('docs/leads_outreach_real.json'))
+# Path helper — all file paths are relative to the script's location, not CWD
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+def _docs_path(filename):
+    """Return absolute path to a file in the docs/ directory (relative to this script)."""
+    return os.path.join(_SCRIPT_DIR, "docs", filename)
+
+data = json.load(open(_docs_path('leads_outreach_real.json')))
 
 def is_valid_email(email):
     """Check if email domain has a valid MX record (accepts mail)."""
@@ -34,7 +42,7 @@ valid.sort(key=lambda x: -x.get('capacity_kw', 0))
 
 # Write validated CSV
 fieldnames = ['company', 'decision_maker', 'title', 'email', 'phone', 'address', 'industry', 'capacity_kw']
-with open('docs/leads_outreach_validated.csv', 'w', newline='') as f:
+with open(_docs_path('leads_outreach_validated.csv'), 'w', newline='') as f:
     writer = csv.DictWriter(f, fieldnames=fieldnames)
     writer.writeheader()
     for c in valid:

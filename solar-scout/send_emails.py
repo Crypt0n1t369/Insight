@@ -33,6 +33,15 @@ from email.mime.text import MIMEText
 from smtplib import SMTP, SMTP_SSL
 
 
+# ---------------------------------------------------------------------------
+# Path helper — all file paths are relative to the script's location, not CWD
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+def _docs_path(filename):
+    """Return absolute path to a file in the docs/ directory (relative to this script)."""
+    return os.path.join(_SCRIPT_DIR, "docs", filename)
+
+
 # Feminine Latvian first names (need "Godātā" instead of "Godātais")
 LATVIAN_FEMININE_NAMES = {
     "marina", "anna", "karina", "kristīne", "līga", "liga",
@@ -87,8 +96,10 @@ def load_config():
     }
 
 
-def load_leads(csv_path="docs/leads_outreach_validated.csv"):
-    """Load validated leads from CSV."""
+def load_leads(csv_path=None):
+    """Load validated leads from CSV. Path is relative to the script's location."""
+    if csv_path is None:
+        csv_path = _docs_path("leads_outreach_validated.csv")
     leads = []
     with open(csv_path, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -229,7 +240,7 @@ def run_send(leads, cfg, test_only=False, delay=30):
         return 0, 0
 
     targets = leads[:3] if test_only else leads
-    sent_log_path = "docs/sent_log.json"
+    sent_log_path = _docs_path("sent_log.json")
 
     # Load existing log
     sent_log = []

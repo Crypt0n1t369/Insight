@@ -5,7 +5,15 @@ Reads from docs/leads_outreach_validated.csv (produced by regenerate_validated.p
 ensuring consistency with send_emails.py.
 """
 
+import os
 import csv
+
+# Path helper — all file paths are relative to the script's location, not CWD
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+def _docs_path(filename):
+    """Return absolute path to a file in the docs/ directory (relative to this script)."""
+    return os.path.join(_SCRIPT_DIR, "docs", filename)
 
 # Feminine Latvian first names (need "Godātā" instead of "Godātais")
 LATVIAN_FEMININE_NAMES = {
@@ -22,14 +30,14 @@ def is_feminine_name(first_name: str) -> bool:
 
 
 # Read directly from the validated CSV (same source as send_emails.py)
-with open("docs/leads_outreach_validated.csv") as f:
+with open(_docs_path("leads_outreach_validated.csv")) as f:
     valid = list(csv.DictReader(f))
 
 total_kw = sum(float(r.get("capacity_kw", 0) or 0) for r in valid)
 total_mw = total_kw / 1000
 
 # Generate email drafts
-with open('docs/email_drafts_validated.md', 'w') as f:
+with open(_docs_path('email_drafts_validated.md'), 'w') as f:
     f.write(f'# Validated Outreach Emails — {len(valid)} Companies Ready to Send\n\n')
     f.write(f'Total: {len(valid)} companies | {total_mw:.1f} MW\n\n')
     f.write(
