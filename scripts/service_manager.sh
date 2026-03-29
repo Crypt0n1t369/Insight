@@ -22,7 +22,7 @@ check_port() {
 }
 
 do_status() {
-    local services=("3000:Credo API" "3001:Audio Backend" "3002:Credo Frontend" "3003:Youth Platform" "3005:Audio Frontend" "3006:CG Web" "8080:JCI Portal")
+    local services=("3000:Credo API" "3001:Audio Backend" "3002:Credo Frontend" "3003:Youth Platform" "3004:Synthesis API" "3005:Audio Frontend" "3006:CG Web" "3007:Synthesis UI" "8080:JCI Portal")
     echo ""
     echo "=== Service Status ==="
     all_ok=true
@@ -72,6 +72,12 @@ do_start() {
         sleep 3
         log_info "JCI Portal started on 8080"
     fi
+    if ! check_port 3004; then
+        cd "$WORKSPACE/projects/synthesis"
+        nohup node --import tsx server/index.ts > /tmp/synthesis_api.log 2>&1 &
+        sleep 3
+        log_info "Synthesis API started on 3004"
+    fi
     if ! check_port 3005; then
         cd "$WORKSPACE/projects/audio-transformation-tool/code"
         nohup npx vite preview --port 3005 --host 0.0.0.0 > /tmp/audio-frontend.log 2>&1 &
@@ -84,6 +90,12 @@ do_start() {
         sleep 2
         log_info "CG Web started on 3006"
     fi
+    if ! check_port 3007; then
+        cd "$WORKSPACE/projects/synthesis/ui"
+        nohup npx vite --port 3007 --host 0.0.0.0 > /tmp/synthesis_ui.log 2>&1 &
+        sleep 3
+        log_info "Synthesis UI started on 3007"
+    fi
     sleep 3
     do_status
 }
@@ -91,12 +103,14 @@ do_start() {
 do_stop() {
     log_info "Stopping services..."
     pkill -f "node dist/index.js" && log_info "Credo API stopped" || true
-    pkill -f "tsx server/index.ts" && log_info "Audio Backend stopped" || true
+    pkill -f "audio_backend.log" && log_info "Audio Backend stopped" || true
     pkill -f "next dev.*3002" && log_info "Credo Frontend stopped" || true
     pkill -f "uvicorn.*3003" && log_info "Youth Platform stopped" || true
     pkill -f "python3 webapp/server.py" && log_info "JCI Portal stopped" || true
+    pkill -f "synthesis_api.log" && log_info "Synthesis API stopped" || true
     pkill -f "vite.*3005" && log_info "Audio Frontend stopped" || true
     pkill -f "web.server.*3006" && log_info "CG Web stopped" || true
+    pkill -f "vite.*3007" && log_info "Synthesis UI stopped" || true
 }
 
 case "${1:-status}" in
