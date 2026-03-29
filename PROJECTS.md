@@ -15,17 +15,28 @@
 - **Git:** ✅ Committed `d38d30e`
 
 ### 2. Audio Transformation Tool
-- **Status:** Running + Server Unit Tests (17 tests)
+- **Status:** Running + Full Test Coverage ✅ (42 tests)
 - **Summary:** Audio-based transformation platform (wellness → military → enterprise → individual development)
 - **Path:** `projects/audio-transformation-tool/code/` (Vite + React)
 - **Runtime:** 
   - Backend: Port 3001 (demo mode - OpenRouter credits exhausted)
   - Frontend: Port 3005 (vite preview)
-- **Tests:** 17/17 server unit tests passing ✅ (verified 2026-03-27)
-- **Git:** ✅ Committed (e175d03)
-- **Test Files:** server.test.ts (17 tests covering health, protocols, chat, director, meditation generation)
-- **Demo Protocols:** 9 active (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE) — served via demo mode when OpenRouter credits exhausted
-- **Next:** Frontend integration tests, API key configuration for production AI
+- **Tests:** 42/42 passing ✅ (verified 2026-03-29)
+  - 17 server unit tests (health, protocols, chat, director, meditation generation)
+  - 9 client protocol structure tests
+  - 16 API integration tests (full user journey, all 10 methodologies)
+- **Git:** ✅ Committed (ca1ae15)
+- **Test Files:**
+  - `server/server.test.ts` — 17 server unit tests
+  - `services/protocols.test.ts` — 9 protocol structure tests
+  - `services/api.integration.test.ts` — 16 integration tests (live backend)
+- **Protocols:** 10 active (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL)
+- **Demo Scripts:** Protocol-specific fallback scripts for all 10 methodologies (5-6 batches each)
+- **Next:** 
+  1. Add OPENROUTER_API_KEY with credits → enable live AI generation
+  2. Supabase auth integration (VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY needed)
+  3. Voice/TTS integration (VITE_RESEMBLE_API_KEY + VITE_RESEMBLE_VOICE_UUID)
+  4. Frontend E2E tests (Playwright)
 
 ### 3. Credo Collaboration Platform
 - **Status:** MVP RUNNING (API + Frontend Connected)
