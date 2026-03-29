@@ -1,5 +1,123 @@
 ---
 
+## 2026-03-29 05:56 Cairo (03:56 UTC) — Wakeup Cron (Aton)
+
+### Status: ✅ All 8 Services Healthy / ✅ 948 Tests Pass / ✅ H11 Context Summary Fixed (1479 bytes) / ✅ 7 Memory Glob Bugs Fixed / ✅ Pushed (89c1f73) / ⚠️ All P0 Items Blocked on User Action
+
+**This session: Found and fixed a systemic glob bug across 7 memory scripts. All services healthy. Tests pass. Security issues still awaiting approval. Nothing buildable without user action.**
+
+### Memory Glob Bug — Found & Fixed ✅ (commit 89c1f73)
+
+7 scripts were using `MEMORY_DIR.glob("*.md")` which only found `.md` files directly in `memory/` root — completely missing all subdirectory files (04-archives/, 00-inbox/, 01-areas/, 02-resources/, 03-projects/).
+
+**Root cause:** `memory/*.md` only matches the root; actual memory content lives in subdirectories.
+
+**Fixed scripts (all → `**/*.md`):**
+| Script | Lines | Impact |
+|--------|-------|--------|
+| `auto_memory_inject.py` | 2 | H11 health check now passes |
+| `context_loader.py` | 1 | Recent decisions now indexed |
+| `context_summarizer.py` | 3 | Summary now counts all files |
+| `memory_manager.py` | 2 | Memory operations now complete |
+| `memory_recall.py` | 1 | Recall search now finds archives |
+| `enhanced_context.py` | 1 | Context injection now complete |
+| `memory_ingest.py` | 2 | Vector ingestion now complete |
+
+**Result:** `.memory_context` is now 1,479 bytes (was 17 bytes — a timestamp from March 9). H11: ✅ OK.
+
+### Test Verification (03:58 UTC)
+| Project | Tests | Result |
+|---------|-------|--------|
+| workspace/server (audio) | 34 vitest | ✅ |
+| audio-transformation-tool/code | 9 vitest | ✅ |
+| collaboration-platform (Credo) | 137 vitest | ✅ |
+| synthesis | 495 vitest | ✅ |
+| jci-org-manager | 62 pytest | ✅ |
+| festival-coordinator | 140 pytest | ✅ |
+| youth-empowerment-platform | 24 pytest | ✅ |
+| contribution-graph (bot) | 47 pytest | ✅ |
+| contribution-graph (db) | 18 pytest | ✅ |
+| **TOTAL** | **966** | **✅ All passing** |
+
+### Service Health Check (03:57 UTC)
+| Service | Port | Status |
+|---------|------|--------|
+| Credo API | 3000 | ✅ 200 |
+| Audio Backend | 3001 | ✅ 200 |
+| Youth Platform | 3003 | ✅ 200 |
+| Synthesis API | 3004 | ✅ 200 |
+| Audio Frontend | 3005 | ✅ 200 |
+| CG Web | 3006 | ✅ 200 |
+| Synthesis UI | 3007 | ✅ 200 |
+| JCI Portal | 8080 | ✅ 200 |
+
+### Git — Clean + Pushed ✅
+- Commit: `89c1f73` — "fix(memory): glob bug in 7 scripts — now recurses subdirectories"
+- Working tree: clean
+
+### Health Check Summary (03:56 UTC)
+| Check | Status |
+|-------|--------|
+| H1: Repo status | ✅ OK (after commit) |
+| H2: Secrets | ✅ OK |
+| H3: Memory files | ✅ OK (1 root file — index.md) |
+| H4: Test harness | ✅ OK |
+| H5: Budget | ⚠️ manual |
+| H6: Git branch | ✅ OK (master) |
+| H7: Memory freshness | ✅ OK |
+| H8: Git cleanup | ✅ OK |
+| H9: Cron active | ✅ OK |
+| H10: Memory context | ✅ OK |
+| **H11: Context summary** | **✅ OK (1,479 bytes — was 17)** |
+| H12: Budget | ✅ OK |
+| H13: Memory usage | ✅ OK (4759MB free) |
+| H14: Services | ✅ OK (8/8) |
+| H15: CPU load | ✅ OK (0.56) |
+| H16: Disk space | ✅ OK (44%) |
+| H17: Gateway | ✅ OK |
+
+### 🚨 CRITICAL SECURITY ISSUES — Still Awaiting User Approval (UNCHANGED)
+
+Both documented since 2026-03-29 01:26 UTC. **Need explicit user approval.**
+
+#### Issue 1: `tools.exec.security` = `"full"` ⚠️ CRITICAL
+- **Risk:** Any compromised session/prompt injection → arbitrary command execution
+- **Fix:** Change to `"allowlist"` + define safe command allowlist
+- **Approval needed**
+
+#### Issue 2: `channels.telegram.groupPolicy` = `"open"` ⚠️ CRITICAL
+- **Risk:** If bot token configured, any group can message the bot
+- **Current:** `bot_token` present but not configured for group access
+- **Fix:** Change to `"restricted"` + list known group IDs
+- **Approval needed**
+
+### 🚨 ALL P0 ITEMS STILL BLOCKED ON USER ACTION
+
+| # | Item | Blocker | Impact |
+|---|------|---------|--------|
+| 1 | **Solar Scout SMTP** | Configure SMTP env vars | Fires 15 emails (33.4 MW) |
+| 2 | **OpenRouter credits** | openrouter.ai → add $5–10 | AI features 402 error |
+| 3 | **CG Test 0.1** | Review `TEST_01_INTERVIEW_SCRIPT.md` + recruit | Phase 0 go/no-go |
+| 4 | **CG Test 0.3** | Identify 1 event (4–8 wks out) | Phase 0 acquisition |
+| 5 | **CG Test 0.4** | Identify 5 target orgs | Phase 0 go/no-go |
+| 6 | **CG Telegram bot token** | BotFather → new token | Phase 2 bot |
+| 7 | **Solar Scout Tier 2** | Lursoft.lv lookup or +371 calls | ~22 MW more |
+| 8 | **Audio Tool → Vercel** | vercel.com → import + env vars | Public URL + Telegram |
+| 9 | **Supabase persistence** | supabase.com → create project | Phase 2 KG persistence |
+
+### What's Buildable Right Now: NOTHING Meaningful
+All meaningful features require external credentials, user decisions, or submodule access. Workspace-level code is clean, TypeScript compiles cleanly, no stale TODOs.
+
+### What's Next
+1. **User: Approve security fixes** — `exec.security = "allowlist"` + `groupPolicy = "restricted"` (approval required — CRITICAL)
+2. **User: Configure Solar Scout SMTP** — highest near-term ROI (fires 15 emails, 33.4 MW pipeline ready)
+3. **User: Add OpenRouter credits** — openrouter.ai → $5–10 (unblocks AI features)
+4. **User: Review CG TEST_01** — approve interview script + recruit participant
+5. **User: Deploy Audio Tool to Vercel** — vercel.com → import + env vars
+6. **User: Create Supabase project** — unlocks Phase 2 KG persistence
+
+---
+
 ## 2026-03-29 05:26 Cairo (03:26 UTC) — Wakeup Cron (Aton)
 
 ### Status: ✅ All 8 Services Healthy / ✅ 1,002 Tests Pass / ✅ MEMORY_CONTEXT.md Restored (4577 bytes) / ✅ BACKLOG.md Updated / ⚠️ All P0 Items Blocked on User Action
