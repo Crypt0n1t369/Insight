@@ -1,23 +1,27 @@
-# PROGRESS.md — 2026-03-29 15:56 Cairo (13:56 UTC) | Aton ☀️🦞
+# PROGRESS.md — 2026-03-29 14:32 Cairo (12:32 UTC) | Aton ☀️🦞
 
 ## This Session's Deliverables
 
-### ✅ Full Test Suite Verified — 729+ Tests Passing (13:58 UTC)
+### ✅ Solar Scout Email Template Bug Fixed — Committed (12:32 UTC)
+| | |
+|--|--|
+| **Commit** | `d3a2188` |
+| **Files** | `send_emails.py`, `docs/SEND_GUIDE.md`, `docs/email_drafts_validated.md` |
+| **Bug fixed** | LV body said `Esmu [name] no [email]` = "I am Janis from janis@gmail.com" — nonsensical |
+| **Fix** | Added `SENDER_COMPANY` env var / config field; email body now correctly says "I am [name] from [Company]" |
+| **Verification** | `--dry-run-all` — all 15 emails render correctly with `[YOUR COMPANY]` placeholder |
+
+### ✅ Full Test Suite Verified (12:30 UTC)
 | Suite | Tests | Result |
 |-------|-------|--------|
 | workspace/server vitest | 34 | ✅ |
 | projects/synthesis vitest | 495 | ✅ |
 | projects/contribution-graph pytest | 47 | ✅ |
 | projects/jci-org-manager pytest | 62 | ✅ |
-| **Total (core)** | **638** | **✅ All passing** |
-| **+ audio/code** | **+16 API integration** | **✅ (synced prior session)** |
+| audio/code vitest | 25 | ✅ |
+| **Total** | **663** | **✅ All passing** |
 
-- **Git:** Clean (`5a96c7b`), submodules at correct commits
-- **Audio submodule:** `ca1ae15` — 16 new API integration tests (synced prior session)
-- **Solar Scout pipeline:** `--dry-run-all` confirms all 15 emails render correctly (placeholders shown until SMTP configured)
-- **No actionable engineering tasks found** — all P0 blockers require user action
-
-### ✅ All 8 Services Healthy (13:56 UTC)
+### ✅ All 8 Services Healthy (12:30 UTC)
 | Port | Service | Status |
 |------|---------|--------|
 | 3000 | Credo API | ✅ 200 |
