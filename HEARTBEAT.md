@@ -24,6 +24,6 @@
 - description: Verify Audio Backend is running on port 3001
 - frequency: 15m
 - action: |
-    curl -s http://localhost:3001/health | grep -q '"status": "ok"' && echo "Audio Backend: OK" || echo "Audio Backend: FAIL"
+    curl -s http://localhost:3001/health | grep -q '"status":"ok"' && echo "Audio Backend: OK" || echo "Audio Backend: FAIL"
 - alert: |
     Audio Backend down! Run: cd workspace && bash server/start.sh backend &
