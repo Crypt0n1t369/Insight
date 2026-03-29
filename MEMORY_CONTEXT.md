@@ -2,7 +2,7 @@
 Generated: 2026-03-29 05:37
 
 ## Active Projects
-- audio-transformation-tool: Unknown
+- audio-transformation-tool: Demo mode working (Web Speech API), 9 tests passing, Vercel-ready (user action needed for deployment)
 
 ## Key Decisions
 ### Memory System Architecture
