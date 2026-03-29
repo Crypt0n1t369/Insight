@@ -1,6 +1,12 @@
 # BACKLOG.md - Task Queue
 
-## LAST UPDATED: 2026-03-29 01:26 UTC (Worker-1 session)
+## LAST UPDATED: 2026-03-29 03:26 UTC (main session - Aton)
+
+### ⚠️ Worker-1 BACKLOG Edit Failure — KNOWN ISSUE
+- Worker-1 (isolated sessions) cannot edit BACKLOG.md — "Edit failed" error
+- Root cause: Isolated cron sessions may not have workspace write access
+- Workaround: Main session can edit; Worker-1 tasks requiring BACKLOG edits should be handled in main session
+- Last successful Worker-1 edit: 2026-03-29 01:26 UTC
 
 ---
 
