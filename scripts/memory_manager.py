@@ -40,7 +40,7 @@ def get_recent_memories(days: int = 7) -> list:
     memories = []
     now = datetime.now()
     
-    for f in MEMORY_DIR.glob("*.md"):
+    for f in MEMORY_DIR.glob("**/*.md"):
         if f.name == "index.md":
             continue
         
@@ -80,7 +80,7 @@ def check_memory_freshness() -> bool:
     """Check if memory is fresh (written today)."""
     today = datetime.now().strftime("%Y-%m-%d")
     
-    for f in MEMORY_DIR.glob("*.md"):
+    for f in MEMORY_DIR.glob("**/*.md"):
         if today in f.name:
             return True
     

@@ -47,7 +47,7 @@ def load_recent_decisions():
     decisions = []
     memory_dir = WORKSPACE / "memory"
     
-    for f in sorted(memory_dir.glob("*.md"), reverse=True)[:3]:
+    for f in sorted(memory_dir.glob("**/*.md"), reverse=True)[:3]:
         if f.name == "index.md":
             continue
         content = f.read_text()

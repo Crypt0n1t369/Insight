@@ -35,7 +35,7 @@ def build_index():
     doc_count = 0
     
     # Load all memory files
-    for f in MEMORY_DIR.glob("*.md"):
+    for f in MEMORY_DIR.glob("**/*.md"):
         if f.name == "index.md":
             continue
         

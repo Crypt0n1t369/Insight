@@ -29,7 +29,7 @@ def get_recent_files(days=3):
     """Get memory files from recent days."""
     files = []
     now = datetime.now()
-    for f in MEMORY_DIR.glob("*.md"):
+    for f in MEMORY_DIR.glob("**/*.md"):
         if f.name in ["index.md", "decisions.md"]:
             continue
         try:

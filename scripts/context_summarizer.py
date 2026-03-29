@@ -49,7 +49,7 @@ def summarize_current_session():
     
     summary += f"""
 ## Context Status
-- Memory files: {len(list(MEMORY_DIR.glob('*.md')))} total
+- Memory files: {len(list(MEMORY_DIR.glob('**/*.md')))} total
 - Last memory update: {today}
 
 ---
@@ -67,7 +67,7 @@ def archive_old_sessions():
     cutoff = datetime.now().timestamp() - (7 * 24 * 60 * 60)
     
     archived = []
-    for f in MEMORY_DIR.glob("*.md"):
+    for f in MEMORY_DIR.glob("**/*.md"):
         if f.stat().st_mtime < cutoff:
             if f.name not in ["index.md", "decisions.md"]:
                 # Move to archive
@@ -86,7 +86,7 @@ def main():
     
     if args.status:
         # Show current status
-        memory_files = list(MEMORY_DIR.glob("*.md"))
+        memory_files = list(MEMORY_DIR.glob("**/*.md"))
         print(f"📚 Memory files: {len(memory_files)}")
         
         today = datetime.now().strftime("%Y-%m-%d")

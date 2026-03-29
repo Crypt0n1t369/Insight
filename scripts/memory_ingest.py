@@ -43,9 +43,8 @@ def load_memory_files() -> list:
     ids = []
     metadatas = []
     
-    # Find all .md files
-    md_files = list(MEMORY_DIR.glob("*.md"))
-    md_files.extend(MEMORY_DIR.glob("memory/*.md"))
+    # Find all .md files (recursive to catch subdirectories like 04-archives/)
+    md_files = list(MEMORY_DIR.glob("**/*.md"))
     
     for f in sorted(md_files):
         if f.name == "index.md":

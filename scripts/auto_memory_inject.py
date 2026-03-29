@@ -43,7 +43,7 @@ def build_index():
     term_freq = defaultdict(lambda: defaultdict(int))
     doc_count = 0
     
-    for f in MEMORY_DIR.glob("*.md"):
+    for f in MEMORY_DIR.glob("**/*.md"):
         if f.name == "index.md":
             continue
         if f.name.startswith("."):
@@ -136,7 +136,7 @@ def generate_context():
     # Get recent memories summary
     now = datetime.now()
     recent = []
-    for f in MEMORY_DIR.glob("*.md"):
+    for f in MEMORY_DIR.glob("**/*.md"):
         if f.name == "index.md" or f.name.startswith("."):
             continue
         try:
