@@ -68,6 +68,7 @@ export SMTP_PORT="587"
 export SMTP_USER="your@email.com"
 export SMTP_PASSWORD="xxxx xxxx xxxx xxxx"
 export SENDER_NAME="Jānis Zeltins"
+export SENDER_COMPANY="Solar Scout Latvia"   # shown as "from [COMPANY]" in email body
 export SENDER_EMAIL="janis@yourcompany.lv"
 export BCC_RECIPIENT="janis@yourcompany.lv"  # receives a BCC copy of every email
 ```
@@ -78,6 +79,12 @@ Add these fields to `config.py`:
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 587
 SMTP_USER = "your@email.com"
+SMTP_PASSWORD = "xxxx xxxx xxxx xxxx"
+SENDER_NAME = "Jānis Zeltins"
+SENDER_COMPANY = "Solar Scout Latvia"
+SENDER_EMAIL = "janis@yourcompany.lv"
+BCC_RECIPIENT = "janis@yourcompany.lv"
+```
 SMTP_PASSWORD = "xxxx xxxx xxxx xxxx"
 SENDER_NAME = "Jānis Zeltins"
 SENDER_EMAIL = "your@email.com"

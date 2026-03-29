@@ -60,10 +60,11 @@ def is_feminine_name(first_name: str) -> bool:
 def load_config():
     """Load SMTP config from environment variables (with config.py as fallback for SMTP fields only)."""
     # Env vars always win for sender identity
-    sender_name   = os.getenv("SENDER_NAME", "[YOUR NAME]")
-    sender_email  = os.getenv("SENDER_EMAIL", "[YOUR@EMAIL.COM]")
-    sender_phone  = os.getenv("SENDER_PHONE", "+371 XXX XXXX")
-    bcc_recip     = os.getenv("BCC_RECIPIENT", "")
+    sender_name    = os.getenv("SENDER_NAME", "[YOUR NAME]")
+    sender_company = os.getenv("SENDER_COMPANY", "[YOUR COMPANY]")
+    sender_email   = os.getenv("SENDER_EMAIL", "[YOUR@EMAIL.COM]")
+    sender_phone   = os.getenv("SENDER_PHONE", "+371 XXX XXXX")
+    bcc_recip      = os.getenv("BCC_RECIPIENT", "")
 
     # SMTP credentials: env vars first, then config.py fallback
     host     = os.getenv("SMTP_HOST", "")
@@ -79,9 +80,10 @@ def load_config():
             port     = port or int(port_cfg)
             user     = getattr(config, "SMTP_USER", "") or user
             password = getattr(config, "SMTP_PASSWORD", "") or password
-            sender_name  = getattr(config, "SENDER_NAME", sender_name)
-            sender_email = getattr(config, "SENDER_EMAIL", sender_email)
-            bcc_recip    = getattr(config, "BCC_RECIPIENT", bcc_recip)
+            sender_name    = getattr(config, "SENDER_NAME", sender_name)
+            sender_company = getattr(config, "SENDER_COMPANY", sender_company)
+            sender_email   = getattr(config, "SENDER_EMAIL", sender_email)
+            bcc_recip      = getattr(config, "BCC_RECIPIENT", bcc_recip)
         except (ImportError, AttributeError):
             pass
 
@@ -91,8 +93,9 @@ def load_config():
 
     return {
         "host": host, "port": port, "user": user, "password": password,
-        "sender_name": sender_name, "sender_email": sender_email,
-        "sender_phone": sender_phone, "bcc_recipient": bcc_recip,
+        "sender_name": sender_name, "sender_company": sender_company,
+        "sender_email": sender_email, "sender_phone": sender_phone,
+        "bcc_recipient": bcc_recip,
     }
 
 
@@ -124,7 +127,7 @@ def build_email_body(lead, cfg, lang="lv"):
         subject = f"SaulesPaneļi Latvija — Bezmaksas konsultācija jūsu ražotnei"
         body = f"""{greeting_lv}
 
-Esmu {cfg['sender_name']} no {cfg['sender_email']} — mēs palīdzam Latvijas rūpniecības uzņēmumiem saražot savu elektroenerģiju ar saules paneļiem.
+Esmu {cfg['sender_name']} no {cfg['sender_company']} — mēs palīdzam Latvijas rūpniecības uzņēmumiem saražot savu elektroenerģiju ar saules paneļiem.
 
 Jūsu uzņēmums {company} ({address}) atbilst mūsu kritērijiem:
 ✔ Rūpnieciskā darbība ar lielu jumta platību
@@ -147,7 +150,7 @@ Ja nevēlaties saņemt turpmākus paziņojumus, lūdzu, atbildiet uz šo e-pastu
         subject = f"Free Solar Assessment for {company} — {capacity:,} kW Potential"
         body = f"""{greeting_en}
 
-I'm {cfg['sender_name']} from {cfg['sender_email']}. We help Latvian manufacturing companies reduce their electricity costs by installing solar panels on their facilities.
+I'm {cfg['sender_name']} from {cfg['sender_company']}. We help Latvian manufacturing companies reduce their electricity costs by installing solar panels on their facilities.
 
 Based on our preliminary analysis, your facility at {address} could host approximately {capacity:,} kW of solar panels — potentially cutting your electricity costs by 30–50%.
 

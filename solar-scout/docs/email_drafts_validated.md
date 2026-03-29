@@ -3,7 +3,7 @@
 Total: 15 companies | 33.4 MW
 
 > ⚠️ Email validation: strict MX check — requires valid mail server (not localhost, not null MX)
-> ⚠️ Draft preview — replace [YOUR NAME] / [YOUR@EMAIL.COM] / [PHONE] before sending
+> ⚠️ Draft preview — replace [YOUR NAME] / [YOUR COMPANY] / [YOUR@EMAIL.COM] / [PHONE] before sending
 
 ---
 
