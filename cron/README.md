@@ -9,18 +9,25 @@ This directory contains the OpenClaw cron job configuration and related scripts.
 - `scripts/` - Cron job execution scripts
 - `logs/` - Execution logs and state files
 
-## Current Cron Jobs
+## Current Cron Jobs (as of 2026-03-29)
 
-### Active Jobs
-1. **Wakeup** - Runs every 30 minutes, verifies systems, updates PROGRESS.md
-2. **Worker-1** - Runs every 5 hours, picks highest-priority BACKLOG.md task and executes
-3. **Worker-3** - Runs every 5 hours, checks OpenClaw system tasks, health, memory cleanup
+| Job | Schedule | Session | Purpose |
+|-----|----------|---------|---------|
+| **Wakeup** | 30 min | `current` | Verify systems, update PROGRESS.md |
+| **Worker-1** | 5 hours | `isolated` | Pick highest-priority BACKLOG.md task |
+| **Worker-3** | 5 hours | `isolated` | OpenClaw health, memory cleanup |
 
-### Note on Isolated Sessions
-Wakeup cron runs in `sessionTarget: current` mode (updated 2026-03-28). This allows it
-to edit workspace files (PROGRESS.md, MEMORY_CONTEXT.md, etc.) without the isolated-session
-edit limitation. Worker-1 and Worker-3 run in `isolated` mode — they do NOT edit files,
-only read and report.
+### ⚠️ Worker-2 — DISABLED (2026-03-28)
+- Worker-2 was disabled after it failed trying to edit a submodule (solar-scout/PROGRESS.md)
+- Isolated sessions cannot write to submodule files
+- Worker-2 had 1 consecutive error before disable
+
+### Note on Session Modes
+- `sessionTarget: current` = runs in the cron-initiating session, CAN edit workspace files
+- `sessionTarget: isolated` = ephemeral isolated session, CANNOT edit workspace files
+
+The Wakeup job runs in `current` mode so it can update PROGRESS.md and MEMORY_CONTEXT.md.
+Worker-1 and Worker-3 run in `isolated` mode — they only read and report.
 
 ## Rate Limiter System
 - `rate_limiter.py` - Advanced rate limiting with resume capability
@@ -33,7 +40,8 @@ only read and report.
 - Verify workspace write access
 - Review error logs in `logs/` directory
 - Test scripts individually before adding to cron
-- Isolated sessions cannot edit workspace files — use `sessionTarget: current` for edit-dependent jobs
+- **Isolated sessions cannot edit workspace files** — use `sessionTarget: current` for edit-dependent jobs
+- **Isolated sessions cannot edit submodules** — solar-scout/ and projects/*/ require main session
 
 ## Backup Strategy
 The system automatically:
@@ -41,3 +49,8 @@ The system automatically:
 - Archives logs weekly
 - Creates snapshots before major changes
 - Maintains 30-day retention policy
+
+## Auto Memory
+- `scripts/auto_memory_inject.py` — runs on cron, generates `.memory_context`
+- Output: `/home/drg/.openclaw/workspace/.memory_context` (auto-loaded as project context)
+- Memory search: TF-IDF based, queries 5 active topics
