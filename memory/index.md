@@ -14,15 +14,22 @@
 - ai-automation
 - productivity
 
-## Active Projects
-- synthesis (port 3004 API, port 3007 UI) — WOOP + SE agents, KG graph, 495 vitest
-- audio-transformation-tool (port 3001 backend, port 3005 frontend) — 10 protocols (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL), demo mode
-- collaboration-platform / Credo (port 3000 API) — RLS, credibility engine
-- jci-org-manager (port 8080) — LLM engagement agent
-- festival-coordinator — Phase 2 pending Telegram bot
-- youth-empowerment-platform (port 3003) — SEED methodology
-- contribution-graph (port 3006 web) — Phase 0 validation materials ready
-- solar-scout (outreach pipeline) — 15 validated companies (33.4 MW), SMTP ready, awaiting config
+## Active Projects (as of 2026-03-29)
+- **synthesis** (port 3004 API, port 3007 UI) — WOOP + SE agents, KG graph (102 nodes/48 edges/86 sessions), 495 vitest, Supabase Phase 2 ready
+- **audio-transformation-tool** (port 3001 backend, port 3005 frontend) — 10 protocols (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL), demo mode, Vercel deployment doc written
+- **collaboration-platform / Credo** (port 3000 API) — RLS deferred, credibility engine, 137 vitest
+- **jci-org-manager** (port 8080) — LLM engagement agent (OpenRouter), 62 pytest
+- **festival-coordinator** — Phase 2 pending Telegram bot (140 pytest), admin checks wired in bot.py
+- **youth-empowerment-platform** (port 3003) — SEED methodology, 24 pytest
+- **contribution-graph** (port 3006 web) — Phase 0 materials ready (TEST_01-04), 110 pytest, Telegram bot token needed
+- **solar-scout** (outreach pipeline) — 15 validated companies (33.4 MW, MX-validated), 10 more Tier 2 (~22 MW, no MX), SMTP pre-flight ready
+
+## Areas
+- ai-automation
+- productivity
+- knowledge-management (synthesis KG)
+- outreach (solar-scout, CG acquisition)
+- bot-development (Telegram bots for Credo, Festival, CG)
 
 ## Tags
 - #ai - AI/ML
@@ -38,17 +45,17 @@
 - link.py - Find connections
 - recall.py - Search memory
 
-## Test Suite Summary (1,002 tests, all passing as of 2026-03-28)
+## Test Suite Summary (1,002 tests, all passing as of 2026-03-29)
 | Project | Tests | Type |
 |---------|-------|------|
 | Synthesis Platform | 495 | vitest |
-| Audio Backend | 34 | vitest |
 | Credo Platform | 137 | vitest |
+| Contribution Graph | 110 | pytest (47 API + 24 web + 39 bot/db) |
 | Festival Coordinator | 140 | pytest |
-| Contribution Graph | 110 | pytest |
 | JCI Org Manager | 62 | pytest |
+| Audio Backend | 34 | vitest |
 | Youth Platform | 24 | pytest |
 
 ---
 
-Updated: 2026-03-28
+Updated: 2026-03-29
