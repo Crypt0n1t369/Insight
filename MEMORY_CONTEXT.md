@@ -1,5 +1,5 @@
 === ATON CONTEXT ===
-Generated: 2026-03-29 15:56 Cairo (13:56 UTC)
+Generated: 2026-03-29 14:37 Cairo (12:37 UTC)
 
 ## Active Projects
 
@@ -7,8 +7,9 @@ Generated: 2026-03-29 15:56 Cairo (13:56 UTC)
 - **Status:** Pipeline complete, SMTP not configured
 - **What works:** `regenerate_validated.py` → `generate_emails.py` → `send_emails.py --dry-run-all` (all CWD-independent now ✅)
 - **Bug fixed (2026-03-29):** All 3 scripts now use script-relative paths — works from workspace root OR solar-scout/ dir
+- **Email template bug fixed (12:32 UTC):** Added `SENDER_COMPANY` field; LV body now says "Esmu [name] no [Company]" instead of the nonsensical "Esmu Janis no janis@gmail.com" (commit `d3a2188`)
 - **15 validated companies / 33.4 MW** — all MX-validated, personalized LV+EN emails
-- **P0 blocker:** User must configure SMTP env vars (Gmail App Password / Mailgun / SendGrid)
+- **P0 blocker:** User must configure SMTP env vars (Gmail App Password / Mailgun / SendGrid) + `SENDER_COMPANY`
 - **Docs:** solar-scout/docs/SEND_GUIDE.md
 
 ### Audio Transformation Tool — DEMO MODE RUNNING ⚠️
@@ -57,6 +58,7 @@ Generated: 2026-03-29 15:56 Cairo (13:56 UTC)
 
 ## Quick Status
 - Services: 8/8 HTTP 200 (3000/3001/3003/3004/3005/3006/3007/8080) ✅
-- Tests: 729 passing this session (workspace 34, synthesis 495, CG 89, JCI 62, audio 25 + submodule sync ca1ae15)
+- Tests: 663 passing this session (workspace 34, synthesis 495, CG 47, JCI 62, audio 25)
+- Git: clean ✅ (commit efa4edd)
 - Git: clean ✅
 - Cron: Wakeup running this session; Worker-1 OK (15m ago); Worker-3 OK (5h ago)
