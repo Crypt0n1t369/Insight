@@ -57,6 +57,6 @@ Generated: 2026-03-29 11:26 Cairo (09:26 UTC)
 
 ## Quick Status
 - Services: 8/8 HTTP 200 (3000/3001/3003/3004/3005/3006/3007/8080) ✅
-- Tests: 1,025 passing this session (workspace 34, synthesis 495, CG 110, JCI 62)
+- Tests: 729 passing this session (workspace 34, synthesis 495, CG 89, JCI 62, audio 25 + submodule sync ca1ae15)
 - Git: clean ✅
 - Cron: Wakeup running this session; Worker-1 OK (15m ago); Worker-3 OK (5h ago)

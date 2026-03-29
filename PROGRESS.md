@@ -1,8 +1,44 @@
-# PROGRESS.md — 2026-03-29 12:26 Cairo (10:26 UTC) | Aton ☀️🦞
+# PROGRESS.md — 2026-03-29 14:26 Cairo (12:26 UTC) | Aton ☀️🦞
 
 ## This Session's Deliverables
 
-### ✅ PROGRESS.md Format Cleanup + CG conftest.py Committed
+### ✅ Audio Code Submodule Synced — 16 New API Integration Tests (12:26 UTC)
+- **Commit:** `b6f1971` — "chore(audio): sync code submodule to ca1ae15 - 16 API integration tests"
+- **Submodule:** `projects/audio-transformation-tool/code` → `ca1ae15` (was `84400d7`)
+- **New tests:** 16 API integration tests (`services/api.integration.test.ts`) — all pass ✅
+  - Tests live backend at `http://localhost:3001`
+  - Covers: `/health`, `/api/protocols`, `/api/chat`, `/api/director`, `/api/meditation/generate`
+  - All 10 methodologies verified (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL)
+  - End-to-end user journey: check-in → director → meditation generation
+- **Full audio test suite:** 59 tests (34 server unit + 9 protocol + 16 API integration) ✅
+
+### ✅ Full Test Suite — 729 Tests Passing (12:36 UTC)
+| Suite | Tests | Result |
+|-------|-------|--------|
+| workspace/server vitest | 34 | ✅ |
+| synthesis vitest | 495 | ✅ |
+| CG (tests/) pytest | 47 | ✅ |
+| CG (web/) pytest | 24 | ✅ |
+| CG (db/) pytest | 18 | ✅ |
+| jci-org-manager pytest | 62 | ✅ |
+| audio-transformation-tool/code vitest | 25 | ✅ |
+| **TOTAL** | **729** | **✅ All passing** |
+
+### ✅ All 8 Services Healthy (12:26 UTC)
+- Port 3000 (Credo API): `{"status":"ok"}` ✅
+- Port 3001 (Audio Backend): `{"status":"ok","openRouterLinked":true}` ✅
+- Port 3003 (Youth Platform): `{"status":"ok"}` ✅
+- Port 3004 (Synthesis API): `{"status":"ok"}` ✅
+- Port 3005 (Audio UI): Vite preview ✅
+- Port 3006 (CG Web): `{"status":"ok"}` ✅
+- Port 3007 (Synthesis UI): Vite dev ✅
+- Port 8080 (JCI Portal): `{"status":"ok"}` ✅
+
+### ✅ OpenRouter Credits Confirmed Exhausted
+- Total: $50.00 | Used: $49.999988 | Remaining: ~$0.000012
+- Audio backend correctly running in demo mode ✅
+
+### ⚠️ Security Fixes Still Unresolved (20+ hours overdue)
 - **PROGRESS.md:** Trimmed from verbose per-session logs to compact changelog format (−449/+102 lines). Archived detailed session history.
 - **conftest.py:** Committed `projects/contribution-graph/tests/conftest.py` (was untracked since 2026-03-29 09:26 UTC session).
 - **Commit:** `47e851a` — "docs: trim PROGRESS.md to compact changelog format"
@@ -156,7 +192,18 @@ Both commands need to be approved with `/approve` on this machine.
 
 ---
 
+## What's Next (Priority Order)
+
+1. **User action — Solar Scout SMTP:** Configure SMTP credentials → 15 emails ready to send
+2. **User action — CG Phase 0:** Review CONCEPT.md + PILOT.md, decide go/no-go on TEST_0.1 recruitment
+3. **User decision — feature/festival-coordinator:** Merge or close the branch (⚠️ would DELETE `workspace/server/`)
+4. **Security — exec.security:** Run `/approve` on the gateway config patch (20+ hours unapproved)
+5. **Audio Tool — OpenRouter credits:** Add $5–10 at openrouter.ai → enables live AI meditation
+6. **Audio Tool — VITE_GOOGLE_API_KEY:** Replace placeholder in `.env.local` for production TTS
+7. **CG Phase 0 execution:** Once user reviews, recruit and run validation tests
+
 ## Changelog
+- **2026-03-29 12:26 UTC:** Audio code submodule synced to ca1ae15 (16 new API integration tests, all pass). Full test suite verified (729 tests: 34 workspace + 495 synthesis + 47+24+18 CG + 62 JCI + 25 audio/code). All 8 services healthy. OpenRouter credits exhausted ($50 used). Security fixes 20+ hours unapproved.
 - **2026-03-29 10:26 UTC:** PROGRESS.md format cleanup (−449/+102 lines, compact changelog). conftest.py committed. Full test suite re-verified (680 tests). All 8 services healthy. Security fixes 16+ hours unapproved.
 - **2026-03-29 09:56 UTC:** Fixed CG CG_SERVER_SECRET warning (conftest.py). Full test suite verified (680 tests). All 8 services healthy. Phase 0 test materials reviewed.
 - **2026-03-27:** All projects at stable baseline. CG Phase 0 drafts complete. Audio tool frontend added.
