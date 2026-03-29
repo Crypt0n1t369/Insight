@@ -1,5 +1,79 @@
 ---
 
+## 2026-03-29 05:26 Cairo (03:26 UTC) — Wakeup Cron (Aton)
+
+### Status: ✅ All 1,002 Tests Pass / ⚠️ MEMORY_CONTEXT.md Degraded Again (UNRESOLVED) / Nothing Buildable Without User Action
+
+**This session: Verified all 8 services healthy (ports 3000/3001/3003/3004/3005/3006/3007/8080). Ran full test suite — all suites pass (1,002 total: 495 Synthesis + 137 Credo + 110 CG + 140 Festival + 62 JCI + 34 Audio + 24 Youth). Found MEMORY_CONTEXT.md degraded to 17 lines again despite `session-memory` hook being disabled — manually restored with full detailed content. All P0 items remain blocked on user action.**
+
+### Verification Results — All Clean ✅
+
+| Check | Result | Details |
+|-------|--------|---------|
+| All 8 services | ✅ HTTP 200 | 3000/3001/3003/3004/3005/3006/3007/8080 |
+| Full test suite | ✅ 1,002 pass | All 9 suites exit 0 |
+| Git workspace | ✅ Clean | MEMORY_CONTEXT.md restored this session |
+| Health check | ✅ 16/17 | H11 WARN (context low — non-actionable in cron) |
+| No TODO/FIXME/BUG | ✅ None | workspace scripts/server/ clean |
+
+### ⚠️ MEMORY_CONTEXT.md DEGRADATION — RECURRING, UNRESOLVED
+
+**Problem:** MEMORY_CONTEXT.md regenerated to ~17 lines despite `session-memory` hook disabled in gateway config (`hooks.internal.entries."session-memory".enabled: false`).
+
+**Timeline:**
+- 04:27 UTC (prior cron): Reported "fix holding" — detailed ~111 lines
+- 03:26 UTC (this cron): Degraded to 17 lines
+- **Conclusion:** Fix did NOT hold; something else is overwriting it
+
+**Root cause:** Unknown. `auto_memory_inject.py` writes to `.memory_context` (different file). `session-memory` hook is disabled. OpenClaw internal auto-regeneration suspected but not confirmed.
+
+**Current state:** Manually restored to ~140 lines with full detailed content (this session).
+
+**If you can help investigate:** Check OpenClaw hooks/logs for what regenerates workspace context files on a schedule.
+
+### 🚨 CRITICAL SECURITY ISSUES — Still Awaiting User Approval
+
+Both documented in prior sessions. **Still require explicit user approval.** I will not apply without go-ahead.
+
+#### Issue 1: `tools.exec.security` = `"full"` ⚠️ CRITICAL
+- **Risk:** Any compromised session/prompt injection could run arbitrary commands
+- **Fix:** Change to `"allowlist"` + define safe command allowlist
+- **Your approval needed**
+
+#### Issue 2: `channels.telegram.groupPolicy` = `"open"` ⚠️ CRITICAL
+- **Risk:** If bot token is configured, any group can message the bot
+- **Current:** `bot_token` is empty, so no active risk
+- **Fix:** Change to `"restricted"` + list known group IDs
+- **Your approval needed**
+
+### 🚨 ALL P0 ITEMS STILL BLOCKED ON USER ACTION
+
+| # | Item | Blocker |
+|---|------|---------|
+| 1 | **Solar Scout SMTP** | Configure SMTP env vars — fires 15 emails (33.4 MW) |
+| 2 | **OpenRouter credits** | openrouter.ai → add $5–10 (demo mode works in meantime) |
+| 3 | **CG Test 0.1** | Review `TEST_01_INTERVIEW_SCRIPT.md` + recruit participants |
+| 4 | **CG Test 0.3** | Identify 1 event (4–8 wks out) |
+| 5 | **CG Test 0.4** | Identify 5 target orgs |
+| 6 | **CG Telegram bot token** | BotFather → new token |
+| 7 | **Solar Scout Tier 2** | Lursoft.lv lookup or +371 calls (~22 MW more) |
+| 8 | **Audio Tool → Vercel** | vercel.com → import repo + env vars |
+| 9 | **Supabase persistence** | supabase.com → create project |
+
+### What's Buildable Right Now: NOTHING Meaningful
+All meaningful features require external credentials, user decisions, or submodule access. Workspace-level code is clean, TypeScript compiles cleanly, no stale TODOs.
+
+### What's Next
+1. **User: Help investigate MEMORY_CONTEXT.md degradation** — something regenerating it despite hook disabled
+2. **User: Approve security fixes** — `exec.security` + `groupPolicy` (approval required)
+3. **User: Configure Solar Scout SMTP** — highest near-term ROI (33.4 MW, pipeline ready)
+4. **User: Add OpenRouter credits** — unblocks AI features across all projects
+5. **User: Deploy Audio Tool to Vercel** — vercel.com → import + env vars
+6. **User: Review CG Phase 0** — approve TEST_01 recruitment script
+7. **User: Create Supabase project** — unlocks Phase 2 KG persistence
+
+---
+
 ## 2026-03-29 04:56 Cairo (02:56 UTC) — Wakeup Cron (Aton)
 
 ### Status: ✅ All 8 Services Healthy / All 1,002 Tests Pass / 🚨 2 CRITICAL Security Issues Unchanged / Nothing Buildable Without User Action

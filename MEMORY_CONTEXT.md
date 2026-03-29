@@ -1,5 +1,5 @@
 === ATON CONTEXT ===
-Generated: 2026-03-29 00:27 UTC (wakeup cron session)
+Generated: 2026-03-29 01:26 UTC (wakeup cron — 04:26 Cairo)
 
 ## Active Projects
 
@@ -25,7 +25,7 @@ Generated: 2026-03-29 00:27 UTC (wakeup cron session)
 - **Status:** Active — outreach pipeline ready to fire
 - **Validated:** 15 companies / 33.4 MW (MX-validated, SMTP-ready)
 - **Tier 2:** 10 companies / ~22 MW (no MX, needs Lursoft lookup)
-- **SMTP flag:** `--smtp-check` added — pre-flight validation
+- **SMTP flag:** `--smtp-check` + `--check-replies` added
 - **Git:** Nested repo at solar-scout/, workspace synced
 
 ### Credo Collaboration Platform
@@ -63,7 +63,9 @@ Generated: 2026-03-29 00:27 UTC (wakeup cron session)
 | 2026-03-28 | KGStorage autosave (60s) + forceSave endpoint | Sessions persist correctly |
 | 2026-03-28 | forceSave() sets dirty=true before saveSync | Force-save now works post-restart |
 | 2026-03-28 | Solar Scout --smtp-check flag | SMTP pre-flight validation |
-| 2026-03-28 | Solar Scout 15→36 companies | Validated list expanded |
+| 2026-03-28 | Solar Scout --check-replies flag | Follow-up readiness per company |
+| 2026-03-28 | Solar Scout 15→36→15 companies | Corrected data quality (MX validation) |
+| 2026-03-28 | service_manager.sh fixed (3004/3007 added) | All services managed correctly |
 | 2026-03-28 | KGDatabaseAdapter wired to orchestrator | Supabase Phase 2 ready |
 | 2026-03-28 | run_all_tests.sh created | No more pytest cache collisions |
 | 2026-03-28 | Health check: 6→8 services, 3002 removed | Accurate service count |
@@ -73,10 +75,10 @@ Generated: 2026-03-29 00:27 UTC (wakeup cron session)
 
 ## Quick Status
 - **Memory:** Fresh (2026-03-29)
-- **Health:** 17 checks passing (H11 WARN non-actionable)
+- **Health:** 16/17 checks passing (H11 WARN non-actionable in cron session)
 - **Tests:** 1,002 passing (9 suites: 495 Synthesis + 137 Credo + 110 CG + 140 Festival + 62 JCI + 34 Audio + 24 Youth)
 - **Services:** 8/8 healthy (ports 3000/3001/3003/3004/3005/3006/3007/8080)
-- **Git:** Workspace clean except local MEMORY_CONTEXT.md change (this session)
+- **Git:** Workspace clean except MEMORY_CONTEXT.md (degraded — restored this session)
 - **Cron:** Wakeup + Worker-1 + Worker-3 all healthy (0 consecutive errors)
 
 ## P0 Blockers (All User Action Required)
@@ -92,20 +94,27 @@ Generated: 2026-03-29 00:27 UTC (wakeup cron session)
 | 8 | Audio Tool → Vercel | vercel.com → import + env vars | Public URL + Telegram |
 | 9 | Supabase persistence | supabase.com → create project | Phase 2 KG persistence |
 
-## MEMORY_CONTEXT.md Degradation — PERMANENTLY FIXED ✅
-- **Problem (RESOLVED):** System auto-regenerates MEMORY_CONTEXT.md with degraded content (~18 lines vs 93 lines). Happened every ~30 min.
-- **Root cause:** `hooks.internal.entries."session-memory"` internal hook was enabled.
-- **Fix applied (2026-03-29 00:30 UTC):** Disabled `session-memory` hook via `gateway config.patch`. Gateway restarted (SIGUSR1).
-- **Verification:** If MEMORY_CONTEXT.md stays detailed after next cron cycle (~00:57 UTC), fix confirmed working.
-- **If degraded again:** Re-enable via `gateway config.patch` with `hooks.internal.entries."session-memory".enabled: true`
+## ⚠️ MEMORY_CONTEXT.md DEGRADATION — RECURRING ISSUE
+- **Problem:** MEMORY_CONTEXT.md auto-regenerates to ~17 lines (stub content) every ~30 min despite `session-memory` hook disabled
+- **Root cause:** Unknown — hook is disabled in config but file still regenerates
+- **Fix applied:** Hook disabled (`hooks.internal.entries."session-memory".enabled: false`) — did NOT resolve
+- **Workaround:** Manually restore detailed content (this session done)
+- **Status:** UNRESOLVED — needs investigation or user escalation
+- **Frequency:** Degrades every ~1-2 hours between cron sessions
 
-## JCI RuntimeWarning — Cannot Fix (Submodule)
-- `test_llm.py:232` RuntimeWarning: coroutine was never awaited
-- 21 tests pass (62 total in JCI suite) — cosmetic only
-- `projects/jci-org-manager/` is a git submodule — requires non-isolated session to fix
+## SECURITY ISSUES (Awaiting User Approval)
+| Issue | Risk | Fix |
+|-------|------|-----|
+| `tools.exec.security = "full"` | Prompt injection → arbitrary command execution | Change to `"allowlist"` + safe command list |
+| `channels.telegram.groupPolicy = "open"` | Any Telegram group can message bot | Change to `"restricted"` + known group IDs |
 
 ## Git Submodules
 - `Perplexica/` — v1.12.1-5
 - `projects/audio-transformation-tool/code` — heads/main
 - `projects/jci-org-manager` — heads/festival-bot
-- `solar-scout/` — nested git repo (workspace synced)
+- `solar-scout/` — regular git repo (NOT a submodule), workspace synced
+
+## JCI RuntimeWarning — Cannot Fix (Submodule)
+- `test_llm.py:232` RuntimeWarning: coroutine was never awaited
+- 21 tests pass (62 total in JCI suite) — cosmetic only
+- `projects/jci-org-manager/` is a git submodule — requires non-cron session to fix
