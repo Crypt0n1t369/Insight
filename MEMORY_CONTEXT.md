@@ -19,9 +19,9 @@ Generated: 2026-03-29 10:26 Cairo (08:26 UTC)
 
 ### Synthesis Platform — RUNNING ✅
 - **Status:** 3004 API healthy, 3007 UI healthy
-- **KG:** 102 nodes, 47 edges, 86 sessions, 3251 events
-- **Note:** KGStoragePassthroughAdapter (no Supabase) — data not persisted to disk
-- **P0 blocker:** Supabase project needed for KG persistence + Phase 2
+- **KG:** 107 nodes, 49 edges, 91 sessions, 3441 events (verified 2026-03-29 10:36 UTC)
+- **Persistence:** ✅ KG autosaves every 60s to `data/synthesis/knowledge-graph.json` (112KB)
+- **Supabase benefit:** Cross-instance sharing + SQL queries; NOT required for basic persistence
 
 ### Contribution Graph (CG) — PHASE 0 VALIDATION ⚠️
 - **Status:** Tests 0.1–0.4 drafted, no participants recruited
