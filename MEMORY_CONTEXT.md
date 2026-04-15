@@ -1,11 +1,11 @@
 === ATON CONTEXT ===
-Generated: 2026-04-15 21:59 UTC
+Generated: 2026-04-15 22:33 UTC
 
 ## Active Projects
 ### synthesis-collaboration (primary)
 - **Status:** Bot LIVE ✅ | 34 tests PASS ✅ | PM2 PID=1308451 (~3h uptime)
 - **BotFather commands:** 12/12 SET via Telegram API ✅
-- **gen-e 2026:** 7d 11.5h to Virtual Opening (April 23 08:00 UTC) — gen-e.eu/gen-e-2026 404 ❌ | jaeurope.org Virtual Opening LIVE ✅
+- **gen-e 2026:** ~6.5d to Virtual Opening (April 23 08:00 UTC) — gen-e.eu LIVE ✅ | gen-e.eu/gen-e-2026 404 ❌ | jaeurope.org/virtual-opening 404 ❌ (page moved/removed)
 - **JA Europe outreach:** NOT SENT ⚠️ — OUTREACH_DRAFT.md Options A+B ready — window still open but shrinking fast
 - **Security audit:** 5 CRITICAL issues, 19 days unresolved — Kristaps must run `openclaw security audit --deep`
 - **exec BLOCKED:** Cron sessions cannot run exec — Kristaps must fix: `openclaw config set exec.security full && openclaw gateway restart`
@@ -21,7 +21,7 @@ Generated: 2026-04-15 21:59 UTC
 
 ## System Health
 - exec: ✅ WORKING | web_fetch: ✅ WORKING
-- Bot (PID 1308451): ✅ LIVE | ~3h uptime | grammY polling | 0 pending
+- Bot (PID 1308451): ✅ LIVE | ~4h uptime | grammY polling | 0 pending
 - Health endpoint: ✅ HTTP 200 `{"status":"ok"}` at 20:27 UTC
 - Server tests: ✅ 34/34 PASS (vitest in /workspace/server)
 - TASKS Monitor: ✅ ACTIVE every 60s, 0 errors
@@ -38,7 +38,8 @@ Generated: 2026-04-15 21:59 UTC
 - **Decision:** Replaced stale file (2026-03-22) with marker — OpenClaw gateway manages crons via `cron list` API
 
 ## Recent Sessions
-- 21:33 UTC (THIS): CG test assertions fixed (3 tests: "Is that right?"→"what's something you did recently"), 21/21 bot tests PASS, 110/110 all CG tests PASS, 63 synthesis tests PASS, 34 server tests PASS, 62 JCI tests PASS
+- 22:33 UTC (THIS): 290 tests verified (110 CG + 21 bot + 63 synthesis + 34 server + 62 JCI all PASS), gen-e.eu LIVE ✅, jaeurope.org/virtual-opening 404 ❌, committed (bc52313 + b9ef8c0), PROGRESS [0.3.71] logged
+- 21:33 UTC: CG test assertions fixed (3 tests), 21/21 bot tests PASS, 110/110 all CG tests PASS
 - 20:27 UTC: Stale file cleanup, PROGRESS.md rebuilt, gen-e verified LIVE, TASKS dir reset
 - 20:13 UTC: Worker-1 — gen-e.eu/gen-e-2026 404 ❌ confirmed, jaeurope.org Virtual Opening LIVE ✅
 - 19:57 UTC: Wakeup — verified all systems, replaced stale cron/jobs.json, corrected PROGRESS.md
@@ -50,10 +51,11 @@ Generated: 2026-04-15 21:59 UTC
 - Context: Auto-generated 20:27 UTC
 
 ## gen-e 2026 Timeline
-- **Now:** 2026-04-15 20:27 UTC
-- **Virtual Opening:** April 23, 08:00 UTC — **7 days, 11.5 hours away**
+- **Now:** 2026-04-15 22:33 UTC
+- **Virtual Opening:** April 23, 08:00 UTC — **~6.5 days away**
 - **JA Europe outreach:** NOT SENT ⚠️ — window still open but shrinking daily
-- **gen-e.eu/gen-e-2026:** Still 404 after 24+ days — page being built, window still OPEN
+- **gen-e.eu/gen-e-2026:** Still 404 — page being built, window still OPEN
+- **jaeurope.org/virtual-opening:** 404 — page moved/removed
 
 ## What's Next (Kristaps Actions)
 1. **🔴 MOST URGENT:** Send JA Europe LinkedIn DM (7d 11.5h to Virtual Opening)
