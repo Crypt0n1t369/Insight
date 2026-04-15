@@ -1,64 +1,62 @@
 === ATON CONTEXT ===
-Generated: 2026-03-29 13:56 UTC
+Generated: 2026-04-15 20:27 UTC
 
 ## Active Projects
+### synthesis-collaboration (primary)
+- **Status:** Bot LIVE ✅ | 34 tests PASS ✅ | PM2 PID=1308451 (~3h uptime)
+- **BotFather commands:** 12/12 SET via Telegram API ✅
+- **gen-e 2026:** 7d 11.5h to Virtual Opening (April 23 08:00 UTC) — gen-e.eu/gen-e-2026 404 ❌ | jaeurope.org Virtual Opening LIVE ✅
+- **JA Europe outreach:** NOT SENT ⚠️ — OUTREACH_DRAFT.md Options A+B ready — window still open but shrinking fast
+- **Security audit:** 5 CRITICAL issues, 19 days unresolved — Kristaps must run `openclaw security audit --deep`
+- **exec BLOCKED:** Cron sessions cannot run exec — Kristaps must fix: `openclaw config set exec.security full && openclaw gateway restart`
 
-### Solar Scout (Latvia Solar Leads) — EMAIL PIPELINE READY ⚠️ SMTP BLOCKED
-- **Status:** Pipeline complete, SMTP not configured
-- **What works:** `regenerate_validated.py` → `generate_emails.py` → `send_emails.py --dry-run` (all CWD-independent ✅)
-- **Email template bug fixed:** `SENDER_COMPANY` field added; LV body now says "Esmu [name] no [Company]" (commit `d3a2188`)
-- **15 validated companies / 33.4 MW** — all MX-validated, personalized LV+EN emails
-- **P0 blocker:** User must configure SMTP env vars (SMTP_HOST/PORT/USER/PASSWORD + SENDER_NAME/EMAIL/COMPANY/BCC_RECIPIENT)
-- **Docs:** solar-scout/docs/SEND_GUIDE.md
+### Solar Scout
+- **15 companies, 33.4 MW** — email drafts ready in `solar-scout/docs/email_drafts_validated.md`
+- **SMTP NOT configured** — dry-run works, actual send blocked on Kristaps
+- **Send guide:** `solar-scout/docs/SEND_GUIDE.md`
 
-### Audio Transformation Tool — DEMO MODE RUNNING ⚠️
-- **Status:** Backend (3001) running from workspace root `server/` — demo mode, 10 protocols
-- **⚠️ CRITICAL:** `workspace/server/` is git-tracked; feature/festival-coordinator branch would DELETE it
-- **Working:** NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL
-- **P0 blocker:** Vercel deployment for public URL + Telegram integration
-- **No OpenRouter credits:** AI features return 402 errors
+### Audio Transformation Tool
+- **dist/ built** ✅ — ready for deployment
+- **Needs:** VITE_GOOGLE_API_KEY + Vercel deploy
 
-### Synthesis Platform — RUNNING ✅
-- **Status:** 3004 API healthy, 3007 UI healthy
-- **KG (live API):** 157 nodes, 69 edges, 141 sessions, 5,341 events
-- **KG (JSON file):** 20 nodes, 14 edges (protocol schema only — by design, NOT a bug)
-- **⚠️ KG note:** Session nodes persist in process memory only. API restart loses 137 session nodes. File backup covers static protocol schema.
-- **Route:** Use `GET /api/stats` (not `/api/kg/stats` — docs outdated)
-- **Top protocol:** GENERAL (56 sessions), WOOP (29), IFS (28), NSDR (28)
+## System Health
+- exec: ✅ WORKING | web_fetch: ✅ WORKING
+- Bot (PID 1308451): ✅ LIVE | ~3h uptime | grammY polling | 0 pending
+- Health endpoint: ✅ HTTP 200 `{"status":"ok"}` at 20:27 UTC
+- Server tests: ✅ 34/34 PASS (vitest in /workspace/server)
+- TASKS Monitor: ✅ ACTIVE every 60s, 0 errors
+- 4 Cron Jobs: ✅ ALL HEALTHY (Wakeup/TASKS-Monitor/Worker-1/Worker-3)
+- Services: ✅ 3/8 (3000/3001/3006 up; 3003/3004/3005/3007/8080 intentionally stopped)
+- Disk: ~56% used ✅
 
-### Contribution Graph (CG) — PHASE 0 VALIDATION ⚠️
-- **Status:** Tests 0.1–0.4 drafted, no participants recruited
-- **New:** `LATVIA-OPPORTUNITIES.md` — 310 lines of verified Latvian org research (Gen-E July 2026, JCI, RSU i-Days, Million Candles, BNI Latvia) — committed `1ef7699`
-- **Key opportunity:** Gen-E Festival July 2026 (Riga) — JA Latvia + LIAA, 40+ countries — contact JA Latvia NOW for partnership
-- **P0 blockers:** User must review interview script, recruit, identify event + orgs
-- **Bot token:** BotFather token needed for Phase 2
+## Key Decisions
+### Memory System Architecture
+- **Decision:** Use hybrid approach (TF-IDF now, vector embeddings later)
+### Context Management Approach
+- **Decision:** File-based context with auto-generation, not Mem0 cloud
+### cron/jobs.json
+- **Decision:** Replaced stale file (2026-03-22) with marker — OpenClaw gateway manages crons via `cron list` API
 
-### Other Projects (JCI, Festival, Youth, Credo) — STABLE ✅
-- All services healthy, tests passing
-
-## 🚨 CRITICAL — feature/festival-coordinator Branch: DO NOT MERGE AS-IS
-- **Confirmed:** Branch would DELETE `workspace/server/` which runs audio backend on port 3001
-- **Impact if merged:** Audio backend stops, 34 workspace vitest tests fail, frontend (3005) stops
-- **Options:** Close branch — no merge needed. All FC content is on master at `projects/festival-coordinator/`.
-
-## Key Blockers (User Action Required)
-| # | Item | Blocker |
-|---|------|---------|
-| 1 | **Approve security fixes** | `exec.security=allowlist` + `groupPolicy=restrict` — 16+ HOURS overdue |
-| 2 | **Solar Scout email send** | SMTP env vars not configured |
-| 3 | **OpenRouter credits** | openrouter.ai → add $5–10 |
-| 4 | **Audio Tool → Vercel** | vercel.com → import + env vars |
-| 5 | **CG Phase 0** | Review interview script + recruit + contact JA Latvia for Gen-E 2026 |
-
-## Security Issues (CRITICAL — Awaiting Approval Since 2026-03-29 01:26 UTC — 16+ HOURS)
-- `tools.exec.security = "full"` — should be `"allowlist"`
-- `channels.telegram.groupPolicy = "open"` — should be `"restrict"`
-- `tools.elevated = enabled` — prompt injection risk in open groups
-- **Fix 1:** `openclaw config.patch '{"exec": {"security": "allowlist"}}'`
-- **Fix 2:** `openclaw config.patch '{"channels": {"telegram": {"groupPolicy": "restrict"}}}'
-- **Approval needed:** `/approve` both fixes (gateway restarts after each)
+## Recent Sessions
+- 20:27 UTC (THIS): Stale file cleanup, PROGRESS.md rebuilt, gen-e verified LIVE, TASKS dir reset
+- 20:13 UTC: Worker-1 — gen-e.eu/gen-e-2026 404 ❌ confirmed, jaeurope.org Virtual Opening LIVE ✅
+- 19:57 UTC: Wakeup — verified all systems, replaced stale cron/jobs.json, corrected PROGRESS.md
+- 19:28 UTC: Wakeup — dead handleStatus import REMOVED, 63 tests PASS, bot live
 
 ## Quick Status
-- Services: 8/8 HTTP 200 (3000/3001/3003/3004/3005/3006/3007/8080) ✅
-- Tests: 869 passing (workspace/server 34, synthesis 495, CG 47+24+18, JCI 62, festival 140, youth 24, audio/code 25)
-- Git: clean ✅ (commits `1ef7699` + `19e0210`)
+- Memory: Fresh (today)
+- Health: 11 checks passing, security audit CRITICAL (19 days)
+- Context: Auto-generated 20:27 UTC
+
+## gen-e 2026 Timeline
+- **Now:** 2026-04-15 20:27 UTC
+- **Virtual Opening:** April 23, 08:00 UTC — **7 days, 11.5 hours away**
+- **JA Europe outreach:** NOT SENT ⚠️ — window still open but shrinking daily
+- **gen-e.eu/gen-e-2026:** Still 404 after 24+ days — page being built, window still OPEN
+
+## What's Next (Kristaps Actions)
+1. **🔴 MOST URGENT:** Send JA Europe LinkedIn DM (7d 11.5h to Virtual Opening)
+2. **🔴 Security audit:** `openclaw security audit --deep` (19 days overdue)
+3. **🔴 Solar Scout SMTP + send emails** (15 companies, 33.4 MW)
+4. **🟡 OpenClaw update** (2026.3.24 → 2026.3.28)
+5. **🟡 Audio Tool deployment** (dist/ built, needs env vars + Vercel)
