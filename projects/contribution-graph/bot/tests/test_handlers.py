@@ -74,7 +74,8 @@ def test_handle_start_resets_to_phase_1_opening(fresh_state: UserState):
     assert fresh_state.chosen_challenge is None
     assert fresh_state.quick_replies == []
     assert fresh_state.mirror_summary is None
-    assert "Is that right?" in result  # P1_OPENING_QUESTION content
+    # P1_OPENING_QUESTION asks "what's something you did recently"
+    assert "what's something you did recently" in result
 
 
 def test_handle_start_returns_opening_question(fresh_state: UserState):
@@ -231,7 +232,7 @@ async def test_handle_update_non_command_routes_to_phase_handler(fresh_state: Us
     # Substantial free text (>5 chars) → handle_phase_new advances to PHASE_1_OPENING
     # and returns the Phase 1 opening question.
     assert fresh_state.phase == Phase.PHASE_1_OPENING
-    assert "Is that right?" in result
+    assert "what's something you did recently" in result
 
 
 # ---------------------------------------------------------------------------
@@ -252,7 +253,8 @@ async def test_phase_new_valid_text_shows_opening_question(fresh_state: UserStat
         fresh_state,
     )
     assert fresh_state.phase == Phase.PHASE_1_OPENING
-    assert "Is that right?" in result
+    # P1_OPENING_QUESTION asks "what's something you did recently"
+    assert "what's something you did recently" in result
 
 
 # ---------------------------------------------------------------------------

@@ -47,11 +47,17 @@
 - **Organizers:** Junior Achievement Latvia + LIAA (Investment and Development Agency of Latvia)
 - **Organizer quote:** "We want this experience to be not just about competition, but also about building new friendships and international contacts"
 - **Contact:** jalatvia.lv/iscf
-- **Key person:** Jānis Krievāns (Board Chair), Ieva Jāgere (LIAA Director General)
+- **Key person:** Jānis Krievāns (Board Chair) — j***@jal.lv (RocketReach)
+- **Verified email:** info@jalatvia.lv
+- **Verified phone:** +371 67 339 656
+- **Facebook:** facebook.com/JALatvia
+- **Key person at LIAA:** Ieva Jāgere (LIAA Director General)
 
 **What this means for the platform:** This is the single highest-value acquisition event in the next 18 months. A platform like ours, integrated into Gen-E, could acquire 200+ young people in one weekend. This is the festival acquisition channel Kristaps has been thinking about, validated.
 
 **Gap this fills for us:** Primary acquisition channel (Test 0.2). Real challenge source (student companies have real business problems). Network anchor (LIAA + JA connection = credibility with government + business).
+
+**Action: Initiate contact with JA Latvia NOW** — email info@jalatvia.lv or call +371 67 339 656 to discuss Gen-E 2026 partnership.
 
 ---
 

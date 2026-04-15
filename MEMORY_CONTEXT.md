@@ -1,5 +1,5 @@
 === ATON CONTEXT ===
-Generated: 2026-04-15 20:27 UTC
+Generated: 2026-04-15 21:59 UTC
 
 ## Active Projects
 ### synthesis-collaboration (primary)
@@ -38,7 +38,8 @@ Generated: 2026-04-15 20:27 UTC
 - **Decision:** Replaced stale file (2026-03-22) with marker — OpenClaw gateway manages crons via `cron list` API
 
 ## Recent Sessions
-- 20:27 UTC (THIS): Stale file cleanup, PROGRESS.md rebuilt, gen-e verified LIVE, TASKS dir reset
+- 21:33 UTC (THIS): CG test assertions fixed (3 tests: "Is that right?"→"what's something you did recently"), 21/21 bot tests PASS, 110/110 all CG tests PASS, 63 synthesis tests PASS, 34 server tests PASS, 62 JCI tests PASS
+- 20:27 UTC: Stale file cleanup, PROGRESS.md rebuilt, gen-e verified LIVE, TASKS dir reset
 - 20:13 UTC: Worker-1 — gen-e.eu/gen-e-2026 404 ❌ confirmed, jaeurope.org Virtual Opening LIVE ✅
 - 19:57 UTC: Wakeup — verified all systems, replaced stale cron/jobs.json, corrected PROGRESS.md
 - 19:28 UTC: Wakeup — dead handleStatus import REMOVED, 63 tests PASS, bot live

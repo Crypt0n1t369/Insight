@@ -366,7 +366,7 @@ def main():
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
 
-    logger.info(f"Bot polling as: https://t.me/")
+    logger.info("Bot polling starting. Press Ctrl+C to stop.")
     try:
         bot.run()
     except KeyboardInterrupt:

@@ -134,11 +134,16 @@ def handle_help(state: UserState) -> str:
 # =============================================================================
 
 # The Socratic entry question from DISCOVERY-FLOW.md
+# NOTE: This must NOT assume prior conversation context — it's the FIRST thing new users see.
 P1_OPENING_QUESTION = (
-    "Hey — I've been thinking about what you said the last time we talked.\n\n"
-    "Here's what I noticed: you seem to care about doing work that actually matters "
-    "to you — not just completing tasks, but creating something you're proud of.\n\n"
-    "Is that right? And if so — what's the thing you're most trying to figure out right now?"
+    "Hey — I'm not a quiz and I'm not a career test.\n\n"
+    "I'm a map that helps you figure out what you're actually good at — "
+    "by looking at what you've actually done, not what you think you should be good at.\n\n"
+    "We'll do it through some questions. Some will feel obvious. Some might catch you off guard. "
+    "Answer honestly — there are no wrong answers, only interesting ones.\n\n"
+    "Ready?\n\n"
+    "First one: what's something you did recently that you didn't have to do — "
+    "but you did it anyway?"
 )
 
 

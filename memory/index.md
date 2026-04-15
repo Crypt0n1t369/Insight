@@ -21,7 +21,7 @@
 - **jci-org-manager** (port 8080) — LLM engagement agent (OpenRouter), 62 pytest
 - **festival-coordinator** — Phase 2 pending Telegram bot (140 pytest), admin checks wired in bot.py
 - **youth-empowerment-platform** (port 3003) — SEED methodology, 24 pytest
-- **contribution-graph** (port 3006 web) — Phase 0 materials ready (TEST_01-04), 110 pytest, Telegram bot token needed
+- **contribution-graph** (port 3006 web) — Phase 0 materials ready, OPEN_QUESTIONS.md (Q6/Q7/Q8 answered), OUTREACH_DRAFT.md (4 emails ready), 110 pytest, Telegram bot token needed
 - **solar-scout** (outreach pipeline) — 15 validated companies (33.4 MW, MX-validated), 10 more Tier 2 (~22 MW, no MX), SMTP pre-flight ready
 
 ## Areas
@@ -58,4 +58,4 @@
 
 ---
 
-Updated: 2026-03-29
+Updated: 2026-03-31

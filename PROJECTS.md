@@ -3,16 +3,25 @@
 ## Active Projects
 
 ### 1. Synthesis Platform
-- **Status:** RUNNING — Backend + UI
+- **Status:** ✅ Phase 1 COMPLETE — Phase 2 Ready to Start
 - **Summary:** Unified wellness protocol orchestration platform with 8 specialist agents (WOOP, IFS, NSDR, BREATHWORK, SE, ACT, GENERAL, NVC)
 - **Path:** `projects/synthesis/`
+- **Documentation:**
+  - `README.md` ✅ — architecture, 8 agents, API endpoints, UI pages
+  - `ARCHITECTURE.md` ✅ — full system design, module specs, extension protocol
+  - `PROGRESS.md` ✅ — Phase 2 backlog with priorities (2026-03-31)
+  - `SUPABASE_SCHEMA.md` ✅ — Phase 2 implementation blueprint: 8 tables, RLS policies, migration path (2026-03-31)
 - **Tests:** 460/460 backend vitest + 6/6 UI API client tests ✅ (verified 2026-03-27)
 - **Runtime:**
   - API Server: Port 3004 (Express — health, protocols, sessions, KG, stats)
-  - UI: Port 3007 (Vite + React — 4 pages: Protocols, Session Runner, KG Query, Stats)
+  - UI: Port 3007 (Vite + React — 5 pages: Protocols, Session Runner, KG Query, Stats, Session History)
 - **Agents:** WOOP, IFS, NSDR, BREATHWORK, SE (Somatic Experiencing), ACT, NVC (Nonviolent Communication), GENERAL — all 8 registered in AGENT_REGISTRY
-- **Recent (15:43 UTC):** Added React UI frontend (port 3007). Build succeeds (209KB gzipped). API streaming verified end-to-end.
 - **Git:** ✅ Committed `d38d30e`
+- **Phase 2 Backlog (P1):**
+  1. Supabase session persistence (no blocker — can start design)
+  2. Auth integration in UI (needs VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY)
+  3. Synthetic Mediator (no blocker — well-defined)
+- **Credential needs:** Supabase credentials, Resemble AI (voice/TTS), OpenRouter credits
 
 ### 2. Audio Transformation Tool
 - **Status:** Running + Full Test Coverage ✅ (42 tests)
@@ -39,9 +48,10 @@
   4. Frontend E2E tests (Playwright)
 
 ### 3. Credo Collaboration Platform
-- **Status:** MVP RUNNING (API + Frontend Connected)
+- **Status:** MVP RUNNING + CONTEXT.md Added
 - **Summary:** Infrastructure for distributed, pseudo-anonymous collaboration with egoless representation
 - **Path:** `projects/collaboration-platform/`
+- **CONTEXT.md:** ✅ Created 2026-03-31 — architecture, API endpoints, trust tiers, next actions
 - **Runtime:** 
   - API: Port 3000 ✅
   - Frontend: Port 3002 ✅
@@ -60,25 +70,12 @@
   2. Paper Branch pilot (live testing)
 
 ### 4. JCI Org Manager
-- **Status:** Enhanced + Test Coverage (33 tests)
+- **Status:** Enhanced + Test Coverage (41 tests) + CONTEXT.md Added
 - **Summary:** AI-powered organization manager for Telegram groups. Manages projects, collaboration, member engagement, and fluid roles.
 - **Path:** `projects/jci-org-manager/`
-- **Implementation:**
-  - 4 AI Agents: Collaboration, Projects, Engagement, Roles
-  - Database models: Member, Project, Task, Meeting, Opportunity, EngagementLog
-  - Google Drive integration for organization folders
-  - Telegram bot with command handlers + inline keyboards + callback queries
+- **CONTEXT.md:** ✅ Created 2026-03-31 — full architecture, API endpoints, next actions
 - **Tests:** 41/41 passing ✅ (verified 2026-03-26)
-- **Runtime:** Portal running on port 8080
-- **Git:** ✅ Committed and synced (27831a1)
-- **Recent Improvements (Mar 11):**
-  - Fixed `_get_or_create_member` with DB persistence
-  - Fixed `_update_profile_field` (interest/skill/goal/availability)
-  - Connected webapp `/api/profile` to real DB
-  - Added test_bot.py (6 tests)
-  - Added test_integration.py (9 tests)
-  - Added test_webapp.py (11 tests)
-- **Next:** Configure .env with Telegram bot token for production
+- **Runtime:** Portal on port 8080 ✅ (web fetch verified)
 
 ### 5. Solar Scout (Lead Generator)
 - **Status:** Completed / Archived (Feb 2026) - No pending tasks
@@ -88,35 +85,23 @@
 - **Location:** `solar-scout/` (root directory - NOT under projects/)
 - **Git:** ✅ Committed (7d1b21e committed Mar 18)
 
-### 6. Festival Coordinator
-- **Status:** Phase 1 Complete (Database + Tests)
+## Festival Coordinator
+- **Status:** Phase 1 Complete + README Added
 - **Summary:** Telegram bot for festival volunteer coordination with task assignment, reputation/points system, and rewards redemption
 - **Path:** `projects/festival-coordinator/`
-- **Research:** RESEARCH.md (comprehensive analysis)
-- **Plan:** IMPLEMENTATION_PLAN.md (3-week phased build)
-- **Implementation (Phase 1 Complete):**
-  - Database models: Festival, TaskCategory, FestivalTask, TaskClaim, Reward, ReputationLedger, Redemption
-  - 11 tests passing covering all models and integration flows
-- **Architecture:** Extend JCI Org Manager (leverages existing bot infrastructure)
-- **Core Features:**
-  - Task board (technical, marketing, operations, creative, logistics)
-  - Claim → Complete → Verify → Earn points flow
-  - Reputation system (Credo-inspired trust tiers)
-  - Rewards catalog (VIP, merch, experiences)
-  - Leaderboard gamification
-- **Failure Prevention:**
-  - Skin in the game (reputation at stake)
-  - Peer verification for completions
-  - Trust tiers limiting task claims
-  - Timeout auto-release for abandoned tasks
+- **README:** ✅ Created 2026-03-31 — full architecture, Phase 2 commands, trust tiers, next steps
 - **Tests:** 49/49 passing ✅ (verified 2026-03-26)
-- **Git:** ✅ Committed (aa843cb)
-- **Next:** Phase 2 - Bot commands integration
+- **Runtime:** Extends JCI Org Manager (port 8080 when JCI portal running)
+- **Git:** ✅ Committed and synced
+- **Phase 1 Complete:** Database models (Festival, TaskCategory, FestivalTask, TaskClaim, Reward, PointRedemption)
+- **Next:** Phase 2 — Bot commands (`/festival`, `/tasks`, `/claim`, `/complete`, `/verify`, `/points`, `/rewards`, `/redeem`)
+- **Blocker:** Needs TELEGRAM_BOT_TOKEN configured in JCI Org Manager `.env`
 
 ### 7. Youth Empowerment Platform
-- **Status:** MVP RUNNING
-- **Summary:** User-owned AI agents with encrypted vaults, matching to opportunities, NPC-guided hero's journey
+- **Status:** MVP RUNNING + CONTEXT.md Added
+- **Summary:** User-owned AI agents with encrypted vaults, character-guided journeys, and opportunity matching.
 - **Path:** `projects/youth-empowerment-platform/`
+- **CONTEXT.md:** ✅ Created 2026-03-31 — vault system, character/NPC, journey engine, Telegram blocker
 - **Runtime:** Port 3003 ✅
 - **Tests:** 24/24 passing ✅ (verified 2026-03-26)
 - **API Features:**
@@ -125,25 +110,50 @@
   - Character system with personality profiles
   - Journey engine for progression tracking
   - Opportunity matching
-- **Recent Improvements (Mar 14):**
-  - Added `/health` endpoint with detailed status
-- **Next:** Telegram bot integration (needs TELEGRAM_BOT_TOKEN)
+- **Next:** Add TELEGRAM_BOT_TOKEN for bot activation
 
 ### 8. Contribution Graph
-- **Status:** Phase 0 — Validation (No Code)
+- **Status:** Phase 0 COMPLETE ✅ — All 9 documents done, 4 outreach drafts ready
 - **Summary:** Behavioral profiling system that discovers comparative advantage through micro-challenge participation, then matches to real work. Core bet: bot-observed behavioral data produces richer capability profiles than CVs or self-assessments.
 - **Path:** `projects/contribution-graph/`
-- **Documents:**
-  - `CONCEPT.md` — Full product blueprint: Core Bet, 3-Layer Architecture (Discovery Engine → Marketplace → Coordination), filetree, test plan (pre-engineering gates), roadmap (Phase 0–3)
-  - `PILOT.md` — Phase 0 validation protocol: 4 tests (self-discovery desire, attribution fairness, festival top-of-funnel, client problem readiness)
-- **Phase 0 Gates (No Engineering Required):**
-  - Test 0.1: ≥7/10 target users say they'd use the bot
-  - Test 0.2: ≥4/5 say structured attribution feels fair
-  - Test 0.3: ≥40% QR scan → quiz completion; ≥20% D7 return
-  - Test 0.4: ≥3/5 orgs willing to pay at some price
-- **Key Design:** Cybernetic self-discovery loop (sensor → comparator → effector → user agent). Three-layer decoupled architecture (Discovery → Marketplace → Coordination) built sequentially, not in parallel.
-- **Git:** ✅ Untracked (pending first commit)
-- **Next:** Boss reviews CONCEPT.md + PILOT.md → go/no-go on Phase 0 validation execution
+- **Document Completion: 9/9 + 2 support files ✅:**
+  - `CONCEPT.md` — Full blueprint: Core Bet, 3-Layer Architecture, filetree, test plan, roadmap
+  - `PILOT.md` — 4-test Phase 0 validation protocol with go/no-go gates
+  - `TEST_01_INTERVIEW_SCRIPT.md` — 5-screen prototype + full script + screener + go/no-go template
+  - `DISCOVERY-FLOW.md` — 5-phase conversational profiling system + behavioral signal inventory
+  - `DISCOVERY-FLOW-APPENDIX.md` — 25-nudge library + 9 challenge designs + 4 behavioral tests
+  - `IDENTITY-ARCHITECTURE.md` — Session continuity, short-code, map delivery, DB schema
+  - `LATVIA-OPPORTUNITIES.md` — 6 verified Latvian orgs + event calendar through July 2026
+  - `OPEN_QUESTIONS.md` — Q6/Q7/Q8 answered (onboarding hook, 16-25 perk, event strategy)
+  - `OUTREACH_DRAFT.md` — 4 ready-to-send partnership emails (JA Europe, JA Latvia, Million Candles, JCI Latvia)
+  - `TEST_01_PARTICIPANT_RECRUITMENT.md` — Ready-to-use recruitment kit (copy-paste messages + screener + scheduling)
+  - `QUICKSTART.md` — 3 most urgent actions for Kristaps today
+- **Status Docs:** `PROGRESS.md` ✅ — Full progress report with blockers, next actions, and decision gates
+- **⚠️ April 7 Deadline:** MISSED (8 days ago) — outreach NOT sent — but gen-e.eu/gen-e-2026 STILL 404, window may still be open
+- **Gen-E Virtual Opening:** April 23 (**9 days away**) ✅ — still confirmed live on jaeurope.org
+- **Phase 0:** COMPLETE ✅ — 9/9 documents committed, in execute mode
+- **Next:** Kristaps sends JA Europe LinkedIn outreach NOW (OUTREACH_DRAFT.md Draft 1) → recruits Test 0.1 participants → runs interviews
+
+### 9. Synthesis Collaboration Platform
+- **Status:** 🚨 BLOCKED — exec BLOCKED in cron; npm install never run; bot never started; 16 tests never run; dead handleStatus import in index.ts (harmless — should be removed)
+- **Summary:** Telegram-native collaborative intelligence engine aggregating insights, synthesizing commonalities/divergences, generating next-step proposals. Inspired by Karpathy LLM-wiki pattern
+- **Path:** `projects/synthesis-collaboration/`
+- **Key Docs:** `SPEC.md` ✅; `LOG.md` ✅; `PLAN.md` ✅; `CHANGELOG.md` ✅ (updated 2026-04-15 01:27 Cairo); `PROGRESS.md` ✅ (updated 2026-04-15 01:27 Cairo); `OUTLINE.md` ✅ (updated 2026-04-15 01:27 Cairo)
+- **Source Code:** ✅ 22 source files ALL VERIFIED CLEAN (full audit 2026-04-15 01:27 Cairo — complete walkthrough of all handlers, services, schema, tests)
+- **Tests:** 16 tests written ✅ — NEVER RUN (exec BLOCKED in cron session — needs non-cron session)
+  - `tests/unit/synthesis.test.ts`: 9 tests (parseOpenClawResponse ×4, formatSynthesisForTelegram ×3, formatContributionForOpenClaw ×2)
+  - `tests/unit/db.test.ts`: 7 tests (user, project, contribution, synthesis, contributor ops)
+- **TASKS Monitor:** ✅ Running every 60s (isolated cron c24d7d68). Last confirmed OK at 23:57 UTC. Pipeline idle, no pending tasks.
+- **All 4 Cron Jobs:** ✅ HEALTHY (verified 23:27 UTC) — Wakeup currently running, TASKS Monitor ran 6s ago, Worker-1/Worker-3 last OK ✅, 0 consecutive errors
+- **Pipeline:** ✅ TASKS Monitor verified working end-to-end on test task (2026-04-13 09:34 UTC)
+- **Knowledge Graph:** ✅ Entity extraction (MiniMax LLM + keyword fallback), typed relationships, confidence scoring, supersession pattern
+- **Chat Service:** ✅ MiniMax Chat API with graceful null fallback
+- **NL Fallback:** ✅ 12-intent keyword parser, 60+ regex patterns
+- **Bot token:** ✅ `8700911729:AAEio69n8NAn83hQGsyUQvIgSpLHgDAvCN0` — getMe confirmed live
+- **exec BLOCKER:** npm install never run — bot has NEVER been started (exec denied in cron session)
+- **gen-e Status:** gen-e.eu LIVE ✅ | gen-e.eu/gen-e-2026 404 ❌ | **9 days** to Virtual Opening (April 23) | JA Europe outreach NOT SENT (April 7 deadline missed by 8 days)
+- **Dead Code:** `handleStatus` in `src/bot/handlers/status.ts` — imported in `index.ts` line 23 but never registered. `handleStatusWithReadiness` (personal.ts) handles `/status` and is strictly more feature-rich. Safe to remove in non-cron session.
+- **Next (Kristaps):** Non-cron session → `openclaw config set exec.security full` → `cd projects/synthesis-collaboration && npm install` → `npx prisma generate && npx prisma db push` → `npm test` → `npm run bot` → BotFather commands → JA Europe LinkedIn outreach (9 days to April 23)
 
 ---
 

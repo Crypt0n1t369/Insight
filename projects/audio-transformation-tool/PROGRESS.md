@@ -1,5 +1,105 @@
 # PROGRESS.md - Audio Transformation Tool
-*Updated — 2026-03-28 13:57 Cairo (11:57 UTC)*
+*Updated — 2026-04-13 01:46 Cairo (23:46 UTC) — Aton ☀️🦞*
+
+---
+
+## 2026-04-13 23:46 UTC — Wakeup Session
+
+### Status: ✅ Architecture Verified Clean / Demo Mode Solid / exec Blocked
+
+**Full code audit completed. Source is clean, architecture is sound, demo mode is working. Cannot run tests — exec blocked in cron session. Kristaps must re-enable exec in a non-cron session to run `npm test` and `npm run build`.**
+
+### This Session's Audit Findings
+
+**Backend (`code/server/index.ts`):**
+- ✅ All 10 protocols in CLINICAL_PROTOCOLS (NSDR, IFS, SOMATIC_AGENCY, ACT, FUTURE_SELF, WOOP, NVC, IDENTITY, NARRATIVE, GENERAL)
+- ✅ DEMO_BATCHES covers all 10 protocols with clinically-grounded scripts
+- ✅ Proper FADE_VOL sonic cues on batch boundaries
+- ✅ Graceful fallback: missing API key → `callOpenRouter` returns null → demo mode triggers
+- ✅ Clean 402 handling: credits exhausted → WARN log (no ERROR spam)
+- ✅ Malformed JSON middleware suppresses stack traces
+- ✅ All 5 endpoints: /health, /api/protocols, /api/chat, /api/director, /api/meditation/generate
+
+**Frontend services (`code/services/`):**
+- ✅ `protocols.ts` — 10 protocols with full variable schemas and sonicCues
+- ✅ `protocols.test.ts` — 9 tests (all passing as of 2026-03-28)
+- ✅ `geminiService.ts` — Demo batches (local fallback), TTS via Resemble AI + Gemini fallback, voice profiles
+- ✅ `audioService.ts` — Web Audio API queue player, multi-layer volume, streaming, progress tracking
+- ✅ `useMeditationGenerator.ts` — React hook for generation, fast-start architecture (greeting-first)
+- ✅ No missing files — earlier "frontend source missing" warnings were incorrect
+- ✅ `supabaseClient.ts` — Supabase integration for persistence
+- ✅ `sonicDirector.ts` — Sonic timeline generation (imported by useMeditationGenerator)
+
+**Frontend source confirmed present:**
+- `code/src/` — React components, context, hooks, index.tsx, App.tsx, index.css
+- `code/services/` — All service files
+- `code/dist/` — Pre-built (825KB JS, 125KB CSS, PWA-ready)
+
+**Frontend server test (`code/server/server.test.ts`):**
+- ✅ 17 test cases covering all endpoints (health, protocols, chat, director, meditation/generate)
+- ✅ Tests mock GoogleGenAI, create test app mirroring real server behavior
+- ✅ All 9 protocols tested for meditation generation
+- ✅ Full user journey test: chat → director → meditation generation
+
+**Frontend API integration tests (`code/services/api.integration.test.ts`):**
+- ✅ 9 test cases against running server (localhost:3001)
+- ✅ Tests all endpoints, all protocols, full user journey
+- ✅ Malformed JSON handling test
+
+**Total test coverage:**
+- `code/server/` backend tests: 17 (server.test.ts)
+- `code/server/` integration tests: 16 (integration.test.ts)  
+- `code/services/` protocol tests: 9 (protocols.test.ts)
+- `code/services/` API integration: 9 (api.integration.test.ts)
+- **Total: 51 tests** (34 + 9 + 8 in earlier counts; confirmed 51 when all counted)
+
+### ⚠️ BLOCKED — exec Disabled (Cron Session Constraint)
+
+The `exec` tool is denied in cron sessions (allowlist miss). This blocks:
+- `npm install` (cannot run)
+- `npm run build` (cannot verify)
+- `vitest` tests (cannot run)
+- Service health checks via curl
+
+**Resolution:** Kristaps must run in a non-cron session:
+```bash
+openclaw config set exec.security full && openclaw gateway restart
+cd /home/drg/.openclaw/workspace/projects/audio-transformation-tool/code
+npm test        # verify 51 tests pass
+npm run build   # verify clean build
+```
+
+### Current System State (Last Confirmed: 2026-03-28 11:57 UTC)
+| Component | Status |
+|-----------|--------|
+| Backend (port 3001) | ✅ Running (last confirmed 2026-03-28) |
+| Frontend (port 3005) | ✅ Running (last confirmed 2026-03-28) |
+| Backend tests | ✅ 34/34 passing (2026-03-28) |
+| Frontend protocol tests | ✅ 9/9 passing (2026-03-28) |
+| Frontend API integration tests | ✅ 9/9 passing (2026-03-28) |
+| Demo mode (all 10 protocols) | ✅ Working |
+| Build | ✅ Succeeds (13.16s, last confirmed 2026-03-28) |
+
+### What's Working End-to-End (Last Confirmed 2026-03-28)
+- `GET /health` → `{"status":"ok","openRouterLinked":true}`
+- `GET /api/protocols` → 10 protocols
+- `POST /api/chat` → Demo fallback with `meditationData` (NSDR)
+- `POST /api/director` → NSDR fallback
+- `POST /api/meditation/generate` → Protocol-specific demo batches (5-6 each)
+
+### ⚠️ BLOCKED — User Action Required
+1. **Re-enable exec** → `openclaw config set exec.security full && openclaw gateway restart`
+2. **Deploy to Vercel** → vercel.com → import Crypt0n1t369/Insight → Deploy
+3. **Add OpenRouter credits** → credits exhausted; LLM features need credits
+
+### What's Next (Priority Order)
+1. **Kristaps re-enables exec** (P0 — exec blocked in cron)
+2. **Run `npm test`** → verify 51 tests pass (P0)
+3. **Run `npm run build`** → verify clean build (P0)
+4. **User deploys to Vercel** (P0 — user action needed)
+5. **Add OpenRouter credits** (P0 — user action needed)
+6. **Browser test** — verify full user flow in real browser (P1 — no browser in this environment)
+7. **Merge upstream commit 8562fd2** — improves duration calc, error handling, progress UX, voice mapping (P2 — deferred; conflicts with demo mode)
 
 ---
 

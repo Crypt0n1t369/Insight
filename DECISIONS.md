@@ -156,4 +156,62 @@ Each decision follows: DATE | DECISION | RATIONALE | STATUS
 - **Rationale:** Concept is strong, architecture is sound, but Q6/Q7/Q8 must be answered before Phase 1 build
 - **Status:** ⏳ Pending user action — needs Test 0.1 recruitment + interviews
 
-_Last updated: 2026-03-28_
+_Last updated: 2026-03-31 02:26 UTC_
+
+## 2026-04-13
+
+### Audio Tool NVC Chinese Character Bug
+- **Decision:** Fix NVC demo batch encoding corruption in `server/index.ts`
+- **Problem:** `without评价` — Chinese chars embedded in English NVC demo script
+- **Fix:** `without评价` → `without evaluating`
+- **Status:** ✅ Fixed (commit needed — non-cron session)
+
+### Audio Tool Demo Fallback Chain
+- **Decision:** Fix frontend `generateMeditationScript` final catch block fallback
+- **Problem:** `DEMO_BATCHES['DEFAULT']` — `'DEFAULT'` key doesn't exist in frontend DEMO_BATCHES
+- **Fix:** `DEMO_BATCHES['GENERAL'] || DEMO_BATCHES['NSDR']` (matches existing backend fallback logic)
+- **Status:** ✅ Fixed (commit needed — non-cron session)
+
+_Last updated: 2026-04-13 22:46 UTC_
+
+## 2026-03-31
+
+### gen-e.eu Homepage Now Live — Window Tightening ⚠️
+- **Finding (01:56 UTC):** gen-e.eu homepage now shows "Gen-E 2026 – Europe's Largest Entrepreneurship Festival" ✅
+- **gen-e.eu/gen-e-2026:** Still 404 — specific event details not yet published
+- **Implication:** JA Europe is actively building Gen-E 2026 web presence RIGHT NOW. The homepage going live suggests detail pages (partner info, schedule, etc.) are coming soon. The pre-announcement partnership window is still OPEN but tightening.
+- **Action urgency:** April 7 outreach deadline is more critical now — 7 days away. JA Europe LinkedIn DM should go out ASAP.
+- **Status:** ✅ OUTREACH_DRAFT.md header updated (01:57 UTC)
+
+---
+
+## 2026-03-29
+
+### Gen-E 2026 Web Presence — Status Update
+- **19:27 UTC:** gen-e.eu homepage is now LIVE with "Gen-E 2026" branding (previously only newsletter signup)
+- **gen-e.eu/gen-e-2026:** Still 404 — event details not yet published
+- **Implication:** JA Europe is actively building Gen-E 2026 web presence now. Optimal outreach window confirmed — they're in planning mode before public launch.
+- **Status:** ✅ OUTREACH_DRAFT.md updated with new timing insight
+
+### CG Phase 0 Open Questions — Draft Answers
+- **Q6 (Onboarding hook):** The personal map takeaway IS the hook. User leaves with a named "operating wavelength" + behavioral evidence in 5 minutes. Validation: ≥5/10 would screenshot and share.
+- **Q7 (16-25 perk):** Verifiable contribution record (evidence work mattered) + priority access to opportunities + skills mapped to specific gaps. NOT money, badges, or abstract career advice.
+- **Q8 (Test 0.2 event):** JCI Latvia Innovators' meeting (immediate) → Gen-E 2026 July (outreach NOW). Gen-E is JA Europe program; JA Europe is primary partnership contact.
+- **Status:** ⏳ Draft — needs user review before sending outreach
+
+### JA Europe vs JA Latvia — Clarification
+- **JA Europe** (jaeurope.org): Primary decision-maker for Gen-E 2026. Coordinates 40+ national JA organizations. Partnership discussions go here.
+- **JA Latvia** (jalatvia.lv): Site unreachable. Local JA chapter and Gen-E 2026 local host. Secondary contact via JCI Latvia.
+- **JCI Latvia** (jci.lv): Separate org (Junior Chamber International Latvia). Confirmed active. Good for Test 0.2 venue (monthly Innovators' meetings).
+- **Status:** ✅ Clarified — OUTREACH_DRAFT.md updated with correct contacts
+
+### Security Fixes Verified Applied
+- **Decision:** Confirm exec.security=allowlist, groupPolicy=allowlist are active in gateway config
+- **Verification:** Gateway config retrieved via `gateway` tool — both settings confirmed at `"allowlist"`
+- **Config touched:** 2026-03-29T14:36:52.412Z — applied by prior session
+- **Status:** ✅ VERIFIED (14:56 UTC) — no further action needed
+
+### Audio Submodule — Cron Context Limitation
+- **Finding:** `projects/audio-transformation-tool/code` is a git submodule (ca1ae15)
+- **Impact:** Submodule updates require exec access — cannot be modified in cron sessions
+- **Status:** ℹ️ Informational — requires non-cron session to push submodule changes

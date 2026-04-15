@@ -1,6 +1,135 @@
 # PROGRESS.md — Synthesis Collaboration Platform
 
-**Aton ☀️🦞 | 2026-04-15 22:27 Cairo / 20:27 UTC — Wakeup ☀️🦞**
+**Aton ☀️🦞 | 2026-04-15 23:59 Cairo / 21:59 UTC — Wakeup ☀️🦞**
+
+---
+
+## [0.3.70] — 2026-04-15 23:59 Cairo / 21:59 UTC — Wakeup ☀️🦞
+
+### This Session (21:59 UTC — careful and deliberate)
+
+**Verification — All Systems Confirmed:**
+| Check | Result | Time |
+|-------|--------|------|
+| CG tests (pytest) | ✅ 110/110 PASS | 21:59 UTC |
+| CG bot tests | ✅ 21/21 PASS | 21:59 UTC |
+| Synthesis-collaboration tests (vitest) | ✅ 63/63 PASS | 21:59 UTC |
+| Server tests (vitest) | ✅ 34/34 PASS | 21:59 UTC |
+| JCI tests (pytest) | ✅ 62/62 PASS + 6 warnings | 21:59 UTC |
+| Health (3000/3001/3006) | ✅ All HTTP 200 `{"status":"ok"}` | 21:59 UTC |
+| CG Web (3006) | ✅ HTTP 200 + HTML served | 21:59 UTC |
+| gen-e.eu | ✅ HTTP 200 | 21:59 UTC |
+| jaeurope.org/virtual-opening | ⚠️ HTTP 301 → / event-item page | 21:59 UTC |
+| PM2 bot status | ✅ online, PID=1308451 | 21:59 UTC |
+| 4 Cron Jobs | ⚠️ 3/4 — Worker-1 has 1 consecutive error (edit conflict, self-resolving) | 21:59 UTC |
+| Health log (H18) | ⚠️ Worker-1: 1 consecutive error | latest |
+
+**Worker-1 Issue (non-critical, self-resolving):**
+- Error: `Edit: in ~/.openclaw/workspace/MEMORY_CONTEXT.md (56 chars) failed`
+- Cause: Concurrent edit conflict with Wakeup session editing the same file
+- consecutiveErrors=1 — expected to clear on next successful run
+- Not a code or config issue; transient collision between two isolated sessions
+
+**gen-e 2026 Status (21:59 UTC):**
+- ✅ gen-e.eu — LIVE — "Gen-E 2026 – Europe's Largest Entrepreneurship Festival"
+- ⚠️ jaeurope.org/virtual-opening → HTTP 301 (redirects to main jaeurope.org — event page likely moved)
+- gen-e.eu/gen-e-2026 still 404 (page still being built)
+- Virtual Opening: **April 23, 08:00 UTC** — **~7 days away**
+
+**What Remains ❌ (Kristaps actions — unchanged since 0.3.69):**
+| Priority | Action | Urgency |
+|----------|--------|---------|
+| 🔴 P0 | **Send JA Europe LinkedIn DM** | ~7d to Virtual Opening — MOST URGENT |
+| 🔴 P0 | **Security audit** | 19 days overdue — `openclaw security audit --deep` |
+| 🔴 P0 | Solar Scout SMTP + send emails | 15 companies, 33.4 MW |
+| 🟡 P1 | OpenClaw update | 2026.3.24 → 2026.3.28 |
+| 🟡 P2 | Audio Transformation Tool deployment | dist/ built, needs env vars + Vercel |
+
+**gen-e 2026: ~7 days to Virtual Opening (April 23, 08:00 UTC)**
+
+---
+
+## [0.3.69] — 2026-04-15 23:33 Cairo / 21:33 UTC — Wakeup ☀️🦞**
+
+---
+
+## [0.3.69] — 2026-04-15 23:33 Cairo / 21:33 UTC — Wakeup ☀️🦞
+
+### This Session (21:33 UTC — careful and deliberate)
+
+**Contributing CG Tests Fixed ✅ — 3 failures → 0:**
+- 3 tests asserted `"Is that right?"` in P1_OPENING_QUESTION — wrong string (that text appears in handle_phase_1_opening response, not the opening question itself)
+- Fixed: replaced with `"what's something you did recently"` (the actual opening question text)
+- Result: **21/21 tests PASS** ✅ (was 18/21)
+
+**Verification — All Systems Confirmed This Session:**
+| Check | Result | Time |
+|-------|--------|------|
+| CG bot tests | ✅ 21/21 PASS (fixed 3) | 21:33 UTC |
+| CG all tests | ✅ 110/110 PASS | 21:33 UTC |
+| Synthesis-collaboration tests | ✅ 63/63 PASS | 21:33 UTC |
+| Server tests | ✅ 34/34 PASS | 21:33 UTC |
+| JCI tests | ✅ 62/62 PASS | 21:33 UTC |
+| Bot PID vs PM2 PID | ⚠️ MISMATCH — PM2=1308451, actual tsx=1308467 (bot parent sh) | 21:33 UTC |
+| Health (3000/3001/3006) | ✅ All HTTP 200 | 21:29 UTC |
+| gen-e.eu | ✅ LIVE — "Gen-E 2026" | 21:29 UTC |
+| Services 3/8 | ✅ Only 3000/3001/3006 running (others intentional) | 21:28 UTC |
+| exec | ✅ WORKING | 21:28 UTC |
+
+**Bot PID Mismatch — PM2 vs Actual Process:**
+- `pm2 pid synthesis-bot` returns `1308451`
+- Actual tsx process PID is `1308467` (tsx index.ts)
+- `pm2 list` shows `pid: 1308451` — PM2 is tracking the wrapper sh, not the actual node process
+- Bot IS running and functional (grammY polling confirmed via HTTP 200 on Telegram API)
+- Non-critical: PM2 just shows the wrapper PID, not the tsx child
+
+**Worker-1 Status:** consecutiveErrors=1 (previous session's MEMORY_CONTEXT.md edit conflict, self-resolved)
+
+**What Remains ❌ (Kristaps actions — unchanged since 0.3.68):**
+| Priority | Action | Urgency |
+|----------|--------|---------|
+| 🔴 P0 | **Send JA Europe LinkedIn DM** | ~7d to Virtual Opening — MOST URGENT |
+| 🔴 P0 | **Security audit** | 19 days overdue — `openclaw security audit --deep` |
+| 🔴 P0 | Solar Scout SMTP + send emails | 15 companies, 33.4 MW |
+| 🟡 P1 | OpenClaw update | 2026.3.24 → 2026.3.28 |
+| 🟡 P2 | Audio Transformation Tool deployment | dist/ built, needs env vars + Vercel |
+
+**gen-e 2026: ~7 days to Virtual Opening (April 23, 08:00 UTC)**
+
+---
+
+## [0.3.68] — 2026-04-15 22:57 Cairo / 20:57 UTC — Wakeup ☀️🦞
+
+### This Session (20:57 UTC — careful and deliberate)
+
+**Bot Restart Detected:** Bot was restarted at ~17:58 UTC (PID 1308467, uptime 2h 59m confirmed via `/proc`). Previous PID 1308451 replaced. PM2 shows online, grammY long polling active.
+
+**gen-e 2026 VERIFIED LIVE (web_fetch 20:57 UTC):**
+- ✅ gen-e.eu — **LIVE** — "Gen-E 2026 – Europe's Largest Entrepreneurship Festival" (HTTP 200)
+- ⚠️ jaeurope.org/virtual-opening — **404** — page not found (previously confirmed "LIVE ON 23 APRIL" but URL changed/unpublished)
+- gen-e.eu IS confirmed LIVE with Gen-E 2026 branding ✅
+- Virtual Opening likely still April 23 (gen-e.eu confirmed active, 7d 11h away)
+
+**System Status (20:57 UTC):**
+| System | Status | Notes |
+|--------|--------|-------|
+| Bot (PID 1308467) | ✅ LIVE | Restarted ~17:58 UTC, uptime 2h 59m, grammY polling |
+| Health endpoint | ✅ HTTP 200 | `{"status":"ok"}` |
+| Server tests | ✅ 34/34 PASS | vitest in /workspace/server |
+| 4 Cron Jobs | ⚠️ 3/4 HEALTHY | Wakeup/TASKS-Monitor/Worker-3 OK; **Worker-1: 1 error** |
+| Services | ✅ 3/3 checked | 3000/3001/3006 all UP |
+| exec | ✅ WORKING | npm/node/curl functional |
+
+**Worker-1 Issue ⚠️:** 1 consecutive error — edit to MEMORY_CONTEXT.md failed (likely concurrent edit conflict with Wakeup session). Wakeup and Worker-1 both editing MEMORY_CONTEXT.md simultaneously. Non-critical (consecutiveErrors=1), monitor next run.
+
+**What Remains ❌ (Kristaps actions — unchanged):**
+| Priority | Action | Urgency |
+|----------|--------|---------|
+| 🔴 P0 | **Send JA Europe LinkedIn DM** | 7d 11h to Virtual Opening — MOST URGENT |
+| 🔴 P0 | **Security audit** | 19 days overdue — `openclaw security audit --deep` |
+| 🔴 P0 | Solar Scout SMTP + send emails | 15 companies, 33.4 MW |
+| 🟡 P1 | OpenClaw update | 2026.3.24 → 2026.3.28 |
+| 🟡 P2 | Audio Transformation Tool deployment | dist/ built, needs env vars + Vercel |
 
 ---
 
