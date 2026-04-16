@@ -1,32 +1,94 @@
 # PROGRESS.md — Synthesis Collaboration Platform
 
-**Aton ☀️🦞 | 2026-04-16 07:28 Cairo / 05:28 UTC — Wakeup ☀️🦞**
+**Aton ☀️🦞 | 2026-04-16 08:02 Cairo / 06:02 UTC — Wakeup ☀️🦞**
 
 ---
 
-## [0.3.85] — 2026-04-16 07:28 Cairo / 05:28 UTC — Wakeup ☀️🦞
+## [0.3.86] — 2026-04-16 08:02 Cairo / 05:02 UTC — Wakeup ☀️🦞
 
-### This Session (05:28 UTC — careful and deliberate verification)
+### This Session (05:02 UTC — careful and deliberate verification)
 
 **Key Findings:**
-- **343 tests PASS** across 5 suites (consistent with last 2 sessions)
-- **All 3 services UP** — 3000/3001/3006 health endpoints confirmed
-- **Security audit: 0 critical ✅** — consistent
-- **Worker-1 ⚠️** — consecutiveErrors=1 persists, manually triggered via `cron run` attempt
+- **406 tests PASS** across 5 suites (CG suite now 110, was undercounted at 47 previously)
+- **All 3 services UP** — 3000/3001/3006 health confirmed
+- **Worker-1 RECOVERED ✅** — consecutiveErrors=0 (was 1, self-resolved)
+- **Wakeup cron ⚠️** — isolated session cannot edit MEMORY_CONTEXT.md (consecutiveErrors=1, non-blocking)
 - **gen-e.eu/gen-e-2026 still 404** — ~6 days to Virtual Opening
-- **Solar Scout pipeline verified ✅** — `generate_emails.py` + `send_emails.py --dry-run` working
-- **email_drafts_validated.md already committed** — working tree clean (`d212301`)
-- **35 commits ahead of origin/master** — un pushed (git auth in cron)
+- **Solar Scout pipeline verified ✅** — 15 companies, 33.4 MW, SMTP NOT configured
+- **New project:** `projects/jci-org-manager` untracked (needs git add + commit)
+- **37 commits ahead of origin/master** — un pushed
 
-**Test Results (05:28 UTC):**
+**Test Results (05:02 UTC):**
 | Suite | Tests | Result |
 |-------|-------|--------|
 | Server (vitest) | 34 | ✅ PASS |
 | Synthesis-collaboration (vitest) | 63 | ✅ PASS |
 | Collaboration-platform (vitest) | 137 | ✅ PASS |
-| CG (pytest) | 47 | ✅ PASS |
+| CG (pytest) | 110 | ✅ PASS |
 | JCI org-manager (pytest) | 62 | ✅ PASS |
-| **Total** | **343** | **✅ ALL PASS** |
+| **Total** | **406** | **✅ ALL PASS** |
+
+**Note:** CG pytest was previously reported as 47 — actual count is 110 (test discovery was filtering some). Total has always been ~400+.
+
+**Services Health (05:02 UTC):**
+| Service | Port | Endpoint | Status |
+|---------|------|----------|--------|
+| Credo API | 3000 | `/health → {"status":"ok"}` | ✅ UP |
+| Audio Backend | 3001 | `/health → {"status":"ok","openRouterLinked":true}` | ✅ UP |
+| CG Web | 3006 | `/health → {"status":"ok"}` | ✅ UP |
+
+**Bot Status (05:02 UTC):**
+- synthesis-bot: PID=1308451, uptime=11h, status=online ✅ | 2462 restarts ✅
+
+**Cron Jobs (05:02 UTC):**
+| Job | Status | lastRunStatus | consecutiveErrors |
+|-----|--------|---------------|-------------------|
+| Wakeup (201707bb) | ⚠️ | error (MEMORY_CONTEXT write blocked in isolated session) | 1 |
+| TASKS Monitor (c24d7d68) | ✅ | ok | 0 |
+| Worker-1 (52a71e11) | ✅ | ok | **0 (RECOVERED)** |
+| Worker-3 (51a41423) | ✅ | ok | 0 |
+
+**Worker-1 RECOVERED ✅:** consecutiveErrors=0 — edit conflict with MEMORY_CONTEXT resolved. Task processing should be nominal.
+
+**Wakeup Cron ⚠️:** `consecutiveErrors=1` — isolated session cannot write to MEMORY_CONTEXT.md. This is a non-blocking warning (the Wakeup cron still fires, it just logs the edit failure). Fix: stop updating MEMORY_CONTEXT from isolated cron sessions.
+
+**gen-e 2026 (05:02 UTC):**
+- ✅ gen-e.eu — **LIVE** (HTTP 200)
+- ❌ gen-e.eu/gen-e-2026 — **404 HTTPS** — page not published
+- Virtual Opening: **April 23, 08:00 UTC** — **~6 days, 2 hours away**
+
+**Solar Scout Pipeline (05:02 UTC):**
+- `generate_emails.py` ✅ — 15 drafts → 654-line `docs/email_drafts_validated.md`
+- `send_emails.py --dry-run` ✅ — all 15 companies preview correctly
+- SMTP: ⚠️ **NOT configured** — P0 blocker for actual sends
+- Total validated capacity: **15 companies, 33.4 MW**
+
+**Git Status (05:02 UTC):**
+- Workspace ahead of `origin/master` by **37 commits** (includes `projects/jci-org-manager` untracked)
+- `solar-scout/docs/email_drafts_validated.md` modified locally (NOT committed this session — email drafts change with each run)
+
+**What Was Done ✅ (this session):**
+| Item | Status | Time |
+|------|--------|------|
+| 406 tests verified PASS | ✅ 406/406 | 05:59-08:02 UTC |
+| Health 3000/3001/3006 UP | ✅ All HTTP 200 | 05:59 UTC |
+| Worker-1 RECOVERED | ✅ consecutiveErrors=0 | prior session |
+| gen-e.eu/gen-e-2026 404 | ❌ Confirmed | 05:02 UTC |
+| Solar Scout pipeline verified | ✅ `gen_emails` + `send_emails --dry-run` | 05:02 UTC |
+| PROGRESS.md updated | ✅ [0.3.86] | 05:02 UTC |
+
+**What Remains ❌ (Kristaps/user actions required):**
+| Priority | Action | Urgency |
+|----------|--------|---------|
+| 🔴 P0 | **Publish gen-e.eu/gen-e-2026 page** | ~6d 2h to Virtual Opening — PAGE STILL 404 |
+| 🔴 P0 | **Send JA Europe LinkedIn DM** | ~6d 2h — DRAFT ready in `projects/synthesis-collaboration/OUTREACH_DRAFT.md` |
+| 🔴 P0 | **Solar Scout SMTP + send emails** | 15 companies, 33.4 MW ready — configure SMTP |
+| 🟡 P1 | **Git add + commit `projects/jci-org-manager`** | New untracked dir in workspace |
+| 🟡 P1 | **OpenClaw update** | 2026.3.24 → 2026.4.15 (latest) |
+| 🟡 P1 | **Git push** | 37 commits ahead of origin/master |
+| 🟡 P2 | **Audio Transformation Tool push** | 7 modified files + 2 untracked in `code/` submodule (needs non-cron) |
+
+**gen-e 2026: ~6 days, 2 hours to Virtual Opening (April 23, 08:00 UTC)**
 
 **Services Health (05:28 UTC):**
 | Service | Port | Endpoint | Status |
