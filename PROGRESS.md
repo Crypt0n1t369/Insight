@@ -1,6 +1,68 @@
 # PROGRESS.md — Synthesis Collaboration Platform
 
-**Aton ☀️🦞 | 2026-04-16 02:30 Cairo / 00:30 UTC — Wakeup ☀️🦞**
+**Aton ☀️🦞 | 2026-04-16 02:58 Cairo / 00:58 UTC — Wakeup ☀️🦞**
+
+---
+
+## [0.3.76] — 2026-04-16 02:58 Cairo / 00:58 UTC — Wakeup ☀️🦞
+
+### This Session (00:58 UTC — careful and deliberate)
+
+**All Tests VERIFIED (this session):**
+| Suite | Tests | Result | Time |
+|-------|-------|--------|------|
+| CG (pytest) | 110 | ✅ PASS | 00:58 UTC |
+| CG bot (pytest) | 21 | ✅ PASS | 00:58 UTC |
+| Synthesis-collaboration (vitest) | 63 | ✅ PASS | 00:58 UTC |
+| Server (vitest) | 34 | ✅ PASS | 00:58 UTC |
+| JCI (pytest) | 62 | ✅ PASS + warnings | 00:58 UTC |
+| **Total** | **290** | **✅ ALL PASS** | 00:58 UTC |
+
+**Health Endpoints (00:58 UTC):**
+- 3000 (Credo API): `{"status":"ok"}` ✅
+- 3001 (Audio Backend): `{"status":"ok","openRouterLinked":true}` ✅
+- 3006 (CG Web): `{"service":"contribution-graph-web","status":"ok"}` ✅
+
+**Bot Status (00:58 UTC):**
+- PM2 PID=1308451 | uptime=6h | status=online | 2462 restarts ✅
+- Actual tsx PID=1308467 (child of sh wrapper) — grammY long polling active ✅
+- node (preflight) PID=1308478 ✅
+
+**Git Status (00:58 UTC):**
+- Workspace clean except:
+  - `m projects/audio-transformation-tool/code` — SUBMODULE DIRTY (local changes — not committed, needs non-cron session)
+  - `? projects/jci-org-manager` — untracked files (handled correctly)
+- No uncommitted workspace files ✅
+
+**Solar Scout (00:58 UTC):**
+- `send_emails.py --dry-run-all` ✅ — all 15 companies preview correctly
+- SMTP NOT configured — placeholders shown (YOUR_NAME, YOUR_COMPANY, etc.)
+- **P0 blocker:** Kristaps must configure SMTP + send emails (15 companies, 33.4 MW)
+
+**Cron Jobs (00:58 UTC):**
+| Job | Status | lastRunStatus | consecutiveErrors |
+|-----|--------|---------------|-------------------|
+| Wakeup | ✅ | ok | 0 |
+| TASKS-Monitor | ✅ | ok | 0 |
+| Worker-1 | ✅ | ok | 0 |
+| Worker-3 | ✅ | ok | 0 |
+
+**gen-e 2026 Timeline (00:58 UTC):**
+- **Virtual Opening:** April 23, 08:00 UTC — **~7 days, 7 hours away**
+- gen-e.eu: **LIVE** ✅
+- gen-e.eu/gen-e-2026: **404** ❌ (still being built)
+- JA Europe outreach: **NOT SENT** ⚠️ — OUTREACH_DRAFT.md Options A+B ready
+
+**What Remains ❌ (Kristaps actions — non-cron required):**
+| Priority | Action | Urgency |
+|----------|--------|---------|
+| 🔴 P0 | **Send JA Europe LinkedIn DM** | ~7d 7h to Virtual Opening — MOST URGENT |
+| 🔴 P0 | **Security audit** | 20+ days unresolved — `openclaw security audit --deep` |
+| 🔴 P0 | **Solar Scout SMTP + send emails** | 15 companies, 33.4 MW |
+| 🟡 P1 | **OpenClaw update** | 2026.3.24 → 2026.3.28 |
+| 🟡 P2 | **Audio Transformation Tool deployment** | dist/ built, needs VITE_GOOGLE_API_KEY + Vercel |
+
+**gen-e 2026: ~7 days, 7 hours to Virtual Opening (April 23, 08:00 UTC)**
 
 ---
 
