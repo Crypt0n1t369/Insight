@@ -1,6 +1,6 @@
 # OUTREACH_DRAFT.md — JA Europe Gen-E 2026 Partnership
 
-**Aton ☀️🦞 | 2026-04-16 14:59 Cairo (2026-04-16 12:59 UTC)**
+**Aton ☀️🦞 | 2026-04-16 15:29 Cairo (2026-04-16 13:29 UTC)**
 
 ---
 
@@ -18,7 +18,7 @@
 - ⚠️ gen-e.eu (the main homepage) IS LIVE with Gen-E 2026 branding — use this as the reference link
 - **Gen-E Virtual Opening CONFIRMED LIVE on jaeurope.org** — "LIVE ON 23 APRIL – 10:00 AM CEST"
 - Content confirmed: *"The virtual opening marks the beginning of an innovative journey where creativity meets technology, providing JA students with a unique opportunity to showcase their entrepreneurial projects on a global stage. Hear from special guests and get a first look at the Virtual Expo and our awards!"*
-- Virtual Opening: **April 23, 10:00 AM CEST (08:00 UTC)** — **~6 days 19 hours away** (as of 2026-04-16 12:59 UTC)
+- Virtual Opening: **April 23, 10:00 AM CEST (08:00 UTC)** — **~6 days 18.5 hours away** (as of 2026-04-16 13:29 UTC)
 - April 7 outreach deadline was **missed by 9 days** — but window still open (content being built)
 
 ## CRITICAL FIX: Use gen-e.eu NOT gen-e.eu/gen-e-2026
@@ -82,11 +82,11 @@ Kristaps
 ## gen-e.eu Status (Updated 2026-04-16 14:37 Cairo / 12:37 UTC)
 - ✅ gen-e.eu — **LIVE** — "Gen-E 2026 – Europe's Largest Entrepreneurship Festival"
 - ❌ gen-e.eu/gen-e-2026 — **404 Page Not Found** (page being built)
-- ✅ Virtual Opening: **April 23, 10:00 AM CEST** — **~6 days 19 hours away** (as of 12:59 UTC)
+- ✅ Virtual Opening: **April 23, 10:00 AM CEST** — **~6 days 18.5 hours away** (as of 13:29 UTC)
 - ✅ Newsletter signup functional on gen-e.eu
 - ✅ jaeurope.org virtual opening content CONFIRMED LIVE: *"The virtual opening marks the beginning of an innovative journey where creativity meets technology, providing JA students with a unique opportunity to showcase their entrepreneurial projects on a global stage. Hear from special guests and get a first look at the Virtual Expo and our awards!"*
 - ⚠️ April 7 outreach deadline **missed by 9 days** (April 7 → April 16) — window MAY still be open
 
 ---
 
-*Aton ☀️🦞 | Created: 2026-04-13 17:30 UTC | Updated: 2026-04-16 12:59 UTC (gen-e.eu/gen-e-2026 404, ~6d 19h to Virtual Opening, 9d past April 7 deadline) | Kristaps: review + send via LinkedIn DM NOW | ⚠️ Use gen-e.eu NOT gen-e.eu/gen-e-2026*
+*Aton ☀️🦞 | Created: 2026-04-13 17:30 UTC | Updated: 2026-04-16 13:29 UTC (gen-e.eu/gen-e-2026 404, ~6d 18.5h to Virtual Opening, 9d past April 7 deadline) | Kristaps: review + send via LinkedIn DM NOW | ⚠️ Use gen-e.eu NOT gen-e.eu/gen-e-2026*
