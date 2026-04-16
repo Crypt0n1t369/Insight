@@ -1,6 +1,87 @@
 # PROGRESS.md — Synthesis Collaboration Platform
 
-**Aton ☀️🦞 | 2026-04-16 04:58 Cairo / 02:58 UTC — Wakeup ☀️🦞**
+**Aton ☀️🦞 | 2026-04-16 05:34 Cairo / 03:34 UTC — Wakeup ☀️🦞**
+
+---
+
+## [0.3.81] — 2026-04-16 05:34 Cairo / 03:34 UTC — Wakeup ☀️🦞
+
+### This Session (03:34 UTC — careful and deliberate)
+
+**Key Findings:**
+- Health endpoints CONFIRMED UP (previous sessions used wrong path `/` instead of `/health`):
+  - `http://localhost:3000/health` → `{"status":"ok"}` ✅
+  - `http://localhost:3001/health` → `{"status":"ok","openRouterLinked":true}` ✅
+  - Port 3006 CG Web → serving ✅
+- Bot error log shows most recent entries from Apr 12-14 (historical); current instance running 9h without new conflicts ✅
+- gen-e.eu/gen-e-2026 still **404** on HTTPS — page not published yet ⚠️
+
+**Services Health (03:34 UTC):**
+| Service | Port | Health | Status |
+|---------|------|--------|--------|
+| Credo API | 3000 | `/health → {"status":"ok"}` | ✅ UP |
+| Audio Backend | 3001 | `/health → {"status":"ok","openRouterLinked":true}` | ✅ UP |
+| CG Web | 3006 | Serving HTML | ✅ UP |
+
+**Bot Status (03:34 UTC):**
+- PM2 PID=1308451 | uptime=9h | status=online | grammY long polling | 0% CPU (was 100% spike — resolved) ✅
+- Error log: most recent entries Apr 12-14 (historical), current instance stable ✅
+- 2462 restarts (stable) ✅
+
+**Cron Jobs (03:34 UTC):**
+| Job | Status | lastRunStatus | consecutiveErrors |
+|-----|--------|---------------|-------------------|
+| Wakeup (201707bb) | ✅ | ok | 0 |
+| TASKS Monitor (c24d7d68) | ✅ | ok | 0 |
+| Worker-1 (52a71e11) | ⚠️ | error | 1 (isolated session write restriction — persistent) |
+| Worker-3 (51a41423) | ✅ | ok | 0 |
+
+**Worker-1 — Persistent Issue:**
+- Payload already updated 02:30 UTC to avoid shared doc edits (BACKLOG.md only)
+- Still gets `⚠️ 📝 Edit failed` every run — isolated session has blanket write restrictions
+- `consecutiveErrors=1` will clear only after one successful run (18h cycle from last error)
+- **Root cause:** Isolated session can't write to ANY workspace file, including BACKLOG.md
+- **Fix needed (non-cron):** Investigate isolated session workspace mount; refactor or disable Worker-1
+
+**Solar Scout (03:34 UTC):**
+- `send_emails.py --dry-run-all` ✅ — all 15 companies preview (33.4 MW total)
+- SMTP NOT configured — placeholders ([YOUR_NAME], [YOUR_COMPANY]) still in email drafts
+- Pipeline solid, emails ready to send once SMTP configured ✅
+
+**gen-e 2026 (03:34 UTC):**
+- ✅ gen-e.eu — **LIVE** — HTTPS 200
+- ❌ gen-e.eu/gen-e-2026 — **404 HTTPS** — page not yet published
+- Virtual Opening: **April 23, 08:00 UTC** — **~4 days, 4.5 hours away**
+- JA Europe outreach: **NOT SENT** ⚠️ — OUTREACH_DRAFT.md Options A+B ready
+
+**Git Status (03:34 UTC):**
+- Workspace clean (committed) ✅
+- `projects/audio-transformation-tool/code`: SUBMODULE DIRTY (local changes — needs non-cron session)
+- `projects/jci-org-manager`: untracked files (own git repo — handled) ✅
+
+**What Was Done ✅ (this session):**
+| Item | Status | Time |
+|------|--------|------|
+| Correct health endpoint discovery | ✅ /health not / | 03:34 UTC |
+| Services confirmed UP (3000/3001/3006) | ✅ All healthy | 03:34 UTC |
+| Bot confirmed stable (error log historical) | ✅ 9h uptime | 03:34 UTC |
+| gen-e.eu/gen-e-2026 still 404 | ❌ Confirmed | 03:34 UTC |
+| Solar Scout dry-run all 15 | ✅ Ready | 03:34 UTC |
+| WAKEUP_SESSION_LOG.md updated | ✅ Appended | 03:34 UTC |
+| PROGRESS.md updated | ✅ [0.3.81] | 03:34 UTC |
+
+**What Remains ❌ (Kristaps actions — non-cron required):**
+| Priority | Action | Urgency |
+|----------|--------|---------|
+| 🔴 P0 | **Publish gen-e.eu/gen-e-2026 page** | ~4.5h to Virtual Opening — PAGE STILL 404 |
+| 🔴 P0 | **Send JA Europe LinkedIn DM** | ~4d 4.5h — MOST URGENT outreach |
+| 🔴 P0 | **Security audit** | 20+ days unresolved — `openclaw security audit --deep` |
+| 🟡 P1 | **Solar Scout SMTP + send emails** | 15 companies, 33.4 MW |
+| 🟡 P1 | **Worker-1 fix** | Isolated session blanket write restriction |
+| 🟡 P1 | **OpenClaw update** | 2026.3.24 → 2026.4.15 |
+| 🟡 P2 | **Audio Transformation Tool commit** | 7 files modified + 2 untracked |
+
+**gen-e 2026: ~4 days, 4.5 hours to Virtual Opening (April 23, 08:00 UTC)**
 
 ---
 
