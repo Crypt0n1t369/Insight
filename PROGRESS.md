@@ -1,6 +1,77 @@
 # PROGRESS.md — Synthesis Collaboration Platform
 
-**Aton ☀️🦞 | 2026-04-16 01:28 Cairo / 23:28 UTC — Wakeup ☀️🦞**
+**Aton ☀️🦞 | 2026-04-16 02:30 Cairo / 00:30 UTC — Wakeup ☀️🦞**
+
+---
+
+## [0.3.75] — 2026-04-16 02:30 Cairo / 00:30 UTC — Wakeup ☀️🦞
+
+### This Session (00:30 UTC — careful and deliberate)
+
+**All Tests VERIFIED (this session):**
+| Suite | Tests | Result | Time |
+|-------|-------|--------|------|
+| CG (pytest, full suite) | 110 | ✅ PASS | 00:29 UTC |
+| CG bot (pytest) | 21 | ✅ PASS | 00:29 UTC |
+| Synthesis-collaboration (vitest) | 63 | ✅ PASS | 00:29 UTC |
+| Server (vitest) | 34 | ✅ PASS | 00:29 UTC |
+| JCI (pytest) | 62 | ✅ PASS + 6 warnings | 00:29 UTC |
+| **Total** | **290** | **✅ ALL PASS** | 00:29 UTC |
+
+**Health Endpoints (00:29 UTC):**
+- 3000 (Credo API): `{"status":"ok"}` ✅
+- 3001 (Audio Backend): `{"status":"ok","openRouterLinked":true}` ✅
+- 3006 (CG Web): `{"service":"contribution-graph-web","status":"ok"}` ✅
+
+**Bot Status (00:29 UTC):**
+- PM2 PID=1308451 | uptime=6h | status=online ✅
+- Actual tsx PID=1308467 (child of sh wrapper) — grammY long polling active ✅
+
+**Cron Jobs (00:30 UTC):**
+| Job | Status | lastRunStatus | consecutiveErrors |
+|-----|--------|---------------|-------------------|
+| Wakeup | ✅ | ok | 0 |
+| TASKS-Monitor | ✅ | ok | 0 |
+| Worker-1 | ✅ | **ok — error CLEARED** | 0 |
+| Worker-3 | ✅ | ok | 0 |
+
+**Worker-1 Recovery ✅:**
+- The persistent MEMORY_CONTEXT.md edit conflict is **RESOLVED**
+- Previous fix (payload updated to avoid MEMORY_CONTEXT.md edits) is now working
+- consecutiveErrors=0 confirmed across all 4 cron jobs
+
+**Git Commit (00:30 UTC — this session):**
+- ✅ Committed 4 workspace files (9b1b39a): BACKLOG.md, CHANGELOG.md, PROGRESS.md, WAKEUP_SESSION_LOG.md
+- projects/audio-transformation-tool/code: SUBMODULE DIRTY — local changes (not committed — requires non-cron session)
+- projects/jci-org-manager: untracked files — handled correctly
+
+**gen-e 2026 Timeline (00:30 UTC):**
+- **Virtual Opening:** April 23, 08:00 UTC — **7 days, 7.5 hours away**
+- gen-e.eu: **LIVE** ✅
+- gen-e.eu/gen-e-2026: **404** ❌ (still being built)
+- jaeurope.org/virtual-opening: **404** ❌ (page moved/removed)
+- **JA Europe outreach: NOT SENT** ⚠️ — OUTREACH_DRAFT.md Options A+B ready
+
+**What Was Done ✅:**
+| Item | Status | Time |
+|------|--------|------|
+| 290 tests verified PASS | ✅ 290/290 | 00:29 UTC |
+| Health 3000/3001/3006 UP | ✅ | 00:29 UTC |
+| Bot process alive (PM2) | ✅ PID 1308451 | 00:29 UTC |
+| 4/4 cron jobs healthy | ✅ | 00:30 UTC |
+| Worker-1 error CLEARED | ✅ resolved | 00:30 UTC |
+| Git committed (9b1b39a) | ✅ 4 files | 00:30 UTC |
+| gen-e.eu LIVE | ✅ | 00:29 UTC |
+| gen-e.eu/gen-e-2026 404 | ❌ confirmed | 00:29 UTC |
+
+**What Remains ❌ (Kristaps actions — non-cron required):**
+| Priority | Action | Urgency |
+|----------|--------|---------|
+| 🔴 P0 | **Send JA Europe LinkedIn DM** | ~7d 7.5h to Virtual Opening — MOST URGENT |
+| 🔴 P0 | **Security audit** | 20+ days unresolved — `openclaw security audit --deep` |
+| 🔴 P0 | **Solar Scout SMTP + send emails** | 15 companies, 33.4 MW |
+| 🟡 P1 | **OpenClaw update** | 2026.3.24 → 2026.3.28 |
+| 🟡 P2 | **Audio Transformation Tool deployment** | dist/ built, needs VITE_GOOGLE_API_KEY + Vercel |
 
 ---
 
