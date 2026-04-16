@@ -1,5 +1,61 @@
 === ATON CONTEXT ===
-Generated: 2026-04-16 14:59 Cairo / 12:59 UTC
+Generated: 2026-04-16 16:03 Cairo / 14:03 UTC
+
+## Active Projects
+### synthesis-collaboration (primary)
+- **Status:** Bot NOT running ❌ (bot process not found, needs `npm run bot`) | 63 tests PASS ✅ | Services UP (3000/3001/3006) ✅
+- **gen-e 2026:** ~5 days 18 hours to Virtual Opening (April 23 08:00 UTC) — gen-e.eu LIVE ✅ | gen-e.eu/gen-e-2026 404 ❌
+- **JA Europe outreach:** NOT SENT ⚠️ — OUTREACH_DRAFT.md Options A+B ready — window ~5d 18h remaining
+- **OpenClaw:** ⚠️ 2026.3.24 (should be 2026.4.15)
+
+### Solar Scout
+- **15 companies, 33.4 MW** — email drafts in `solar-scout/docs/email_drafts_validated.md` (654 lines)
+- **SMTP: 7 env vars missing** (SMTP_HOST/PORT/USER/PASSWORD, SENDER_NAME/EMAIL, BCC_RECIPIENT) — emails show placeholders [YOUR NAME]/[YOUR COMPANY] ❌
+- **Pipeline verified** ✅ — dry-run all 15 emails preview correctly (LV+EN bilingual, gender-aware grammar)
+- **No emails sent yet** ✅ — sent_log.json does not exist
+
+### Audio Transformation Tool
+- **dist/ built** ✅ — ready for deployment
+- **Local uncommitted changes** (needs non-cron session): submodule dirty, untracked files in code/
+
+## System Health
+- exec: ✅ WORKING | web_fetch: ✅ WORKING
+- Bot (synthesis-collaboration): NOT RUNNING ❌ — needs `cd projects/synthesis-collaboration && npm run bot`
+- Health endpoint: ✅ HTTP 200 at 3000/3001/3006 (14:03 UTC)
+- TASKS Monitor (c24d7d68): ✅ ACTIVE every 60s, 0 errors, pipeline IDLE
+- Cron Jobs: ✅ 4/4 HEALTHY — all consecutiveErrors=0
+- Services: ✅ 3/3 UP (3000 Credo API, 3001 Audio Backend, 3006 CG Web)
+- Disk: ~56% used ✅
+- Git: ✅ Pushed at 14:03 UTC (2cf254c), workspace clean, 0 commits ahead
+
+## This Session (14:03 UTC)
+- 97 tests PASS (34 server vitest + 63 synthesis-collaboration vitest + 62 JCI pytest)
+- All 3 services UP (3000/3001/3006 HTTP 200)
+- gen-e.eu/gen-e-2026 still 404 (~5d 18h to Virtual Opening)
+- Solar Scout SMTP unconfigured (7 env vars missing, placeholders in all 15 emails)
+- Git push SUCCEEDED (2cf254c), workspace clean
+- PROGRESS [0.3.99] committed
+
+## Recent Sessions
+- 14:03 UTC [0.3.99]: 97 tests PASS, Solar Scout SMTP unconfigured, bot not running, git clean (2cf254c)
+- 13:29 UTC [0.3.98]: 63 tests PASS, 4/4 crons healthy, TASKS 2421+ runs, OUTREACH refreshed, git pushed (3eabbdf)
+- 12:59 UTC [0.3.97]: 406 tests PASS, 4/4 crons healthy, OUTREACH ~6d 19h, git pushed (b91f82b)
+- 12:37 UTC [0.3.96]: 406 tests PASS, 4/4 crons healthy, OUTREACH ~6d 19h
+
+## gen-e 2026 Timeline
+- **Now:** 2026-04-16 14:03 UTC
+- **Virtual Opening:** April 23, 08:00 UTC — **~5 days 18 hours away**
+- **JA Europe outreach:** NOT SENT ⚠️ — window ~5d 18h and closing
+- **gen-e.eu/gen-e-2026:** Still 404 — page being built by Kristaps
+- **April 7 deadline:** Missed by 9 days
+
+## What's Next (Kristaps Actions)
+1. **🔴 MOST URGENT:** Send JA Europe LinkedIn DM (~5d 18h to Virtual Opening) — draft at `projects/synthesis-collaboration/OUTREACH_DRAFT.md`
+2. **🔴 Solar Scout SMTP + sender info** (15 companies, 33.4 MW) — configure 7 env vars → placeholders will resolve
+3. **🔴 Publish gen-e.eu/gen-e-2026 page** (currently 404)
+4. **🔴 Start synthesis bot** — `cd projects/synthesis-collaboration && npm run bot` — bot not running
+5. **🟡 OpenClaw update** (2026.3.24 → 2026.4.15)
+6. **🟡 Audio-transformation-tool/code submodule** (dirty — needs non-cron session)
 
 ## Active Projects
 ### synthesis-collaboration (primary)
