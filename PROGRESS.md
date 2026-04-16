@@ -1,6 +1,85 @@
 # PROGRESS.md — Synthesis Collaboration Platform
 
-**Aton ☀️🦞 | 2026-04-16 07:03 Cairo / 05:03 UTC — Wakeup ☀️🦞**
+**Aton ☀️🦞 | 2026-04-16 07:28 Cairo / 05:28 UTC — Wakeup ☀️🦞**
+
+---
+
+## [0.3.85] — 2026-04-16 07:28 Cairo / 05:28 UTC — Wakeup ☀️🦞
+
+### This Session (05:28 UTC — careful and deliberate verification)
+
+**Key Findings:**
+- **343 tests PASS** across 5 suites (consistent with last 2 sessions)
+- **All 3 services UP** — 3000/3001/3006 health endpoints confirmed
+- **Security audit: 0 critical ✅** — consistent
+- **Worker-1 ⚠️** — consecutiveErrors=1 persists, manually triggered via `cron run` attempt
+- **gen-e.eu/gen-e-2026 still 404** — ~6 days to Virtual Opening
+- **Solar Scout pipeline verified ✅** — `generate_emails.py` + `send_emails.py --dry-run` working
+- **email_drafts_validated.md already committed** — working tree clean (`d212301`)
+- **35 commits ahead of origin/master** — un pushed (git auth in cron)
+
+**Test Results (05:28 UTC):**
+| Suite | Tests | Result |
+|-------|-------|--------|
+| Server (vitest) | 34 | ✅ PASS |
+| Synthesis-collaboration (vitest) | 63 | ✅ PASS |
+| Collaboration-platform (vitest) | 137 | ✅ PASS |
+| CG (pytest) | 47 | ✅ PASS |
+| JCI org-manager (pytest) | 62 | ✅ PASS |
+| **Total** | **343** | **✅ ALL PASS** |
+
+**Services Health (05:28 UTC):**
+| Service | Port | Endpoint | Status |
+|---------|------|----------|--------|
+| Credo API | 3000 | `/health → {"status":"ok"}` | ✅ UP |
+| Audio Backend | 3001 | `/health → {"status":"ok","openRouterLinked":true}` | ✅ UP |
+| CG Web | 3006 | `/health → {"status":"ok"}` | ✅ UP |
+
+**Bot Status (05:28 UTC):**
+- synthesis-bot: PID=1308451, uptime=10h+, status=online ✅
+
+**Cron Jobs (05:28 UTC):**
+| Job | Status | lastRunStatus | consecutiveErrors |
+|-----|--------|---------------|-------------------|
+| Wakeup (201707bb) | ✅ | running | 0 |
+| TASKS Monitor (c24d7d68) | ✅ | ok | 0 |
+| Worker-1 (52a71e11) | ⚠️ | error→triggered | 1 (manually re-fired) |
+| Worker-3 (51a41423) | ✅ | ok | 0 |
+
+**gen-e 2026 (05:28 UTC):**
+- ✅ gen-e.eu — **LIVE** (HTTP 200)
+- ❌ gen-e.eu/gen-e-2026 — **404 HTTPS** — page not published
+- Virtual Opening: **April 23, 08:00 UTC** — **~6 days, 2.5 hours away**
+
+**Solar Scout Pipeline (05:28 UTC):**
+- `generate_emails.py` ✅ — 15 drafts → `email_drafts_validated.md`
+- `send_emails.py --dry-run` ✅ — all 15 preview correctly
+- `send_emails.py --check-replies` ✅ — confirms no emails sent yet
+- SMTP: ⚠️ **NOT configured** — P0 blocker for actual sends
+- `email_drafts_validated.md`: ⚠️ Minor note fix (removed stale `[YOUR COMPANY]` from draft warning — live send uses `SENDER_COMPANY` env var) — already committed
+
+**What Was Done ✅ (this session):**
+| Item | Status | Time |
+|------|--------|------|
+| 343 tests verified PASS | ✅ 343/343 | 05:29 UTC |
+| Health 3000/3001/3006 UP | ✅ All HTTP 200 | 05:29 UTC |
+| Solar Scout pipeline verified | ✅ `gen_emails` + `send_emails --dry-run` | 05:29 UTC |
+| gen-e.eu LIVE / gen-e-2026 404 | ❌ Confirmed | 05:29 UTC |
+| Worker-1 manually triggered | ✅ enqueued `manual:...` | 05:28 UTC |
+| email_drafts_validated.md | ✅ Already committed (`d212301`) | prior session |
+
+**What Remains ❌ (Kristaps/user actions required):**
+| Priority | Action | Urgency |
+|----------|--------|---------|
+| 🔴 P0 | **Publish gen-e.eu/gen-e-2026 page** | ~6d 2.5h to Virtual Opening — PAGE STILL 404 |
+| 🔴 P0 | **Send JA Europe LinkedIn DM** | ~6d 2.5h — DRAFT ready in `projects/synthesis-collaboration/OUTREACH_DRAFT.md` |
+| 🔴 P0 | **Solar Scout SMTP + send emails** | 15 companies, 33.4 MW ready — configure SMTP |
+| 🟡 P1 | **OpenClaw update** | 2026.3.24 → 2026.4.15 (latest) |
+| 🟡 P1 | **Git push** | 35 commits ahead of origin/master |
+| 🟡 P1 | **Worker-1 isolated session fix** | consecutiveErrors=1 persists — blanket write restriction |
+| 🟡 P2 | **Audio Transformation Tool push** | 7 modified files + 2 untracked in `code/` submodule (needs non-cron) |
+
+**gen-e 2026: ~6 days, 2.5 hours to Virtual Opening (April 23, 08:00 UTC)**
 
 ---
 
