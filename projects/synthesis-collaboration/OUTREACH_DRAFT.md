@@ -18,8 +18,8 @@
 - ⚠️ gen-e.eu (the main homepage) IS LIVE with Gen-E 2026 branding — use this as the reference link
 - **Gen-E Virtual Opening CONFIRMED LIVE on jaeurope.org** — "LIVE ON 23 APRIL – 10:00 AM CEST"
 - Content confirmed: *"The virtual opening marks the beginning of an innovative journey where creativity meets technology, providing JA students with a unique opportunity to showcase their entrepreneurial projects on a global stage. Hear from special guests and get a first look at the Virtual Expo and our awards!"*
-- Virtual Opening: **April 23, 10:00 AM CEST** — **8 days away**
-- April 7 outreach deadline was **missed by 8 days** — but window still open (content being built)
+- Virtual Opening: **April 23, 10:00 AM CEST** — **~5.5 days away**
+- April 7 outreach deadline was **missed by 9 days** — but window still open (content being built)
 
 ## CRITICAL FIX: Use gen-e.eu NOT gen-e.eu/gen-e-2026
 
@@ -38,7 +38,7 @@ I noticed the Gen-E 2026 page (gen-e.eu) is still being finalized — congratula
 
 I'm part of a small team building a collaborative intelligence tool (Telegram bot + synthesis engine) — it helps groups reach better decisions faster by surfacing common ground and divergences from real conversations. Think: Wiki + AI synthesis + structured deliberation, all in a familiar chat interface.
 
-With 8 days to the Virtual Opening, we wanted to offer a youth perspective:
+With ~5.5 days to the Virtual Opening, we wanted to offer a youth perspective:
 - Could we contribute a short demo or use case to gen-e.eu before launch?
 - Or would you be open to a quick call about how young entrepreneurs might use tools like ours during Gen-E?
 
@@ -75,18 +75,18 @@ Kristaps
 3. Personalize with your name/connection to JA
 4. Send via LinkedIn DM to JA Europe company page (linkedin.com/company/1286877)
 5. If no response in 2-3 days, follow up once
-6. If receptive, offer to schedule a quick call before April 20
+6. If receptive, offer to schedule a quick call ASAP (window is closing fast)
 
 ---
 
 ## gen-e.eu Status (April 15, 01:58 Cairo / 01:58 UTC — via web_fetch this session)
 - ✅ gen-e.eu — **LIVE** — "Gen-E 2026 – Europe's Largest Entrepreneurship Festival"
 - ❌ gen-e.eu/gen-e-2026 — **404 Page Not Found** (page being built)
-- ✅ Virtual Opening: **April 23, 10:00 AM CEST** — **8 days away**
+- ✅ Virtual Opening: **April 23, 10:00 AM CEST** — **~5.5 days away**
 - ✅ Newsletter signup functional on gen-e.eu
 - ✅ jaeurope.org virtual opening content CONFIRMED LIVE: *"The virtual opening marks the beginning of an innovative journey where creativity meets technology, providing JA students with a unique opportunity to showcase their entrepreneurial projects on a global stage. Hear from special guests and get a first look at the Virtual Expo and our awards!"*
-- ⚠️ April 7 outreach deadline **missed by 8 days** (April 7 → April 15) — window MAY still be open
+- ⚠️ April 7 outreach deadline **missed by 9 days** (April 7 → April 16) — window MAY still be open
 
 ---
 
-*Aton ☀️🦞 | Created: 2026-04-13 17:30 UTC | Updated: 2026-04-15 07:00 UTC (this session: TASKS Monitor 1954+ runs ✅, gen-e.eu LIVE ✅, jaeurope.org Virtual Opening LIVE ✅, gen-e.eu/gen-e-2026 404 ❌, 8 days to Virtual Opening ✅, April 7 missed by 8 days ✅) | Kristaps: review + send via LinkedIn DM NOW (8 days to Virtual Opening) | ⚠️ gen-e.eu/gen-e-2026 → gen-e.eu (CRITICAL FIX already applied in draft)*
+*Aton ☀️🦞 | Created: 2026-04-13 17:30 UTC | Updated: 2026-04-16 09:59 UTC (gen-e.eu/gen-e-2026 404 ❌, ~5.5d to Virtual Opening ✅, 9d past April 7 deadline ⚠️) | Kristaps: review + send via LinkedIn DM NOW (~5.5d to Virtual Opening) | ⚠️ Use gen-e.eu NOT gen-e.eu/gen-e-2026*
