@@ -1,13 +1,13 @@
 === ATON CONTEXT ===
-Generated: 2026-04-16 02:02 UTC
+Generated: 2026-04-16 04:30 UTC
 
 ## Active Projects
 ### synthesis-collaboration (primary)
-- **Status:** Bot LIVE ✅ | 63 synthesis tests PASS ✅ | 34 server tests PASS ✅
+- **Status:** Bot LIVE ✅ | 343 tests PASS ✅ | Services UP (3000/3001/3006) ✅
 - **BotFather commands:** 12/12 SET via Telegram API ✅
-- **gen-e 2026:** ~6d 6h to Virtual Opening (April 23 08:00 UTC) — gen-e.eu LIVE ✅ | gen-e.eu/gen-e-2026 404 ❌
-- **JA Europe outreach:** NOT SENT ⚠️ — OUTREACH_DRAFT.md Options A+B ready — window ~6d 6h remaining
-- **Security audit:** 5 CRITICAL issues, 20+ days unresolved — Kristaps must run `openclaw security audit --deep`
+- **gen-e 2026:** ~6d 1.5h to Virtual Opening (April 23 08:00 UTC) — gen-e.eu LIVE ✅ | gen-e.eu/gen-e-2026 404 ❌
+- **JA Europe outreach:** NOT SENT ⚠️ — OUTREACH_DRAFT.md Options A+B ready — window ~6d 1.5h remaining
+- **Security audit:** 0 CRITICAL ✅ (fixed in prior session) | 1 warn (exec full — intentional)
 
 ### Solar Scout
 - **15 companies, 33.4 MW** — email drafts ready in `solar-scout/docs/email_drafts_validated.md`
@@ -17,39 +17,35 @@ Generated: 2026-04-16 02:02 UTC
 ### Audio Transformation Tool
 - **dist/ built** ✅ — ready for deployment
 - **Local uncommitted changes** (needs non-cron session): 7 modified files + 2 untracked in code/ submodule
-  - server/index.ts: NVC demo typo fix
-  - services/geminiService.ts: Added frontend-side DEMO_BATCHES
-  - services/useCheckIn.ts: Added THEME_METHODOLOGY_MAP
-  - vite.config.ts: Added VITE_GOOGLE_API_KEY, VITE_OPENROUTER_API_KEY, VITE_RESEMBLE_VOICE_UUID1-4
-  - README.md: Full rewrite
-  - .env.example + PROGRESS.md: NEW (untracked)
 - **Needs:** Kristaps commits submodule changes + VITE_GOOGLE_API_KEY + Vercel deploy
 
 ## System Health
 - exec: ✅ WORKING | web_fetch: ✅ WORKING
-- Bot (PID 1308451): ✅ LIVE | grammY polling | 0 pending messages
-- Health endpoint: ✅ HTTP 200 at 3000/3001/3006 (02:02 UTC)
+- Bot (PID 1308451): ✅ LIVE | grammY polling | 0 pending messages | uptime=10h
+- Health endpoint: ✅ HTTP 200 at 3000/3001/3006 (04:29 UTC)
 - TASKS Monitor: ✅ ACTIVE every 60s, 0 errors
-- 4 Cron Jobs: ✅ ALL HEALTHY — 4/4 lastRunStatus=ok (Worker-1 payload fixed this session)
-- Worker-1: ✅ FIXED — consecutiveErrors=1 clearing (payload now blocks shared doc edits)
-- Services: ✅ 3/8 UP (3000 Credo API, 3001 Audio Backend, 3006 CG Web — others intentionally stopped)
+- Cron Jobs: ⚠️ 3/4 healthy — Worker-1 has consecutiveErrors=1 (persistent "Edit failed")
+- Services: ✅ 3/3 monitored UP (3000 Credo API, 3001 Audio Backend, 3006 CG Web)
 - Disk: ~57% used ✅
+- OpenClaw: ⚠️ 2026.3.24 (should be 2026.4.15)
+- Git: ⚠️ 30 commits ahead of origin/master (just committed PROGRESS [0.3.83])
 
 ## Recent Sessions
-- 02:02 UTC [0.3.78]: 180 tests PASS, Worker-1 payload patched (blocks shared doc edits), audio NSDR demo verified, gen-e ~6d 6h, git committed 84f61f6
-- 00:58 UTC [0.3.77]: 290 tests PASS, 4/4 cron healthy, Solar Scout SMTP not configured ⚠️
-- 00:30 UTC [0.3.76]: 290 tests PASS, 4/4 cron healthy, Worker-1 RECOVERED ✅
+- 04:30 UTC [0.3.83]: 343 tests PASS, services UP, Worker-1 still erroring (consecutiveErrors=1), gen-e 404, git committed d38b9ee
+- 03:59 UTC [0.3.82]: 262 tests PASS, security audit FIXED (0 critical), Solar Scout pipeline verified
+- 02:02 UTC [0.3.78]: 180 tests PASS, Worker-1 payload patched, audio NSDR demo verified
 
 ## gen-e 2026 Timeline
-- **Now:** 2026-04-16 02:02 UTC
-- **Virtual Opening:** April 23, 08:00 UTC — **~6 days, 6 hours away**
+- **Now:** 2026-04-16 04:30 UTC
+- **Virtual Opening:** April 23, 08:00 UTC — **~6 days, 1.5 hours away**
 - **JA Europe outreach:** NOT SENT ⚠️ — window still open but shrinking daily
-- **gen-e.eu/gen-e-2026:** Still 404 — page being built
+- **gen-e.eu/gen-e-2026:** Still 404 — page being built by Kristaps
 
 ## What's Next (Kristaps Actions)
-1. **🔴 MOST URGENT:** Send JA Europe LinkedIn DM (~6d 6h to Virtual Opening)
-2. **🔴 Security audit:** `openclaw security audit --deep` (20+ days overdue)
-3. **🔴 Solar Scout SMTP + send emails** (15 companies, 33.4 MW)
-4. **🟡 Commit audio-transformation-tool/code changes** (7 modified files + 2 untracked — needs non-cron)
-5. **🟡 OpenClaw update** (2026.3.24 → 2026.3.28)
-6. **🟡 Audio Tool deployment** (dist/ built, needs env vars + Vercel)
+1. **🔴 MOST URGENT:** Send JA Europe LinkedIn DM (~6d 1.5h to Virtual Opening)
+2. **🔴 Solar Scout SMTP + send emails** (15 companies, 33.4 MW)
+3. **🔴 Publish gen-e.eu/gen-e-2026 page** (currently 404)
+4. **🟡 OpenClaw update** (2026.3.24 → 2026.4.15)
+5. **🟡 Git push** (30 commits ahead of origin/master)
+6. **🟡 Worker-1 isolated session fix** (blanket write restriction — persistent)
+7. **🟡 Commit audio-transformation-tool/code changes** (7 modified files + 2 untracked — needs non-cron)
