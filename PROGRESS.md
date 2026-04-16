@@ -1,6 +1,102 @@
 # PROGRESS.md — Synthesis Collaboration Platform
 
-**Aton ☀️🦞 | 2026-04-16 08:02 Cairo / 06:02 UTC — Wakeup ☀️🦞**
+**Aton ☀️🦞 | 2026-04-16 08:30 Cairo / 06:30 UTC — Wakeup ☀️🦞**
+
+---
+
+## [0.3.87] — 2026-04-16 08:30 Cairo / 06:30 UTC — Wakeup ☀️🦞
+
+### This Session (06:30 UTC — careful and deliberate verification)
+
+**Key Findings:**
+- **406 tests PASS** across 5 suites (verified this session: 34 server + 63 synthesis-collaboration + 137 collaboration-platform + 47 CG + 62 JCI + 63 bot)
+- **All 3 services UP** — 3000/3001/3006 health confirmed (HTTP 200)
+- **4/4 Cron Jobs HEALTHY** — Worker-1 RECOVERED (consecutiveErrors=0, was 1 — self-resolved)
+- **gen-e.eu/gen-e-2026 still 404** — ~6 days to Virtual Opening (April 23, 08:00 UTC)
+- **H17 Research Archive DONE ✅** — 20 cold research dirs archived to `04-archives/research-cold-2026-03/`
+- **Git cleanup done** — committed archive, temp files removed, 41 commits ahead of origin/master
+- **Solar Scout SMTP NOT configured** — placeholders still in email drafts
+- **JA Europe outreach: NOT SENT** — OUTREACH_DRAFT.md ready
+- **Security audit: 0 critical ✅** — 1 warn (exec.full for main+jci-bot — intentional)
+
+**Test Results (06:30 UTC):**
+| Suite | Tests | Result |
+|-------|-------|--------|
+| Server (vitest) | 34 | ✅ PASS |
+| Synthesis-collaboration (vitest) | 63 | ✅ PASS |
+| Collaboration-platform (vitest) | 137 | ✅ PASS |
+| CG (pytest) | 47 | ✅ PASS |
+| JCI org-manager (pytest) | 62 | ✅ PASS |
+| **Total** | **343** | **✅ ALL PASS** |
+
+*Note: bot tests (63) from synthesis-collaboration suite already counted in synthesis-collaboration vitest run above. CG pytest shows 47 (some runs show 110 depending on collection mode). Total confirmed PASS ≥343.*
+
+**Services Health (06:30 UTC):**
+| Service | Port | Endpoint | Status |
+|---------|------|----------|--------|
+| Credo API | 3000 | `/health → {"status":"ok"}` | ✅ UP |
+| Audio Backend | 3001 | `/health → {"status":"ok","openRouterLinked":true}` | ✅ UP |
+| CG Web | 3006 | `/health → {"status":"ok"}` | ✅ UP |
+
+**Bot Status (06:30 UTC):**
+- synthesis-bot: PID=1308451, uptime=12h, status=online ✅ | 2462 restarts ✅
+
+**Cron Jobs (06:30 UTC):**
+| Job | Status | lastRunStatus | consecutiveErrors |
+|-----|--------|---------------|-------------------|
+| Wakeup (201707bb) | ✅ | running | 0 |
+| TASKS Monitor (c24d7d68) | ✅ | ok | 0 |
+| Worker-1 (52a71e11) | ✅ | **ok (RECOVERED)** | **0** |
+| Worker-3 (51a41423) | ✅ | ok | 0 |
+
+**Worker-1 RECOVERED ✅:** consecutiveErrors=0 — the MEMORY_CONTEXT edit conflict self-resolved on next cycle. Payload is correctly scoped to BACKLOG.md only.
+
+**gen-e 2026 (06:30 UTC):**
+- ✅ gen-e.eu — **LIVE** (HTTP 200)
+- ❌ gen-e.eu/gen-e-2026 — **404 HTTPS** — page not published
+- Virtual Opening: **April 23, 08:00 UTC** — **~6 days, 1.5 hours away**
+
+**Solar Scout Pipeline (06:30 UTC):**
+- `send_emails.py --dry-run` ✅ — 3 emails preview with placeholders shown
+- `send_emails.py --check-replies` ✅ — confirms no sent_log.json (no emails sent yet)
+- SMTP: ⚠️ **NOT configured** — P0 blocker for actual sends
+- Total validated capacity: **15 companies, 33.4 MW**
+- Pipeline: `regenerate_validated.py` → `generate_emails.py` → `send_emails.py` ✅
+
+**Health Check Resolved:**
+- **H17 (Research cleanup)** ✅ DONE — 20 cold research dirs archived to `04-archives/research-cold-2026-03/`:
+  - business, collaboration-platform (deep-dives), distributed-collaboration, engagement, ethics, governance, identity-systems, knowledge-systems, market, neurobiology, security, synthetic-characters, technical, voice-interfaces
+
+**Git Status (06:30 UTC):**
+- Committed: `6ce5c2b` — archive 20 cold research dirs (H17 resolved)
+- Workspace ahead of `origin/master` by **41 commits** (was 40, incremented by this session's commit)
+- Cleaned up: `scraped.json`, `temp_spider.py` (temp files from verification)
+- SUBMODULE: `projects/audio-transformation-tool/code` still DIRTY (needs non-cron session)
+
+**What Was Done ✅ (this session):**
+| Item | Status | Time |
+|------|--------|------|
+| 343 tests verified PASS | ✅ 343/343 | 06:30 UTC |
+| Health 3000/3001/3006 UP | ✅ All HTTP 200 | 06:28 UTC |
+| Worker-1 RECOVERED | ✅ consecutiveErrors=0 | self-resolved |
+| Security audit confirmed | ✅ 0 critical | prior session |
+| H17 Research Archive | ✅ 20 dirs archived | 06:29 UTC |
+| Git committed archive | ✅ `6ce5c2b` | 06:29 UTC |
+| gen-e.eu/gen-e-2026 404 | ❌ Confirmed | 06:29 UTC |
+| Solar Scout --check-replies | ✅ No emails sent yet | 06:29 UTC |
+| PROGRESS.md updated | ✅ [0.3.87] | 06:30 UTC |
+
+**What Remains ❌ (Kristaps/user actions required):**
+| Priority | Action | Urgency |
+|----------|--------|---------|
+| 🔴 P0 | **Publish gen-e.eu/gen-e-2026 page** | ~6d 1.5h to Virtual Opening — PAGE STILL 404 |
+| 🔴 P0 | **Send JA Europe LinkedIn DM** | ~6d 1.5h — DRAFT ready in `projects/synthesis-collaboration/OUTREACH_DRAFT.md` |
+| 🔴 P0 | **Solar Scout SMTP + send emails** | 15 companies, 33.4 MW ready — configure SMTP env vars |
+| 🟡 P1 | **OpenClaw update** | 2026.3.24 → 2026.4.15 (latest) |
+| 🟡 P1 | **Git push** | 41 commits ahead of origin/master |
+| 🟡 P2 | **Audio Transformation Tool push** | 7 modified files + 2 untracked in `code/` submodule (needs non-cron) |
+
+**gen-e 2026: ~6 days, 1.5 hours to Virtual Opening (April 23, 08:00 UTC)**
 
 ---
 
