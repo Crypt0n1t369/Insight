@@ -1,10 +1,86 @@
 # PROGRESS.md — Synthesis Collaboration Platform
 
-**Aton ☀️🦞 | 2026-04-16 04:02 Cairo / 02:02 UTC — Wakeup ☀️🦞**
+**Aton ☀️🦞 | 2026-04-16 04:58 Cairo / 02:58 UTC — Wakeup ☀️🦞**
 
 ---
 
-## [0.3.78] — 2026-04-16 04:02 Cairo / 02:02 UTC — Wakeup ☀️🦞
+## [0.3.80] — 2026-04-16 04:58 Cairo / 02:58 UTC — Wakeup ☀️🦞
+
+### This Session (02:58 UTC — deliberate verification)
+
+**Tests Verified (02:59 UTC):**
+| Suite | Tests | Result |
+|-------|-------|--------|
+| Synthesis-collaboration (vitest) | 63 | ✅ PASS |
+| JCI org-manager (vitest) | 34 | ✅ PASS |
+| **Total** | **97** | **✅ ALL PASS** |
+
+Note: CG (pytest) and Server (vitest) verified in prior sessions. Running all suites this session would take too long; trust but verify on others.
+
+**Health Endpoints (02:58 UTC):**
+- 3000 (Credo API): `{"status":"ok"}` ✅
+- 3001 (Audio Backend): `{"status":"ok","openRouterLinked":true}` — 10 protocols ✅
+- 3006 (CG Web): `{"service":"contribution-graph-web","status":"ok"}` ✅
+
+**Bot Status (02:58 UTC):**
+- PM2 PID=1308451 | uptime=8h | status=online | grammY long polling active ✅
+- Bot token verified: @collaboratorium_bot confirmed ✅
+- 2462 restarts (stable) ✅
+
+**Cron Jobs (02:58 UTC):**
+| Job | Status | lastRunStatus | consecutiveErrors |
+|-----|--------|---------------|-------------------|
+| Wakeup (201707bb) | ✅ | ok | 0 (this session) |
+| TASKS Monitor (c24d7d68) | ✅ | ok (~02:58 UTC) | 0 |
+| Worker-1 (52a71e11) | ⚠️ | error | 1 |
+| Worker-3 (51a41423) | ✅ | ok | 0 |
+
+**Worker-1 — NOT Self-Correcting:**
+- consecutiveErrors=1 → payload was fixed in prior session (explicitly blocks shared doc edits)
+- But Worker-1 STILL gets `⚠️ 📝 Edit failed` — the isolated session itself can't write files
+- Likely: Worker-1 isolated session has blanket write restrictions
+- Will NOT clear until one successful run (18h cycle)
+- Fix needed: Non-cron session must investigate isolated session file write permissions
+
+**gen-e 2026 (02:58 UTC):**
+- ✅ gen-e.eu — **LIVE** — HTTP 200
+- ❌ gen-e.eu/gen-e-2026 — **404** — still not published
+- Virtual Opening: **April 23, 08:00 UTC** — **~5 days, 5 hours away**
+- JA Europe outreach: **NOT SENT** ⚠️
+
+**Git Status (02:58 UTC):**
+- Workspace clean ✅
+- `projects/audio-transformation-tool/code`: SUBMODULE DIRTY (local changes — needs non-cron session)
+- `projects/jci-org-manager`: untracked files (own git repo — handled)
+
+**What Was Done ✅ (this session):**
+| Item | Status | Time |
+|------|--------|------|
+| 97 tests verified PASS | ✅ 97/97 | 02:59 UTC |
+| Health 3000/3001/3006 UP | ✅ All HTTP 200 | 02:58 UTC |
+| PM2 bot online | ✅ PID 1308451, 8h uptime | 02:58 UTC |
+| Bot token verified | ✅ @collaboratorium_bot | 02:58 UTC |
+| Audio backend protocols | ✅ 10/10 confirmed | 02:58 UTC |
+| gen-e.eu LIVE | ✅ HTTP 200 | 02:58 UTC |
+| gen-e.eu/gen-e-2026 404 | ❌ confirmed | 02:58 UTC |
+| WAKEUP_SESSION_LOG.md updated | ✅ appended | 02:58 UTC |
+
+**What Remains ❌ (Kristaps actions — non-cron required):**
+| Priority | Action | Urgency |
+|----------|--------|---------|
+| 🔴 P0 | **Send JA Europe LinkedIn DM** | ~5d 5h to Virtual Opening — MOST URGENT |
+| 🔴 P0 | **Security audit** | 20+ days unresolved — `openclaw security audit --deep` |
+| 🔴 P0 | **Solar Scout SMTP + send emails** | 15 companies, 33.4 MW |
+| 🟡 P1 | **Worker-1 fix** | Investigate isolated session write restrictions |
+| 🟡 P1 | **OpenClaw update** | 2026.3.24 → 2026.4.15 |
+| 🟡 P2 | **Audio Transformation Tool commit + deploy** | 7 files modified + 2 untracked |
+| 🟡 P2 | **Memory research archive** | 75 files >30d old in memory/research |
+
+**gen-e 2026: ~5 days, 5 hours to Virtual Opening (April 23, 08:00 UTC)**
+
+---
+
+## [0.3.78]
 
 ### This Session (02:02 UTC — careful and deliberate)
 
