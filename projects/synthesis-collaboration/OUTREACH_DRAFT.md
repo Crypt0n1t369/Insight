@@ -18,7 +18,7 @@
 - ⚠️ gen-e.eu (the main homepage) IS LIVE with Gen-E 2026 branding — use this as the reference link
 - **Gen-E Virtual Opening CONFIRMED LIVE on jaeurope.org** — "LIVE ON 23 APRIL – 10:00 AM CEST"
 - Content confirmed: *"The virtual opening marks the beginning of an innovative journey where creativity meets technology, providing JA students with a unique opportunity to showcase their entrepreneurial projects on a global stage. Hear from special guests and get a first look at the Virtual Expo and our awards!"*
-- Virtual Opening: **April 23, 10:00 AM CEST** — **~6 days 21 hours away** (as of 2026-04-16)
+- Virtual Opening: **April 23, 10:00 AM CEST** — **~6 days 20 hours away** (as of 2026-04-16)
 - April 7 outreach deadline was **missed by 9 days** — but window still open (content being built)
 
 ## CRITICAL FIX: Use gen-e.eu NOT gen-e.eu/gen-e-2026
@@ -82,7 +82,7 @@ Kristaps
 ## gen-e.eu Status (Updated 2026-04-16 11:59 Cairo / 09:59 UTC)
 - ✅ gen-e.eu — **LIVE** — "Gen-E 2026 – Europe's Largest Entrepreneurship Festival"
 - ❌ gen-e.eu/gen-e-2026 — **404 Page Not Found** (page being built)
-- ✅ Virtual Opening: **April 23, 10:00 AM CEST** — **~6 days 21 hours away**
+- ✅ Virtual Opening: **April 23, 10:00 AM CEST** — **~6 days 20 hours away**
 - ✅ Newsletter signup functional on gen-e.eu
 - ✅ jaeurope.org virtual opening content CONFIRMED LIVE: *"The virtual opening marks the beginning of an innovative journey where creativity meets technology, providing JA students with a unique opportunity to showcase their entrepreneurial projects on a global stage. Hear from special guests and get a first look at the Virtual Expo and our awards!"*
 - ⚠️ April 7 outreach deadline **missed by 9 days** (April 7 → April 16) — window MAY still be open
